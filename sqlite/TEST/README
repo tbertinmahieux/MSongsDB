@@ -1,0 +1,13 @@
+
+README
+
+by Thierry Bertin-Mahieux (2009) Columbia University
+tb2332@columbia.edu
+
+
+file MSongsDB/sqlite/TEST/README
+
+The folder sqlite/TEST is a dummy folder that I can use
+to play around with SQLite, in particular make sure it
+handles the size I am looking for.
+

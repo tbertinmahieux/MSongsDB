@@ -1,0 +1,11 @@
+BEGIN TRANSACTION;
+CREATE TABLE tbl1(one varchar(10), two smallint);
+INSERT INTO "tbl1" VALUES('hello!',10);
+INSERT INTO "tbl1" VALUES('good bye',20);
+INSERT INTO "tbl1" VALUES('yo b*tch',3);
+CREATE TABLE tbl2 (
+f1 varchar(30) primary key,
+f2 text,
+f3 real
+);
+COMMIT;

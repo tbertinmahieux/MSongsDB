@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import glob
+import numpy as np
 # our HDF utils library
 import hdf5_utils as HDF5
 # Echo Nest python API
@@ -83,3 +84,9 @@ if __name__ == '__main__':
         h5 = HDF5.open_h5_file_append(hdf5filename)
         HDF5.fill_hdf5_from_track(h5,track)
         h5.close()
+        # display
+        if np.mod(k+1,10) == 0:
+            print k,'songs encoded'
+
+    # done
+    print 'all',len(allmp3s),'songs encoded in dir:',hdf5dir

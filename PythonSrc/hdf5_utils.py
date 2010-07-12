@@ -35,29 +35,53 @@ import hdf5_descriptors as DESC
 
 
 
-def fill_hdf5_from_track(h5,track):
+def fill_hdf5_from_track(h5,track,verbose=0):
     """
     Fill an open hdf5 using all the content in a track object
     from the Echo Nest python API
+    Put verbose to 2 or higher to see details.
     """
     # get the metadata table, fill it
-    metadata = h5.metadata.songs.row
+    metadata = h5.root.metadata.songs.row
     metadata['artist'] = track.artist
+    if verbose > 1:
+        print "metadata['artist'] = ",metadata['artist']
     metadata['duration'] = track.duration
+    if verbose > 1:
+        print "metadata['duration'] = ",metadata['duration']
     metadata['end_of_fade_in'] = track.end_of_fade_in
+    if verbose > 1:
+        print "metadata['end_of_fade_in'] = ",metadata['end_of_fade_in']
     metadata['id'] = track.id
+    if verbose > 1:
+        print "metadata['id'] = ",metadata['id']
     metadata['sample_md5'] = track.sample_md5
+    if verbose > 1:
+        print "metadata['sample_md5'] = ",metadata['sample_md5']
     metadata.append()
     # get the analysis table, fill it
-    analysis = h5.analysis.songs.row
+    analysis = h5.root.analysis.songs.row
     analysis['duration'] = track.duration
+    if verbose > 1:
+        print "analysis['duration'] = ",analysis['duration']
     analysis['key'] = track.key
+    if verbose > 1:
+        print "analysis['key'] = ",analysis['key']
     analysis['key_confidence'] = track.key_confidence
+    if verbose > 1:
+        print "analysis['key_confidence'] = ",analysis['key_confidence']
     analysis['loudness'] = track.loudness
+    if verbose > 1:
+        print "analysis['loudness'] = ",analysis['loudness']
     analysis['mode'] = track.mode
+    if verbose > 1:
+        print "analysis['mode'] = ",analysis['mode']
     analysis['mode_confidence'] = track.mode_confidence
+    if verbose > 1:
+        print "analysis['mode_confidence'] = ",analysis['mode_confidence']
     analysis.append()
     raise NotImplementedError
+
 
 def create_song_file(h5filename,title='H5 Song File',force=False):
     """
@@ -82,7 +106,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
     table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song')
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
-    table = h5.createTable(group,'songs',DESC.SongMetaData,'table of Echo Nest analysis for one song')
+    table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
     # close it, done
     h5.close()
 

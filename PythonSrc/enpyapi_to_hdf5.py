@@ -55,7 +55,7 @@ def die_with_usage():
     print 'Upload a song to get its analysis, writes it to a HDF5 file'
     print 'using the Million Song Database format'
     print 'usage:'
-    print '  python enpyapi_to_hdf5.py <songpath> <hdf5file>'
+    print '  python enpyapi_to_hdf5.py <songpath> <new hdf5file>'
     print ''
     sys.exit(0)
 
@@ -76,4 +76,19 @@ if __name__ == '__main__':
         print 'ERROR: hdf5 file already exist:',hdf5file,', delete or choose new path'
         die_with_usage()
 
-    raise NotImplementedError
+        
+    # get EN track for that song
+    print 'get analysis for file:',songfile
+    track = trackEN.track_from_filename(songfile)
+
+    # create HDF5 file
+    print 'create HDF5 file:',hdf5file
+    HDF5.create_song_file(hdf5file,force=False)
+
+    # fill hdf5 file
+    print 'fill HDF5 file with info from track'
+    h5 = HDF5.open_h5_file_append(hdf5file)
+    HDF5.fill_hdf5_from_track(h5,track,verbose=2)
+    h5.close()
+
+    

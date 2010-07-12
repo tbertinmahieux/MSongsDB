@@ -58,7 +58,7 @@ class SongAnalysis(tables.IsDescription):
     Class to hold the analysis of one song
     """
     duration = tables.FloatCol()
-    segments = Float32Col() # note to self: Float32Col(shape=(2,3))
+    segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
     key = tables.IntCol()
     key_confidence = tables.FloatCol()
     loudness = tables.FloatCol()

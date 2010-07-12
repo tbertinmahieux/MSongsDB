@@ -29,58 +29,66 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import numpy as np
 # code relies on pytables, see http://www.pytables.org
 import tables
 import hdf5_descriptors as DESC
 
 
 
-def fill_hdf5_from_track(h5,track,verbose=0):
+def fill_hdf5_from_track(h5,track):
     """
     Fill an open hdf5 using all the content in a track object
     from the Echo Nest python API
-    Put verbose to 2 or higher to see details.
     """
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs.row
+    metadata['analyzer_version'] = track.analyzer_version
     metadata['artist'] = track.artist
-    if verbose > 1:
-        print "metadata['artist'] = ",metadata['artist']
+    metadata['audio_md5'] = track.audio_md5
+    metadata['bitrate'] = track.bitrate
     metadata['duration'] = track.duration
-    if verbose > 1:
-        print "metadata['duration'] = ",metadata['duration']
-    metadata['end_of_fade_in'] = track.end_of_fade_in
-    if verbose > 1:
-        print "metadata['end_of_fade_in'] = ",metadata['end_of_fade_in']
     metadata['id'] = track.id
-    if verbose > 1:
-        print "metadata['id'] = ",metadata['id']
+    metadata['release'] = track.release
     metadata['sample_md5'] = track.sample_md5
-    if verbose > 1:
-        print "metadata['sample_md5'] = ",metadata['sample_md5']
+    metadata['samplerate'] = track.samplerate
+    metadata['title'] = track.title
     metadata.append()
     # get the analysis table, fill it
     analysis = h5.root.analysis.songs.row
     analysis['duration'] = track.duration
-    if verbose > 1:
-        print "analysis['duration'] = ",analysis['duration']
+    analysis['end_of_fade_in'] = track.end_of_fade_in
     analysis['key'] = track.key
-    if verbose > 1:
-        print "analysis['key'] = ",analysis['key']
     analysis['key_confidence'] = track.key_confidence
-    if verbose > 1:
-        print "analysis['key_confidence'] = ",analysis['key_confidence']
     analysis['loudness'] = track.loudness
-    if verbose > 1:
-        print "analysis['loudness'] = ",analysis['loudness']
     analysis['mode'] = track.mode
-    if verbose > 1:
-        print "analysis['mode'] = ",analysis['mode']
     analysis['mode_confidence'] = track.mode_confidence
-    if verbose > 1:
-        print "analysis['mode_confidence'] = ",analysis['mode_confidence']
+    analysis['start_of_fade_out'] = track.start_of_fade_out
+    analysis['time_signature'] = track.time_signature
+    analysis['time_signature_confidence'] = track.time_signature_confidence
     analysis.append()
-    raise NotImplementedError
+    group = h5.root.analysis
+    # analysis arrays (segments)
+    h5.createArray(group,'segments_start',np.array(map(lambda x : x['start'],track.segments)),'array of start times of segments')
+    h5.createArray(group,'segments_confidence',np.array(map(lambda x : x['confidence'],track.segments)),'array of confidence of segments')
+    h5.createArray(group,'segments_pitches',np.array(map(lambda x : x['pitches'],track.segments)).transpose(),'array of pitches of segments')
+    h5.createArray(group,'segments_timbre',np.array(map(lambda x : x['timbre'],track.segments)).transpose(),'array of timbre of segments')
+    h5.createArray(group,'segments_loudness_max',np.array(map(lambda x : x['loudness_max'],track.segments)),'array of max loudness of segments')
+    h5.createArray(group,'segments_loudness_max_time',np.array(map(lambda x : x['loudness_max_time'],track.segments)).transpose(),'array of max loudness time of segments')
+    h5.createArray(group,'segments_loudness_start',np.array(map(lambda x : x['loudness_start'],track.segments)).transpose(),'array of loudness of segments at start time')    
+    # analysis arrays (sections)
+    h5.createArray(group,'sections_start',np.array(map(lambda x : x['start'],track.sections)),'array of start times of sections')
+    h5.createArray(group,'sections_confidence',np.array(map(lambda x : x['confidence'],track.sections)),'array of confidence of sections')
+    # analysis arrays (beats)
+    h5.createArray(group,'beats_start',np.array(map(lambda x : x['start'],track.beats)),'array of start times of beats')
+    h5.createArray(group,'beats_confidence',np.array(map(lambda x : x['confidence'],track.beats)),'array of confidence of beats')
+    # analysis arrays (bars)
+    h5.createArray(group,'bars_start',np.array(map(lambda x : x['start'],track.bars)),'array of start times of bars')
+    h5.createArray(group,'bars_confidence',np.array(map(lambda x : x['confidence'],track.bars)),'array of confidence of bars')
+    # analysis arrays (tatums)
+    h5.createArray(group,'tatums_start',np.array(map(lambda x : x['start'],track.tatums)),'array of start times of tatums')
+    h5.createArray(group,'tatums_confidence',np.array(map(lambda x : x['confidence'],track.tatums)),'array of confidence of tatums')    
+    # DONE
 
 
 def create_song_file(h5filename,title='H5 Song File',force=False):

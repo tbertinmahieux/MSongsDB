@@ -43,10 +43,6 @@ except KeyError: # historic reasons
 
 
 
-
-
-
-
 def die_with_usage():
     """ HELP MENU """
     print 'enpyapi_to_hdf5.py'
@@ -88,7 +84,7 @@ if __name__ == '__main__':
     # fill hdf5 file
     print 'fill HDF5 file with info from track'
     h5 = HDF5.open_h5_file_append(hdf5file)
-    HDF5.fill_hdf5_from_track(h5,track,verbose=2)
+    HDF5.fill_hdf5_from_track(h5,track)
     h5.close()
 
     

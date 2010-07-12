@@ -37,16 +37,15 @@ class SongMetaData(tables.IsDescription):
     Class to hold the metadata of one song
     """
     artist = tables.StringCol(MAXSTRLEN)
+    analyzer_version = tables.StringCol(32)
     audio_md5 = tables.StringCol(32)
     bitrate = tables.IntCol()
     duration = tables.FloatCol()
-    end_of_fade_in = tables.FloatCol()
     genre = tables.StringCol(MAXSTRLEN)
     id = tables.StringCol(MAXSTRLEN)
     release = tables.StringCol(MAXSTRLEN)
     sample_md5 = tables.StringCol(32)
     samplerate = tables.IntCol()
-    status = tables.StringCol(MAXSTRLEN)
     title = tables.StringCol(MAXSTRLEN)
     #analysispath = tables.StringCol(MAXSTRLEN)
     # song mbid
@@ -58,10 +57,16 @@ class SongAnalysis(tables.IsDescription):
     Class to hold the analysis of one song
     """
     duration = tables.FloatCol()
+    end_of_fade_in = tables.FloatCol()
     segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
     key = tables.IntCol()
-    key_confidence = tables.FloatCol()
+    key_confidence = tables.Float32Col()
     loudness = tables.FloatCol()
     sample_md5 = tables.StringCol(32)
+    segments_start = tables.Float32Col(shape=(717,1))
+    segments_confidence = tables.Float32Col(shape=(717,))
     mode = tables.IntCol()
-    mode_confidence = tables.FloatCol()
+    mode_confidence = tables.Float32Col()
+    start_of_fade_out = tables.FloatCol()
+    time_signature = tables.IntCol()
+    time_signature_confidence = tables.Float32Col()

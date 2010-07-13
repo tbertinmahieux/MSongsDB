@@ -36,6 +36,31 @@ import hdf5_descriptors as DESC
 
 
 
+def fill_hdf5_from_song(h5,song):
+    """
+    Fill an open hdf5 using all the content in a song object
+    from the Echo Nest python API.
+    Usually, fill_hdf5_from_track() will have been called first.
+    """
+    # get the metadata table, fill it
+    metadata = h5.root.metadata.songs.row
+    metadata['artist_familiarity'] = song.artist_familiarity
+    metadata['artist_hotttness'] = song.artist_hotttness
+    metadata['artist_id'] = song.artist_id
+    metadata['artist_latitude'] = song.artist_location.latitude
+    metadata['artist_location'] = song.artist_location.location
+    metadata['artist_longitude'] = song.artist_location.longitude
+    metadata['artist_name'] = song.artist_name
+    metadata.append()
+    # get the analysis table
+    analysis = h5.root.analysis.songs.row    
+    analysis['tempo'] = song.audio_summary.tempo
+    analysis.append()
+    # we probably did a mistake, adding new row instead of filling 1st one
+    raise NotImplementedError
+
+    
+
 def fill_hdf5_from_track(h5,track):
     """
     Fill an open hdf5 using all the content in a track object

@@ -63,8 +63,6 @@ class SongAnalysis(tables.IsDescription):
     key_confidence = tables.Float32Col()
     loudness = tables.FloatCol()
     sample_md5 = tables.StringCol(32)
-    segments_start = tables.Float32Col(shape=(717,1))
-    segments_confidence = tables.Float32Col(shape=(717,))
     mode = tables.IntCol()
     mode_confidence = tables.Float32Col()
     start_of_fade_out = tables.FloatCol()

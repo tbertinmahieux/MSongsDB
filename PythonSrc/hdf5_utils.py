@@ -43,20 +43,19 @@ def fill_hdf5_from_song(h5,song):
     Usually, fill_hdf5_from_track() will have been called first.
     """
     # get the metadata table, fill it
-    metadata = h5.root.metadata.songs.row
-    metadata['artist_familiarity'] = song.artist_familiarity
-    metadata['artist_hotttness'] = song.artist_hotttness
-    metadata['artist_id'] = song.artist_id
-    metadata['artist_latitude'] = song.artist_location.latitude
-    metadata['artist_location'] = song.artist_location.location
-    metadata['artist_longitude'] = song.artist_location.longitude
-    metadata['artist_name'] = song.artist_name
-    metadata.append()
+    metadata = h5.root.metadata.songs
+    metadata.cols.artist_familiarity[0] = song.artist_familiarity
+    metadata.cols.artist_hotttness[0] = song.artist_hotttness
+    metadata.cols.artist_id[0] = song.artist_id
+    metadata.cols.artist_latitude[0] = song.artist_location.latitude
+    metadata.cols.artist_location[0] = song.artist_location.location
+    metadata.cols.artist_longitude[0] = song.artist_location.longitude
+    metadata.cols.artist_name[0] = song.artist_name
+    metadata.flush()
     # get the analysis table
-    analysis = h5.root.analysis.songs.row    
-    analysis['tempo'] = song.audio_summary.tempo
-    analysis.append()
-    # we probably did a mistake, adding new row instead of filling 1st one
+    analysis = h5.root.analysis.songs
+    analysis.cols.tempo[0] = song.audio_summary.tempo
+    analysis.flush()
     raise NotImplementedError
 
     
@@ -67,31 +66,31 @@ def fill_hdf5_from_track(h5,track):
     from the Echo Nest python API
     """
     # get the metadata table, fill it
-    metadata = h5.root.metadata.songs.row
-    metadata['analyzer_version'] = track.analyzer_version
-    metadata['artist'] = track.artist
-    metadata['audio_md5'] = track.audio_md5
-    metadata['bitrate'] = track.bitrate
-    metadata['duration'] = track.duration
-    metadata['id'] = track.id
-    metadata['release'] = track.release
-    metadata['sample_md5'] = track.sample_md5
-    metadata['samplerate'] = track.samplerate
-    metadata['title'] = track.title
-    metadata.append()
+    metadata = h5.root.metadata.songs
+    metadata.cols.analyzer_version[0] = track.analyzer_version
+    metadata.cols.artist[0] = track.artist
+    metadata.cols.audio_md5[0] = track.audio_md5
+    metadata.cols.bitrate[0] = track.bitrate
+    metadata.cols.duration[0] = track.duration
+    metadata.cols.id[0] = track.id
+    metadata.cols.release[0] = track.release
+    metadata.cols.sample_md5[0] = track.sample_md5
+    metadata.cols.samplerate[0] = track.samplerate
+    metadata.cols.title[0] = track.title
+    metadata.flush()
     # get the analysis table, fill it
-    analysis = h5.root.analysis.songs.row
-    analysis['duration'] = track.duration
-    analysis['end_of_fade_in'] = track.end_of_fade_in
-    analysis['key'] = track.key
-    analysis['key_confidence'] = track.key_confidence
-    analysis['loudness'] = track.loudness
-    analysis['mode'] = track.mode
-    analysis['mode_confidence'] = track.mode_confidence
-    analysis['start_of_fade_out'] = track.start_of_fade_out
-    analysis['time_signature'] = track.time_signature
-    analysis['time_signature_confidence'] = track.time_signature_confidence
-    analysis.append()
+    analysis = h5.root.analysis.songs
+    analysis.cols.duration[0] = track.duration
+    analysis.cols.end_of_fade_in[0] = track.end_of_fade_in
+    analysis.cols.key[0] = track.key
+    analysis.cols.key_confidence[0] = track.key_confidence
+    analysis.cols.loudness[0] = track.loudness
+    analysis.cols.mode[0] = track.mode
+    analysis.cols.mode_confidence[0] = track.mode_confidence
+    analysis.cols.start_of_fade_out[0] = track.start_of_fade_out
+    analysis.cols.time_signature[0] = track.time_signature
+    analysis.cols.time_signature_confidence[0] = track.time_signature_confidence
+    analysis.flush()
     group = h5.root.analysis
     # analysis arrays (segments)
     h5.createArray(group,'segments_start',np.array(map(lambda x : x['start'],track.segments)),'array of start times of segments')
@@ -123,7 +122,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
     Raise a ValueError if it's the case.
     Other optional param is the H5 file.
 
-    Setups the groups, each containing a table 'songs':
+    Setups the groups, each containing a table 'songs' with one row:
     - metadata
     - analysis
     """
@@ -137,9 +136,15 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
         # group metadata
     group = h5.createGroup("/",'metadata','metadata about the song')
     table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song')
+    r = table.row
+    r.append()
+    table.flush()
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
+    r = table.row
+    r.append()
+    table.flush()
     # close it, done
     h5.close()
 

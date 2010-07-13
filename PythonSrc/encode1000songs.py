@@ -29,6 +29,7 @@ import os
 import sys
 import glob
 import numpy as np
+import traceback
 # our HDF utils library
 import hdf5_utils as HDF5
 # Echo Nest python API
@@ -79,14 +80,24 @@ if __name__ == '__main__':
         if os.path.exists(hdf5filename):
             continue
         # encode
-        track = trackEN.track_from_filename(allmp3s[k])
-        HDF5.create_song_file(hdf5filename,force=False)
-        h5 = HDF5.open_h5_file_append(hdf5filename)
-        HDF5.fill_hdf5_from_track(h5,track)
-        h5.close()
+        try:
+            track = trackEN.track_from_filename(allmp3s[k])
+            HDF5.create_song_file(hdf5filename,force=False)
+            h5 = HDF5.open_h5_file_append(hdf5filename)
+            HDF5.fill_hdf5_from_track(h5,track)
+            h5.close()
+        except Exception, msg:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            if str(exc_type) == "<type 'exceptions.KeyboardInterrupt'>":
+                raise KeyboardInterrupt
+            traceback.print_exc()
+            print msg
+            print 'ERROR with file :',allmp3s[k]
+            continue
+
         # display
         if np.mod(k+1,10) == 0:
-            print k,'songs encoded'
+            print k+1,'songs encoded'
 
     # done
     print 'all',len(allmp3s),'songs encoded in dir:',hdf5dir

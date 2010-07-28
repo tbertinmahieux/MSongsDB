@@ -36,17 +36,17 @@ class SongMetaData(tables.IsDescription):
     """
     Class to hold the metadata of one song
     """
-    artist = tables.StringCol(MAXSTRLEN)
-    analyzer_version = tables.StringCol(32)
-    audio_md5 = tables.StringCol(32)
-    bitrate = tables.IntCol()
-    duration = tables.FloatCol()
-    genre = tables.StringCol(MAXSTRLEN)
-    id = tables.StringCol(MAXSTRLEN)
-    release = tables.StringCol(MAXSTRLEN)
-    sample_md5 = tables.StringCol(32)
-    samplerate = tables.IntCol()
-    title = tables.StringCol(MAXSTRLEN)
+    artist = tables.StringCol(MAXSTRLEN,pos=0)
+    analyzer_version = tables.StringCol(32,pos=1)
+    audio_md5 = tables.StringCol(32,pos=2)
+    bitrate = tables.IntCol(pos=3)
+    duration = tables.FloatCol(pos=4)
+    genre = tables.StringCol(MAXSTRLEN,pos=5)
+    id = tables.StringCol(MAXSTRLEN,pos=6)
+    release = tables.StringCol(MAXSTRLEN,pos=7)
+    sample_md5 = tables.StringCol(32,pos=8)
+    samplerate = tables.IntCol(pos=9)
+    title = tables.StringCol(MAXSTRLEN,pos=10)
     #analysispath = tables.StringCol(MAXSTRLEN)
     # song mbid
     # album mbid
@@ -56,22 +56,22 @@ class SongAnalysis(tables.IsDescription):
     """
     Class to hold the analysis of one song
     """
-    duration = tables.FloatCol()
-    end_of_fade_in = tables.FloatCol()
+    duration = tables.FloatCol(pos=0)
+    end_of_fade_in = tables.FloatCol(pos=1)
     #segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
-    key = tables.IntCol()
-    key_confidence = tables.Float32Col()
-    loudness = tables.FloatCol()
-    sample_md5 = tables.StringCol(32)
-    mode = tables.IntCol()
-    mode_confidence = tables.Float32Col()
-    start_of_fade_out = tables.FloatCol()
-    time_signature = tables.IntCol()
-    time_signature_confidence = tables.Float32Col()
+    key = tables.IntCol(pos=2)
+    key_confidence = tables.Float32Col(pos=3)
+    loudness = tables.FloatCol(pos=4)
+    sample_md5 = tables.StringCol(32,pos=5)
+    mode = tables.IntCol(pos=6)
+    mode_confidence = tables.Float32Col(pos=7)
+    start_of_fade_out = tables.FloatCol(pos=8)
+    time_signature = tables.IntCol(pos=9)
+    time_signature_confidence = tables.Float32Col(pos=10)
 
 
 class SongPath(tables.IsDescription):
     """
     Class to hold the path to the HDF5 file of one song
     """
-    path = tables.StringCol(MAXSTRLEN)
+    path = tables.StringCol(MAXSTRLEN,pos=0)

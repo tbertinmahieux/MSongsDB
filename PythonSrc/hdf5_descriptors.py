@@ -68,3 +68,10 @@ class SongAnalysis(tables.IsDescription):
     start_of_fade_out = tables.FloatCol()
     time_signature = tables.IntCol()
     time_signature_confidence = tables.Float32Col()
+
+
+class SongPath(tables.IsDescription):
+    """
+    Class to hold the path to the HDF5 file of one song
+    """
+    path = tables.StringCol(MAXSTRLEN)

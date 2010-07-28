@@ -149,6 +149,40 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
     h5.close()
 
 
+def create_summary_file(h5filename,title='H5 Song File',force=False):
+    """
+    Create a new HDF5 file for all songs.
+    It will contains everything except the length-variable tables,
+    plus a path table.
+    Tables created empty.
+    If force=False, refuse to overwrite an existing file
+    Raise a ValueError if it's the case.
+    Other optional param is the H5 file.
+
+    Setups the groups, each containing a table 'songs' with one row:
+    - metadata
+    - analysis
+    """
+    # check if file exists
+    if not force:
+        if os.path.exists(h5filename):
+            raise ValueError('file exists, can not create HDF5 song file')
+    # create the H5 file
+    h5 = tables.openFile(h5filename, mode='w', title='H5 Song File')
+    # setup the groups and tables
+        # group metadata
+    group = h5.createGroup("/",'metadata','metadata about the song')
+    table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song')
+        # group analysis
+    group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
+    table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
+        # group path
+    group = h5.createGroup("/",'path','paths to HDF5 files of the songs')
+    table = h5.createTable(group,'songs',DESC.SongPath,'table of paths for songs')
+    # close it, done
+    h5.close()
+    
+
 def open_h5_file_read(h5filename):
     """
     Open an existing H5 in read mode.

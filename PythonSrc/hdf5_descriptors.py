@@ -58,7 +58,7 @@ class SongAnalysis(tables.IsDescription):
     """
     duration = tables.FloatCol()
     end_of_fade_in = tables.FloatCol()
-    segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
+    #segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
     key = tables.IntCol()
     key_confidence = tables.Float32Col()
     loudness = tables.FloatCol()

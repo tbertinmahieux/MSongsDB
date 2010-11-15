@@ -75,7 +75,6 @@ def fill_hdf5_from_song(h5,song):
     analysis.flush()
 
 
-
 def fill_hdf5_from_track(h5,track):
     """
     Fill an open hdf5 using all the content in a track object
@@ -230,7 +229,21 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             row.append()
             h5.root.analysis.songs.flush()
             # ARRAYS
-            
+            h5.root.analysis.segments_start.append( get_segments_start(h5tocopy,songidx) )
+            h5.root.analysis.segments_confidence.append( get_segments_confidence(h5tocopy,songidx) )
+            h5.root.analysis.segments_pitches.append( get_segments_pitches(h5tocopy,songidx) )
+            h5.root.analysis.segments_timbre.append( get_segments_timbre(h5tocopy,songidx) )
+            h5.root.analysis.segments_loudness_max.append( get_segments_loudness_max(h5tocopy,songidx) )
+            h5.root.analysis.segments_loudness_max_time.append( get_segments_loudness_max_time(h5tocopy,songidx) )
+            h5.root.analysis.segments_loudness_start.append( get_segments_loudness_start(h5tocopy,songidx) )
+            h5.root.analysis.sections_start.append( get_sections_start(h5tocopy,songidx) )
+            h5.root.analysis.sections_confidence.append( get_sections_confidence(h5tocopy,songidx) )
+            h5.root.analysis.beats_start.append( get_beats_start(h5tocopy,songidx) )
+            h5.root.analysis.beats_confidence.append( get_beats_confidence(h5tocopy,songidx) )
+            h5.root.analysis.bars_start.append( get_bars_start(h5tocopy,songidx) )
+            h5.root.analysis.bars_confidence.append( get_bars_confidence(h5tocopy,songidx) )
+            h5.root.analysis.tatums_start.append( get_tatums_start(h5tocopy,songidx) )
+            h5.root.analysis.tatums_confidence.append( get_tatums_confidence(h5tocopy,songidx) )
             # counter
             counter += 1
         # close h5 file

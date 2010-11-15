@@ -33,7 +33,23 @@ import numpy as np
 # code relies on pytables, see http://www.pytables.org
 import tables
 import hdf5_descriptors as DESC
+from hdf5_getters import *
 
+ARRAY_DESC_SEGMENTS_START = 'array of start times of segments'
+ARRAY_DESC_SEGMENTS_CONFIDENCE = 'array of confidence of segments'
+ARRAY_DESC_SEGMENTS_PITCHES = 'array of pitches of segments (chromas)'
+ARRAY_DESC_SEGMENTS_TIMBRE = 'array of timbre of segments (MFCC-like)'
+ARRAY_DESC_SEGMENTS_LOUDNESS_MAX = 'array of max loudness of segments'
+ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME = 'array of max loudness time of segments'
+ARRAY_DESC_SEGMENTS_LOUDNESS_START = 'array of loudness of segments at start time'
+ARRAY_DESC_SECTIONS_START = 'array of start times of sections'
+ARRAY_DESC_SECTIONS_CONFIDENCE = 'array of confidence of sections'
+ARRAY_DESC_BEATS_START = 'array of start times of beats'
+ARRAY_DESC_BEATS_CONFIDENCE = 'array of confidence of sections'
+ARRAY_DESC_BARS_START = 'array of start times of bars'
+ARRAY_DESC_BARS_CONFIDENCE = 'array of confidence of bars'
+ARRAY_DESC_TATUMS_START = 'array of start times of tatums'
+ARRAY_DESC_TATUMS_CONFIDENCE = 'array of confidence of tatums'
 
 
 def fill_hdf5_from_song(h5,song):
@@ -45,20 +61,20 @@ def fill_hdf5_from_song(h5,song):
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
     metadata.cols.artist_familiarity[0] = song.artist_familiarity
-    metadata.cols.artist_hotttness[0] = song.artist_hotttness
+    metadata.cols.artist_hotttnesss[0] = song.artist_hotttnesss
     metadata.cols.artist_id[0] = song.artist_id
     metadata.cols.artist_latitude[0] = song.artist_location.latitude
     metadata.cols.artist_location[0] = song.artist_location.location
     metadata.cols.artist_longitude[0] = song.artist_location.longitude
     metadata.cols.artist_name[0] = song.artist_name
+    metadata.cols.song_hotttnesss[0] = song.song_hotttnesss
+    metadata.cols.title[0] = song.title
     metadata.flush()
     # get the analysis table
     analysis = h5.root.analysis.songs
-    analysis.cols.tempo[0] = song.audio_summary.tempo
     analysis.flush()
-    raise NotImplementedError
 
-    
+
 
 def fill_hdf5_from_track(h5,track):
     """
@@ -67,15 +83,14 @@ def fill_hdf5_from_track(h5,track):
     """
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
-    metadata.cols.analyzer_version[0] = track.analyzer_version
-    metadata.cols.artist[0] = track.artist
+    #metadata.cols.analyzer_version[0] = track.analyzer_version
+    metadata.cols.artist_name[0] = track.artist # already done from song eventually
     metadata.cols.audio_md5[0] = track.audio_md5
-    metadata.cols.bitrate[0] = track.bitrate
+    metadata.cols.analysis_sample_rate[0] = track.analysis_sample_rate
     metadata.cols.duration[0] = track.duration
     metadata.cols.id[0] = track.id
     metadata.cols.release[0] = track.release
     metadata.cols.sample_md5[0] = track.sample_md5
-    metadata.cols.samplerate[0] = track.samplerate
     metadata.cols.title[0] = track.title
     metadata.flush()
     # get the analysis table, fill it
@@ -88,31 +103,140 @@ def fill_hdf5_from_track(h5,track):
     analysis.cols.mode[0] = track.mode
     analysis.cols.mode_confidence[0] = track.mode_confidence
     analysis.cols.start_of_fade_out[0] = track.start_of_fade_out
+    analysis.cols.tempo[0] = track.tempo
     analysis.cols.time_signature[0] = track.time_signature
     analysis.cols.time_signature_confidence[0] = track.time_signature_confidence
     analysis.flush()
     group = h5.root.analysis
     # analysis arrays (segments)
-    h5.createArray(group,'segments_start',np.array(map(lambda x : x['start'],track.segments)),'array of start times of segments')
-    h5.createArray(group,'segments_confidence',np.array(map(lambda x : x['confidence'],track.segments)),'array of confidence of segments')
-    h5.createArray(group,'segments_pitches',np.array(map(lambda x : x['pitches'],track.segments)).transpose(),'array of pitches of segments')
-    h5.createArray(group,'segments_timbre',np.array(map(lambda x : x['timbre'],track.segments)).transpose(),'array of timbre of segments')
-    h5.createArray(group,'segments_loudness_max',np.array(map(lambda x : x['loudness_max'],track.segments)),'array of max loudness of segments')
-    h5.createArray(group,'segments_loudness_max_time',np.array(map(lambda x : x['loudness_max_time'],track.segments)).transpose(),'array of max loudness time of segments')
-    h5.createArray(group,'segments_loudness_start',np.array(map(lambda x : x['loudness_start'],track.segments)).transpose(),'array of loudness of segments at start time')    
+    analysis.cols.idx_segments_start[0] = 0
+    h5.createArray(group,'segments_start',np.array(map(lambda x : x['start'],track.segments)),ARRAY_DESC_SEGMENTS_START)
+    analysis.cols.idx_segments_confidence[0] = 0
+    h5.createArray(group,'segments_confidence',np.array(map(lambda x : x['confidence'],track.segments)),ARRAY_DESC_SEGMENTS_CONFIDENCE)
+    analysis.cols.idx_segments_pitches[0] = 0
+    h5.createArray(group,'segments_pitches',np.array(map(lambda x : x['pitches'],track.segments)),ARRAY_DESC_SEGMENTS_PITCHES)
+    analysis.cols.idx_segments_timbre[0] = 0
+    h5.createArray(group,'segments_timbre',np.array(map(lambda x : x['timbre'],track.segments)),ARRAY_DESC_SEGMENTS_TIMBRE)
+    analysis.cols.idx_segments_loudness_max[0] = 0
+    h5.createArray(group,'segments_loudness_max',np.array(map(lambda x : x['loudness_max'],track.segments)),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
+    analysis.cols.idx_segments_loudness_max_time[0] = 0
+    h5.createArray(group,'segments_loudness_max_time',np.array(map(lambda x : x['loudness_max_time'],track.segments)),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
+    analysis.cols.idx_segments_loudness_start[0] = 0
+    h5.createArray(group,'segments_loudness_start',np.array(map(lambda x : x['loudness_start'],track.segments)),ARRAY_DESC_SEGMENTS_LOUDNESS_START)    
     # analysis arrays (sections)
-    h5.createArray(group,'sections_start',np.array(map(lambda x : x['start'],track.sections)),'array of start times of sections')
-    h5.createArray(group,'sections_confidence',np.array(map(lambda x : x['confidence'],track.sections)),'array of confidence of sections')
-    # analysis arrays (beats)
-    h5.createArray(group,'beats_start',np.array(map(lambda x : x['start'],track.beats)),'array of start times of beats')
-    h5.createArray(group,'beats_confidence',np.array(map(lambda x : x['confidence'],track.beats)),'array of confidence of beats')
+    analysis.cols.idx_sections_start[0] = 0
+    h5.createArray(group,'sections_start',np.array(map(lambda x : x['start'],track.sections)),ARRAY_DESC_SECTIONS_START)
+    analysis.cols.idx_sections_confidence[0] = 0
+    h5.createArray(group,'sections_confidence',np.array(map(lambda x : x['confidence'],track.sections)),ARRAY_DESC_SECTIONS_CONFIDENCE)
+    # analysis arrays (beats
+    analysis.cols.idx_beats_start[0] = 0
+    h5.createArray(group,'beats_start',np.array(map(lambda x : x['start'],track.beats)),ARRAY_DESC_BEATS_START)
+    analysis.cols.idx_beats_confidence[0] = 0
+    h5.createArray(group,'beats_confidence',np.array(map(lambda x : x['confidence'],track.beats)),ARRAY_DESC_BEATS_CONFIDENCE)
     # analysis arrays (bars)
-    h5.createArray(group,'bars_start',np.array(map(lambda x : x['start'],track.bars)),'array of start times of bars')
-    h5.createArray(group,'bars_confidence',np.array(map(lambda x : x['confidence'],track.bars)),'array of confidence of bars')
+    analysis.cols.idx_bars_start[0] = 0
+    h5.createArray(group,'bars_start',np.array(map(lambda x : x['start'],track.bars)),ARRAY_DESC_BARS_START)
+    analysis.cols.idx_bars_confidence[0] = 0
+    h5.createArray(group,'bars_confidence',np.array(map(lambda x : x['confidence'],track.bars)),ARRAY_DESC_BARS_CONFIDENCE)
     # analysis arrays (tatums)
-    h5.createArray(group,'tatums_start',np.array(map(lambda x : x['start'],track.tatums)),'array of start times of tatums')
-    h5.createArray(group,'tatums_confidence',np.array(map(lambda x : x['confidence'],track.tatums)),'array of confidence of tatums')    
+    analysis.cols.idx_tatums_start[0] = 0
+    h5.createArray(group,'tatums_start',np.array(map(lambda x : x['start'],track.tatums)),ARRAY_DESC_TATUMS_START)
+    analysis.cols.idx_tatums_confidence[0] = 0
+    h5.createArray(group,'tatums_confidence',np.array(map(lambda x : x['confidence'],track.tatums)),ARRAY_DESC_TATUMS_CONFIDENCE)
+    analysis.flush()
     # DONE
+
+
+def fill_hdf5_summary_file(h5,h5_filenames):
+    """
+    Fill an open hdf5 sumary file using all the content from all the HDF5 files
+    listed as filenames. These HDF5 files are supposed to be filled already.
+    Usefull to create one big HDF5 file from many, thus improving IO speed.
+    For most of the info, we simply use one row per song.
+    For the arrays (e.g. segment_start) we need the indecies (e.g. idx_segment_start)
+    to know which part of the array belongs to one particular song.
+    """
+    # counter
+    counter = 0
+    # iterate over filenames
+    for h5idx,h5filename in enumerate(h5_filenames):
+        # open h5 file
+        h5tocopy = open_h5_file_read(h5filename)
+        # get number of songs in new file
+        nSongs = get_num_songs(h5tocopy)
+        # iterate over songs in one HDF5 (1 if regular file, more if summary file)
+        for songidx in xrange(nSongs):
+            # PATH
+            pass
+            # METADATA
+            row = h5.root.metadata.songs.row
+            row["artist_familiarity"] = get_artist_familiarity(h5tocopy,songidx)
+            row["artist_hotttnesss"] = get_artist_hotttnesss(h5copy,songidx)
+            row["artist_id"] = get_artist_id(h5copy,songidx)
+            row["artist_latitude"] = get_artist_latitude(h5copy,songidx)
+            row["artist_location"] = get_artist_location(h5copy,songidx)
+            row["artist_longitude"] = get_artist_longitude(h5copy,songidx)
+            row["artist_name"] = get_artist_name(h5copy,songidx)
+            row["song_hotttnesss"] = get_song_hotttnesss(h5copy,songidx)
+            row["title"] = song.title(h5copy,songidx)
+            row.append()
+            h5.root.metadata.songs.flush()
+            # ANALYSIS
+            row = h5.root.analysis.songs.row
+            row["duration"] = get_duration(h5tocopy,songidx)
+            row["end_of_fade_in"] = get_end_of_fade_in(h5tocopy,songidx)
+            row["key"] = get_key(h5tocopy,songidx)
+            row["key_confidence"] = get_key_confidence(h5tocopy,songidx)
+            row["loudness"] = get_loudness(h5tocopy,songidx)
+            row["mode"] = get_mode(h5tocopy,songidx)
+            row["mode_confidence"] = get_mode_confidence(h5tocopy,songidx)
+            row["start_of_fade_out"] = get_start_of_fade_out(h5tocopy,songidx)
+            row["tempo"] = get_tempo(h5tocopy,songidx)
+            row["time_signature"] = get_time_signature(h5tocopy,songidx)
+            row["time_signature_confidence"] = get_time_signature_confidence(h5tocopy,songidx)
+            # INDECIES
+            if counter == 0 : # we're first row
+                row["idx_segments_start"] = 0
+                row["idx_segments_confidence"] = 0
+                row["idx_segments_pitches"] = 0
+                row["idx_segments_timbre"] = 0
+                row["idx_segments_loudness_max"] = 0
+                row["idx_segments_loudness_max_time"] = 0
+                row["idx_segments_loudness_start"] = 0
+                row["idx_sections_start"] = 0
+                row["idx_sections_confidence"] = 0
+                row["idx_beats_start"] = 0
+                row["idx_beats_confidence"] = 0
+                row["idx_bars_start"] = 0
+                row["idx_bars_confidence"] = 0
+                row["idx_tatums_start"] = 0
+                row["idx_tatums_confidence"] = 0
+            else : # check the current shape of the arrays
+                row["idx_segments_start"] = h5.root.analysis.segments_start.shape[0]
+                row["idx_segments_confidence"] = h5.root.analysis.segments_confidence.shape[0]
+                row["idx_segments_pitches"] = h5.root.analysis.segments_pitches.shape[0]
+                row["idx_segments_timbre"] = h5.root.analysis.segments_timbre.shape[0]
+                row["idx_segments_loudness_max"] = h5.root.analysis.segments_loudness_max.shape[0]
+                row["idx_segments_loudness_max_time"] = h5.root.analysis.segments_loudness_max_time.shape[0]
+                row["idx_segments_loudness_start"] = h5.root.analysis.segments_loudness_start.shape[0]
+                row["idx_sections_start"] = h5.root.analysis.sections_start.shape[0]
+                row["idx_sections_confidence"] = h5.root.analysis.sections_confidence.shape[0]
+                row["idx_beats_start"] = h5.root.analysis.beats_start.shape[0]
+                row["idx_beats_confidence"] = h5.root.analysis.beats_confidence.shape[0]
+                row["idx_bars_start"] = h5.root.analysis.bars_start.shape[0]
+                row["idx_bars_confidence"] = h5.root.analysis.bars_confidence.shape[0]
+                row["idx_tatums_start"] = h5.root.analysis.tatums_start.shape[0]
+                row["idx_tatums_confidence"] = h5.root.analysis.tatums_confidence.shape[0]
+            row.append()
+            h5.root.analysis.songs.flush()
+            # ARRAYS
+            
+            # counter
+            counter += 1
+        # close h5 file
+        h5tocopy.close()
+        
+    raise NotImplementedError
 
 
 def create_song_file(h5filename,title='H5 Song File',force=False):
@@ -176,6 +300,22 @@ def create_summary_file(h5filename,title='H5 Song File',force=False):
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
+        # group analysis arrays
+    h5.createEArray(group,'segments_start',np.zeros(0),ARRAY_DESC_SEGMENTS_START)
+    h5.createEArray(group,'segments_confidence',np.zeros(0),ARRAY_DESC_SEGMENTS_CONFIDENCE)
+    h5.createEArray(group,'segments_pitches',np.zeros((0,12)),ARRAY_DESC_SEGMENTS_PITCHES
+    h5.createEArray(group,'segments_timbre',np.zeros((0,12)),ARRAY_DESC_SEGMENTS_TIMBRE
+    h5.createEArray(group,'segments_loudness_max',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
+    h5.createEArray(group,'segments_loudness_max_time',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME
+    h5.createEArray(group,'segments_loudness_start',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
+    h5.createEArray(group,'sections_start',np.zeros(0),ARRAY_DESC_SECTIONS_START)
+    h5.createEArray(group,'sections_confidence',np.zeros(0),ARRAY_DESC_SECTIONS_CONFIDENCE)
+    h5.createEArray(group,'beats_start',np.zeros(0),ARRAY_DESC_BEATS_START)
+    h5.createEArray(group,'beats_confidence',np.zeros(0),ARRAY_DESC_BEATS_CONFIDENCE)
+    h5.createEArray(group,'bars_start',np.zeros(0),ARRAY_DESC_BARS_START)
+    h5.createEArray(group,'bars_confidence',np.zeros(0),ARRAY_DESC_BARS_CONFIDENCE)
+    h5.createEArray(group,'tatums_start',np.zeros(0),ARRAY_DESC_TATUMS_START)
+    h5.createEArray(group,'tatums_confidence',np.zeros(0),ARRAY_DESC_TATUMS_CONFIDENCE)
         # group path
     group = h5.createGroup("/",'path','paths to HDF5 files of the songs')
     table = h5.createTable(group,'songs',DESC.SongPath,'table of paths for songs')

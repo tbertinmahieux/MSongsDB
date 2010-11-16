@@ -38,7 +38,7 @@ class SongMetaData(tables.IsDescription):
     Class to hold the metadata of one song
     """
     artist_name = tables.StringCol(MAXSTRLEN,pos=0)
-    artist_id = tables.StringCol(MAXSTRLEN,pos=1)
+    artist_id = tables.StringCol(32,pos=1)
     analyzer_version = tables.StringCol(32,pos=2)
     audio_md5 = tables.StringCol(32,pos=3)
     analysis_sample_rate = tables.IntCol(pos=4)

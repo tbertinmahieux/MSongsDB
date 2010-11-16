@@ -75,79 +75,296 @@ classdef HDF5_Song_File_Reader
       end
       
       function res = get_artist_familiarity(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_familiarity(songidx);
       end
       
-      function res = get_artist_hotttnesss(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+      function res = get_artist_hotttnesss(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_hotttnesss(songidx);
       end
       
       function res = get_artist_id(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_id(:,songidx);
       end
       
       function res = get_artist_latitude(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_latitude(songidx);
       end
       
       function res = get_artist_longitude(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_longitude(songidx);
       end
       
       function res = get_artist_location(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_location(:,songidx);
       end
       
       function res = get_artist_name(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_name(:,songidx);
       end
       
       function res = get_song_hotttnesss(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.song_hotttnesss(songidx);
       end
       
       function res = get_title(obj,songidx)
-        if nargin < 2
-            songidx = 1;
-        end  
+        if (nargin < 2); songidx = 1; end
         res = obj.metadata.title(:,songidx);
       end
       
-      function res = get_beats_start(obj,songidx)
-      % return beats start for a given song (starting at 1)
-          if nargin < 2
-              songidx = 1;
+      function res = get_duration(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.duration(songidx);
+      end
+      
+      function res = get_end_of_fade_in(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.end_of_fade_in(songidx);
+      end
+      
+      function res = get_key(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.key(songidx);
+      end
+      
+      function res = get_key_confidence(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.key_confidence(songidx);
+      end
+      
+      function res = get_loudness(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.loudness(songidx);
+      end
+      
+      function res = get_mode(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.mode(songidx);
+      end
+      
+      function res = get_mode_confidence(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.mode_confidence(songidx);
+      end
+      
+      function res = get_start_of_fade_out(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.start_of_fade_out(songidx);
+      end
+      
+      function res = get_tempo(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.tempo(songidx);
+      end
+      
+      function res = get_time_signature(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.time_signature(songidx);
+      end
+      
+      function res = get_time_signature_confidence(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.time_signature_confidence(songidx);
+      end
+      
+      function res = get_segments_start(obj,songidx)
+      % return segments start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_start');
+          pos1 = obj.analysis.idx_segments_start(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_segments_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
           end
+      end
+      
+      function res = get_segments_confidence(obj,songidx)
+      % return segments confidence for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_confidence');
+          pos1 = obj.analysis.idx_segments_confidence(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_segments_confidence(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_segments_pitches(obj,songidx)
+      % return segments pitches for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_pitches');
+          pos1 = obj.analysis.idx_segments_pitches(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end,:);
+          else
+            pos2 = obj.analysis.idx_segments_pitches(songidx+1); % +1 -1
+            res = data(pos1:pos2,:);
+          end
+      end
+      
+      function res = get_segments_timbre(obj,songidx)
+      % return segments timbre for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_timbre');
+          pos1 = obj.analysis.idx_segments_timbre(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end,:);
+          else
+            pos2 = obj.analysis.idx_segments_timbre(songidx+1); % +1 -1
+            res = data(pos1:pos2,:);
+          end
+      end
+      
+      function res = get_segments_loudness_max(obj,songidx)
+      % return segments loudness max for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_loudness_max');
+          pos1 = obj.analysis.idx_segments_loudness_max(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_segments_loudness_max(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_segments_loudness_max_time(obj,songidx)
+      % return segments loudness max time for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_loudness_max_time');
+          pos1 = obj.analysis.idx_segments_loudness_max_time(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_segments_loudness_max_time(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_segments_loudness_start(obj,songidx)
+      % return segments loudness start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/segments_loudness_start');
+          pos1 = obj.analysis.idx_segments_loudness_start(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_segments_loudness_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_sections_start(obj,songidx)
+      % return sections start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/sections_start');
+          pos1 = obj.analysis.idx_sections_start(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_sections_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_sections_confidence(obj,songidx)
+      % return sections start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/sections_confidence');
+          pos1 = obj.analysis.idx_sections_confidence(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_sections_confidence(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_beats_start(obj,songidx)
+      % return beats start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
           data = hdf5read(obj.h5filename,'/analysis/beats_start');
           pos1 = obj.analysis.idx_beats_start(songidx)+1;
-          if songidx == obj.get_num_songs()  
+          if songidx == obj.get_num_songs()
             res = data(pos1:end);
           else
             pos2 = obj.analysis.idx_beats_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_beats_confidence(obj,songidx)
+      % return beats confidence for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/beats_confidence');
+          pos1 = obj.analysis.idx_beats_confidence(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_beats_confidence(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_bars_start(obj,songidx)
+      % return bars start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/bars_start');
+          pos1 = obj.analysis.idx_bars_start(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_bars_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_bars_confidence(obj,songidx)
+      % return bars start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/bars_confidence');
+          pos1 = obj.analysis.idx_bars_confidence(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_bars_confidence(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_tatums_start(obj,songidx)
+      % return bars start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/tatums_start');
+          pos1 = obj.analysis.idx_tatums_start(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_tatums_start(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_tatums_confidence(obj,songidx)
+      % return bars start for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/analysis/tatums_confidence');
+          pos1 = obj.analysis.idx_tatums_confidence(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.analysis.idx_tatums_confidence(songidx+1); % +1 -1
             res = data(pos1:pos2);
           end
       end

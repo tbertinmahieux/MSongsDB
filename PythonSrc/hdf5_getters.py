@@ -33,7 +33,7 @@ def get_num_songs(h5):
     Return the number of songs contained in this h5 file, i.e. the number of rows
     for all basic informations like name, artist, ...
     """
-    return h5.root.metadata.songs.title.nrows
+    return h5.root.metadata.songs.nrows
 
 def get_artist_familiarity(h5,songidx=0):
     """
@@ -131,7 +131,7 @@ def get_mode_confidence(h5,songidx=0):
     """
     return h5.root.analysis.songs.cols.mode_confidence[songidx]
 
-def get_mode_start_of_fade_out(h5,songidx=0):
+def get_start_of_fade_out(h5,songidx=0):
     """
     Get start of fade out from a HDF5 song file, by default the first song in it
     """
@@ -143,17 +143,17 @@ def get_tempo(h5,songidx=0):
     """
     return h5.root.analysis.songs.cols.tempo[songidx]
 
-def get_signature(h5,songidx=0):
+def get_time_signature(h5,songidx=0):
     """
     Get signature from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.signature[songidx]
+    return h5.root.analysis.songs.cols.time_signature[songidx]
 
-def get_signature_confidence(h5,songidx=0):
+def get_time_signature_confidence(h5,songidx=0):
     """
     Get signature confidence from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.signature_confidence[songidx]
+    return h5.root.analysis.songs.cols.time_signature_confidence[songidx]
 
 def get_segments_start(h5,songidx=0):
     """

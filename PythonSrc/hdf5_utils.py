@@ -170,14 +170,14 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             # METADATA
             row = h5.root.metadata.songs.row
             row["artist_familiarity"] = get_artist_familiarity(h5tocopy,songidx)
-            row["artist_hotttnesss"] = get_artist_hotttnesss(h5copy,songidx)
-            row["artist_id"] = get_artist_id(h5copy,songidx)
-            row["artist_latitude"] = get_artist_latitude(h5copy,songidx)
-            row["artist_location"] = get_artist_location(h5copy,songidx)
-            row["artist_longitude"] = get_artist_longitude(h5copy,songidx)
-            row["artist_name"] = get_artist_name(h5copy,songidx)
-            row["song_hotttnesss"] = get_song_hotttnesss(h5copy,songidx)
-            row["title"] = song.title(h5copy,songidx)
+            row["artist_hotttnesss"] = get_artist_hotttnesss(h5tocopy,songidx)
+            row["artist_id"] = get_artist_id(h5tocopy,songidx)
+            row["artist_latitude"] = get_artist_latitude(h5tocopy,songidx)
+            row["artist_location"] = get_artist_location(h5tocopy,songidx)
+            row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)
+            row["artist_name"] = get_artist_name(h5tocopy,songidx)
+            row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
+            row["title"] = get_title(h5tocopy,songidx)
             row.append()
             h5.root.metadata.songs.flush()
             # ANALYSIS
@@ -248,8 +248,6 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             counter += 1
         # close h5 file
         h5tocopy.close()
-        
-    raise NotImplementedError
 
 
 def create_song_file(h5filename,title='H5 Song File',force=False):
@@ -314,21 +312,21 @@ def create_summary_file(h5filename,title='H5 Song File',force=False):
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
         # group analysis arrays
-    h5.createEArray(group,'segments_start',np.zeros(0),ARRAY_DESC_SEGMENTS_START)
-    h5.createEArray(group,'segments_confidence',np.zeros(0),ARRAY_DESC_SEGMENTS_CONFIDENCE)
-    h5.createEArray(group,'segments_pitches',np.zeros((0,12)),ARRAY_DESC_SEGMENTS_PITCHES
-    h5.createEArray(group,'segments_timbre',np.zeros((0,12)),ARRAY_DESC_SEGMENTS_TIMBRE
-    h5.createEArray(group,'segments_loudness_max',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
-    h5.createEArray(group,'segments_loudness_max_time',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME
-    h5.createEArray(group,'segments_loudness_start',np.zeros(0),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
-    h5.createEArray(group,'sections_start',np.zeros(0),ARRAY_DESC_SECTIONS_START)
-    h5.createEArray(group,'sections_confidence',np.zeros(0),ARRAY_DESC_SECTIONS_CONFIDENCE)
-    h5.createEArray(group,'beats_start',np.zeros(0),ARRAY_DESC_BEATS_START)
-    h5.createEArray(group,'beats_confidence',np.zeros(0),ARRAY_DESC_BEATS_CONFIDENCE)
-    h5.createEArray(group,'bars_start',np.zeros(0),ARRAY_DESC_BARS_START)
-    h5.createEArray(group,'bars_confidence',np.zeros(0),ARRAY_DESC_BARS_CONFIDENCE)
-    h5.createEArray(group,'tatums_start',np.zeros(0),ARRAY_DESC_TATUMS_START)
-    h5.createEArray(group,'tatums_confidence',np.zeros(0),ARRAY_DESC_TATUMS_CONFIDENCE)
+    h5.createEArray(where=group,name='segments_start',atom=tables.Float32Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
+    h5.createEArray(group,'segments_confidence',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE)
+    h5.createEArray(group,'segments_pitches',tables.Float32Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_PITCHES)
+    h5.createEArray(group,'segments_timbre',tables.Float32Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_TIMBRE)
+    h5.createEArray(group,'segments_loudness_max',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
+    h5.createEArray(group,'segments_loudness_max_time',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
+    h5.createEArray(group,'segments_loudness_start',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
+    h5.createEArray(group,'sections_start',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_START)
+    h5.createEArray(group,'sections_confidence',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_CONFIDENCE)
+    h5.createEArray(group,'beats_start',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_BEATS_START)
+    h5.createEArray(group,'beats_confidence',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_BEATS_CONFIDENCE)
+    h5.createEArray(group,'bars_start',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_BARS_START)
+    h5.createEArray(group,'bars_confidence',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_BARS_CONFIDENCE)
+    h5.createEArray(group,'tatums_start',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_TATUMS_START)
+    h5.createEArray(group,'tatums_confidence',tables.Float32Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE)
         # group path
     group = h5.createGroup("/",'path','paths to HDF5 files of the songs')
     table = h5.createTable(group,'songs',DESC.SongPath,'table of paths for songs')
@@ -349,6 +347,7 @@ def open_h5_file_append(h5filename):
     return tables.openFile(h5filename, mode='a')
 
 
+################################################ MAIN #####################################
 
 def die_with_usage():
     """ HELP MENU """

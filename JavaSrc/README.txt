@@ -11,5 +11,4 @@ To compile (could be simplified) and run the java demo, do (on Linux):
 
 cd <blablabla/JavaSrc>
 javac -classpath jhdf5.jar:jhdf5obj.jar:jhdfobj.jar hdf5_getters.java
-java hdf5_getters <path to hdf5 song>
-
+java -classpath ./jhdf5.jar:./jhdf5obj.jar:./jhdfobj.jar:. hdf5_getters

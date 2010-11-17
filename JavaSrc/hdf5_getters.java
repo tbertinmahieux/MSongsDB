@@ -10,6 +10,9 @@ The goal is to reproduce the Python getters behaviour.
 Our aim is only to show how to use the HDF5 files with Java, the
 code is not optimized at all!
 
+To get a faster code, you should load metadata/songs and analysis/songs
+only once, see the Matlab code in /MatlabSrc for inspiration.
+
 This is part of the Million Song Dataset project from
 LabROSA (Columbia University) and The Echo Nest.
 
@@ -87,7 +90,6 @@ public class hdf5_getters
     {    
 	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
 	metadata.init();
-	String[] members = metadata.getMemberNames();
 	int wantedMember = find( metadata.getMemberNames() , "artist_familiarity");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) metadata.getData();
@@ -101,7 +103,6 @@ public class hdf5_getters
     {    
 	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
 	metadata.init();
-	String[] members = metadata.getMemberNames();
 	int wantedMember = find( metadata.getMemberNames() , "artist_hotttnesss");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) metadata.getData();
@@ -115,7 +116,6 @@ public class hdf5_getters
     {    
 	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
 	metadata.init();
-	String[] members = metadata.getMemberNames();
 	int wantedMember = find( metadata.getMemberNames() , "artist_id");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) metadata.getData();
@@ -129,7 +129,6 @@ public class hdf5_getters
     {    
 	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
 	metadata.init();
-	String[] members = metadata.getMemberNames();
 	int wantedMember = find( metadata.getMemberNames() , "artist_latitude");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) metadata.getData();
@@ -143,13 +142,118 @@ public class hdf5_getters
     {    
 	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
 	metadata.init();
-	String[] members = metadata.getMemberNames();
 	int wantedMember = find( metadata.getMemberNames() , "artist_longitude");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) metadata.getData();
 	double[] col = (double[]) alldata.get(wantedMember);
 	return col[songidx];
     }
+
+    public static String get_artist_location(H5File h5) throws Exception {
+	return get_artist_location(h5, 0); }
+    public static String get_artist_location(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	int wantedMember = find( metadata.getMemberNames() , "artist_location");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	String[] col = (String[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static String get_artist_name(H5File h5) throws Exception {
+	return get_artist_name(h5, 0); }
+    public static String get_artist_name(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	int wantedMember = find( metadata.getMemberNames() , "artist_name");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	String[] col = (String[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_song_hotttnesss(H5File h5) throws Exception {
+	return get_song_hotttnesss(h5, 0); }
+    public static double get_song_hotttnesss(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	int wantedMember = find( metadata.getMemberNames() , "song_hotttnesss");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static String get_title(H5File h5) throws Exception {
+	return get_title(h5, 0); }
+    public static String get_title(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	int wantedMember = find( metadata.getMemberNames() , "title");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	String[] col = (String[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_duration(H5File h5) throws Exception {
+	return get_duration(h5, 0); }
+    public static double get_duration(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "duration");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_end_of_fade_in(H5File h5) throws Exception {
+	return get_end_of_fade_in(h5, 0); }
+    public static double get_end_of_fade_in(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "end_of_fade_in");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static int get_key(H5File h5) throws Exception {
+	return get_key(h5, 0); }
+    public static int get_key(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "key");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static float get_key_confidence(H5File h5) throws Exception {
+	return get_key_confidence(h5, 0); }
+    public static float get_key_confidence(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "key_confidence");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	float[] col = (float[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    // TO DO: ADD MORE GETTERS
 
     /**
      * Slow utility function.
@@ -187,6 +291,15 @@ public class hdf5_getters
 	    System.out.println("artist id: " + get_artist_id(h5));
 	    System.out.println("artist latitude: " + get_artist_latitude(h5));
 	    System.out.println("artist longitude: " + get_artist_longitude(h5));
+	    System.out.println("artist location: " + get_artist_location(h5));
+	    System.out.println("artist name: " + get_artist_name(h5));
+	    System.out.println("song hotttnesss: " + get_song_hotttnesss(h5));
+	    System.out.println("title: " + get_title(h5));
+	    System.out.println("duration: " + get_duration(h5));
+	    System.out.println("end_of_fade_in: " + get_end_of_fade_in(h5));
+	    System.out.println("key: " + get_key(h5));
+	    System.out.println("key confidence: " + get_key_confidence(h5));
+
 	} catch (Exception e) {
 	    System.out.println("something went wrong:");
 	    e.printStackTrace();

@@ -109,6 +109,47 @@ public class hdf5_getters
 	return col[songidx];
     }
 
+    public static String get_artist_id(H5File h5) throws Exception {
+	return get_artist_id(h5, 0); }
+    public static String get_artist_id(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	String[] members = metadata.getMemberNames();
+	int wantedMember = find( metadata.getMemberNames() , "artist_id");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	String[] col = (String[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_artist_latitude(H5File h5) throws Exception {
+	return get_artist_latitude(h5, 0); }
+    public static double get_artist_latitude(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	String[] members = metadata.getMemberNames();
+	int wantedMember = find( metadata.getMemberNames() , "artist_latitude");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_artist_longitude(H5File h5) throws Exception {
+	return get_artist_longitude(h5, 0); }
+    public static double get_artist_longitude(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
+	metadata.init();
+	String[] members = metadata.getMemberNames();
+	int wantedMember = find( metadata.getMemberNames() , "artist_longitude");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) metadata.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
 
     /**
      * Slow utility function.
@@ -143,6 +184,9 @@ public class hdf5_getters
 	try {
 	    System.out.println("artist familiarity: " + get_artist_familiarity(h5));
 	    System.out.println("artist hotttnesss: " + get_artist_hotttnesss(h5));
+	    System.out.println("artist id: " + get_artist_id(h5));
+	    System.out.println("artist latitude: " + get_artist_latitude(h5));
+	    System.out.println("artist longitude: " + get_artist_longitude(h5));
 	} catch (Exception e) {
 	    System.out.println("something went wrong:");
 	    e.printStackTrace();

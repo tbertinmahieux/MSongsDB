@@ -240,20 +240,111 @@ public class hdf5_getters
 	return col[songidx];
     }
 
-    public static float get_key_confidence(H5File h5) throws Exception {
+    public static double get_key_confidence(H5File h5) throws Exception {
 	return get_key_confidence(h5, 0); }
-    public static float get_key_confidence(H5File h5, int songidx) throws Exception
+    public static double get_key_confidence(H5File h5, int songidx) throws Exception
     {    
 	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
 	analysis.init();
 	int wantedMember = find( analysis.getMemberNames() , "key_confidence");
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) analysis.getData();
-	float[] col = (float[]) alldata.get(wantedMember);
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+ 
+    public static double get_loudness(H5File h5) throws Exception {
+	return get_loudness(h5, 0); }
+    public static double get_loudness(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "loudness");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
 	return col[songidx];
     }
 
-    // TO DO: ADD MORE GETTERS
+    public static int get_mode(H5File h5) throws Exception {
+	return get_mode(h5, 0); }
+    public static int get_mode(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "mode");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_mode_confidence(H5File h5) throws Exception {
+	return get_mode_confidence(h5, 0); }
+    public static double get_mode_confidence(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "mode_confidence");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_start_of_fade_out(H5File h5) throws Exception {
+	return get_start_of_fade_out(h5, 0); }
+    public static double get_start_of_fade_out(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "start_of_fade_out");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_tempo(H5File h5) throws Exception {
+	return get_tempo(h5, 0); }
+    public static double get_tempo(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "tempo");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static int get_time_signature(H5File h5) throws Exception {
+	return get_time_signature(h5, 0); }
+    public static int get_time_signature(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "time_signature");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_time_signature_confidence(H5File h5) throws Exception {
+	return get_time_signature_confidence(h5, 0); }
+    public static double get_time_signature_confidence(H5File h5, int songidx) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "time_signature_confidence");
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    // TO DO: ADD ARRAY GETTERS
 
     /**
      * Slow utility function.
@@ -299,7 +390,13 @@ public class hdf5_getters
 	    System.out.println("end_of_fade_in: " + get_end_of_fade_in(h5));
 	    System.out.println("key: " + get_key(h5));
 	    System.out.println("key confidence: " + get_key_confidence(h5));
-
+	    System.out.println("loudness: " + get_loudness(h5));
+	    System.out.println("mode: " + get_mode(h5));
+	    System.out.println("mode confidence: " + get_mode_confidence(h5));
+	    System.out.println("start of fade out: " + get_start_of_fade_out(h5));
+	    System.out.println("tempo: " + get_tempo(h5));
+	    System.out.println("time signature: " + get_time_signature(h5));
+	    System.out.println("time signature confidence: " + get_time_signature_confidence(h5));
 	} catch (Exception e) {
 	    System.out.println("something went wrong:");
 	    e.printStackTrace();

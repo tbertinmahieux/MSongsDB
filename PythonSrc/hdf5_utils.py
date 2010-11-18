@@ -67,6 +67,7 @@ def fill_hdf5_from_song(h5,song):
     metadata.cols.artist_location[0] = song.artist_location.location
     metadata.cols.artist_longitude[0] = song.artist_location.longitude
     metadata.cols.artist_name[0] = song.artist_name
+    metadata.cols.song_id[0] = song.id
     metadata.cols.song_hotttnesss[0] = song.song_hotttnesss
     metadata.cols.title[0] = song.title
     metadata.flush()
@@ -191,6 +192,7 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)
             row["artist_name"] = get_artist_name(h5tocopy,songidx)
             row["release"] = get_release(h5tocopy,songidx)
+            row["song_id"] = get_song_id(h5tocopy,songidx)
             row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
             row["title"] = get_title(h5tocopy,songidx)
             row.append()

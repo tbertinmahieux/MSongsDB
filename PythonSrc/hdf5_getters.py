@@ -83,6 +83,12 @@ def get_release(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.release[songidx]
 
+def get_song_id(h5,songidx=0):
+    """
+    Get song id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.song_id[songidx]
+
 def get_song_hotttnesss(h5,songidx=0):
     """
     Get song hotttnesss from a HDF5 song file, by default the first song in it

@@ -77,6 +77,12 @@ def get_artist_name(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.artist_name[songidx]
 
+def get_release(h5,songidx=0):
+    """
+    Get release from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.release[songidx]
+
 def get_song_hotttnesss(h5,songidx=0):
     """
     Get song hotttnesss from a HDF5 song file, by default the first song in it
@@ -88,6 +94,18 @@ def get_title(h5,songidx=0):
     Get title from a HDF5 song file, by default the first song in it
     """
     return h5.root.metadata.songs.cols.title[songidx]
+
+def get_analysis_sample_rate(h5,songidx=0):
+    """
+    Get analysis sample rate from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.analysis.songs.cols.analysis_sample_rate[songidx]
+
+def get_audio_md5(h5,songidx=0):
+    """
+    Get audio MD5 from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.analysis.songs.cols.audio_md5[songidx]
 
 def get_duration(h5,songidx=0):
     """
@@ -154,6 +172,12 @@ def get_time_signature_confidence(h5,songidx=0):
     Get signature confidence from a HDF5 song file, by default the first song in it
     """
     return h5.root.analysis.songs.cols.time_signature_confidence[songidx]
+
+def get_track_id(h5,songidx=0):
+    """
+    Get track id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.analysis.songs.cols.track_id[songidx]
 
 def get_segments_start(h5,songidx=0):
     """

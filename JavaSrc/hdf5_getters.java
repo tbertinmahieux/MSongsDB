@@ -10,6 +10,11 @@ The goal is to reproduce the Python getters behaviour.
 Our aim is only to show how to use the HDF5 files with Java, the
 code is not optimized at all!
 
+NOTE ON 2D ARRAYS: pitches and timbre are supposed to be #segs x 12
+They are stored in 1D array by concatenating rows, e.g. elem 20
+should be row 1 elem 8.
+To get element of row r and column c from an array a, call a[r*12+c]
+
 To get a faster code, you should load metadata/songs and analysis/songs
 only once, see the Matlab code in /MatlabSrc for inspiration.
 

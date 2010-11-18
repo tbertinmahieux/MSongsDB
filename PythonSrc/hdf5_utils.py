@@ -110,54 +110,39 @@ def fill_hdf5_from_track(h5,track):
     group = h5.root.analysis
     # analysis arrays (segments)
     analysis.cols.idx_segments_start[0] = 0
-    h5.createArray(group,'segments_start',np.array(map(lambda x : x['start'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_START)
+    group.segments_start.append( np.array(map(lambda x : x['start'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_confidence[0] = 0
-    h5.createArray(group,'segments_confidence',np.array(map(lambda x : x['confidence'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_CONFIDENCE)
+    group.segments_confidence.append( np.array(map(lambda x : x['confidence'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_pitches[0] = 0
-    h5.createArray(group,'segments_pitches',np.array(map(lambda x : x['pitches'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_PITCHES)
+    group.segments_pitches.append( np.array(map(lambda x : x['pitches'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_timbre[0] = 0
-    h5.createArray(group,'segments_timbre',np.array(map(lambda x : x['timbre'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_TIMBRE)
+    group.segments_timbre.append( np.array(map(lambda x : x['timbre'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_loudness_max[0] = 0
-    h5.createArray(group,'segments_loudness_max',np.array(map(lambda x : x['loudness_max'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
+    group.segments_loudness_max.append( np.array(map(lambda x : x['loudness_max'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_loudness_max_time[0] = 0
-    h5.createArray(group,'segments_loudness_max_time',np.array(map(lambda x : x['loudness_max_time'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
+    group.segments_loudness_max_time.append( np.array(map(lambda x : x['loudness_max_time'],track.segments),dtype='float64') )
     analysis.cols.idx_segments_loudness_start[0] = 0
-    h5.createArray(group,'segments_loudness_start',np.array(map(lambda x : x['loudness_start'],track.segments),dtype='float64'),
-                   ARRAY_DESC_SEGMENTS_LOUDNESS_START)    
+    group.segments_loudness_start.append( np.array(map(lambda x : x['loudness_start'],track.segments),dtype='float64') )
     # analysis arrays (sections)
     analysis.cols.idx_sections_start[0] = 0
-    h5.createArray(group,'sections_start',np.array(map(lambda x : x['start'],track.sections),dtype='float64'),
-                   ARRAY_DESC_SECTIONS_START)
+    group.sections_start.append( np.array(map(lambda x : x['start'],track.sections),dtype='float64') )
     analysis.cols.idx_sections_confidence[0] = 0
-    h5.createArray(group,'sections_confidence',np.array(map(lambda x : x['confidence'],track.sections),dtype='float64'),
-                   ARRAY_DESC_SECTIONS_CONFIDENCE)
+    group.sections_confidence.append( np.array(map(lambda x : x['confidence'],track.sections),dtype='float64') )
     # analysis arrays (beats
     analysis.cols.idx_beats_start[0] = 0
-    h5.createArray(group,'beats_start',np.array(map(lambda x : x['start'],track.beats),dtype='float64'),
-                   ARRAY_DESC_BEATS_START)
+    group.beats_start.append( np.array(map(lambda x : x['start'],track.beats),dtype='float64') )
     analysis.cols.idx_beats_confidence[0] = 0
-    h5.createArray(group,'beats_confidence',np.array(map(lambda x : x['confidence'],track.beats),dtype='float64'),
-                   ARRAY_DESC_BEATS_CONFIDENCE)
+    group.beats_confidence.append( np.array(map(lambda x : x['confidence'],track.beats),dtype='float64') )
     # analysis arrays (bars)
     analysis.cols.idx_bars_start[0] = 0
-    h5.createArray(group,'bars_start',np.array(map(lambda x : x['start'],track.bars),dtype='float64'),
-                   ARRAY_DESC_BARS_START)
+    group.bars_start.append( np.array(map(lambda x : x['start'],track.bars),dtype='float64') )
     analysis.cols.idx_bars_confidence[0] = 0
-    h5.createArray(group,'bars_confidence',np.array(map(lambda x : x['confidence'],track.bars),dtype='float64'),
-                   ARRAY_DESC_BARS_CONFIDENCE)
+    group.bars_confidence.append( np.array(map(lambda x : x['confidence'],track.bars),dtype='float64') )
     # analysis arrays (tatums)
     analysis.cols.idx_tatums_start[0] = 0
-    h5.createArray(group,'tatums_start',np.array(map(lambda x : x['start'],track.tatums),dtype='float64'),
-                   ARRAY_DESC_TATUMS_START)
+    group.tatums_start.append( np.array(map(lambda x : x['start'],track.tatums),dtype='float64') )
     analysis.cols.idx_tatums_confidence[0] = 0
-    h5.createArray(group,'tatums_confidence',np.array(map(lambda x : x['confidence'],track.tatums),dtype='float64'),
-                   ARRAY_DESC_TATUMS_CONFIDENCE)
+    group.tatums_confidence.append( np.array(map(lambda x : x['confidence'],track.tatums),dtype='float64') )
     analysis.flush()
     # DONE
 
@@ -303,6 +288,22 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
     r = table.row
     r.append()
     table.flush()
+        # create arrays in group analysis
+    h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
+    h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE)
+    h5.createEArray(group,'segments_pitches',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_PITCHES)
+    h5.createEArray(group,'segments_timbre',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_TIMBRE)
+    h5.createEArray(group,'segments_loudness_max',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
+    h5.createEArray(group,'segments_loudness_max_time',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
+    h5.createEArray(group,'segments_loudness_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
+    h5.createEArray(group,'sections_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_START)
+    h5.createEArray(group,'sections_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_CONFIDENCE)
+    h5.createEArray(group,'beats_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_START)
+    h5.createEArray(group,'beats_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_CONFIDENCE)
+    h5.createEArray(group,'bars_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_START)
+    h5.createEArray(group,'bars_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_CONFIDENCE)
+    h5.createEArray(group,'tatums_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_START)
+    h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE)
     # close it, done
     h5.close()
 

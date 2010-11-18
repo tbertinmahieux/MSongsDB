@@ -185,6 +185,12 @@ public class hdf5_getters
 	return get_member_double(h5,songidx,"/analysis/songs","end_of_fade_in");
     }
 
+    public static double get_energy(H5File h5) throws Exception { return get_energy(h5, 0); }
+    public static double get_energy(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_double(h5,songidx,"/analysis/songs","energy");
+    } 
+
     public static int get_key(H5File h5) throws Exception { return get_key(h5, 0); }
     public static int get_key(H5File h5, int songidx) throws Exception
     {    

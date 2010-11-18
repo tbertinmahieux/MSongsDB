@@ -131,6 +131,12 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/metadata/songs","artist_name");
     }
 
+    public static String get_release(H5File h5) throws Exception { return get_release(h5, 0); }
+    public static String get_release(H5File h5, int songidx) throws Exception
+    {  
+	return get_member_string(h5,songidx,"/metadata/songs","release");
+    }
+
     public static double get_song_hotttnesss(H5File h5) throws Exception { return get_song_hotttnesss(h5, 0); }
     public static double get_song_hotttnesss(H5File h5, int songidx) throws Exception
     {    
@@ -142,6 +148,18 @@ public class hdf5_getters
     {    
 	return get_member_string(h5,songidx,"/metadata/songs","title");
     }
+
+    public static double get_analysis_sample_rate(H5File h5) throws Exception { return get_analysis_sample_rate(h5, 0); }
+    public static double get_analysis_sample_rate(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_double(h5,songidx,"/analysis/songs","analysis_sample_rate");
+    }
+
+    public static String get_audio_md5(H5File h5) throws Exception { return get_audio_md5(h5, 0); }
+    public static String get_audio_md5(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_string(h5,songidx,"/analysis/songs","audio_md5");
+    } 
 
     public static double get_duration(H5File h5) throws Exception { return get_duration(h5, 0); }
     public static double get_duration(H5File h5, int songidx) throws Exception
@@ -197,8 +215,7 @@ public class hdf5_getters
 	return get_member_double(h5,songidx,"/analysis/songs","tempo");
     }
 
-    public static int get_time_signature(H5File h5) throws Exception {
-	return get_time_signature(h5, 0); }
+    public static int get_time_signature(H5File h5) throws Exception { return get_time_signature(h5, 0); }
     public static int get_time_signature(H5File h5, int songidx) throws Exception
     {   
 	return get_member_int(h5,songidx,"/analysis/songs","time_signature");
@@ -208,6 +225,12 @@ public class hdf5_getters
     public static double get_time_signature_confidence(H5File h5, int songidx) throws Exception
     {    
 	return get_member_double(h5,songidx,"/analysis/songs","time_signature_confidence");
+    }
+
+    public static String get_track_id(H5File h5) throws Exception { return get_track_id(h5, 0); }
+    public static String get_track_id(H5File h5, int songidx) throws Exception
+    {   
+	return get_member_string(h5,songidx,"/analysis/songs","track_id");
     }
 
     public static double[] get_segments_start(H5File h5) throws Exception { return get_segments_start(h5, 0); }

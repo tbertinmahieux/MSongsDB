@@ -45,6 +45,7 @@ class SongMetaData(tables.IsDescription):
     title = tables.StringCol(MAXSTRLEN)
     artist_familiarity = tables.Float64Col()
     artist_hotttnesss = tables.Float64Col()
+    song_id = tables.StringCol(32)
     song_hotttnesss = tables.Float64Col()
     artist_latitude = tables.Float64Col()
     artist_longitude = tables.Float64Col()
@@ -71,8 +72,10 @@ class SongAnalysis(tables.IsDescription):
     """
     analysis_sample_rate = tables.IntCol()
     audio_md5 = tables.StringCol(32)
+    danceability = tables.Float64Col()
     duration = tables.Float64Col()
     end_of_fade_in = tables.Float64Col()
+    energy = tables.Float64Col()
     key = tables.IntCol()
     key_confidence = tables.Float64Col()
     loudness = tables.Float64Col()

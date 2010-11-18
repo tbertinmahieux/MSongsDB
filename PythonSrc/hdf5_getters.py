@@ -113,6 +113,12 @@ def get_audio_md5(h5,songidx=0):
     """
     return h5.root.analysis.songs.cols.audio_md5[songidx]
 
+def get_danceability(h5,songidx=0):
+    """
+    Get danceability from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.analysis.songs.cols.danceability[songidx]
+
 def get_duration(h5,songidx=0):
     """
     Get duration from a HDF5 song file, by default the first song in it
@@ -124,6 +130,12 @@ def get_end_of_fade_in(h5,songidx=0):
     Get end of fade in from a HDF5 song file, by default the first song in it
     """
     return h5.root.analysis.songs.cols.end_of_fade_in[songidx]
+
+def get_energy(h5,songidx=0):
+    """
+    Get energy from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.analysis.songs.cols.energy[songidx]
 
 def get_key(h5,songidx=0):
     """

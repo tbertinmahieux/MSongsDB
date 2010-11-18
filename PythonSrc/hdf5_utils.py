@@ -73,7 +73,8 @@ def fill_hdf5_from_song(h5,song):
     metadata.flush()
     # get the analysis table
     analysis = h5.root.analysis.songs
-    # TODO what do we get from song in analysis?
+    analysis.danceability = song.audio_summary.danceability
+    analysis.energy = song.audio_summary.energy
     analysis.flush()
 
 
@@ -201,8 +202,10 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             row = h5.root.analysis.songs.row
             row["analysis_sample_rate"] = get_analysis_sample_rate(h5tocopy,songidx)
             row["audio_md5"] = get_audio_md5(h5tocopy,songidx)
+            row["danceability"] = get_danceability(h5tocopy,songidx)
             row["duration"] = get_duration(h5tocopy,songidx)
             row["end_of_fade_in"] = get_end_of_fade_in(h5tocopy,songidx)
+            row["energy"] = get_energy(h5tocopy,songidx)
             row["key"] = get_key(h5tocopy,songidx)
             row["key_confidence"] = get_key_confidence(h5tocopy,songidx)
             row["loudness"] = get_loudness(h5tocopy,songidx)

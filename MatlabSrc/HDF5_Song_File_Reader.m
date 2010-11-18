@@ -139,6 +139,11 @@ classdef HDF5_Song_File_Reader
         res = obj.analysis.audio_md5(songidx);
       end
 
+      function res = get_danceability(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.danceability(songidx);
+      end
+      
       function res = get_duration(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.duration(songidx);

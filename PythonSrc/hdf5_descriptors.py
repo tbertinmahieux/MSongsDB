@@ -37,23 +37,18 @@ class SongMetaData(tables.IsDescription):
     """
     Class to hold the metadata of one song
     """
-    artist_name = tables.StringCol(MAXSTRLEN,pos=0)
-    artist_id = tables.StringCol(32,pos=1)
-    analyzer_version = tables.StringCol(32,pos=2)
-    audio_md5 = tables.StringCol(32,pos=3)
-    analysis_sample_rate = tables.IntCol(pos=4)
-    duration = tables.Float64Col(pos=5)
-    genre = tables.StringCol(MAXSTRLEN,pos=6)
-    id = tables.StringCol(MAXSTRLEN,pos=7)
-    release = tables.StringCol(MAXSTRLEN,pos=8)
-    sample_md5 = tables.StringCol(32,pos=9)
-    title = tables.StringCol(MAXSTRLEN,pos=11)
-    artist_familiarity = tables.Float64Col(pos=12)
-    artist_hotttnesss = tables.Float64Col(pos=13)
-    song_hotttnesss = tables.Float64Col(pos=14)
-    artist_latitude = tables.Float64Col(pos=15)
-    artist_longitude = tables.Float64Col(pos=16)
-    artist_location = tables.StringCol(MAXSTRLEN,pos=17)
+    artist_name = tables.StringCol(MAXSTRLEN)
+    artist_id = tables.StringCol(32)
+    analyzer_version = tables.StringCol(32)
+    genre = tables.StringCol(MAXSTRLEN)
+    release = tables.StringCol(MAXSTRLEN)
+    title = tables.StringCol(MAXSTRLEN)
+    artist_familiarity = tables.Float64Col()
+    artist_hotttnesss = tables.Float64Col()
+    song_hotttnesss = tables.Float64Col()
+    artist_latitude = tables.Float64Col()
+    artist_longitude = tables.Float64Col()
+    artist_location = tables.StringCol(MAXSTRLEN)
 
     # TO ADD
     
@@ -61,9 +56,9 @@ class SongMetaData(tables.IsDescription):
     # album mbid
     # artist mbid
 
-    # tags (from EN) need to crate a new table
+    # tags (from EN) need to create a new table
     # we just need a start
-    tags_idx = tables.IntCol(pos=14)
+    tags_idx = tables.IntCol()
 
     # url
     
@@ -74,35 +69,36 @@ class SongAnalysis(tables.IsDescription):
     """
     Class to hold the analysis of one song
     """
-    duration = tables.Float64Col(pos=0)
-    end_of_fade_in = tables.Float64Col(pos=1)
-    #segments = tables.Float32Col() # note to self: Float32Col(shape=(2,3))
-    key = tables.IntCol(pos=2)
-    key_confidence = tables.Float64Col(pos=3)
-    loudness = tables.Float64Col(pos=4)
-    sample_md5 = tables.StringCol(32,pos=5)
-    mode = tables.IntCol(pos=6)
-    mode_confidence = tables.Float64Col(pos=7)
-    start_of_fade_out = tables.Float64Col(pos=8)
-    tempo = tables.Float64Col(pos=9)
-    time_signature = tables.IntCol(pos=10)
-    time_signature_confidence = tables.Float64Col(pos=11)
+    analysis_sample_rate = tables.IntCol()
+    audio_md5 = tables.StringCol(32)
+    duration = tables.Float64Col()
+    end_of_fade_in = tables.Float64Col()
+    key = tables.IntCol()
+    key_confidence = tables.Float64Col()
+    loudness = tables.Float64Col()
+    mode = tables.IntCol()
+    mode_confidence = tables.Float64Col()
+    start_of_fade_out = tables.Float64Col()
+    tempo = tables.Float64Col()
+    time_signature = tables.IntCol()
+    time_signature_confidence = tables.Float64Col()
+    track_id = tables.StringCol(MAXSTRLEN,)
     # ARRAY INDECES
-    idx_segments_start = tables.IntCol(pos=12)
-    idx_segments_confidence = tables.IntCol(pos=13)
-    idx_segments_pitches = tables.IntCol(pos=14)
-    idx_segments_timbre = tables.IntCol(pos=15)
-    idx_segments_loudness_max = tables.IntCol(pos=16)
-    idx_segments_loudness_max_time = tables.IntCol(pos=17)
-    idx_segments_loudness_start = tables.IntCol(pos=18)
-    idx_sections_start = tables.IntCol(pos=19)
-    idx_sections_confidence = tables.IntCol(pos=20)
-    idx_beats_start = tables.IntCol(pos=21)
-    idx_beats_confidence = tables.IntCol(pos=22)
-    idx_bars_start = tables.IntCol(pos=23)
-    idx_bars_confidence = tables.IntCol(pos=24)
-    idx_tatums_start = tables.IntCol(pos=25)
-    idx_tatums_confidence = tables.IntCol(pos=26)
+    idx_segments_start = tables.IntCol()
+    idx_segments_confidence = tables.IntCol()
+    idx_segments_pitches = tables.IntCol()
+    idx_segments_timbre = tables.IntCol()
+    idx_segments_loudness_max = tables.IntCol()
+    idx_segments_loudness_max_time = tables.IntCol()
+    idx_segments_loudness_start = tables.IntCol()
+    idx_sections_start = tables.IntCol()
+    idx_sections_confidence = tables.IntCol()
+    idx_beats_start = tables.IntCol()
+    idx_beats_confidence = tables.IntCol()
+    idx_bars_start = tables.IntCol()
+    idx_bars_confidence = tables.IntCol()
+    idx_tatums_start = tables.IntCol()
+    idx_tatums_confidence = tables.IntCol()
 
 class SongPath(tables.IsDescription):
     """

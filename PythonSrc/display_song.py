@@ -67,6 +67,7 @@ if __name__ == '__main__':
     numSongs = hdf5_getters.get_num_songs(h5)
     if songidx >= numSongs:
         print 'ERROR: file contains only',numSongs
+        h5.close()
         sys.exit(0)
 
     # get all getters
@@ -81,6 +82,7 @@ if __name__ == '__main__':
             getters.index(onegetter)
         except ValueError:
             print 'ERROR: getter requested:',onegetter,'does not exist.'
+            h5.close()
             sys.exit(0)
         getters = [onegetter]
     getters = np.sort(getters)
@@ -93,10 +95,9 @@ if __name__ == '__main__':
         else:
             print getter[4:]+":",res
 
-
     # done
     print 'DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path
-
+    h5.close()
 
 
     

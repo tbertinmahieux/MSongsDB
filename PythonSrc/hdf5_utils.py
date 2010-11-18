@@ -72,6 +72,7 @@ def fill_hdf5_from_song(h5,song):
     metadata.flush()
     # get the analysis table
     analysis = h5.root.analysis.songs
+    # TODO what do we get from song in analysis?
     analysis.flush()
 
 
@@ -84,16 +85,13 @@ def fill_hdf5_from_track(h5,track):
     metadata = h5.root.metadata.songs
     #metadata.cols.analyzer_version[0] = track.analyzer_version
     metadata.cols.artist_name[0] = track.artist # already done from song eventually
-    metadata.cols.audio_md5[0] = track.audio_md5
-    metadata.cols.analysis_sample_rate[0] = track.analysis_sample_rate
-    metadata.cols.duration[0] = track.duration
-    metadata.cols.id[0] = track.id
     metadata.cols.release[0] = track.release
-    metadata.cols.sample_md5[0] = track.sample_md5
     metadata.cols.title[0] = track.title
     metadata.flush()
     # get the analysis table, fill it
     analysis = h5.root.analysis.songs
+    analysis.cols.analysis_sample_rate[0] = track.analysis_sample_rate
+    analysis.cols.audio_md5[0] = track.audio_md5
     analysis.cols.duration[0] = track.duration
     analysis.cols.end_of_fade_in[0] = track.end_of_fade_in
     analysis.cols.key[0] = track.key
@@ -105,6 +103,7 @@ def fill_hdf5_from_track(h5,track):
     analysis.cols.tempo[0] = track.tempo
     analysis.cols.time_signature[0] = track.time_signature
     analysis.cols.time_signature_confidence[0] = track.time_signature_confidence
+    analysis.cols.track_id[0] = track.id
     analysis.flush()
     group = h5.root.analysis
     # analysis arrays (segments)
@@ -191,12 +190,15 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             row["artist_location"] = get_artist_location(h5tocopy,songidx)
             row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)
             row["artist_name"] = get_artist_name(h5tocopy,songidx)
+            row["release"] = get_release(h5tocopy,songidx)
             row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
             row["title"] = get_title(h5tocopy,songidx)
             row.append()
             h5.root.metadata.songs.flush()
             # ANALYSIS
             row = h5.root.analysis.songs.row
+            row["analysis_sample_rate"] = get_analysis_sample_rate(h5tocopy,songidx)
+            row["audio_md5"] = get_audio_md5(h5tocopy,songidx)
             row["duration"] = get_duration(h5tocopy,songidx)
             row["end_of_fade_in"] = get_end_of_fade_in(h5tocopy,songidx)
             row["key"] = get_key(h5tocopy,songidx)
@@ -208,6 +210,7 @@ def fill_hdf5_summary_file(h5,h5_filenames):
             row["tempo"] = get_tempo(h5tocopy,songidx)
             row["time_signature"] = get_time_signature(h5tocopy,songidx)
             row["time_signature_confidence"] = get_time_signature_confidence(h5tocopy,songidx)
+            row["track_id"] = get_track_id(h5tocopy,songidx)
             # INDECIES
             if counter == 0 : # we're first row
                 row["idx_segments_start"] = 0

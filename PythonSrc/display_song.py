@@ -28,6 +28,7 @@ import os
 import sys
 import hdf5_getters
 import hdf5_utils
+import numpy as np
 
 
 def die_with_usage():
@@ -36,7 +37,9 @@ def die_with_usage():
     print 'T. Bertin-Mahieux (2010) tb2332@columbia.edu'
     print 'to quickly display all we know about a song'
     print 'usage:'
-    print '   python display_song.py <HDF5 file> <OPT: song idx>'
+    print '   python display_song.py <HDF5 file> <OPT: song idx> <OPT: specific getter>'
+    print 'example:'
+    print '   python display_song.py mysong.h5 0 danceability'
     sys.exit(0)
 
 
@@ -51,12 +54,48 @@ if __name__ == '__main__':
     hdf5path = sys.argv[1]
     songidx = 0
     if len(sys.argv) > 2:
-        songidx = int(songidx)
+        songidx = int(sys.argv[2])
+    onegetter = ''
+    if len(sys.argv) > 3:
+        onegetter = sys.argv[3]
 
     # sanity check
     if not os.path.isfile(hdf5path):
         print 'ERROR: file',hdf5path,'does not exist.'
         sys.exit(0)
+    h5 = hdf5_utils.open_h5_file_read(hdf5path)
+    numSongs = hdf5_getters.get_num_songs(h5)
+    if songidx >= numSongs:
+        print 'ERROR: file contains only',numSongs
+        sys.exit(0)
+
+    # get all getters
+    getters = filter(lambda x: x[:4] == 'get_', hdf5_getters.__dict__.keys())
+    getters.remove("get_num_songs") # special case
+    if onegetter == 'num_songs' or onegetter == 'get_num_songs':
+        getters = []
+    elif onegetter != '':
+        if onegetter[:4] != 'get_':
+            onegetter = 'get_' + onegetter
+        try:
+            getters.index(onegetter)
+        except ValueError:
+            print 'ERROR: getter requested:',onegetter,'does not exist.'
+            sys.exit(0)
+        getters = [onegetter]
+    getters = np.sort(getters)
+
+    # print them
+    for getter in getters:
+        res = hdf5_getters.__getattribute__(getter)(h5,songidx)
+        if res.__class__.__name__ == 'ndarray':
+            print getter[4:]+": shape =",res.shape
+        else:
+            print getter[4:]+":",res
+
+
+    # done
+    print 'DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path
 
 
 

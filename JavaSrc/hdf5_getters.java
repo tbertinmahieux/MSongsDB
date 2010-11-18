@@ -84,267 +84,220 @@ public class hdf5_getters
 	}
     }
 
-    public static double get_artist_familiarity(H5File h5) throws Exception {
-	return get_artist_familiarity(h5, 0); }
+    public static double get_artist_familiarity(H5File h5) throws Exception { return get_artist_familiarity(h5, 0); }
     public static double get_artist_familiarity(H5File h5, int songidx) throws Exception
-    {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_familiarity");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+    {  
+	return get_member_double(h5,songidx,"/metadata/songs","artist_familiarity");	
     }
 
-    public static double get_artist_hotttnesss(H5File h5) throws Exception {
-	return get_artist_hotttnesss(h5, 0); }
+    public static double get_artist_hotttnesss(H5File h5) throws Exception { return get_artist_hotttnesss(h5, 0); }
     public static double get_artist_hotttnesss(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_hotttnesss");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/metadata/songs","artist_hotttnesss");
     }
 
-    public static String get_artist_id(H5File h5) throws Exception {
-	return get_artist_id(h5, 0); }
+    public static String get_artist_id(H5File h5) throws Exception { return get_artist_id(h5, 0); }
     public static String get_artist_id(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_id");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	String[] col = (String[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_string(h5,songidx,"/metadata/songs","artist_id");
     }
 
-    public static double get_artist_latitude(H5File h5) throws Exception {
-	return get_artist_latitude(h5, 0); }
+    public static double get_artist_latitude(H5File h5) throws Exception { return get_artist_latitude(h5, 0); }
     public static double get_artist_latitude(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_latitude");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/metadata/songs","artist_latitude");
     }
 
-    public static double get_artist_longitude(H5File h5) throws Exception {
-	return get_artist_longitude(h5, 0); }
+    public static double get_artist_longitude(H5File h5) throws Exception { return get_artist_longitude(h5, 0); }
     public static double get_artist_longitude(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_longitude");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/metadata/songs","artist_longitude");
     }
 
-    public static String get_artist_location(H5File h5) throws Exception {
-	return get_artist_location(h5, 0); }
+    public static String get_artist_location(H5File h5) throws Exception { return get_artist_location(h5, 0); }
     public static String get_artist_location(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_location");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	String[] col = (String[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_string(h5,songidx,"/metadata/songs","artist_location");
     }
 
-    public static String get_artist_name(H5File h5) throws Exception {
-	return get_artist_name(h5, 0); }
+    public static String get_artist_name(H5File h5) throws Exception { return get_artist_name(h5, 0); }
     public static String get_artist_name(H5File h5, int songidx) throws Exception
-    {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "artist_name");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	String[] col = (String[]) alldata.get(wantedMember);
-	return col[songidx];
+    {  
+	return get_member_string(h5,songidx,"/metadata/songs","artist_name");
     }
 
-    public static double get_song_hotttnesss(H5File h5) throws Exception {
-	return get_song_hotttnesss(h5, 0); }
+    public static double get_song_hotttnesss(H5File h5) throws Exception { return get_song_hotttnesss(h5, 0); }
     public static double get_song_hotttnesss(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "song_hotttnesss");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/metadata/songs","song_hotttnesss");
     }
 
-    public static String get_title(H5File h5) throws Exception {
-	return get_title(h5, 0); }
+    public static String get_title(H5File h5) throws Exception { return get_title(h5, 0); }
     public static String get_title(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS metadata = (H5CompoundDS) h5.get("/metadata/songs");
-	metadata.init();
-	int wantedMember = find( metadata.getMemberNames() , "title");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) metadata.getData();
-	String[] col = (String[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_string(h5,songidx,"/metadata/songs","title");
     }
 
-    public static double get_duration(H5File h5) throws Exception {
-	return get_duration(h5, 0); }
+    public static double get_duration(H5File h5) throws Exception { return get_duration(h5, 0); }
     public static double get_duration(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "duration");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","duration");
     }
 
-    public static double get_end_of_fade_in(H5File h5) throws Exception {
-	return get_end_of_fade_in(h5, 0); }
+    public static double get_end_of_fade_in(H5File h5) throws Exception { return get_end_of_fade_in(h5, 0); }
     public static double get_end_of_fade_in(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "end_of_fade_in");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","end_of_fade_in");
     }
 
-    public static int get_key(H5File h5) throws Exception {
-	return get_key(h5, 0); }
+    public static int get_key(H5File h5) throws Exception { return get_key(h5, 0); }
     public static int get_key(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "key");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	int[] col = (int[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_int(h5,songidx,"/analysis/songs","key");
     }
 
-    public static double get_key_confidence(H5File h5) throws Exception {
-	return get_key_confidence(h5, 0); }
+    public static double get_key_confidence(H5File h5) throws Exception { return get_key_confidence(h5, 0); }
     public static double get_key_confidence(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "key_confidence");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","key_confidence");
     }
  
-    public static double get_loudness(H5File h5) throws Exception {
-	return get_loudness(h5, 0); }
+    public static double get_loudness(H5File h5) throws Exception { return get_loudness(h5, 0); }
     public static double get_loudness(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "loudness");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","loudness");
     }
 
-    public static int get_mode(H5File h5) throws Exception {
-	return get_mode(h5, 0); }
+    public static int get_mode(H5File h5) throws Exception { return get_mode(h5, 0); }
     public static int get_mode(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "mode");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	int[] col = (int[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_int(h5,songidx,"/analysis/songs","mode");
     }
 
-    public static double get_mode_confidence(H5File h5) throws Exception {
-	return get_mode_confidence(h5, 0); }
+    public static double get_mode_confidence(H5File h5) throws Exception { return get_mode_confidence(h5, 0); }
     public static double get_mode_confidence(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "mode_confidence");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","mode_confidence");
     }
 
-    public static double get_start_of_fade_out(H5File h5) throws Exception {
-	return get_start_of_fade_out(h5, 0); }
+    public static double get_start_of_fade_out(H5File h5) throws Exception { return get_start_of_fade_out(h5, 0); }
     public static double get_start_of_fade_out(H5File h5, int songidx) throws Exception
-    {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "start_of_fade_out");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+    {   
+	return get_member_double(h5,songidx,"/analysis/songs","start_of_fade_out");
     }
 
-    public static double get_tempo(H5File h5) throws Exception {
-	return get_tempo(h5, 0); }
+    public static double get_tempo(H5File h5) throws Exception { return get_tempo(h5, 0); }
     public static double get_tempo(H5File h5, int songidx) throws Exception
-    {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "tempo");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+    {
+	return get_member_double(h5,songidx,"/analysis/songs","tempo");
     }
 
     public static int get_time_signature(H5File h5) throws Exception {
 	return get_time_signature(h5, 0); }
     public static int get_time_signature(H5File h5, int songidx) throws Exception
-    {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "time_signature");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	int[] col = (int[]) alldata.get(wantedMember);
-	return col[songidx];
+    {   
+	return get_member_int(h5,songidx,"/analysis/songs","time_signature");
     }
 
-    public static double get_time_signature_confidence(H5File h5) throws Exception {
-	return get_time_signature_confidence(h5, 0); }
+    public static double get_time_signature_confidence(H5File h5) throws Exception { return get_time_signature_confidence(h5, 0); }
     public static double get_time_signature_confidence(H5File h5, int songidx) throws Exception
     {    
-	H5CompoundDS analysis = (H5CompoundDS) h5.get("/analysis/songs");
-	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "time_signature_confidence");
-	assert(wantedMember >= 0);		
-	Vector alldata = (Vector) analysis.getData();
-	double[] col = (double[]) alldata.get(wantedMember);
-	return col[songidx];
+	return get_member_double(h5,songidx,"/analysis/songs","time_signature_confidence");
+    }
+
+    public static double[] get_segments_start(H5File h5) throws Exception { return get_segments_start(h5, 0); }
+    public static double[] get_segments_start(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "segments_start", 1);
+    }
+
+    public static double[] get_segments_confidence(H5File h5) throws Exception { return get_segments_confidence(h5, 0); }
+    public static double[] get_segments_confidence(H5File h5, int songidx) throws Exception
+    {   
+	return get_array_double(h5, songidx, "analysis", "segments_confidence", 1);
+    }
+
+    public static double[] get_segments_pitches(H5File h5) throws Exception { return get_segments_pitches(h5, 0); }
+    public static double[] get_segments_pitches(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "segments_pitches", 2);
+    }
+
+    public static double[] get_segments_timbre(H5File h5) throws Exception { return get_segments_timbre(h5, 0); }
+    public static double[] get_segments_timbre(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "segments_timbre", 2);
+    }
+
+    public static double[] get_segments_loudness_max(H5File h5) throws Exception { return get_segments_loudness_max(h5, 0); }
+    public static double[] get_segments_loudness_max(H5File h5, int songidx) throws Exception
+    {   
+	return get_array_double(h5, songidx, "analysis", "segments_loudness_max", 1);
+    }
+
+    public static double[] get_segments_loudness_max_time(H5File h5) throws Exception { return get_segments_loudness_max_time(h5, 0); }
+    public static double[] get_segments_loudness_max_time(H5File h5, int songidx) throws Exception
+    {   
+	return get_array_double(h5, songidx, "analysis", "segments_loudness_max_time", 1);
+    }
+
+    public static double[] get_segments_loudness_start(H5File h5) throws Exception { return get_segments_loudness_start(h5, 0); }
+    public static double[] get_segments_loudness_start(H5File h5, int songidx) throws Exception
+    {   
+	return get_array_double(h5, songidx, "analysis", "segments_loudness_start", 1);
+    }
+
+    public static double[] get_sections_start(H5File h5) throws Exception { return get_sections_start(h5, 0); }
+    public static double[] get_sections_start(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "sections_start", 1);
+    }
+
+    public static double[] get_sections_confidence(H5File h5) throws Exception { return get_sections_confidence(h5, 0); }
+    public static double[] get_sections_confidence(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "sections_confidence", 1);
+    }
+
+    public static double[] get_beats_start(H5File h5) throws Exception { return get_beats_start(h5, 0); }
+    public static double[] get_beats_start(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "beats_start", 1);
+    }
+
+    public static double[] get_beats_confidence(H5File h5) throws Exception { return get_beats_confidence(h5, 0); }
+    public static double[] get_beats_confidence(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "beats_confidence", 1);
+    }
+
+    public static double[] get_bars_start(H5File h5) throws Exception { return get_bars_start(h5, 0); }
+    public static double[] get_bars_start(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "bars_start", 1);
+    }
+
+    public static double[] get_bars_confidence(H5File h5) throws Exception { return get_bars_confidence(h5, 0); }
+    public static double[] get_bars_confidence(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "bars_confidence", 1);
+    }
+
+    public static double[] get_tatums_start(H5File h5) throws Exception { return get_tatums_start(h5, 0); }
+    public static double[] get_tatums_start(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "tatums_start", 1);
+    }
+
+    public static double[] get_tatums_confidence(H5File h5) throws Exception { return get_tatums_confidence(h5, 0); }
+    public static double[] get_tatums_confidence(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "analysis", "tatums_confidence", 1);
     }
 
     // TO DO: ADD ARRAY GETTERS
+
+    /********************************** UTILITY FUNCTIONS ************************************/
 
     /**
      * Slow utility function.
@@ -356,6 +309,77 @@ public class hdf5_getters
 	return -1;
     }
 
+    public static int get_member_int(H5File h5, int songidx, String table, String member) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(table);
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , member);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double get_member_double(H5File h5, int songidx, String table, String member) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(table);
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , member);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	double[] col = (double[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static String get_member_string(H5File h5, int songidx, String table, String member) throws Exception
+    {    
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(table);
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , member);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	String[] col = (String[]) alldata.get(wantedMember);
+	return col[songidx];
+    }
+
+    public static double[] get_array_double(H5File h5, int songidx, String group, String arrayname, int ndims) throws Exception
+    {    
+	// index
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(group + "/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "idx_"+arrayname);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	int pos1 = col[songidx];
+	// data
+	H5ScalarDS array = (H5ScalarDS) h5.get("/"+group+"/"+arrayname);
+	if (ndims == 1)
+	    {
+		double[] data = (double[]) array.getData();
+		int pos2 = data.length;
+		if (songidx + 1 < col.length) pos2 = col[songidx+1];
+		// copy
+		double[] res = new double[pos2-pos1];
+		for (int k = 0; k < res.length; k++)
+		    res[k] = data[pos1+k];
+		return res;
+	    }
+	else if (ndims == 2) // multiply by 12
+	    {
+		pos1 *= 12;
+		double[] data = (double[]) array.getData();
+		int pos2 = data.length;
+		if (songidx + 1 < col.length) pos2 = col[songidx+1] * 12;
+		// copy
+		double[] res = new double[pos2-pos1];
+		for (int k = 0; k < res.length; k++)
+		    res[k] = data[pos1+k];
+		return res;
+	    }
+	// more than 2 dims?
+	return null;
+    }
 
     public static void main(String[] args)
     {
@@ -397,6 +421,37 @@ public class hdf5_getters
 	    System.out.println("tempo: " + get_tempo(h5));
 	    System.out.println("time signature: " + get_time_signature(h5));
 	    System.out.println("time signature confidence: " + get_time_signature_confidence(h5));
+	    double[] res;
+	    res = get_segments_start(h5);
+	    System.out.println("segments start, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_confidence(h5);
+	    System.out.println("segments confidence, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_pitches(h5);
+	    System.out.println("segments pitches, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_timbre(h5);
+	    System.out.println("segments timbre, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_loudness_max(h5);
+	    System.out.println("segments loudness max, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_loudness_max_time(h5);
+	    System.out.println("segments loudness max time, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_segments_loudness_start(h5);
+	    System.out.println("segments loudness start, length: "+res.length+", elem 20: "+res[20]);
+	    res = get_sections_start(h5);
+	    System.out.println("sections start, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_sections_confidence(h5);
+	    System.out.println("sections confidence, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_beats_start(h5);
+	    System.out.println("beats start, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_beats_confidence(h5);
+	    System.out.println("beats confidence, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_bars_start(h5);
+	    System.out.println("bars start, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_bars_confidence(h5);
+	    System.out.println("bars confidence, length: "+res.length+", elem 1: "+res[1]);
+	    res = get_tatums_start(h5);
+	    System.out.println("tatums start, length: "+res.length+", elem 3: "+res[3]);
+	    res = get_tatums_confidence(h5);
+	    System.out.println("tatums confidence, length: "+res.length+", elem 3: "+res[3]);
 	} catch (Exception e) {
 	    System.out.println("something went wrong:");
 	    e.printStackTrace();

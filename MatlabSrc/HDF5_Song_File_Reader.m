@@ -124,6 +124,16 @@ classdef HDF5_Song_File_Reader
         res = obj.metadata.title(:,songidx);
       end
       
+      function res = get_analysis_sample_rate(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.analysis_sample_rate(songidx);
+      end
+
+      function res = get_audio_md5(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.audio_md5(songidx);
+      end
+
       function res = get_duration(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.duration(songidx);
@@ -177,6 +187,11 @@ classdef HDF5_Song_File_Reader
       function res = get_time_signature_confidence(obj,songidx) 
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.time_signature_confidence(songidx);
+      end
+
+      function res = get_track_id(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.track_id(songidx);
       end
       
       function res = get_segments_start(obj,songidx)

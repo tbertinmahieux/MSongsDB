@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # SHOULD ADD try ... except urlerror
     songs = songEN.search(artist=artist_name, buckets=['id:'+CATALOG, 'tracks', 'audio_summary'], limit=True, results=100)
     if len(songs) == 0:
-        print 'np songs found, nothing from 7digital? exit'
+        print 'no songs found, nothing from 7digital? exit'
         sys.exit(0)
 
     # list of all h5 files created, used for summary file creation
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             print 'should not happen with new API!!!!'
             continue
         track = trackEN.track_from_id(tracks[0]['id'])
-        print 'track name:',track
+        print sidx,') track name:',track,'(release =',track.release,')'
         # create HDF5 file, open it and get it
         HDF5.create_song_file(hdf5_path)
         h5 = HDF5.open_h5_file_append(hdf5_path)

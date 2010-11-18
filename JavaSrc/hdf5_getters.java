@@ -137,6 +137,12 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/metadata/songs","release");
     }
 
+    public static String get_song_id(H5File h5) throws Exception { return get_song_id(h5, 0); }
+    public static String get_song_id(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_string(h5,songidx,"/metadata/songs","song_id");
+    }
+
     public static double get_song_hotttnesss(H5File h5) throws Exception { return get_song_hotttnesss(h5, 0); }
     public static double get_song_hotttnesss(H5File h5, int songidx) throws Exception
     {    

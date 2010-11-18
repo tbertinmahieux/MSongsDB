@@ -167,6 +167,12 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/analysis/songs","audio_md5");
     } 
 
+    public static double get_danceability(H5File h5) throws Exception { return get_danceability(h5, 0); }
+    public static double get_danceability(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_double(h5,songidx,"/analysis/songs","danceability");
+    } 
+
     public static double get_duration(H5File h5) throws Exception { return get_duration(h5, 0); }
     public static double get_duration(H5File h5, int songidx) throws Exception
     {    

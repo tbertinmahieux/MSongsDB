@@ -109,6 +109,11 @@ classdef HDF5_Song_File_Reader
         res = obj.metadata.artist_name(:,songidx);
       end
       
+      function res = get_release(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.metadata.release(songidx);
+      end 
+
       function res = get_song_hotttnesss(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.metadata.song_hotttnesss(songidx);

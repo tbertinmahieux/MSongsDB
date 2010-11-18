@@ -154,6 +154,11 @@ classdef HDF5_Song_File_Reader
         res = obj.analysis.end_of_fade_in(songidx);
       end
       
+      function res = get_energy(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.analysis.energy(songidx);
+      end
+
       function res = get_key(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.key(songidx);

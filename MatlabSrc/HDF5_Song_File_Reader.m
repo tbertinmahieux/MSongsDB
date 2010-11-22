@@ -111,7 +111,7 @@ classdef HDF5_Song_File_Reader
       
       function res = get_release(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.release(songidx);
+        res = deblank(obj.metadata.release(:,songidx)');
       end 
 
       function res = get_song_id(obj,songidx)

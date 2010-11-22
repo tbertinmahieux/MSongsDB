@@ -101,12 +101,12 @@ classdef HDF5_Song_File_Reader
       
       function res = get_artist_location(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.artist_location(:,songidx);
+        res = strtrim(obj.metadata.artist_location(:,songidx));
       end
       
       function res = get_artist_name(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.artist_name(:,songidx);
+        res = strtrim(obj.metadata.artist_name(:,songidx));
       end
       
       function res = get_release(obj,songidx)
@@ -126,7 +126,7 @@ classdef HDF5_Song_File_Reader
       
       function res = get_title(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.title(:,songidx);
+        res = strtrim(obj.metadata.title(:,songidx));
       end
       
       function res = get_analysis_sample_rate(obj,songidx)
@@ -136,7 +136,7 @@ classdef HDF5_Song_File_Reader
 
       function res = get_audio_md5(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.analysis.audio_md5(songidx);
+        res = strtrim(obj.analysis.audio_md5(songidx));
       end
 
       function res = get_danceability(obj,songidx)
@@ -206,7 +206,7 @@ classdef HDF5_Song_File_Reader
 
       function res = get_track_id(obj,songidx) 
         if (nargin < 2); songidx = 1; end
-        res = obj.analysis.track_id(songidx);
+        res = strtrim(obj.analysis.track_id(songidx));
       end
       
       function res = get_segments_start(obj,songidx)

@@ -25,3 +25,153 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+import os
+import sys
+import thread
+import time
+import HDF5_utils as HDF5
+
+
+# lock to access the set of tracks being treated
+# getting a track on the lock means having put the EN id
+# of that track in the set TRACKSET
+# use: get_lock_song
+#      release_lock_song
+TRACKSET_LOCK = thread.Lock()
+TRACKSET = set()
+TRACKSET_CLOSED = False # use to end the process, nothing can get a
+                        # track lock if this is turn to True
+
+def close_trackset():
+    """
+    When terminating the thread, nothing can add anything
+    to TRACKSET anymore
+    """
+    global TRACKSET_CLOSED
+    TRACKSET_CLOSED = True
+
+def get_lock_track(trackid):
+    """
+    Get the lock for the creation of one particular file
+    Returns True if you got, False otherwise (meaning
+    someone else just got it
+    This is a blocking call.
+    """
+    got_lock = TRACKSET_LOCK.acquire(blocking=1)
+    if not got_lock:
+        print 'ERROR: could not get TRACKSET_LOCK lock?'
+        return False
+    if TRACKSET_CLOSED:
+        TRACKSET_LOCK.release()
+        return False
+    if trackid in TRACKSET:
+        TRACKSET_LOCK.release()
+        return False
+    TRACKSET.add( trackid )
+    TRACKSET_LOCK.release()
+    return True
+
+def release_lock_track(trackid):
+    """
+    Release the lock for the creation of one particular file.
+    Should always return True, unless there is a problem
+    Releasing a song that you don't have the lock on is dangerous.
+    """
+    got_lock = TRACKSET_LOCK.acquire(blocking=1)
+    if not got_lock:
+        print 'ERROR: could not get TRACKSET_LOCK lock?'
+        return False
+    if TRACKSET_CLOSED:
+        TRACKSET_LOCK.release()
+        return False
+    if not trackid in TRACKSET:
+        TRACKSET_LOCK.release()
+        print 'WARNING: releasing a song you dont own'
+        return False
+    TRACKSET.remove(trackid)
+    TRACKSET_LOCK.release()
+    return True
+        
+
+def path_from_trackid(trackid):
+    """
+    Returns the typical path, with the letters[2-3-4]
+    of the trackid (starting at 0), hence a song with
+    trackid: TRABC1839DQL4H... will have path:
+    A/B/C/TRABC1839DQL4H....h5
+    """
+    p = os.path.join(trackid[2],trackid[3])
+    p = os.path.join(p,trackid[4])
+    p = os.path.join(p,trackid+'h5')
+    return p
+
+
+def create_track_file(maindir,trackid,track,song,artist):
+    """
+    Main function to create an HDF5 song file.
+    You got to have the track, song and artist already.
+    Returns True if song was created, False otherwise.
+    False can mean another thread is already doing that song.
+    We also check whether the path exists.
+    """
+    hdf5_path = os.path.join(maindir,path_from_trackid(trackid))
+    if os.path.exists( hdf5_path ):
+        return False # file already exists, no stress
+    # lock the file
+    got_lock = get_lock_track(trackid)
+    if not got_lock:
+        return False # someone is taking care of that file
+    if os.path.exists( hdf5_path ):
+        release_lock_track(trackid)
+        return False # got the lock too late, file exists
+    # create file and fill it
+    try:
+        while True:
+            try:
+                if not os.path.isdir( os.path.split(hdf5_path)[0] ):
+                    os.makedirs( os.path.split(hdf5_path)[0] )
+                HDF5.create_song_file(hdf5_path)
+                h5 = HDF5.open_h5_file_append(hdf5_path)
+                # TODO fill from artist
+                HDF5.fill_hdf5_from_song(h5,song)
+                HDF5.fill_hdf5_from_track(h5,track)
+                # TODO billboard? lastfm?
+                h5.close()
+            except KeyboardInterrupt:
+                raise
+            # we dont panic, delete file, wait and retry
+            except Exception as e:
+                # close hdf5
+                try:
+                    h5.close()
+                except NameError,ValueError:
+                    pass
+                # delete path
+                try:
+                    os.remove( hdf5_path )
+                except IOError:
+                    pass
+                # print and wait
+                print 'ERROR creating track:',trackid
+                print e
+                print '(try again in 15 seconds)'
+                time.sleep(15)
+            release_lock_track(trackid)
+            break
+    # KeyboardInterrupt, we delete file, clean things up
+    except KeyboardInterrupt:
+        close_trackset()
+        # close hdf5
+        try:
+            h5.close()
+        except NameError,ValueError:
+            pass
+        # delete path
+        try:
+            os.remove( hdf5_path )
+        except IOError:
+            pass
+        raise
+    # IF WE GET HERE WE'RE GOOD
+    return True

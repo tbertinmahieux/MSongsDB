@@ -1,31 +1,307 @@
 <div class="post">
 <h2>FAQ</h2><br>
 <a href='#whatisindataset'>What is in the dataset?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#fields'>Fields description</a><br>
+<a href='#gettingdataset'>How to get the dataset?</a><br>
 <a href='#whatisformat'>What is the format?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#hdfwhat'>HDF what?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#utf8'>Why strings do not display properly?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#visualize'>How can I visualize a file?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#filepaths'>What are the file paths?</a><br>
 <a href='#whatcanido'>What can I do with this data?</a><br>
 <a href='#howtoorganize'>How do I get it organized?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
-<a href='#wherehelp'>Where can I get help?</a><p>
+<a href='#wherehelp'>Where can I get help?</a><br>
+<a href='http://thefullfool.files.wordpress.com/2010/09/wheres-waldo1.jpg'>Where is Waldo?</a><br>
+<a href='#getinvolved'>How can I get involved?</a><p>
 
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
 Good question, a lot of things.<p>
+
+<a name='fields'><h3>Fields description</h3></a>
+<table border="1">
+<tr>
+<th>Field name</th>
+<th>Type</th>
+<th>Description</th>
+<th>External link</th>
+</tr>
+<tr>
+<td>analysis sample rate</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist familiarity</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist hotttnesss</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist id</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist latitude</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist location</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist longitude</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>artist name</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>audio md5</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>bars confidence</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>bars start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>beats confidence</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>beats start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>danceability</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>end of fade in</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>energy</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>key</td>
+<td>int</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>key confidence</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>loudness</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>int</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>mode confidence</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>release</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>sections confidence</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>sections start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments confidence</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments loudness max</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments loudness max time</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments loudness max start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments pitches</td>
+<td>2D array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>segments timbre</td>
+<td>2D array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>song hotttnesss</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>song id</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>start of fade out</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>tatums confidence</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>tatums start</td>
+<td>array float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>tempo</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>time signature</td>
+<td>int</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>time signature confidence</td>
+<td>float</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+<tr>
+<td>track id</td>
+<td>string</td>
+<td>row 2, cell 2</td>
+<td>row 2, cell 3</td>
+</tr>
+</table><br>
+<p>
+
+<a name='gettingdataset'><h3>How to get the dataset?</h3></a>
+See section "Getting the dataset".<p>
 
 <a name='whatisformat'><h3>What is the format?</h3></a>
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
 Usually one track is one song, though we added several tracks representing
 the same song in case someone wants to measure the variability.
-In this rare case, the tracks arevery similar but not identical. A typical
+In this rare case, the tracks are very similar but not identical. A typical
 reason for this is two different releases of a same album (USA and Europe
-versions?).<br>
+versions?). Here is the list of songs that have multiple tracks and
+the code ???? used to find them.<br>
 The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.<p>
 
 <a name='hdfwhat'><h3>HDF what?</h3></a>
-HDF5! Why? Because! (regarding this, all coplains should definitely
+HDF5! Why? Because! (regarding this, all complains should definitely
 go to tb2332@columbia.edu). In short, <a href="http://www.hdfgroup.org/HDF5/">HDF5</a> 
 is a format developped by NASA to handle 1) large 2) heterogeneous 3)
 hierarchical datasets. The data can be compressed, and the I/O speed
@@ -35,8 +311,25 @@ Is is perfect? No. Does it make more sense that 1M zipped json files or
 matfiles? Yes. Still not happy? Here ????? is a python code to transform the
 data into matfiles.<p>
 
+<a name='utf8'><h3>Why strings do not display correctly?</h3></a>
+All data was downloaded in utf-8 format and was saved in the HDF5
+file in utf-8 format. Does it mean every name / release / title
+should display correctly if you set your display to utf-8? We sure
+hope so, but in practice some string with uncommon elements will never 
+be correctly recorded. Conclusion: use the strings like titles and artist
+names as indications, the real identifiers should be the musicbrainz ID
+or the echonest ID.<p>
+
+<a name='visualize'><h3>How can I visualize a file?</h3></a>
+We mean quickly glance at the content of a file.
+Once again, it depends on the language you want to use, and you
+need the HDF5 library installed (see "code" section). In python
+(with <a href='http://www.pytables.org/'>pytables</a> installed), 
+use display_songs.py????. In Java, you can use the great tool 
+<a href=http://www.hdfgroup.org/hdf-java-html/hdfview/index.html>HDFVIEW</a>.<p>
+
 <a name='filepaths'><h3>What are the file paths?</h3></a>
-We could not put a million files in one dataset. Even a few thousands
+We could not put a million files in one folder. Even a few thousands
 can slow your operating system significantly. We used the track ID
 from the Echo Nest which can be viewed as a hash code. It is always
 TR+LETTERS+LETTERS&NUMBERS. The path is the 3rd, 4th, 5th letters
@@ -61,6 +354,13 @@ authorization.<p>
 There is no mailing or user blog so far. Simply contact one
 of the creator at LabROSA or the Echo Nest, see the "contact us"
 section.<p>
+
+<a name='getinvolved'><h3>How can I get involved?</h3></a>
+Simple! Use the dataset and share your code. We will be happy
+to put it on this website. Also, put on your website the list of songs 
+(e.g. their musicbrainz id) you use when you publish something.
+With a simple list of IDs in a text file, one can recreate a test
+set in a few minutes, and compare results with his own algorithm!<p>
 
 </div>
 

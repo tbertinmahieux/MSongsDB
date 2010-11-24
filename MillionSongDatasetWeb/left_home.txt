@@ -16,7 +16,8 @@ million songs provided by the Echo Nest. <br />
 <div class="post">
 <h2>How to get started<br />
 </h2>
-<p>Get the dataset somehow. Then, look at the FAQ. Finally, we suggest
+<p>Get the dataset somehow. Then, look at the FAQ, in particular the
+list of fields. Finally, we suggest
 a set of task and give snippets of code to get you started. Don't
 hesitate to contact us for any question regarding the dataset and its
 usage.<br />

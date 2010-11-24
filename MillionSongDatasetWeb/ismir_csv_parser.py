@@ -55,12 +55,22 @@ if __name__ == '__main__':
         authors = authors[:-1] # remove last comma
         line = line[pos:]
         # get link
-        pos = string.find(line,'</a>')
-        link = line[:pos+len('</a>')]
+        pos2 = string.find(line,'</a>')
+        if pos2 < 0:
+            continue
+        link = line[:pos2+len('</a>')]
         link = string.replace(link,'";"',' ')
         link = string.replace(link,'""""','"')
-        print 'year='+year,'authors='+authors,' link =',link
+        pos1 = string.find(link,'>')
+        pos2 = string.find(link,'</a>')
+        link_start = link[:pos1]
+        link_name = link[pos1:pos2]
+        link_end = '</a>'
+        link_name = link_name.replace('";',' ')
+        link_name = link_name.replace(';"',' ')
+        print 'year='+year,'authors='+authors,' link =',link_start+link_name+link_end
         # write to file
+        link = link_start+link_name+link_end
         txt.write(authors + ', ' + link + ', ' + year + '.\n')
         # cnt
         cnt += 1

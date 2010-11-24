@@ -20,7 +20,6 @@ Bainbridge, David, <a href="http://ismir2000.ismir.net/papers/invites/bainbridge
 Bainbridge, David and McPherson, John R. and Cunningham, Sally Jo, <a href="http://ismir2002.ismir.net/proceedings/03-SP04-2.pdf">Forming a Corpus of Voice Queries for Music Information Retrieval</a>, 2002.
 Bainbridge, David and Cunningham, Sally Jo and Downie, J. Stephen, <a href="http://ismir2004.ismir.net/proceedings/p008-page-42-paper224.pdf">GREENSTONE as a Music Digital Library Toolkit</a>, 2004.
 Bainbridge, David and Cunningham, Sally Jo and Downie, J. Stephen, <a href="http://ismir2004.ismir.net/proceedings/p072-page-397-paper223.pdf">Visual Collaging Of Music In A Digital Library</a>, 2004.
-Barlas, Chris,Beating Babel;0;Identification, Metadata and Rights,INV, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2002.
 Barthélemy, Jérôme, <a href="http://ismir2001.ismir.net/pdf/barthelemy.pdf">Figured Bass and Tonality Recognition</a>, 2001.
 Basili, Roberto and Serafini, Alfredo and Stellato, Armando, <a href="http://ismir2004.ismir.net/proceedings/p092-page-505-paper239.pdf">Classification of musical genre: a machine learning approach</a>, 2004.
 Batlle, Eloi and Cano, Pedro, <a href="http://ismir2000.ismir.net/posters/batlle.pdf">Automatic Segmentation for Music Classification using Competitive Hidden Markov Models</a>, 2000.
@@ -48,7 +47,7 @@ Cambouropoulos, Emilios and Crochemore, Maxime and Iliopoulos, Costas S. and Moh
 Cannam, Chris and Landone, Christian and Sandler, Mark and Bello, Juan Pablo, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0650_Paper.pdf">The Sonic Visualizer: A Visualization Platform for Semantic Descriptors from </a>, 2006.
 Cano, Pedro and Koppenberger, Markus, <a href="http://ismir2004.ismir.net/proceedings/p085-page-466-paper253.pdf">The emergence of complex network patterns in music networks</a>, 2004.
 Cano, Pedro and Kaltenbrunner, Martin and Gouyon, Fabien and Batlle, Eloi, <a href="http://ismir2002.ismir.net/proceedings/03-SP02-6.pdf">On the Use of FastMap for Audio Retrieval and Browsing</a>, 2002.
-Cantone, Domenico and Cristofaro, Salvatore and Faro, Simone, <a href="http://ismir2005.ismir.net/proceedings/1036.pdf">On Tuning the (Î´";;"Î±)-Sequential-Sampling Algorithm for Î´-Approximate Matching with Alpha-Bounded Gaps in Musical Sequences</a>, 2005.
+Cantone, Domenico and Cristofaro, Salvatore and Faro, Simone, <a href="http://ismir2005.ismir.net/proceedings/1036.pdf">On Tuning the (Î´  Î±)-Sequential-Sampling Algorithm for Î´-Approximate Matching with Alpha-Bounded Gaps in Musical Sequences</a>, 2005.
 Cantone, Domenico and Cristofaro, Salvatore and Faro, Simone, <a href="http://ismir2005.ismir.net/proceedings/2070.pdf">Solving the (&amp delta ,&amp alpha )-Approximate Matching Problem Under Transposition Invariance in Musical Sequences</a>, 2005.
 Casagrande, Norman and Eck, Douglas and Kégl, Balázs, <a href="http://ismir2005.ismir.net/proceedings/1065.pdf">Frame-Level Audio Feature Extraction Using AdaBoost</a>, 2005.
 Casey, Michael and Slaney, Malcolm, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06177_Paper.pdf">Song Intersection by Approximate Nearest Neighbor Search </a>, 2006.
@@ -56,11 +55,9 @@ Casey, Michael and Crawford, Tim, <a href="http://ismir2004.ismir.net/proceeding
 Celma, Òscar and Cano, Pedro and Herrera-Boyer, Perfecto, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06144_Paper.pdf">An Audio Crawler Focused on Weblogs </a>, 2006.
 Celma, Òscar, <a href="http://ismir2004.ismir.net/proceedings/p079-page-433-paper186.pdf">Architecture for an MPEG-7 Web Browser</a>, 2004.
 Celma, Òscar and Ramírez, Miquel and Herrera-Boyer, Perfecto, <a href="http://ismir2005.ismir.net/proceedings/3119.pdf">Foafing the Music: A Music Recommendation System based on RSS Feeds and User Preferences</a>, 2005.
-Cemgil, A. Taylan,Bayesian Methods for Music Signal Analysis,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2006.
 Chai, Wei and Vercoe, Barry, <a href="http://ismir2000.ismir.net/posters/chai.pdf">Using User Models in Music Information Retrieval Systems</a>, 2000.
 Chai, Wei and Vercoe, Barry, <a href="http://ismir2005.ismir.net/proceedings/1041.pdf">Detection of Key Change in Classical Piano Music</a>, 2005.
 Chen, Arbee L. P., <a href="http://ismir2000.ismir.net/papers/invites/chen_invite.pdf">Music Representation, Indexing and Retrieval at NTHU</a>, 2000.
-Hsu, Jia-Lien and Chen, Arbee L. P.,Building a Platform for Performance Study of Various Music Information Retrieval Approaches,PAP,153-162 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
 Chew, Elaine and Chen, Yun-Ching, <a href="http://ismir2003.ismir.net/papers/Chew.PDF">Determining context-defining windows: Pitch spelling using the spiral array</a>, 2003.
 Chiariglione, Leonardo, <a href="http://ismir2002.ismir.net/Proceedings/02-FP08-1.pdf">Technology and Art – Putting Things in Context </a>, 2002.
 Chordia, Parag, <a href="http://ismir2005.ismir.net/proceedings/1137.pdf">Segmentation and Recognition of Tabla Strokes</a>, 2005.
@@ -74,14 +71,12 @@ Collins, Nick, <a href="http://ismir2005.ismir.net/proceedings/1008.pdf">Using a
 Cont, Arshia, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06170_Paper.pdf">Realtime Multiple Pitch Observation using Sparse Non-Negative Constraints</a>, 2006.
 Cook, Nicholas, <a href="http://ismir2005.ismir.net/proceedings/cook.pdf">Towards the complete musicologist</a>, 2005.
 Cooper, Matthew and Foote, Jonathan, <a href="http://ismir2002.ismir.net/proceedings/02-FP03-1.pdf">Automatic Music Summarization via Similarity Analysis</a>, 2002.
-Cope, David,Computer Analysis of Musical Allusions,INV, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
 Crochemore, Maxime and Iliopoulos, Costas S. and Pinzon, Yoan J. and Rytter, Wojciech, <a href="http://ismir2000.ismir.net/posters/pinzon.pdf">Finding Motifs with Gaps</a>, 2000.
 Cruz, Fernando William and Castro, Beatriz Magalhães and Alonso, Luiza Beth Nunes and Ferneda, Edilson and Cunha, Murilo Bastos da and Brandão, Márcio da Costa P., <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0661_Paper.pdf">BDB-MUS: e-music for the preservation of Brazilian Musical Heritage</a>, 2006.
 Cruz, Fernando William and Ferneda, Edilson and Brandão, Márcio da Costa P. and Costa, Evandro and Almeida, Hyggo O. de and Cunha, Murilo Bastos da and Sousa Jr., Rafael T. de and Denicol, João Ricardo E. and Silva, Carlos Alan P. da, <a href="http://ismir2004.ismir.net/proceedings/p078-page-429-paper198.pdf">A Brazilian Popular Music Oriented Digital Library For Musical Harmony E-Learning</a>, 2004.
 Cunningham, Sally Jo and Bainbridge, David and Falconer, A., <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0685_Paper.pdf">More of an Art than a Science': Supporting the Creation of Playlists and Mixes</a>, 2006.
-Cunningham, Sally Jo and Downie, J. Stephen and Bainbridge, David, <a href="http://ismir2005.ismir.net/proceedings/2124.pdf">&quot The Pain";;;"the Pain&quot : Modelling Music Information Behavior and the Songs We Hate</a>, 2005.
+Cunningham, Sally Jo and Downie, J. Stephen and Bainbridge, David, <a href="http://ismir2005.ismir.net/proceedings/2124.pdf">&quot The Pain ; the Pain&quot : Modelling Music Information Behavior and the Songs We Hate</a>, 2005.
 Dalitz, Christophe and Karsten, Thomas, <a href="http://ismir2005.ismir.net/proceedings/2012.pdf">Using the Gamera Framework for Building a Lute Tablature Recognition System</a>, 2005.
-Dannenberg, Roger B.,Music Information Retrieval as Music Understanding,INV,139-142 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
 Dannenberg, Roger B. and Hu, Ning, <a href="http://ismir2004.ismir.net/proceedings/p043-page-232-paper236.pdf">Understanding Search Performance in Query-by-Humming Systems</a>, 2004.
 Dannenberg, Roger B., <a href="http://ismir2005.ismir.net/proceedings/1030.pdf">Toward Automated Holistic Beat Tracking, Music Analysis and Understanding</a>, 2005.
 Dannenberg, Roger B. and Hu, Ning, <a href="http://ismir2002.ismir.net/proceedings/02-FP02-3.pdf">Pattern Discovery Techniques for Music Audio</a>, 2002.
@@ -105,9 +100,8 @@ Doraisamy, Shyamala C. and Rüger, Stefan M., <a href="http://ismir2001.ismir.ne
 Doraisamy, Shyamala C. and Rüger, Stefan M., <a href="http://ismir2002.ismir.net/proceedings/02-FP04-1.pdf">A Comparative and Fault-tolerance Study of the Use of N-grams with Polyphonic Music</a>, 2002.
 Doraisamy, Shyamala C. and Rüger, Stefan M., <a href="http://ismir2004.ismir.net/proceedings/p039-page-204-paper230.pdf">A Polyphonic Music Retrieval System Using N-Grams</a>, 2004.
 Dovey, Matthew J., <a href="http://ismir2001.ismir.net/pdf/dovey.pdf">A Technique for Regular Expression" Style Searching in Polyphonic Music</a>, 2001.
-Downie, J. Stephen and West, Kris and Ehmann, Andreas F. and Vincent, Emmanuel, <a href="http://ismir2005.ismir.net/proceedings/xxxx.pdf">The";2005;"Music Information retrieval Evaluation Exchange (MIREX 2005): Preliminary Overview</a>, 2005.
+Downie, J. Stephen and West, Kris and Ehmann, Andreas F. and Vincent, Emmanuel, <a href="http://ismir2005.ismir.net/proceedings/xxxx.pdf">The 2005 Music Information retrieval Evaluation Exchange (MIREX 2005): Preliminary Overview</a>, 2005.
 Downie, J. Stephen and Cunningham, Sally Jo, <a href="http://ismir2002.ismir.net/proceedings/03-SP05-4.pdf">Toward a Theory of Music Information Retrieval Queries: System Design Implications</a>, 2002.
-Downie, J. Stephen,Whither MIR Research: Thoughts about the Future,INV,219-222 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
 Downie, J. Stephen, <a href="http://ismir2003.ismir.net/papers/Downie.PDF">Toward the scientific evaluation of music information retrieval systems</a>, 2003.
 Droettboom, Michael and Fujinaga, Ichiro and MacMillan, Karl and Patton, Mark and Warner, James and Choudhury, G. Sayeed and DiLauro, Tim, <a href="http://ismir2001.ismir.net/pdf/droettboom.pdf">Expressive and Efficient Retrieval of Symbolic Musical Data</a>, 2001.
 Droettboom, Michael and Fujinaga, Ichiro, <a href="http://ismir2004.ismir.net/proceedings/p090-page-497-paper117.pdf">Micro-level groundtruthing environment for OMR</a>, 2004.
@@ -138,7 +132,6 @@ Geekie, Gordon, <a href="http://ismir2002.ismir.net/proceedings/03-SP01-1.pdf">C
 Geleijnse, Gijs and Korst, Jan, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0619_Paper.pdf">Efficient Lyrics Extraction from the Web </a>, 2006.
 Geleijnse, Gijs and Korst, Jan, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0622_Paper.pdf">Web-based Artists Categorization</a>, 2006.
 Georgaki, Anastasia and Raptis, Spyros and Bakamidis, Stelios, <a href="http://ismir2000.ismir.net/posters/georgaki.pdf">A Music Interface for Visually Impaired People in the WEDELMUSIC Environment. Design and Architecture</a>, 2000.
-Gerhard, David,User Interfaces in MIR,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2006.
 Gerhard, David, <a href="http://ismir2005.ismir.net/proceedings/1113.pdf">Pitch Track Target Deviation in Natural Singing</a>, 2005.
 Gillet, Olivier K. and Richard, Gaël, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0627_Paper.pdf">ENST-Drums: an Extensive Audio-Visual Database for Drum Signal </a>, 2006.
 Gillet, Olivier K. and Richard, Gaël, <a href="http://ismir2005.ismir.net/proceedings/1061.pdf">Drum Track Transcription of Polyphonic Music Using Noise Subspace Projection</a>, 2005.
@@ -178,7 +171,6 @@ Hirata, Keiji and Matsuda, Shu, <a href="http://ismir2002.ismir.net/proceedings/
 Hirst, David, <a href="http://ismir2004.ismir.net/proceedings/p015-page-76-paper112.pdf">An Analytical Methodology for Acousmatic Music</a>, 2004.
 Hoffman, Matt and Cook, Perry, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06167_Paper.pdf">Feature-based Synthesis: A Tool for Evaluation, Designing, and Interacting with </a>, 2006.
 Hofmann-Engl, Ludger, <a href="http://ismir2001.ismir.net/pdf/hofmann-engl.pdf">Towards a Cognitive Model of Melodic Similarity</a>, 2001.
-Hofstadter, Douglas,Variations on the Theme of Musical Similarity,INV, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2002.
 Hoos, Holger H. and Renz, Kai and Görg, Marko, <a href="http://ismir2001.ismir.net/pdf/hoos.pdf">GUIDO/MIR – An Experimental Musical Information Retrieval System based on GUIDO Music Notation</a>, 2001.
 Holmes, Robyn and Ayres, Marie-Louise, <a href="http://ismir2004.ismir.net/proceedings/p003-page-15-paper125.pdf">MusicAustralia: towards a national music information infrastructure</a>, 2004.
 Homburg, Helge and Mierswa, Ingo and Möller, Bülent and Morik, Katharina and Wurst, Michael, <a href="http://ismir2005.ismir.net/proceedings/2117.pdf">A Benchmark Dataset for Audio Classification and Clustering</a>, 2005.
@@ -203,20 +195,20 @@ Jehan, Tristan, <a href="http://ismir2004.ismir.net/proceedings/p025-page-124-pa
 Jensen, Kristoffer and Xu, Jieping and Zachariasen, Martin, <a href="http://ismir2005.ismir.net/proceedings/1031.pdf">Rhythm-Based Segmentation of Popular Chinese Music</a>, 2005.
 Jin, Hui and Jagadish, H. V., <a href="http://ismir2002.ismir.net/proceedings/02-FP01-3.pdf">Indexing Hidden Markov Models for Music Retrieval</a>, 2002.
 Jones, Steve and Cunningham, Sally Jo and Jones, Matt, <a href="http://ismir2004.ismir.net/proceedings/p082-page-447-paper221.pdf">Organizing digital music for use: an examination of personal music collections</a>, 2004.
-Lemström, Kjell and Perttu, Sami, <a href="http://ismir2000.ismir.net/papers/lemstrom_paper.pdf">SEMEX";0;"An efficient Music Retrieval Prototype</a>, 2000.
+Lemström, Kjell and Perttu, Sami, <a href="http://ismir2000.ismir.net/papers/lemstrom_paper.pdf">SEMEX 0 An efficient Music Retrieval Prototype</a>, 2000.
 Kameoka, Hirokazu and Nishimoto, Takuya and Sagayama, Shigeki, <a href="http://ismir2005.ismir.net/proceedings/1130.pdf">Harmonic-Temporal Clustering via Deterministic Annealing EM Algorithm for Audio Feature Extraction</a>, 2005.
 Kapur, Ajay and Singer, Eric, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06137_Paper.pdf">A Retrieval Approach for Human/Robot Music Performance</a>, 2006.
 Kapur, Ajay and McWalter, Richard I. and Tzanetakis, George, <a href="http://ismir2005.ismir.net/proceedings/1109.pdf">New Music Interfaces for Rhythm-Based Retrieval</a>, 2005.
 Karydis, Ioannis and Nanopoulos, Alexandros and Papadopoulos, Apostolos N. and Katsaros, Dimitrios and Manolopoulos, Yannis, <a href="http://ismir2005.ismir.net/proceedings/1039.pdf">Content-Based Music Information Retrieval in Wireless Ad-Hoc Networks</a>, 2005.
 Kiernan, Francis J., <a href="http://ismir2000.ismir.net/posters/kiernan.pdf">Score-based Style Recognition Using Artificial Neural Networks</a>, 2000.
 Kilian, Jürgen and Hoos, Holger H., <a href="http://ismir2004.ismir.net/proceedings/p007-page-38-paper229.pdf">MusicBLAST --Gapped Sequence Alignment for MIR</a>, 2004.
-Kilian, Jürgen and Hoos, Holger H., <a href="http://ismir2002.ismir.net/proceedings/02-FP01-6.pdf">Voice Separation";0;"A Local Optimization Approach</a>, 2002.
+Kilian, Jürgen and Hoos, Holger H., <a href="http://ismir2002.ismir.net/proceedings/02-FP01-6.pdf">Voice Separation 0 A Local Optimization Approach</a>, 2002.
 Kim, Ja-Young and Belkin , Nicholas J., <a href="http://ismir2002.ismir.net/proceedings/02-FP07-2.pdf">Categories of Music Description and Search Terms and Phrases Used by Non-Music Experts</a>, 2002.
 Kim, Youngmoo E. and Williamson, Donald S. and Pilli, Sridhar, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06172_Paper.pdf">Understanding and Quantifying the “Album Effect” in Artist Identification</a>, 2006.
 Kim, Youngmoo E. and Chai, Wei and Garcia, Ricardo and Vercoe, Barry, <a href="http://ismir2000.ismir.net/posters/kim.pdf">Analysis of a Contour-based Representation for Melody </a>, 2000.
 Kim, Youngmoo E. and Whitman, Brian, <a href="http://ismir2002.ismir.net/proceedings/02-FP05-3.pdf">Singer Identification in Popular Music using Voice Coding Features</a>, 2002.
 Kirlin, Phillip B. and Utgoff, Paul E., <a href="http://ismir2005.ismir.net/proceedings/1097.pdf">VOISE: Learning to Segregate Voices in Explicit and Implicit Polyphony</a>, 2005.
-Kitahara, Tetsuro and Goto, Masataka and Komatani, Kazunori and Ogata, Tetsuya and Okuno, Hiroshi G., <a href="http://ismir2005.ismir.net/proceedings/1098.pdf">Instrument Identification in Polyphonic Music: Feature Weighting with Mixed Sounds";;;"Pitch-Dependent Timbre Modeling";;;"and Use of Musical Context</a>, 2005.
+Kitahara, Tetsuro and Goto, Masataka and Komatani, Kazunori and Ogata, Tetsuya and Okuno, Hiroshi G., <a href="http://ismir2005.ismir.net/proceedings/1098.pdf">Instrument Identification in Polyphonic Music: Feature Weighting with Mixed Sounds ; Pitch-Dependent Timbre Modeling ; and Use of Musical Context</a>, 2005.
 Klapuri, Anssi, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06125_Paper.pdf">Multiple Fundamental Frequency Estimation by summing Harmonic Amplitudes</a>, 2006.
 Knees, Peter and Pampalk, Elias and Widmer, Gerhard, <a href="http://ismir2004.ismir.net/proceedings/p094-page-517-paper211.pdf">Artist Classification with Web-Based Data</a>, 2004.
 Knees, Peter and Schedl, Markus and Widmer, Gerhard, <a href="http://ismir2005.ismir.net/proceedings/1059.pdf">Multiple Lyrics Alignment: Automatic Retrieval of Song Lyrics</a>, 2005.
@@ -227,9 +219,9 @@ van Kranenburg, Peter, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0693_Pape
 Krishnaswamy, Arvindh, <a href="http://ismir2004.ismir.net/proceedings/p063-page-345-paper219.pdf">Melodic Atoms for Transcribing Carnatic Music</a>, 2004.
 Kröger, Pedro, <a href="http://ismir2004.ismir.net/proceedings/p080-page-437-paper189.pdf">CsoundXML: a meta-language in XML for sound synthesis</a>, 2004.
 Kurth, Frank and Gehrmann, Thorsten and Müller, Meinard, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0621_Paper.pdf">The Cyclic Beat Spectrum: Tempo-Related Audio Features for Time-Scale </a>, 2006.
-Kurth, Frank and Müller, Meinard and Damm, David and Fremerey, Christian and Ribbrock, Andreas and Clausen, Michael, <a href="http://ismir2005.ismir.net/proceedings/1025.pdf">Syncplayer";0;"An Advanced System for Multimodal Music Access</a>, 2005.
+Kurth, Frank and Müller, Meinard and Damm, David and Fremerey, Christian and Ribbrock, Andreas and Clausen, Michael, <a href="http://ismir2005.ismir.net/proceedings/1025.pdf">Syncplayer 0 An Advanced System for Multimodal Music Access</a>, 2005.
 Kurth, Frank and Müller, Meinard and Ribbrock, Andreas and Röder, Tido and Damm, David and Fremerey, Christian, <a href="http://ismir2004.ismir.net/proceedings/p006-page-34-paper132.pdf">A Prototypical Service for Real-Time Access to Local Context-Based Music Information</a>, 2004.
-Kuuskankare, Mika and Laurson, Mikael, <a href="http://ismir2004.ismir.net/proceedings/p012-page-58-paper210.pdf">Expressive Notation Package";0;"an Overview</a>, 2004.
+Kuuskankare, Mika and Laurson, Mikael, <a href="http://ismir2004.ismir.net/proceedings/p012-page-58-paper210.pdf">Expressive Notation Package 0 an Overview</a>, 2004.
 Kuuskankare, Mika and Laurson, Mikael, <a href="http://ismir2005.ismir.net/proceedings/1086.pdf">Annotating Musical Scores in ENP</a>, 2005.
 Lai, Catherine and Li, Beinan and Fujinaga, Ichiro, <a href="http://ismir2005.ismir.net/proceedings/1090.pdf">Preservation Digitization of David Edelberg's Handel LP Collection: A Pilot Project</a>, 2005.
 Lampropoulos, Aristomenis S. and Lampropoulou, Paraskevi S. and Tsihrintzis, George A., <a href="http://ismir2005.ismir.net/proceedings/1079.pdf">Musical Genre Classification Enhanced by Improved Source Separation Technique</a>, 2005.
@@ -261,7 +253,6 @@ Liang, Wei and Zhang, Shuwu and Xu, Bo, <a href="http://ismir2005.ismir.net/proc
 Lidy, Thomas and Rauber, Andreas, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06131_Paper.pdf">Visually Profiling Radio Stations </a>, 2006.
 Lidy, Thomas and Rauber, Andreas, <a href="http://ismir2005.ismir.net/proceedings/1033.pdf">Evaluation of Feature Extractors and Psycho-Acoustic Transformations for Music Genre Classification</a>, 2005.
 Lin, Karen and Bell, Tim, <a href="http://ismir2000.ismir.net/posters/linbell_fullpaper.pdf">Integrating Paper and Digital Music Information Systems</a>, 2000.
-Lindsay, Adam and Kim, Youngmoo E.,Adventures in Standardization, or, How We Learned to Stop Worrying and Love MPEG-7,INV,195-196 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
 Liu, Dan and Lu, Lie and Zhang, Hong-Jiang, <a href="http://ismir2003.ismir.net/papers/Liu.PDF">Automatic mood detection from acoustic music data</a>, 2003.
 Livshin, Arie and Rodet, Xavier, <a href="http://ismir2003.ismir.net/papers/Livshin.PDF">The importance of cross database evaluation in musical instrument sound classification: A critical approach</a>, 2003.
 Livshin, Arie and Rodet, Xavier, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06124_Paper.pdf">The Significance of the Non-Harmonic “Noise” Versus the Harmonic Series </a>, 2006.
@@ -313,18 +304,17 @@ Müller, Meinard and Kurth, Frank and Röder, Tido, <a href="http://ismir2004.is
 Muñoz-Expósito, J.E. and Garcia-Galón, S. and Ruiz-Reyes, N. and Vera-Candeas, P. and Rivas-Peña, F., <a href="http://ismir2005.ismir.net/proceedings/2027.pdf">Speech/Music Discrimination Using a Single Warped LPC-Based Feature</a>, 2005.
 Nakano, Tomoyasu and Ogata, Jun and Goto, Masataka and Hiraga, Yuzuru, <a href="http://ismir2004.ismir.net/proceedings/p100-page-550-paper157.pdf">A Drum Pattern Retrieval Method by Voice Percussion</a>, 2004.
 Nesbit, Andrew and Hollenberg, Lloyd and Senyard, Anthony, <a href="http://ismir2004.ismir.net/proceedings/p059-page-326-paper245.pdf">Towards Automatic Transcription of Australian Aboriginal Music</a>, 2004.
-Neumayer, Robert and Dittenbach, Michael and Rauber, Andreas, <a href="http://ismir2005.ismir.net/proceedings/1096.pdf">PlaySOM and PocketSOMPlayer";;;"Alternative Interfaces to Large Music Collections</a>, 2005.
+Neumayer, Robert and Dittenbach, Michael and Rauber, Andreas, <a href="http://ismir2005.ismir.net/proceedings/1096.pdf">PlaySOM and PocketSOMPlayer ; Alternative Interfaces to Large Music Collections</a>, 2005.
 Neve, Giovanna and Orio, Nicola, <a href="http://ismir2004.ismir.net/proceedings/p041-page-216-paper181.pdf">Indexing and Retrieval of Music Documents through Pattern Analysis and Data Fusion Techniques</a>, 2004.
 Neve, Giovanna and Orio, Nicola, <a href="http://ismir2005.ismir.net/proceedings/2122.pdf">Experiments on Segmentation Techniques for Music Documents Indexing</a>, 2005.
 Nichols, Eric and Raphael, Christopher, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06122_Paper.pdf">Globally Optimal Audio Partitioning</a>, 2006.
 Nishimura, Takuichi and Hashiguchi, Hiroki and Takita, Junko and Zhang, J. Xin and Goto, Masataka and Oka, Ryuichi, <a href="http://ismir2001.ismir.net/pdf/nishimura.pdf">Music Signal Spotting Retrieval by a Humming Query Using Start Frame Feature Dependent Continuous Dynamic Programming</a>, 2001.
 Noland, Katy and Sandler, Mark, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0691_Paper.pdf">Key Estimation Using a Hidden Markov Model</a>, 2006.
-Noll, Thomas and Garbers, Jörg and Höthker, Karin and Spevak, Christian and Weyde, Tillman, <a href="http://ismir2002.ismir.net/proceedings/03-SP04-3.pdf">Opuscope";0;"Towards a Corpus-Based Music Repository</a>, 2002.
+Noll, Thomas and Garbers, Jörg and Höthker, Karin and Spevak, Christian and Weyde, Tillman, <a href="http://ismir2002.ismir.net/proceedings/03-SP04-3.pdf">Opuscope 0 Towards a Corpus-Based Music Repository</a>, 2002.
 Novello, Alberto and McKinney, Martin F. and Kohlrausch, Armin, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06148_Paper.pdf">Perceptual Evaluation of Music Similarity</a>, 2006.
 Ó Maidín, Donncha S. and Cahill, Margaret, <a href="http://ismir2001.ismir.net/pdf/omaidin.pdf">Score Processing For MIR</a>, 2001.
 Oliver, Nuria and Kreger-Stickles, Lucas, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06162_Paper.pdf">PAPA: Physiology and Purpose-Aware Automatic Playlist Generation</a>, 2006.
 Olson, Tod A. and Downie, J. Stephen, <a href="http://ismir2003.ismir.net/papers/Olson.PDF">Chopin early editions: The construction and usage of a collection of digital scores</a>, 2003.
-Olson, Tod A.,Building Chopin Early Editions [Presentation,INV, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2003.
 Orio, Nicola and Sette, M. Sisti, <a href="http://ismir2003.ismir.net/papers/Orio.PDF">An HMM-based pitch tracker for audio queries</a>, 2003.
 Pachet, François and Laigre, Damien, <a href="http://ismir2001.ismir.net/pdf/pachet.pdf">A Naturalist Approach to Music File Name Analysis</a>, 2001.
 Pachet, François and Zils, Aymeric, <a href="http://ismir2004.ismir.net/proceedings/p065-page-353-paper177.pdf">Automatic extraction of music descriptors from acoustic signals</a>, 2004.
@@ -348,7 +338,6 @@ Pauws, Steffen, <a href="http://ismir2003.ismir.net/papers/Pauws.PDF">Effects of
 Pauws, Steffen, <a href="http://ismir2004.ismir.net/proceedings/p019-page-96-paper142.pdf">Musical key extraction from audio</a>, 2004.
 Pauws, Steffen and Eggen, Berry, <a href="http://ismir2002.ismir.net/proceedings/02-FP07-4.pdf">PATS: Realization and User Evaluation of an Automatic Playlist Generator</a>, 2002.
 Pauws, Steffen and van der Wijdeven, Sander, <a href="http://ismir2005.ismir.net/proceedings/1029.pdf">User Evaluation of a New Interactive Playlist Generation Concept</a>, 2005.
-Pedersen, Charlotte,Digital Sheet Music;0;The Danish Collaborative Project,INV,15-15 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2003.
 Pedro, Jose and Tarasov, Vadim and Batlle, Eloi and Guaus, Enric and Masip, Jaume, <a href="http://ismir2004.ismir.net/proceedings/p061-page-337-paper174.pdf">Industrial audio fingerprinting distributed system with CORBA and Web Services</a>, 2004.
 Peeters, Geoffroy, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06134_Paper.pdf">Chroma-based Estimation of Musical Key from Audio-Signal Analysis</a>, 2006.
 Peeters, Geoffroy, <a href="http://ismir2005.ismir.net/proceedings/2076.pdf">Rhythm Classification Using Spectral Rhythm Patterns</a>, 2005.
@@ -365,7 +354,6 @@ Pikrakis, Aggelos and Antonopoulos, Iasonas and Theodoridis, Sergios, <a href="h
 Pikrakis, Aggelos and Theodoridis, Sergios, <a href="http://ismir2005.ismir.net/proceedings/1044.pdf">A Novel HMM Approach to Melody Spotting in Raw Audio Recordings</a>, 2005.
 Pohle, Tim and Knees, Peter and Schedl, Markus and Widmer, Gerhard, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0684_Paper.pdf">Independent Component Analysis for Music Similarity Computation</a>, 2006.
 Poliner, Graham E. and Ellis, Daniel P. W., <a href="http://ismir2005.ismir.net/proceedings/1107.pdf">A Classification Approach to Melody Transcription</a>, 2005.
-Haus, Goffredo and Pollastri, Emanuele,An Audio Front End for Query-by-Humming Systems,PAP,65-72 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
 Pollastri, Emanuele, <a href="http://ismir2002.ismir.net/proceedings/03-SP03-5.pdf">Some Considerations About Processing Singing Voice for Music Retrieval</a>, 2002.
 Pugin, Laurent, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06152_Paper.pdf">Optical Music Recognition of Early Typographic Prints using Hidden Markov Models</a>, 2006.
 Raphael, Christopher, <a href="http://ismir2005.ismir.net/proceedings/1127.pdf">A Graphical Model for Recognizing Sung Melodies</a>, 2005.
@@ -374,7 +362,6 @@ Raphael, Christopher, <a href="http://ismir2002.ismir.net/proceedings/02-FP01-2.
 Raphael, Christopher, <a href="http://ismir2004.ismir.net/proceedings/p070-page-387-paper171.pdf">A Hybrid Graphical Model for Aligning Polyphonic Audio with Musical Scores</a>, 2004.
 Raphael, Christopher, <a href="http://ismir2004.ismir.net/proceedings/p071-page-395-paper176.pdf">Demonstration of Music Plus One'--- a System for Orchestral Musical Accompanimen</a>, 2004.
 Raphael, Christopher and Stoddard, Josh, <a href="http://ismir2003.ismir.net/papers/Raphael.PDF">Harmonic analysis with probabilistic graphical models</a>, 2003.
-Raskin, Jef,Making Machines Palatable,INV, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
 Rauber, Andreas and Pampalk, Elias and Merkl, Dieter, <a href="http://ismir2002.ismir.net/proceedings/02-FP02-4.pdf">Using Psycho-Acoustic Models and Self-Organizing Maps to Create a Hierarchical Structuring of Music by Musical Styles</a>, 2002.
 Reed, Jeremy and Lee, Chin-Hui, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06104_Paper.pdf">A Study on Music Genre Classification Based on Universal Acoustic Models </a>, 2006.
 Reiss, Joshua D. and Sandler, Mark, <a href="http://ismir2004.ismir.net/proceedings/p005-page-28-paper133.pdf">Audio Issues In MIR Evaluation</a>, 2004.
@@ -397,16 +384,16 @@ Scaringella, Nicolas and Zoia, Giorgio, <a href="http://ismir2005.ismir.net/proc
 Schedl, Markus and Pohle, Tim and Knees, Peter and Widmer, Gerhard, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0641_Paper.pdf">Assigning and Visualizing Music Genres by Web-based Co-Occurance Analysis</a>, 2006.
 Schedl, Markus and Knees, Peter and Widmer, Gerhard, <a href="http://ismir2005.ismir.net/proceedings/1054.pdf">Discovering and Visualizing Prototypical Artists by Web-Based Co-Occurrence Analysis</a>, 2005.
 Scherle, Ryan and Byrd, Donald, <a href="http://ismir2004.ismir.net/proceedings/p089-page-489-paper241.pdf">The Anatomy of a Bibliographic Search System for Music</a>, 2004.
-Schimmelpfennig, Jochen and Kurth, Frank, <a href="http://ismir2000.ismir.net/posters/schimmelpfennig.pdf">MCML";0;"Music Contents Markup Language </a>, 2000.
+Schimmelpfennig, Jochen and Kurth, Frank, <a href="http://ismir2000.ismir.net/posters/schimmelpfennig.pdf">MCML 0 Music Contents Markup Language </a>, 2000.
 Schreier, Eric, <a href="http://ismir2002.ismir.net/Proceedings/02-FP08-5.pdf">About this Business of Metadata</a>, 2002.
 Schwartz, Baron, <a href="http://ismir2003.ismir.net/papers/Schwartz.PDF">Music Notation as a MEI Feasability Test</a>, 2003.
 Schwenninger, Jochen and Brueckner, Raymond and Willett, Daniel and Hennecke, Marcus, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0699_Paper.pdf">Language Identification in Vocal Music</a>, 2006.
-Seeger, Anthony, <a href="http://ismir2003.ismir.net/papers/Seeger.PDF">&quot I Found It, How Can I Use It?&quot";;0;"Dealing With the Ethical and Legal Constraints of Information Access</a>, 2003.
+Seeger, Anthony, <a href="http://ismir2003.ismir.net/papers/Seeger.PDF">&quot I Found It, How Can I Use It?&quot ;0 Dealing With the Ethical and Legal Constraints of Information Access</a>, 2003.
 Seifert, Frank and Rasch, Katharina and Rentzsch, Michael, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0675_Paper.pdf">Tempo Induction by Stream-Based Evaluation of Musical Events</a>, 2006.
 Seifert, Frank and Benn, Wolfgang, <a href="http://ismir2003.ismir.net/papers/Seifert.PDF">Music identification by leadsheets: Converging perceptive and productive musical principles for estimation of semantic similarity of musical documents</a>, 2003.
 Selfridge-Field, Eleanor, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0625_Paper.pdf">Social Cognition and Melodic Persistence: Where Metadata and Content Diverge</a>, 2006.
 Selfridge-Field, Eleanor, <a href="http://ismir2000.ismir.net/papers/invites/selfridge_invite.pdf">What Motivates a Musical Query?</a>, 2000.
-Seppänen, Jarno and Eronen, Antti and Hiipakka, Jarmo, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0683_Paper.pdf">Joint Beat &amp";;"Tatum Tracking from Music Signals</a>, 2006.
+Seppänen, Jarno and Eronen, Antti and Hiipakka, Jarmo, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR0683_Paper.pdf">Joint Beat &amp  Tatum Tracking from Music Signals</a>, 2006.
 Shalev-Shwartz, Shai and Keshet, Joseph and Singer, Yoram, <a href="http://ismir2004.ismir.net/proceedings/p069-page-381-paper140.pdf">Learning to Align Polyphonic Music</a>, 2004.
 Sheh, Alexander and Ellis, Daniel P. W., <a href="http://ismir2003.ismir.net/papers/Sheh.PDF">Chord segmentation and recognition using EM-trained hidden markov models</a>, 2003.
 Shifrin, Jonah B. and Birmingham, William P., <a href="http://ismir2003.ismir.net/papers/Shifrin.PDF">Effectiveness of HMM-based retrieval on large databases</a>, 2003.
@@ -445,7 +432,6 @@ Turnbull, Douglas and Barrington, Luke and Lanckriet, Gert, <a href="http://ismi
 Typke, Rainer and Wiering, Frans and Veltkamp, Remco C., <a href="http://ismir2004.ismir.net/proceedings/p053-page-281-paper120.pdf">A search method for notated polyphonic music with pitch and tempo fluctuations</a>, 2004.
 Typke, Rainer and Wiering, Frans and Veltkamp, Remco C., <a href="http://ismir2005.ismir.net/proceedings/1020.pdf">A Survey of Music Information Retrieval Systems</a>, 2005.
 Typke, Rainer and Giannopoulos, Panos and Veltkamp, Remco C. and Wiering, Frans and van Oostrum, René, <a href="http://ismir2003.ismir.net/papers/Typke.PDF">Using transportation distances for measuring melodic similarity</a>, 2003.
-Tzanetakis, George and Martins, Luis Gustavo,MIR for Audio Signals using Marsyas 0.2,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2006.
 Tzanetakis, George and Essl, Georg and Cook, Perry, <a href="http://ismir2001.ismir.net/pdf/tzanetakis.pdf">Automatic Musical Genre Classification of Audio Signals</a>, 2001.
 Tzanetakis, George and Kapur, Ajay and Benning, Manj, <a href="http://ismir2004.ismir.net/proceedings/p034-page-170-paper217.pdf">Query-by-Beat-Boxing: Music Retrieval For The DJ</a>, 2004.
 Tzanetakis, George and Ermolinskiy, Andrey and Cook, Perry, <a href="http://ismir2002.ismir.net/proceedings/02-FP01-5.pdf">Pitch Histograms in Audio and Symbolic Music Information Retrieval</a>, 2002.
@@ -507,7 +493,7 @@ Mesaros, Annamaria and Virtanen, Tuomas and Klapuri, Anssi, <a href="http://ismi
 Little, David and Raffensperger, David and Pardo, Bryan,tp://ismir2007.ismir.net/proceedings/ISMIR2007_p335_little.pdf>A Query by Humming System that Learns from Experience</a>,POS, <a href=http://www.ismir.net/proceedings/index.php?table_name=publications&function=details&where_field=ID&where_value=8">335-338</a>, 2007.
 Peng, Wei and Li, Tao and Ogihara, Mitsunori, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p027_peng.pdf">Music Clustering with Constraints</a>, 2007.
 Serrà, Joan, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p319_serra.pdf">A Qualitative Assessment of Measures for the Evaluation of a Cover Song Identification System</a>, 2007.
-Leitich, Stefan and Topf, Martin, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p167_leitich.pdf">Globe of Music";0;"Music Library Visualization Using Geosom</a>, 2007.
+Leitich, Stefan and Topf, Martin, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p167_leitich.pdf">Globe of Music 0 Music Library Visualization Using Geosom</a>, 2007.
 Torres, David and Turnbull, Douglas and Barrington, Luke and Lanckriet, Gert, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p405_torres.pdf">Identifying Words that are Musically Meaningful</a>, 2007.
 İzmirli, Özgür, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p195_izmirli.pdf">Localized Key Finding from Audio Using Nonnegative Matrix Factorization for Segmentation</a>, 2007.
 Cunningham, Sally Jo and Bainbridge, David and McKay, Dana, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p083_cunningham.pdf">Finding New Music: A Diary Study of Everyday Encounters with Novel Songs</a>, 2007.
@@ -539,7 +525,7 @@ Geleijnse, Gijs and Schedl, Markus and Knees, Peter, <a href="http://ismir2007.i
 Anglade, Amélie and Tiemann, Marco and Vignoli, Fabio, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p095_anglade.pdf">Virtual Communities for Creating Shared Music Channels</a>, 2007.
 Deliège, François and Pedersen, Torben Bach, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p021_deliege.pdf">Fuzzy Song Sets for Music Warehouses</a>, 2007.
 Levy, Mark and Sandler, Mark, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p411_levy.pdf">A Semantic Space for Music Derived from Social Tags</a>, 2007.
-Aucouturier, Jean-Julien and Pachet, François and Roy, Pierre and Beurivé, Anthony, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p425_aucouturier.pdf">Signal";0;"Context = Better Classification</a>, 2007.
+Aucouturier, Jean-Julien and Pachet, François and Roy, Pierre and Beurivé, Anthony, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p425_aucouturier.pdf">Signal 0 Context = Better Classification</a>, 2007.
 Rhodes, Christophe and Casey, Michael, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p041_rhodes.pdf">Algorithms for Determining and Labelling Approximate Hierarchical Self-Similarity</a>, 2007.
 Mauch, Matthias and Dixon, Simon and Harte, Christopher and Casey, Michael and Fields, Benjamin, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p255_mauch.pdf">Discovering Chord Idioms Through Beatles and Real Book Songs</a>, 2007.
 Pugin, Laurent and Burgoyne, John Ashley and Fujinaga, Ichiro, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p513_pugin.pdf">MAP Adaptation to Improve Optical Music Recognition of Early Music Documents Using Hidden Markov Models</a>, 2007.
@@ -559,7 +545,7 @@ Diet, Jürgen and Kurth, Frank, <a href="http://ismir2007.ismir.net/proceedings/
 Karydis, Ioannis and Nanopoulos, Alexandros and Papadopoulos, Apostolos N. and Cambouropoulos, Emilios, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p445_karydis.pdf">VISA: The Voice Integration/Segregation Algorithm</a>, 2007.
 Craft, Alastair J. D. and Wiggins, Geraint A. and Crawford, Tim, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p073_craft.pdf">How Many Beans Make Five? The Consensus Problem in Music-Genre Classification and a New Evaluation Method for Single-Genre Categorisation Systems</a>, 2007.
 Turnbull, Douglas and Liu, Ruoran and Barrington, Luke and Lanckriet, Gert, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p535_turnbull.pdf">A Game-Based Approach for Collecting Semantic Annotations of Music</a>, 2007.
-Paulus, Jouni and Klapuri, Anssi, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p225_paulus.pdf">Combining Temporal and Spectral Features in HMM-Based";;"Drum Transcription</a>, 2007.
+Paulus, Jouni and Klapuri, Anssi, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p225_paulus.pdf">Combining Temporal and Spectral Features in HMM-Based  Drum Transcription</a>, 2007.
 Turnbull, Douglas and Lanckriet, Gert and Pampalk, Elias and Goto, Masataka, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p051_turnbull.pdf">A Supervised Approach for Detecting Boundaries in Music Using Difference Features and Boosting</a>, 2007.
 Fujihara, Hiromasa and Goto, Masataka, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p467_fujihara.pdf">A Music Information Retrieval System Based on Singing Voice Timbre</a>, 2007.
 Tzanetakis, George and Jones, Randy and McNally, Kirk, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p441_tzanetakis.pdf">Stereo Panning Features for Classifying Recording Production Style</a>, 2007.
@@ -576,9 +562,9 @@ Lebosse, Jerome and Brun, Luc, <a href="http://ismir2007.ismir.net/proceedings/I
 Wei, Bin and Zhang, Chengliang and Ogihara, Mitsunori, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p121_wei.pdf">Keyword Generation for Lyrics</a>, 2007.
 Hu, Xiao and Bay, Mert and Downie, J. Stephen, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p309_hu.pdf">Creating a Simplified Music Mood Classification Ground-Truth Set</a>, 2007.
 McEnnis, Daniel and Cunningham, Sally Jo, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p185_mcennis.pdf">Sociology and Music Recommendation Systems</a>, 2007.
-Proutskova, Polina, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p161_proutskova.pdf">Musical Memory of the World";0;"Data Infrastructure in Ethnomusicological Archives</a>, 2007.
+Proutskova, Polina, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p161_proutskova.pdf">Musical Memory of the World 0 Data Infrastructure in Ethnomusicological Archives</a>, 2007.
 Cao, Chuan and Li, Ming and Liu, Jian and Yan, Yonghong, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p373_cao.pdf">Singing Melody Extraction in Polyphonic Music by Harmonic Tracking</a>, 2007.
-Knees, Peter, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p177_knees.pdf">Search & Select";0;"Intuitively Retrieving Music from Large Collections</a>, 2007.
+Knees, Peter, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p177_knees.pdf">Search & Select 0 Intuitively Retrieving Music from Large Collections</a>, 2007.
 Weyde, Tillman and Wissmann, Jens and Neubarth, Kerstin, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p287_weyde.pdf">An Experiment on the Role of Pitch Intervals in Melodic Segmentation</a>, 2007.
 Eck, Douglas and Bertin-Mahieux, Thierry and Lamere, Paul, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p367_eck.pdf">Autotagging Music Using Supervised Machine Learning</a>, 2007.
 Gruhne, Matthias and Dittmar, Christian and Schmidt, Konstantin, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p369_gruhne.pdf">Phoneme Recognition in Popular Music</a>, 2007.
@@ -601,7 +587,7 @@ Pohle, Tim and Knees, Peter and Schedl, Markus and Widmer, Gerhard, <a href="htt
 Al Kasimi, Alia and Nichols, Eric and Raphael, Christopher, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p355_kasimi.pdf">A Simple Algorithm for Automatic Generation of Polyphonic Piano Fingerings</a>, 2007.
 Fremerey, Christian and Kurth, Frank and Müller, Meinard and Clausen, Michael, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p131_fremerey.pdf">A Demonstration of the SyncPlayer System</a>, 2007.
 Jensen, Jesper Højvang and Ellis, Daniel P. W. and Christensen, Mads G. and Jensen, Søren Holdt, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p107_jensen.pdf">Evaluation of Distance Measures Between Gaussian Mixture Models of MFCCs</a>, 2007.
-Kuuskankare, Mika and Laurson, Mikael, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p289_kuuskankare.pdf">Vivo";0;"Visualizing Harmonic Progressions and Voice-Leading in PWGL</a>, 2007.
+Kuuskankare, Mika and Laurson, Mikael, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p289_kuuskankare.pdf">Vivo 0 Visualizing Harmonic Progressions and Voice-Leading in PWGL</a>, 2007.
 Moreau, Arnaud and Flexer, Arthur, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p353_moreau.pdf">Drum Transcription in Polyphonic Music Using Non-Negative Matrix Factorisation</a>, 2007.
 Skowronek, Janto and McKinney, Martin F. and van de Par, Steven, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p345_skowronek.pdf">A Demonstrator for Automatic Music Mood Estimation</a>, 2007.
 Hamanaka, Masatoshi and Hirata, Keiji and Tojo, Satoshi, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p285_hamanaka.pdf">ATTA: Implementing GTTM on a Computer</a>, 2007.
@@ -618,38 +604,8 @@ Knopke, Ian and Byrd, Donald, <a href="http://ismir2007.ismir.net/proceedings/IS
 Govaerts, Sten and Corthaut, Nik and Duval, Erik, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p347_govaerts.pdf">Mood-ex-Machina: Towards Automation of Moody Tunes</a>, 2007.
 Dressler, Karin and Streich, Sebastian, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_p357_dressler.pdf">Tuning Frequency Estimation Using Circular Statistics</a>, 2007.
 Lartillot, Olivier, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_tutorial_Lartillot.pdf">Introduction to the MIRtoolbox</a>, 2007.
-Cope, David,Computer Analysis of Musical Allusions,INV,83-84 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
-Dunn, Jon W. and Davidson, Mary Wallace and Isaacson, Eric J.,Indiana University Digital Music Library Project: An Update,PAP,137-138 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Aucouturier, Jean-Julien and Sandler, Mark,Using Long-Term Structure to Retrieve Music: Representation and Matching,POS,1-2 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Cano, Pedro and Kaltenbrunner, Martin and Mayor, Oscar and Batlle, Eloi,Statistical Significance in Song-Spotting in Audio,POS,3-4 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Downie, J. Stephen,Music Information Retrieval Annotated Bibliography Website Project, Phase I,POS,5-7 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Fernström, Mikael and Ó Maidín, Donncha,Computer-supported Browsing for MIR,POS,9-10 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Lemström, Kjell and Wiggins, Geraint A. and Meredith, David,A Three-Layer Approach for Music Retrieval in Large Databases,POS,13-14 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-MacMillan, Karl and Droettboom, Michael and Fujinaga, Ichiro,Gamera: A Structured Document Recognition Application Development Environment,POS,15-16 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Mazzoni, Dominic and Dannenberg, Roger B.,Melody Matching Directly from Audio,POS,17-18 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-McPherson, John R. and Bainbridge, David,Usage of the MELDEX Digital Music Library,POS,19-20 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Nam, Unjung and Berger, Jonathan,Addressing the Same but different;0;different but similar problem in automatic music classification,POS,21-22 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Politis, D. and Linardis, P. and Kotopoulos, H. and Alygiazakis, A.,Musical Information Retrieval for Delta and Neumatic Systems,POS,23-24 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
-Rand, William and Birmingham, William P.,Statistical Analysis in Music Information Retrieval,POS,25-26 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2001.
-Rolland, Pierre-Yves,Adaptive User Modelling in a Content-Based Music Retrieval System,POS,27-30 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Smith, Lloyd and Medina, Richard,Discovering Themes by Exact Pattern Matching,POS,31-32 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Sorsa, Timo and Huopaniemi, Jyri,Melodic Resolution in Music Retrieval,POS,33-34 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2001.
-Spevak, Christian and Polfreman, Richard,Sound Spotting;0;a Frame-Based Approach,POS,35-36 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
-Yang, Cheng,Music Database Retrieval Based on Spectral Similarity,POS,37-38 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2001.
 Gouyon, Fabien and Dixon, Simon, <a href="http://ismir2006.ismir.net/PAPERS/ISMIR06Gouyon-Tutorial.pdf">Computational Rhythm Description</a>, 2006.
-Peeters, Geoffroy and Assayag, Gérard,Digital Music Representations,TUT,311-312 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2002.
-Tzanetakis, George,Music Information Retrieval for Audio Signals,TUT,313-314 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2002.
-Dubnov, Shlomo,Modern Methods for Statistical Audio Signal Processing and Characterization,TUT,315-316 and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2002.
-Futrelle, Joe and Downie, J. Stephen,Music IR 101: A Survey Tutorial,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2003.
-Tzanetakis, George,Music Information Retrieval for Audio Signals,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2003.
-Chen, Arbee L. P.,Music IR 201: Music Retrieval and Analysis,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2003.
-Selfridge-Field, Eleanor and Sapp, Craig Stuart,Sound, Symbol, and Idea: Three Approaches to Music Query,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2003.
-Cunningham, Sally Jo and Bainbridge, David,Machine Learning for Music Information Retrieval,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2004.
-Amatriain, Xavier and Tzanetakis, George,Software Frameworks for Analysis of Audio and Music Signals,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and ;, ;, 2004.
 Chew, Elaine, <a href="http://ismir2004.ismir.net/download/ec-2004ismirTutorial.pdf">Musical Knowledge, Computational Models and Retrieval</a>, 2004.
-Atlas, Dalia and Chew, Elaine,Music Background,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2005.
-Pampalk, Elias and Baumann, Stephan,Music Similarity and Visualization for Music IR,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and , ;, 2005.
-Celma, Òscar and Lamere, Paul,Music Recommendation,TUT, and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and  and, ;, 2007.
 Hirata, Keiji and Tojo, Satoshi and Hamanaka, Masatoshi, <a href="http://ismir2007.ismir.net/proceedings/ISMIR2007_tutorial_hirata.pdf">Techniques for Implementing the Generative Theory of Tonal Music</a>, 2007.
 McKay, Cory and Fujinaga, Ichiro, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_259.pdf">Combining Features Extracted From Audio, Symbolic and Cultural Sources</a>, 2008.
 Rabbat, Patrick and Pachet, François, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_135.pdf">Direct and Inverse Inference in Music Databases: How to Make a Title Funk?</a>, 2008.
@@ -672,7 +628,7 @@ Hashida, Mitsuyo and Matsui, Toshie and Katayose, Haruhiro, <a href="http://ismi
 Ramirez, Rafael and Perez, Alfonso and Maestre, Esteban and Kersten, Stefan, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_136.pdf">Performer Identification in Celtic Violin Recordings</a>, 2008.
 Inskip, Charlie and Macfarlane, Andy and Rafferty, Pauline, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_117.pdf">Music, Movies and Meaning: Communication in Film-Makers' Search for Pre-Existing Music, and the Implications for Music Information Retrieval</a>, 2008.
 Downie, J. Stephen and Bay, Mert and Ehmann, Andreas F. and Jones,;;M. Cameron, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_265.pdf">Audio Cover Song Identification: MIREX 2006-2007 Results and Analyses</a>, 2008.
-Hu, Xiao and Downie, J. Stephen and Laurier, Cyril and Bay, Mert and Ehmann, Andreas F., <a href="http://ismir2008.ismir.net/papers/ISMIR2008_263.pdf">The";2007;"MIREX Audio Mood Classification Task: Lessons Learned</a>, 2008.
+Hu, Xiao and Downie, J. Stephen and Laurier, Cyril and Bay, Mert and Ehmann, Andreas F., <a href="http://ismir2008.ismir.net/papers/ISMIR2008_263.pdf">The 2007 MIREX Audio Mood Classification Task: Lessons Learned</a>, 2008.
 Winget, Megan, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_268.pdf">The Liner Notes Digitization Project: Providing Users With Cultural, Historical, and Critical Music Information</a>, 2008.
 Silla Jr., Carlos N. and Koerich, Alessandro L. and Kaestner, Celso A. A., <a href="http://ismir2008.ismir.net/papers/ISMIR2008_106.pdf">The Latin Music Database</a>, 2008.
 Doll, Travis and Migneco, Raymond and Kim, Youngmoo, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_246.pdf">Online Activities for Music Information and Acoustics Education and Psychoacoustic Data Collection</a>, 2008.
@@ -744,8 +700,8 @@ Zhang, Xinglin and Gerhard, David, <a href="http://ismir2008.ismir.net/papers/IS
 Scholz, Ricardo and Ramalho, Geber, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_200.pdf">Cochonut: Recognizing Complex Chords From MIDI Guitar Sequences</a>, 2008.
 Lamere, Paul and Pampalk, Elias, <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Social Tags and Music Information Retrieval</a>, 2008.
 Selfridge-Field, Eleanor and Sapp, Craig, <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Survey of Symbolic Data for Music Applications</a>, 2008.
-Dubnov, Shlomo, <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Computational Temporal Aesthetics";;"Relation Between Surprise, Salience and Aesthetics in Music and Audio Signals</a>, 2008.
-Wang, Ge and Fiebrink, Rebecca and Cook, Perry R., <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Music Information Retrieval in ChucK";;"Real-Time Prototyping for MIR Systems & Performance</a>, 2008.
+Dubnov, Shlomo, <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Computational Temporal Aesthetics  Relation Between Surprise, Salience and Aesthetics in Music and Audio Signals</a>, 2008.
+Wang, Ge and Fiebrink, Rebecca and Cook, Perry R., <a href="http://ismir2008.ismir.net/info/tutorials.pdf">Music Information Retrieval in ChucK  Real-Time Prototyping for MIR Systems & Performance</a>, 2008.
 Bamberger, Jeanne, <a href="http://ismir2008.ismir.net/info/talk_bamberger.pdf">Human Music Retrieval: Noting Time</a>, 2008.
 Tymoczko, Dmitri, <a href="http://ismir2008.ismir.net/info/talk_tymoczko.pdf">The Geometry of Consonance</a>, 2008.
 Pierre-Manzagol, Antoine and Bertin-Mahieux, Thierry and Eck, Douglas, <a href="http://ismir2008.ismir.net/papers/ISMIR2008_261.pdf">On the Use of Sparse Time-Relative Auditory Codes for Music</a>, 2008.
@@ -776,7 +732,7 @@ Suzuki, Masafumi and Kawagoe, Kyoji, <a href="http://ismir2009.ismir.net/proceed
 Raphael, Christopher and Gu, Yupeng, <a href="http://ismir2009.ismir.net/proceedings/LBD-13.pdf">Orchestral Accompaniment for a Reproducing Piano</a>, 2009.
 Junker, Christian and Knees, Peter, <a href="http://ismir2009.ismir.net/proceedings/LBD-11.pdf">Disc-JoQey: A Semi-Automatic Application to Segment and Tag Recordings from Vinyls</a>, 2009.
 Lee, Tan and Yeung, Y. T. and Suman, Senapati and Lee, Y. S. W. and Mak, C. M. and Lam, W. K. and Xia, Yunqing and Zheng, Nengheng and Chan, Alex, <a href="http://ismir2009.ismir.net/proceedings/LBD-12.pdf">DJX: A Content-Based Recommendation System for Chinese Pop Songs</a>, 2009.
-Garbers, Jörg and van Kranenburg, Peter, <a href="http://ismir2009.ismir.net/proceedings/LBD-10.pdf">Bridging Music Information Retrieval and Folk Song Research";0;"The Computational Setup of the WITCHCRAFT Project</a>, 2009.
+Garbers, Jörg and van Kranenburg, Peter, <a href="http://ismir2009.ismir.net/proceedings/LBD-10.pdf">Bridging Music Information Retrieval and Folk Song Research 0 The Computational Setup of the WITCHCRAFT Project</a>, 2009.
 Schmidt, Erik and Kim, Youngmoo , <a href="http://ismir2009.ismir.net/proceedings/LBD-9.pdf">Projection of Acoustic Features to Continuous Valence-Arousal Mood Labels via Regression</a>, 2009.
 Serrà, Joan, <a href="http://ismir2009.ismir.net/proceedings/LBD-8.pdf">Assessing the Results of a Cover Song Identification System with coverSSSSearch</a>, 2009.
 Peeters, Geoffroy and Deruty, Emmanuel, <a href="http://ismir2009.ismir.net/proceedings/LBD-7.pdf">Toward Music Structure Annotation</a>, 2009.
@@ -840,7 +796,7 @@ Lukashevich, Hanna and Abeßer, Jakob and Dittmar, Christian and Grossmann, Holg
 Abeßer, Jakob and Lukashevich, Hanna and Dittmar, Christian and Schuller, Gerald, <a href="http://ismir2009.ismir.net/proceedings/PS3-11.pdf">Genre Classification Using Bass-Related High-Level Features and Playing Styles</a>, 2009.
 Hu, Diane J. and Saul, Lawrence K., <a href="http://ismir2009.ismir.net/proceedings/PS3-9.pdf">A Probabilistic Topic Model for Unsupervised Learning of Musical Key-Profiles</a>, 2009.
 Tidhar, Dan and Fazekas, György and Kolozali, Sefki and Sandler, Mark, <a href="http://ismir2009.ismir.net/proceedings/PS3-10.pdf">Publishing Music Similarity Features on the Semantic Web</a>, 2009.
-Thompson, Jessica and McKay, Cory and Burgoyne, John Ashley and Fujinaga, Ichiro, <a href="http://ismir2009.ismir.net/proceedings/PS3-8.pdf">Additions and Improvements to the ACE";2;"Music Classifier</a>, 2009.
+Thompson, Jessica and McKay, Cory and Burgoyne, John Ashley and Fujinaga, Ichiro, <a href="http://ismir2009.ismir.net/proceedings/PS3-8.pdf">Additions and Improvements to the ACE 2 Music Classifier</a>, 2009.
 Maxwell, James B. and Pasquier, Philippe and Eigenfeldt, Arne, <a href="http://ismir2009.ismir.net/proceedings/PS3-7.pdf">Hierarchical Sequential Memory for Music: A Cognitive Model</a>, 2009.
 Kirlin, Phillip B., <a href="http://ismir2009.ismir.net/proceedings/PS3-6.pdf">Using Harmonic and Melodic Analyses to Automate the Initial Stages of Schenkerian Analysis</a>, 2009.
 Xu, Xin and Naito, Masaki and Kato, Tsuneo and Kawai, Hisashi, <a href="http://ismir2009.ismir.net/proceedings/PS3-5.pdf">Robust and Fast Lyric Search Based on Phonetic Confusion Matrix</a>, 2009.
@@ -862,7 +818,7 @@ Heittola, Toni and Klapuri, Anssi and Virtanen, Tuomas, <a href="http://ismir200
 Fuhrmann, Ferdinand and Haro, Martín and Herrera, Perfecto, <a href="http://ismir2009.ismir.net/proceedings/OS3-1.pdf">Scalability, Generality and Temporal Aspects in Automatic Recognition of Predominant Musical Instruments in Polyphonic Music</a>, 2009.
 Bay, Mert and Ehmann, Andreas F. and Downie, J. Stephen, <a href="http://ismir2009.ismir.net/proceedings/PS2-21.pdf">Evaluation of Multiple-F0 Estimation and Tracking Systems</a>, 2009.
 Cancela, Pablo and Rocamora, Martín and López, Ernesto, <a href="http://ismir2009.ismir.net/proceedings/PS2-20.pdf">An Efficient Multi-Resolution Spectral Transform for Music Analysis</a>, 2009.
-McKay, Cory and Burgoyne, John Ashley and Thompson, Jessica and Fujinaga, Ichiro, <a href="http://ismir2009.ismir.net/proceedings/PS2-19.pdf">Using ACE XML";2;"to Store and Share Feature, Instance and Class Data for Musical Classification</a>, 2009.
+McKay, Cory and Burgoyne, John Ashley and Thompson, Jessica and Fujinaga, Ichiro, <a href="http://ismir2009.ismir.net/proceedings/PS2-19.pdf">Using ACE XML 2 to Store and Share Feature, Instance and Class Data for Musical Classification</a>, 2009.
 Dannenberg, Roger B. and Wasserman, Larry, <a href="http://ismir2009.ismir.net/proceedings/PS2-18.pdf">Estimating the Error Distribution of a Tap Sequence without Ground Truth</a>, 2009.
 Hamanaka, Masatoshi and Tojo, Satoshi, <a href="http://ismir2009.ismir.net/proceedings/PS2-17.pdf">Interactive GTTM Analyzer</a>, 2009.
 Rafii, Zafar and Pardo, Bryan, <a href="http://ismir2009.ismir.net/proceedings/PS2-16.pdf">Learning to Control a Reverberator Using Subjective Perceptual Descriptors</a>, 2009.
@@ -883,7 +839,7 @@ Hsu, Chao-Ling and Chen, Liang-Yu and Jang, Jyh-Shing Roger and Li, Hsing-Ji, <a
 Grosche, Peter and Müller, Meinard, <a href="http://ismir2009.ismir.net/proceedings/OS2-3.pdf">A Mid-Level Representation for Capturing Dominant Tempo and Pulse Information in Music Recordings</a>, 2009.
 Lübbers, Dominik and Jarke, Matthias, <a href="http://ismir2009.ismir.net/proceedings/PS2-1.pdf">Adaptive Multimodal Exploration of Music Collections</a>, 2009.
 Chordia, Parag and Rae, Alex, <a href="http://ismir2009.ismir.net/proceedings/OS2-2.pdf">Using Source Separation to Improve Tempo Detection</a>, 2009.
-Juhász, Zoltán, <a href="http://ismir2009.ismir.net/proceedings/PS1-20.pdf">Motive Identification in";22;"Folksong Corpora Using Dynamic Time Warping and Self Organizing Maps</a>, 2009.
+Juhász, Zoltán, <a href="http://ismir2009.ismir.net/proceedings/PS1-20.pdf">Motive Identification in 22 Folksong Corpora Using Dynamic Time Warping and Self Organizing Maps</a>, 2009.
 Gruhne, Matthias and Dittmar, Christian and Gaertner, Daniel, <a href="http://ismir2009.ismir.net/proceedings/OS2-1.pdf">Improving Rhythmic Similarity Computation by Beat Histogram Transformations</a>, 2009.
 Santoro, Christopher A. and Cheng, Corey I., <a href="http://ismir2009.ismir.net/proceedings/PS1-19.pdf">Multiple F0 Estimation in the Transform Domain</a>, 2009.
 Karydis, Ioannis and Nanopoulos, Alexandros and Gabriel, Hans-Henning and Spiliopoulou, Myra, <a href="http://ismir2009.ismir.net/proceedings/PS1-18.pdf">Tag-Aware Spectral Clustering of Music Items</a>, 2009.
@@ -1034,7 +990,7 @@ Cuthbert, Michael Scott and Ariza, Christopher, <a href="http://ismir2010.ismir.
 Paulus, Jouni and Müller, Meinard and Klapuri, Anssi, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-107.pdf">State of the Art Report: Audio-Based Music Structure Analysis</a>, 2010.
 Hu, Xiao and Downie, J. Stephen, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-106.pdf">When Lyrics Outperform Audio for Music Mood Classification: A Feature Analysis</a>, 2010.
 Schuller, Björn and Kozielski, Christoph and Weninger, Felix and Eyben, Florian and Rigoll, Gerhard, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-105.pdf">Vocalist Gender Recognition in Recorded Popular Music</a>, 2010.
-Vigliensoni, Gabriel and McKay, Cory and Fujinaga, Ichiro, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-104.pdf">Using jWebMiner";2;"to Improve Music Classification Performance by Combining Different Types of Features Mined from the Web</a>, 2010.
+Vigliensoni, Gabriel and McKay, Cory and Fujinaga, Ichiro, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-104.pdf">Using jWebMiner 2 to Improve Music Classification Performance by Combining Different Types of Features Mined from the Web</a>, 2010.
 Laplante, Audrey, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-103.pdf">Users’ Relevance Criteria in Music Retrieval in Everyday Life: An Exploratory Study</a>, 2010.
 Lagrange, Mathieu and Serrà, Joan, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-102.pdf">Unsupervised Accuracy Improvement for Cover Song Detection Using Spectral Connectivity Network</a>, 2010.
 Eyben, Florian and Böck, Sebastian and Schuller, Björn and Graves, Alex, <a href="http://ismir2010.ismir.net/proceedings/ismir2010-101.pdf">Universal Onset Detection with Bidirectional Long Short-Term Memory Neural Networks</a>, 2010.

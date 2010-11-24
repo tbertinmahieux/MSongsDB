@@ -127,7 +127,7 @@ def create_track_file(maindir,trackid,track,song,artist):
         return False # got the lock too late, file exists
     # create file and fill it
     try:
-        while True:
+        while True: # try until we make it work!
             try:
                 if not os.path.isdir( os.path.split(hdf5_path)[0] ):
                     os.makedirs( os.path.split(hdf5_path)[0] )

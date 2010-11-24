@@ -1,8 +1,13 @@
 <div class="post">
-<h2>FAQ</h2><p>
-What is in the dataset?<p>
-What is the format?<p>
-What can I do with this data?<p>
+<h2>FAQ</h2><br>
+<a href='#whatisindataset'>What is in the dataset?</a><br>
+<a href='#whatisformat'>What is the format?</a><br>
+What can I do with this data?<br>
+How do I get it organized?<br>
 What is the licensing?<p>
+<a name='whatisindataset'><h3>What is in the dataset?</h3></a>
+Good question, a lot of things.
+<a name='whatisformat'><h3>What is the format?</h3></a>
+HDF5! Why? Because!
 </div>
 

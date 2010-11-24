@@ -29,8 +29,8 @@ MATLAB requires no additional libraries. We created the basic getters
 through this class.
 
 <h3>Java</h3>
-You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. Read the README file, but the class hdf5_getters.java is
-a stand-alone library.
+You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. Read the README file, but the class hdf5_getters.java should give
+you all you need.
 
 <h3>C/C++</h3>
 We do not have these wrappers for the moment. That being said, HDF5 is

@@ -33,6 +33,7 @@ if __name__ == '__main__':
     cnt = 0
 
     csv = open(csvpath,'r')
+    txt = open(txtpath,'w')
     csv.readline() # skip header
     for line in csv.xreadlines():
         if line == '' or line.strip() == '':
@@ -52,11 +53,19 @@ if __name__ == '__main__':
         authors = string.replace(authors,';;;',' and ')
         authors = string.replace(authors,'"','')
         authors = authors[:-1] # remove last comma
-        #line = line[pos:]
-        print 'year='+year,'authors='+authors,' line =',line
+        line = line[pos:]
+        # get link
+        pos = string.find(line,'</a>')
+        link = line[:pos+len('</a>')]
+        link = string.replace(link,'";"',' ')
+        link = string.replace(link,'""""','"')
+        print 'year='+year,'authors='+authors,' link =',link
+        # write to file
+        txt.write(authors + ', ' + link + ', ' + year + '.\n')
         # cnt
         cnt += 1
 
     csv.close()
+    txt.close()
 
     print cnt,'proper paper found!'

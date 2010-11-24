@@ -2,35 +2,65 @@
 <h2>FAQ</h2><br>
 <a href='#whatisindataset'>What is in the dataset?</a><br>
 <a href='#whatisformat'>What is the format?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#hdfwhat'>HDF what?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#filepaths'>What are the file paths?</a><br>
 <a href='#whatcanido'>What can I do with this data?</a><br>
 <a href='#howtoorganize'>How do I get it organized?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><p>
 
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
-Good question, a lot of things.
+Good question, a lot of things.<p>
 
 <a name='whatisformat'><h3>What is the format?</h3></a>
-HDF5! Why? Because!
+Each file represents one track with all the related information
+(artist information, release information, audio analysis of the track, etc).
+Usually one track is one song, though we added several tracks representing
+the same song in case someone wants to measure the variability.
+In this rare case, the tracks arevery similar but not identical. A typical
+reason for this is two different releases of a same album (USA and Europe
+versions?).<br>
+The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.<p>
+
+<a name='hdfwhat'><h3>HDF what?</h3></a>
+HDF5! Why? Because! (regarding this, all coplains should definitely
+go to tb2332@columbia.edu). In short, <a href="http://www.hdfgroup.org/HDF5/">HDF5</a> 
+is a format developped by NASA to handle 1) large 2) heterogeneous 3)
+hierarchical datasets. The data can be compressed, and the I/O speed
+is impressive. Also note that the core library comes free of charge and
+wrappers exist in most languages (see "code" section).<br>
+Is is perfect? No. Does it make more sense that 1M zipped json files or
+matfiles? Yes. Still not happy? Here ????? is a python code to transform the
+data into matfiles.<p>
+
+<a name='filepaths'><h3>What are the file paths?</h3></a>
+We could not put a million files in one dataset. Even a few thousands
+can slow your operating system significantly. We used the track ID
+from the Echo Nest which can be viewed as a hash code. It is always
+TR+LETTERS+LETTERS&NUMBERS. The path is the 3rd, 4th, 5th letters
+from the track ID, the file itself is named after its track ID + the
+extension ".h5".<p>
 
 <a name='whatcanido'><h3>What can I do with this data?</h3></a>
 Surprise us! But you might want a take a look at the "tasks"
 section to get inspired. You will also find there some snippets
-of code that let's you easily crawl through the whole data.
+of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
-Gordon!
+Gordon!<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
 GNU Public License? If you're a researcher and want to publish,
 you are fine. If you are a company and want to experiment on the
 dataset, contact the Echo Nest, we will probably give you the
-authorization.
+authorization.<p>
 
 <a name='wherehelp'><h3>Where can I get help?</h3></a>
 There is no mailing or user blog so far. Simply contact one
 of the creator at LabROSA or the Echo Nest, see the "contact us"
-page
+section.<p>
 
 </div>
 

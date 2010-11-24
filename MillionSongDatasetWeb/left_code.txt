@@ -1,7 +1,9 @@
 <div class="post">
 <h2>General / Requirements</h2><p>
 All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>.<p>
-HDF5 library available <a href="http://www.hdfgroup.org/downloads/">here</a>.
+Files are in HDF5 format. Why? See FAQ.
+You need the HDF5 library to use the dataset 
+<a href="http://www.hdfgroup.org/downloads/">here</a>.
 Other requirements depend on the language you use, see the foillowing
 section.<p>
 We believe that more than 90% of the researchers using the dataset will not

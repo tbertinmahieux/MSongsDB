@@ -1,0 +1,3 @@
+echo 'rsyncing to columbia'
+echo 'please enter password to cunix.columbia.edu:'
+rsync -avz . tb2332@cunix.columbia.edu:public_html/MillionSongDataset

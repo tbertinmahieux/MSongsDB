@@ -1,0 +1,16 @@
+<div class="post">
+<h2>About the Million Song Dataset</h2><p>
+Most questions should be addressed to <a href=http://www.columbia.edu/~tb2332/>Thierry Bertin-Mahieux</a> at tb2332@columbia.edu<p>
+Below are the participant names per organization. The links on the side should help you find them.<p>
+<b>LabROSA</b>: Daniel P.W. Ellis and Thierry Bertin-Mahieux<p>
+<b>EchoNest</b>: Brian Whitman and Paul Lamere
+<br />
+</div>
+<div class="post">
+<h2>How to cite the dataset<br /></h2>
+<p>
+Please cite us using the following publication:
+<br />
+</p>
+</div>
+

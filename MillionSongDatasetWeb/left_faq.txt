@@ -1,0 +1,8 @@
+<div class="post">
+<h2>FAQ</h2><p>
+What is in the dataset?<p>
+What is the format?<p>
+What can I do with this data?<p>
+What is the licensing?<p>
+</div>
+

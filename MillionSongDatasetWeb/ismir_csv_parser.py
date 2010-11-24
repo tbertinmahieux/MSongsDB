@@ -66,6 +66,7 @@ if __name__ == '__main__':
         link_start = link[:pos1]
         link_name = link[pos1:pos2]
         link_end = '</a>'
+        link_name = link_name.replace('";;;"',', ')
         link_name = link_name.replace('";',' ')
         link_name = link_name.replace(';"',' ')
         print 'year='+year,'authors='+authors,' link =',link_start+link_name+link_end

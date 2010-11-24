@@ -1,11 +1,39 @@
 <div class="post">
-<h2>Requirements</h2><p>
+<h2>General / Requirements</h2><p>
+All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>.<p>
 HDF5 library available <a href="http://www.hdfgroup.org/downloads/">here</a>.
 Other requirements depend on the language you use, see the foillowing
-section
+section.<p>
+We believe that more than 90% of the researchers using the dataset will not
+need to understand the structure of the HDF5 files. Therefore, the wrappers
+below simply provide getters to the different fields saved in each file.
+If you really want to speed things up and want to play with HDF5, we
+have some code to aggregate many files into one (thus saving on IO operations!).
+Want to dig deeper? All our code is open source, the HDF5 file descriptors
+are available in python, see the latter section on Dataset Creation.
+
 </div>
 <div class="post">
 <h2>Wrappers</h2><p>
+<h3>Python</h3>
+The HDF5 wrapper in python is <a href="http://www.pytables.org/moin">pytables</a>.
+If you just want to use the HDF5 provided in the dataset, the file
+hdf5_getters.py should be enough. If you want a deeper understanding of the
+dataset, or want to combine many files into one, see the section on
+dataset creation below. All our work was done in python.
+
+<h3>Matlab</h3>
+MATLAB requires no additional libraries. We created the basic getters
+through this class.
+
+<h3>Java</h3>
+You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. Read the README file, but the class hdf5_getters.java is
+a stand-alone library.
+
+<h3>C/C++</h3>
+We do not have these wrappers for the moment. That being said, HDF5 is
+a C library and we have some testing code in C++, it is definitely feasible.
+If you need these for your application, let us know, we'll work on it!
 
 </div>
 <div class="post">

@@ -19,7 +19,18 @@
   
   <script language="javascript" src="clientSideInclude.js">
   </script>
-</head><body onload="clientSideInclude('left', 'left_home.txt');">
+  
+  <script language="javascript" src="randomIsmirPaper.js">
+  </script>
+  
+  <script type="text/javascript">
+         function mainLoad()
+         {
+           clientSideInclude('left', 'left_home.txt');
+	   randomIsmirPaper();
+         }
+  </script>
+</head><body onload="mainLoad();">
 <br />
 
 <div id="wrapper">
@@ -34,8 +45,10 @@
   <li><a onclick="clientSideInclude('left','left_home.txt');" href="#">
     <span id="home">Home</span></a></li>
   <li><a onclick="clientSideInclude('left','left_getting.txt'); " href="#"> <span id="getting">Getting the dataset</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_code.txt');" href="#"> <span id="code">Code</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_tasks.txt');" href="#"> <span id="tasks">Tasks</span></a></li>
+  <li><a onclick="clientSideInclude('left','left_code.txt');" href="#">
+    <span id="code">Code</span></a></li>
+  <li><a onclick="clientSideInclude('left','left_tasks.txt');" href="#">
+    <span id="tasks">Tasks</span></a></li>
   <li><a onclick="clientSideInclude('left','left_faq.txt');" href="#"> <span id="faq">FAQ</span></a></li>
   <li><a onclick="clientSideInclude('left','left_contactus.txt');" href="#"> <span id="contactus">Contact Us / Cite the dataset</span></a></li>
 </ul>
@@ -60,7 +73,9 @@
 </p>
 <h2>Main Contact</h2>
 <p><b>Thierry Bertin-Mahieux</b>, tb2332@columbia.edu</p>
-</div>
+<h2>Random ISMIR Paper</h2>
+<span id="randomismir">
+</span></div>
 </div>
 <div id="footer">
 <p class="copyright">Copyright © 2006 Sitename.com. Template Designed

@@ -2,12 +2,35 @@
 <h2>FAQ</h2><br>
 <a href='#whatisindataset'>What is in the dataset?</a><br>
 <a href='#whatisformat'>What is the format?</a><br>
-What can I do with this data?<br>
-How do I get it organized?<br>
-What is the licensing?<p>
+<a href='#whatcanido'>What can I do with this data?</a><br>
+<a href='#howtoorganize'>How do I get it organized?</a><br>
+<a href='#whatlicense'>What is the licensing?</a><br>
+<a href='#wherehelp'>Where can I get help?</a><p>
+
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
 Good question, a lot of things.
+
 <a name='whatisformat'><h3>What is the format?</h3></a>
 HDF5! Why? Because!
+
+<a name='whatcanido'><h3>What can I do with this data?</h3></a>
+Surprise us! But you might want a take a look at the "tasks"
+section to get inspired. You will also find there some snippets
+of code that let's you easily crawl through the whole data.
+
+<a name='howtoorganize'><h3>How do I get it organized?</h3></a>
+Gordon!
+
+<a name='whatlicense'><h3>What is the licensing?</h3></a>
+GNU Public License? If you're a researcher and want to publish,
+you are fine. If you are a company and want to experiment on the
+dataset, contact the Echo Nest, we will probably give you the
+authorization.
+
+<a name='wherehelp'><h3>Where can I get help?</h3></a>
+There is no mailing or user blog so far. Simply contact one
+of the creator at LabROSA or the Echo Nest, see the "contact us"
+page
+
 </div>
 

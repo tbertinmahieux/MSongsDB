@@ -21,7 +21,7 @@ audio features and tags, therefore is a good set to compare algorithms
 on such tasks.<p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>
-This a simple supervised task easy to set up with the dataset.
+This is a simple supervised task easy to set up with the dataset.
 From audio features, probably "segments_timbre", and possibly some
 other information like "energy", "danceability", etc, try to predict
 the year or decade when this song was released.<p>

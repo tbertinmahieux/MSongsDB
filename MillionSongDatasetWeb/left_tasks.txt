@@ -8,12 +8,36 @@ information / link to your code / new results, please send us an email!
 <ol>
 <li><a href="#automatictagging">Automatic tagging</a></li>
 <li><a href="#yearrecognition">Year recognition</a></li>
-<li>Imputation of missing data</li>
-<li>Artist name, release, song title analysis</li>
+<li><a href="#imputation">Imputation of missing data</a></li>
+<li><a href="#nameanalysis">Artist name, release, song title analysis</a></li>
 </ol>
-<a name='automatictagging'><b>Automatic Tagging</b></a><p>
-Bonjour!
-<p>
-<a name='yearrecognition'><b>Year recognition</b></a><p>
-allo
+<a name='automatictagging'><h3>Automatic tagging</h3></a>
+<a href="http://scholar.google.com/scholar?q=ismir+automatic+tagging">
+Automatic tagging</a> of audio is the association of appropriate
+keywords to some specific sound segment. In MIR research, this class
+can encompass "music genre recognition", "mood detection", and
+some aspects of "audio scene analysis". This dataset provides
+audio features and tags, therefore is a good set to compare algorithms
+on such tasks.<p>
+
+<a name='yearrecognition'><h3>Year recognition</h3></a>
+This a simple supervised task easy to set up with the dataset.
+From audio features, probably "segments_timbre", and possibly some
+other information like "energy", "danceability", etc, try to predict
+the year or decade when this song was released.<p>
+
+<a name='imputation'><h3>Imputation of missing data</h3></a>
+Imputation of missing data in time series is
+<a href="http://scholar.google.com/scholar?hl=en&q=interpolation+missing+values+audio+data">well-known</a>.
+Recently, we have studied imputation of beat-aligned
+chroma features ???? using Echo Nest data. The Million Song
+Dataset can easily be use to further experiment with this task.
+Code available here ????.<p>
+
+<a name='nameanalysis'><h3>Artist name, release, song title analysis</h3></a>
+Many analysis of the metadata is possible. How do the words of the artist
+names or their song titles cluster? Can we predict tags based on that, or
+is the clustering similar? What is "the most typical song title"
+imagineable.<p>
+
 </div>

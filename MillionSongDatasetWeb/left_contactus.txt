@@ -9,8 +9,9 @@ Below are the participant names per organization. The links on the side should h
 <div class="post">
 <h2>How to cite the dataset<br /></h2>
 <p>
-Please cite us using the following publication:
-<br />
-</p>
+Please cite us using the following publication:<p>
+
+Until then:<br>
+Million Song Dataset, url
 </div>
 

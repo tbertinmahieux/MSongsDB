@@ -308,7 +308,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
     h5.close()
 
 
-def create_summary_file(h5filename,title='H5 Song File',force=False):
+def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows=1000,complevel=1):
     """
     Create a new HDF5 file for all songs.
     It will contains everything except the length-variable tables,
@@ -317,6 +317,12 @@ def create_summary_file(h5filename,title='H5 Song File',force=False):
     If force=False, refuse to overwrite an existing file
     Raise a ValueError if it's the case.
     Other optional param is the H5 file.
+    DETAILS
+    - if you create a very large file, try to approximate correctly
+      the number of data points (songs), it speeds things up with arrays (by
+      setting the chunking correctly).
+    - we set the compression level to 1 by default, it uses the ZLIB library
+      to disable compression, set it to 0
 
     Setups the groups, each containing a table 'songs' with one row:
     - metadata
@@ -328,29 +334,47 @@ def create_summary_file(h5filename,title='H5 Song File',force=False):
             raise ValueError('file exists, can not create HDF5 song file')
     # create the H5 file
     h5 = tables.openFile(h5filename, mode='w', title='H5 Song File')
+    # set filter level
+    h5.filters = tables.Filters(complevel=complevel,complib='zlib')
     # setup the groups and tables
         # group metadata
     group = h5.createGroup("/",'metadata','metadata about the song')
-    table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song')
+    table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song',
+                           expectedrows=expectedrows)
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
-    table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
+    table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song',
+                           expectedrows=expectedrows)
         # group analysis arrays
     h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
-    h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE)
-    h5.createEArray(group,'segments_pitches',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_PITCHES)
-    h5.createEArray(group,'segments_timbre',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_TIMBRE)
-    h5.createEArray(group,'segments_loudness_max',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
-    h5.createEArray(group,'segments_loudness_max_time',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
-    h5.createEArray(group,'segments_loudness_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
-    h5.createEArray(group,'sections_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_START)
-    h5.createEArray(group,'sections_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_CONFIDENCE)
-    h5.createEArray(group,'beats_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_START)
-    h5.createEArray(group,'beats_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_CONFIDENCE)
-    h5.createEArray(group,'bars_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_START)
-    h5.createEArray(group,'bars_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_CONFIDENCE)
-    h5.createEArray(group,'tatums_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_START)
-    h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE)
+    h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'segments_pitches',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_PITCHES,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'segments_timbre',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_TIMBRE,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'segments_loudness_max',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'segments_loudness_max_time',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'segments_loudness_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_START,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'sections_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_START,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'sections_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_CONFIDENCE,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'beats_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_START,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'beats_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_CONFIDENCE,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'bars_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_START,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'bars_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_CONFIDENCE,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'tatums_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_START,
+                    expectedrows=expectedrows*300)
+    h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE,
+                    expectedrows=expectedrows*300)
         # group path
     group = h5.createGroup("/",'path','paths to HDF5 files of the songs')
     table = h5.createTable(group,'songs',DESC.SongPath,'table of paths for songs')

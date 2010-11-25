@@ -103,8 +103,8 @@ def do_json_call(url,filename=''):
     try:
         d = eval(data)
     except SyntaxError as e:
-        print e,', result message was:'
-        print data
+        #print e,', result message was:'
+        #print data
         return None
     # return dictionary
     return d
@@ -152,9 +152,8 @@ def from_one_chart(chartid):
     if TURTLE:
         time.sleep(.6)
     url = 'http://api.billboard.com/apisvc/chart/v1/item?id='+str(chartid)
-    #url += '&format=json'
+    url += '&format=json'
     url += '&api_key=' + BILLBOARD_API_KEY
-    print url
     res = do_json_call(url)
     return res
 
@@ -191,41 +190,41 @@ if __name__ == '__main__':
         print chart
     print 'num charts found:',len(all_charts)
 
-    print 'now just the Mid-year Albums chart:'
-    charts = get_all_charts(charttype='Mid-year Albums')
-    if charts is None:
-        print 'something went wrong with charts'
-        sys.exit(0)
-    for chart in charts:
-        print chart
-    print 'num charts found:',len(charts)
+    #print 'now just the Mid-year Albums chart:'
+    #charts = get_all_charts(charttype='Mid-year Albums')
+    #if charts is None:
+    #    print 'something went wrong with charts'
+    #    sys.exit(0)
+    #for chart in charts:
+    #    print chart
+    #print 'num charts found:',len(charts)
 
-    print 'now just the Singles chart:'
-    singles_charts = get_all_charts(charttype='Singles')
-    if singles_charts is None:
-        print 'something went wrong with charts'
-        sys.exit(0)
-    for chart in singles_charts:
-        print chart
-    print 'num charts found:',len(singles_charts)
+    #print 'now just the Singles chart:'
+    #singles_charts = get_all_charts(charttype='Singles')
+    #if singles_charts is None:
+    #    print 'something went wrong with charts'
+    #    sys.exit(0)
+    #for chart in singles_charts:
+    #    print chart
+    #print 'num charts found:',len(singles_charts)
 
     # ONE SPECIFIC CHART
-    charts = get_all_charts(charttype='Singles',chartname='Dance')
-    print 'num charts found for specific type and name:',len(charts)
-    for chart in charts:
-        print chart
+    #charts = get_all_charts(charttype='Singles',chartname='Dance')
+    #print 'num charts found for specific type and name:',len(charts)
+    #for chart in charts:
+    #    print chart
     #print 'we take the last one:'
     #chart = charts[-1]
-    print 'we take the first one:'
-    chart = charts[0]
-    print chart
-    print 'name as utf 8:',chart['name'].encode('utf-8')
-    print 'id:',chart['id']
-    chartid = chart['id']
+    #print 'we take the first one:'
+    #chart = charts[0]
+    #print chart
+    #print 'name as utf 8:',chart['name'].encode('utf-8')
+    #print 'id:',chart['id']
+    #chartid = chart['id']
 
     # get all songs from that chart
-    res = from_one_chart(chartid)
-    print res
+    #res = from_one_chart(chartid)
+    #print res
 
     # from all charts, count the ones where the server does not crash
     cnt = 0
@@ -233,4 +232,5 @@ if __name__ == '__main__':
         res = from_one_chart(chart['id'])
         if res is not None:
             cnt += 1
+            print chart['id']
     print 'number of good charts:',cnt

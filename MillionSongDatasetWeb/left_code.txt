@@ -40,25 +40,25 @@ h5.close()
 </small><p>
 If you want a deeper understanding of the
 dataset, or want to combine many files into one, see the section on
-<a href='#datacreation'>dataset creation</a> below. All our work was done in python.
+<a href='#datacreation'>dataset creation</a> below. All our work was done in python.<p>
 
 <a name='matlab'><h3>Matlab</h3></a>
 MATLAB requires no additional libraries (tested on Matlab 2009b). We created the basic 
 getters through this class ?????.
 Also, you might be interested by more in-depths examples of using HDF5 with Matlab,
 available <a href="http://www.hdfgroup.org/ftp/HDF5/examples/examples-by-api/api18-m.html">
-here</a>.
+here</a>.<p>
 
 <a name='java'><h3>Java</h3></a>
 You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. 
 Read the <a href="https://github.com/tb2332/MSongsDB/tree/master/JavaSrc/">README</a> file, 
 but the class hdf5_getters.java should give
-you all you need.
+you all you need.<p>
 
 <a name='cplusplus'><h3>C/C++</h3></a>
 We do not have these wrappers for the moment. That being said, HDF5 is
 a C library and we have some testing code in C++, it is definitely feasible.
-If you need these for your application, let us know, we'll work on it!
+If you need these for your application, let us know, we'll work on it!<p>
 
 </div>
 <div class="post">

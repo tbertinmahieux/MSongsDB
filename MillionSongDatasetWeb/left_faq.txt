@@ -4,6 +4,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#fields'>Fields description</a><br>
 <a href='#gettingdataset'>How to get the dataset?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#notapi'>Why is it not an API?</a><br>
 <a href='#whatisformat'>What is the format?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#hdfwhat'>HDF what?</a><br>
@@ -15,6 +17,7 @@
 <a href='#filepaths'>What are the file paths?</a><br>
 <a href='#whatcanido'>What can I do with this data?</a><br>
 <a href='#howtoorganize'>How do I get it organized?</a><br>
+<a href='#howcreated'>How was the dataset created?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><br>
 <a href='http://thefullfool.files.wordpress.com/2010/09/wheres-waldo1.jpg'>Where is Waldo?</a><br>
@@ -293,6 +296,18 @@ For the analysis field, we suggest you first read the Echo Nest
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
 See section "Getting the dataset".<p>
 
+<a name='notapi'><h3>Why is it not an API?</h3></a>
+API have a lot of merit, and most of this dataset was built using
+the Echo Nest API (with unlimited access). But APIs have not
+solved all research problems, and there is a place for such a fixed
+dataset. Everyone gets the same data and can report results on the same
+songs and features. Also, it facilitates the download. It is not because
+an API exists that one gets through the trouble of downloading a million
+songs.<br>
+That being said, this dataset and API can be complementary. This is why
+we made sure we provided enough metadata such as musicbrainz ID so everyone
+can link this data to other existing resources.<p>
+
 <a name='whatisformat'><h3>What is the format?</h3></a>
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
@@ -347,6 +362,10 @@ of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
 Gordon!<p>
+
+<a name='howcreated'><h3>How wasthe dataset created?</h3></a>
+Using the Echonest API. Songs were chosen....?????
+FOr more techincal details, see "dataset creation" in "code" section.<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
 GNU Public License? If you're a researcher and want to publish,

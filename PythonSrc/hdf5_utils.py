@@ -328,6 +328,7 @@ def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows
     - metadata
     - analysis
     """
+    
     # check if file exists
     if not force:
         if os.path.exists(h5filename):

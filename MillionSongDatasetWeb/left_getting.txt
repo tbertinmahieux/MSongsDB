@@ -1,7 +1,9 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
 The dataset is around 300 MB. We do not have access to servers that
-can distribute this load. But we want you to get the dataset! Below
+can distribute this load (we are looking at online solutions like
+<a href="http://www.onlinestoragesolution.com/index.html">this</a>). 
+But we want you to get the dataset! Below
 is a subset of ??? songs so you can get started.
 <p>
 DOWNLOAD SUBSET HERE.

@@ -44,38 +44,38 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>artist familiarity</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>algorithmic estimation</td>
 <td><a href='http://developer.echonest.com/docs/v4/artist.html#familiarity'>url</a></td>
 </tr>
 <tr>
 <td>artist hotttnesss</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>algorithmic estimation</td>
 <td><a href='http://developer.echonest.com/docs/v4/artist.html#hotttnesss'>url</a></td>
 </tr>
 <tr>
 <td>artist id</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/artist.html#search'>url</a></td>
 </tr>
 <tr>
 <td>artist latitude</td>
 <td>float</td>
 <td>latitude</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>artist location</td>
 <td>string</td>
 <td>location name</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>artist longitude</td>
 <td>float</td>
 <td>longitude</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>artist name</td>
@@ -87,12 +87,12 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>audio md5</td>
 <td>string</td>
 <td>audio hash code</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>bars confidence</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -117,13 +117,13 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>danceability</td>
 <td>float</td>
 <td>algorithmic estimation</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>duration</td>
 <td>array float</td>
 <td>in seconds</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>end of fade in</td>
@@ -135,7 +135,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>energy</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>key</td>
@@ -171,7 +171,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>release</td>
 <td>string</td>
 <td>Album name.</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>sections confidence</td>
@@ -231,13 +231,13 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>song hotttnesss</td>
 <td>float</td>
 <td>algorithmic estimation</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>song id</td>
 <td>string</td>
 <td>Echo Nest song ID</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 <tr>
 <td>start of fade out</td>
@@ -278,14 +278,14 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>title</td>
 <td>string</td>
-<td>Song title</td>
-<td>row 2, cell 3</td>
+<td>song title</td>
+<td></td>
 </tr>
 <tr>
 <td>track id</td>
 <td>string</td>
 <td>Echo Nest track ID</td>
-<td>row 2, cell 3</td>
+<td></td>
 </tr>
 </table><br>
 <p>

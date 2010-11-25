@@ -11,7 +11,7 @@ papers</li>
 <li>helping new researchers in the MIR field getting started</li>
 </ol>
 NO AUDIO IS PROVIDED HERE. The core of the dataset is the analysis of a
-million songs provided by the Echo Nest. <br />
+million songs and metadata provided by the Echo Nest. <br />
 </div>
 <div class="post">
 <h2>How to get started<br />

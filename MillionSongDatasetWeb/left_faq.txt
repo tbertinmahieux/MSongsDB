@@ -24,108 +24,112 @@
 Good question, a lot of things.<p>
 
 <a name='fields'><h3>Fields description</h3></a>
+Below are a list of all fields available in the files of the dataset.
+For the analysis field, we suggest you first read the Echo Nest
+<a href='http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation_2.2.pdf'>analyze documentation</a>.
+
 <table border="1">
 <tr>
 <th>Field name</th>
 <th>Type</th>
 <th>Description</th>
-<th>External link</th>
+<th>Link</th>
 </tr>
 <tr>
 <td>analysis sample rate</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>artist familiarity</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#familiarity'>url</a></td>
 </tr>
 <tr>
 <td>artist hotttnesss</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#hotttnesss'>url</a></td>
 </tr>
 <tr>
 <td>artist id</td>
 <td>string</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#search'>url</a></td>
 </tr>
 <tr>
 <td>artist latitude</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>latitude</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>artist location</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>location name</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>artist longitude</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>longitude</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>artist name</td>
 <td>string</td>
-<td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td>artist name</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#search'>url</a></td>
 </tr>
 <tr>
 <td>audio md5</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>audio hash code</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>bars confidence</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>bars start</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>beats confidence</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>beats start</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>danceability</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>algorithmic estimation</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td>in seconds</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>end of fade in</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>energy</td>
@@ -137,150 +141,150 @@ Good question, a lot of things.<p>
 <td>key</td>
 <td>int</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>key confidence</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>loudness</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>mode</td>
 <td>int</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>mode confidence</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>release</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>Album name.</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>sections confidence</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>sections start</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments confidence</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max time</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max start</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments pitches</td>
 <td>2D array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments start</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments timbre</td>
 <td>2D array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>song hotttnesss</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>algorithmic estimation</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>song id</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>Echo Nest song ID</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>start of fade out</td>
 <td>float</td>
-<td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td>time in sec</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>tatums confidence</td>
 <td>array float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>tatums start</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td>smallest rythmic element</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>tempo</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>time signature</td>
 <td>int</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>time signature confidence</td>
 <td>float</td>
 <td>row 2, cell 2</td>
-<td>row 2, cell 3</td>
+<td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>title</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>Song title</td>
 <td>row 2, cell 3</td>
 </tr>
 <tr>
 <td>track id</td>
 <td>string</td>
-<td>row 2, cell 2</td>
+<td>Echo Nest track ID</td>
 <td>row 2, cell 3</td>
 </tr>
 </table><br>

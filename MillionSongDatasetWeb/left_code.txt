@@ -17,29 +17,52 @@ are available in python, see the latter section on Dataset Creation.
 </div>
 <div class="post">
 <h2>Wrappers</h2><p>
-<h3>Python</h3>
+We provide wrappers for <a href='#python'>python</a>, <a href='#matlab'>matlab</a>
+and <a href='#java'>java</a>, plus a note on <a href='#cplusplus'>C/C++</a>.<p>
+
+<a name='python'><h3>Python</h3></a>
 The HDF5 wrapper in python is <a href="http://www.pytables.org/moin">pytables</a>.
+It relies on <a href="http://numpy.scipy.org/">numpy</a> (that you probably already have).
 If you just want to use the HDF5 provided in the dataset, the file
-hdf5_getters.py should be enough. If you want a deeper understanding of the
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_getters.py">
+hdf5_getters.py</a> should be enough:<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 50px; margin-right: 150px;">
+<div style="margin-left: 25px;">
+import hdf5_utils<br />
+import hdf5_getters<br>
+h5 = hdf5_utils.open_h5_file_read(<path some file>)<br>
+duration = hdf5_hetters.get_duration(h5)<br>
+h5.close()
+</code>
+</div>
+</div>
+</small><p>
+If you want a deeper understanding of the
 dataset, or want to combine many files into one, see the section on
-dataset creation below. All our work was done in python.
+<a href='#datacreation'>dataset creation</a> below. All our work was done in python.
 
-<h3>Matlab</h3>
-MATLAB requires no additional libraries. We created the basic getters
-through this class.
+<a name='matlab'><h3>Matlab</h3></a>
+MATLAB requires no additional libraries (tested on Matlab 2009b). We created the basic 
+getters through this class ?????.
+Also, you might be interested by more in-depths examples of using HDF5 with Matlab,
+available <a href="http://www.hdfgroup.org/ftp/HDF5/examples/examples-by-api/api18-m.html">
+here</a>.
 
-<h3>Java</h3>
-You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. Read the README file, but the class hdf5_getters.java should give
+<a name='java'><h3>Java</h3></a>
+You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. 
+Read the <a href="https://github.com/tb2332/MSongsDB/tree/master/JavaSrc/">README</a> file, 
+but the class hdf5_getters.java should give
 you all you need.
 
-<h3>C/C++</h3>
+<a name='cplusplus'><h3>C/C++</h3></a>
 We do not have these wrappers for the moment. That being said, HDF5 is
 a C library and we have some testing code in C++, it is definitely feasible.
 If you need these for your application, let us know, we'll work on it!
 
 </div>
 <div class="post">
-<h2>Dataset Creation</h2><p>
+<a name='datacreation'><h2>Dataset Creation</h2></a><p>
 Here is the python code used to create the dataset.
 Note that we add an unrestricted access to the Echo
 Nest API, but nothing special other than that.

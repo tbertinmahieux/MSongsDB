@@ -28,6 +28,14 @@ a:hover {
   text-decoration: none;
   color: #005880;
 }
+markup {
+ white-space: pre-wrap;
+ white-space: -moz-pre-wrap;
+ white-space: -o-pre-wrap;
+ display: block;
+ padding: 0.5em 1em;
+ border: 1px solid #bebab0;
+}
 #header {
   margin: 0px auto;
   background: transparent url(images/headerimage.jpg) no-repeat scroll left top;

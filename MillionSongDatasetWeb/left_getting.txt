@@ -12,6 +12,13 @@ Then, we have some hard drives with the dataset on it ready to be sent.
 Please send us an email with your lab coordinates, and we should be able
 to arrange something. The dataset can also fit on a couple of DVD.
 <p>
+Another option, if you are interested in cloud computing, we plan to
+make the dataset part of
+<a href="http://aws.amazon.com/publicdatasets/">aws public datasets</a>.
+You will be able to access it and and do computations using 
+your AWS virtual machine (<a href="http://aws.amazon.com/ec2/">EC2 
+service</a>).
+<p>
 Finally, if you have space on your lab servers to host such a dataset,
 please let us know! A solution involving a few bittorrent servers might
 also be viable.

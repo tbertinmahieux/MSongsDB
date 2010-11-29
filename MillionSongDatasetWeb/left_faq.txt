@@ -10,6 +10,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#hdfwhat'>HDF what?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#aggregate'>song / aggregate / summary files</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#utf8'>Why strings do not display properly?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#visualize'>How can I visualize a file?</a><br>
@@ -330,6 +332,25 @@ Is is perfect? No. Does it make more sense that 1M zipped json files or
 matfiles? Yes. Still not happy? Here is a 
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_to_matfile.py">python code</a> 
 to transform the data into matfiles.<p>
+
+<a name='aggregate'><h3>song / aggregate / summary files</h3></a>
+We usually use song file to refer to the typical HDF5 file that contains
+the information for only one song. An aggregate file is also an HDF5 file,
+but that contains the information of many songs. It is usefull if you do
+I/O intensive experiments, as it reduce the number of open/close file
+operations you need to perform. A summary file is similar to an
+aggregate file, but contains just the metadata, i.e. we remove all
+the big tables like the analysis (bars, beats, segments, ...).
+Usefull if you want to quickly search the metadata, a lot of space is
+saved!<br>
+Note on summary files, if you're using the code 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/display_song.py">
+display_song.py</a>, you need the '-summary' flag to tell the code 
+that some getters won't find their field, e.g. bars_start.<br>
+The dataset you received should contain one million song files.
+You can create aggregate and/or summary files using the python scripts.
+<p>
+
 
 <a name='utf8'><h3>Why strings do not display correctly?</h3></a>
 All data was downloaded in utf-8 format and was saved in the HDF5

@@ -166,8 +166,6 @@ def fill_hdf5_summary_file(h5,h5_filenames):
         nSongs = get_num_songs(h5tocopy)
         # iterate over songs in one HDF5 (1 if regular file, more if summary file)
         for songidx in xrange(nSongs):
-            # PATH
-            pass
             # METADATA
             row = h5.root.metadata.songs.row
             row["artist_familiarity"] = get_artist_familiarity(h5tocopy,songidx)
@@ -315,8 +313,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=compl
 def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows=1000,complevel=1):
     """
     Create a new HDF5 file for all songs.
-    It will contains everything except the length-variable tables,
-    plus a path table.
+    It will contains everything that are in regular song files.
     Tables created empty.
     If force=False, refuse to overwrite an existing file
     Raise a ValueError if it's the case.
@@ -380,9 +377,6 @@ def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows
                     expectedrows=expectedrows*300)
     h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE,
                     expectedrows=expectedrows*300)
-        # group path
-    group = h5.createGroup("/",'path','paths to HDF5 files of the songs')
-    table = h5.createTable(group,'songs',DESC.SongPath,'table of paths for songs')
     # close it, done
     h5.close()
     

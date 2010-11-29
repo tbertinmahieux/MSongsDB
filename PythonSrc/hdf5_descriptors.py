@@ -102,11 +102,4 @@ class SongAnalysis(tables.IsDescription):
     idx_bars_confidence = tables.IntCol()
     idx_tatums_start = tables.IntCol()
     idx_tatums_confidence = tables.IntCol()
-
-class SongPath(tables.IsDescription):
-    """
-    Class to hold the path to the HDF5 file of one song
-    Used for database maintenance? if we merge many HDF5 files
-    """
-    path = tables.StringCol(MAXSTRLEN,pos=0)
-
+    

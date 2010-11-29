@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
+
 import sys
 import time
 try:
@@ -70,6 +71,9 @@ def transfer(h5path,matpath=None,force=False):
         True if the file was transfered, False if there was
         a problem.
         Could also raise an IOException
+    NOTE
+        All the data has to be loaded in memory! be careful
+        if one file contains tons of songs!
     """
     # sanity checks
     if not os.path.isfile(h5path):
@@ -107,6 +111,13 @@ def transfer(h5path,matpath=None,force=False):
                     gettername += str(songidx+1)
                 data = hdf5_getters.__getattribute__(getter)(h5,songidx)
                 matdata[gettername] = data
+    except MemoryError:
+        print 'Memory Error with file:',h5path
+        print 'All data has to be loaded in memory before being saved as matfile'
+        print 'Is this an aggregated / summary file with tons of songs?'
+        print 'This code is optimized for files containing one song,'
+        print 'but write me an email! (TBM)'
+        raise
     finally:
         # close h5
         h5.close()
@@ -135,6 +146,8 @@ def die_with_usage():
     print 'NOTE: the main function is "transfer", you can use it in your script,'
     print 'for instance if you come up with a subset of all songs that are of'
     print 'interest to you, just pass in each song path.'
+    print 'Also, data for each song is loaded in memory, can be heavy if you have'
+    print 'an aggregated / summary HDF5 file.'
     print ' '
     print 'copyright: T. Bertin-Mahieux (2010) Columbia University'
     print 'tb2332@columbia.edu'

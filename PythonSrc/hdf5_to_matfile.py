@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import time
 try:
     import scipy.io as sio
     import numpy as np
@@ -55,6 +56,64 @@ def get_all_files(basedir,ext='.h5') :
     return allfiles
 
 
+def transfer(h5path,matpath=None,force=False):
+    """
+    Transfer an HDF5 song file (.h5) to a matfile (.mat)
+    If there are more than one song in the HDF5 file, each
+    field name gets a number happened: 1, 2, 3, ...., numfiles
+    PARAM
+        h5path  - path to the HDF5 song file
+        matpath - path to the new matfile, same as HDF5 path
+                  with a different extension by default
+        force   - if True and matfile exists, overwrite
+    RETURN
+        True if the file was transfered, False if there was
+        a problem.
+        Could also raise an IOException
+    """
+    # sanity checks
+    if not os.path.isfile(h5path):
+        print 'path to HF5 files does not exist:',h5path
+        return False
+    if not os.path.splitext(h5path)[1] == '.h5':
+        print 'expecting a .h5 extension for file:',h5path
+        return False
+    # check matfile
+    if os.path.exists(matpath):
+        if force:
+            print 'overwriting file:',matpath
+        else:
+            print 'matfile',matpath,'already exists (delete or force):'
+            return False
+    # get all getters! we assume that all we need is in hdf5_getters.py
+    # further assume that they have the form get_blablabla and that's the
+    # only thing that has that form
+    getters = filter(lambda x: x[:4] == 'get_', hdf5_getters.__dict__.keys())
+    getters.remove("get_num_songs") # special case
+    # open h5 file
+    h5 = hdf5_utils.open_h5_file_read(h5path)
+    # transfer
+    nSongs = hdf5_getters.get_num_songs(h5)
+    matdata = {'transfer_note':'transferred on '+time.ctime()+' from file: '+h5path}
+    try:
+        # iterate over songs
+        for song in xrange(nSongs):
+            # iterate over getter
+            for getter in getters:
+                gettername = getter[4:]
+                if nSongs > 1:
+                    gettername += str(song+1)
+                data = hdf5_getters.__getattribute__(getter)(h5,songidx)
+                matdata[gettername] = data
+    finally:
+        # close h5
+        h5.close()
+    # create
+    sio.savemat(matpath,matdata)
+    # all good
+    return True
+
+
 
 def die_with_usage():
     """ HELP MENU """
@@ -70,6 +129,10 @@ def die_with_usage():
     print ' '
     print 'REQUIREMENTS'
     print '   as usual: HDF5 C library, numpy/scipy, pytables'
+    print ' '
+    print 'NOTE: the main function is "transfer", you can use it in your script,'
+    print 'for instance if you come up with a subset of all songs that are of'
+    print 'interest to you, just pass in each song path.'
     print ' '
     print 'copyright: T. Bertin-Mahieux (2010) Columbia University'
     print 'tb2332@columbia.edu'

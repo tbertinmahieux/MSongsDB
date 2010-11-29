@@ -327,8 +327,9 @@ hierarchical datasets. The data can be compressed, and the I/O speed
 is impressive. Also note that the core library comes free of charge and
 wrappers exist in most languages (see "code" section).<br>
 Is is perfect? No. Does it make more sense that 1M zipped json files or
-matfiles? Yes. Still not happy? Here ????? is a python code to transform the
-data into matfiles.<p>
+matfiles? Yes. Still not happy? Here is a 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_to_matfile.py">python code</a> 
+to transform the data into matfiles.<p>
 
 <a name='utf8'><h3>Why strings do not display correctly?</h3></a>
 All data was downloaded in utf-8 format and was saved in the HDF5

@@ -158,6 +158,8 @@ if __name__ == '__main__':
         print sys.argv[1],"is neither a file nor a directory? confused... a link? c'est klug?"
         sys.exit(0)
     allh5files = get_all_files(sys.argv[1],ext='.h5')
+    if len(allh5files) == 0:
+        print 'no .h5 file found, sorry, check directory you gave us:',sys.argv[1]
 
     # final sanity checks
     for f in allh5files:
@@ -167,7 +169,16 @@ if __name__ == '__main__':
         print 'you are creating',nFiles,'new matlab files, hope you have the space and time!'
 
     # let's go!
-    
+    cnt = 0
+    for f in allh5files:
+        filedone = transfer(f)
+        if filedone:
+            cnt += 1
 
+    # summary report
+    print 'we did',cnt,'files out of',len(allh5files)
+    if cnt == len(allh5files):
+        print 'congratulations!'
+    
 
     

@@ -147,9 +147,9 @@ def fill_hdf5_from_track(h5,track):
     # DONE
 
 
-def fill_hdf5_summary_file(h5,h5_filenames):
+def fill_hdf5_aggregate_file(h5,h5_filenames):
     """
-    Fill an open hdf5 sumary file using all the content from all the HDF5 files
+    Fill an open hdf5 aggregate file using all the content from all the HDF5 files
     listed as filenames. These HDF5 files are supposed to be filled already.
     Usefull to create one big HDF5 file from many, thus improving IO speed.
     For most of the info, we simply use one row per song.
@@ -164,7 +164,7 @@ def fill_hdf5_summary_file(h5,h5_filenames):
         h5tocopy = open_h5_file_read(h5filename)
         # get number of songs in new file
         nSongs = get_num_songs(h5tocopy)
-        # iterate over songs in one HDF5 (1 if regular file, more if summary file)
+        # iterate over songs in one HDF5 (1 if regular file, more if aggregate file)
         for songidx in xrange(nSongs):
             # METADATA
             row = h5.root.metadata.songs.row
@@ -310,7 +310,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=compl
     h5.close()
 
 
-def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows=1000,complevel=1):
+def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expectedrows=1000,complevel=1):
     """
     Create a new HDF5 file for all songs.
     It will contains everything that are in regular song files.
@@ -329,7 +329,6 @@ def create_summary_file(h5filename,title='H5 Song File',force=False,expectedrows
     - metadata
     - analysis
     """
-    
     # check if file exists
     if not force:
         if os.path.exists(h5filename):

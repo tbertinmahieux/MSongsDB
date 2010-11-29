@@ -79,6 +79,8 @@ def transfer(h5path,matpath=None,force=False):
         print 'expecting a .h5 extension for file:',h5path
         return False
     # check matfile
+    if matpath is None:
+        matpath = os.path.splitext(h5path)[0] + '.mat'
     if os.path.exists(matpath):
         if force:
             print 'overwriting file:',matpath
@@ -97,12 +99,12 @@ def transfer(h5path,matpath=None,force=False):
     matdata = {'transfer_note':'transferred on '+time.ctime()+' from file: '+h5path}
     try:
         # iterate over songs
-        for song in xrange(nSongs):
+        for songidx in xrange(nSongs):
             # iterate over getter
             for getter in getters:
                 gettername = getter[4:]
                 if nSongs > 1:
-                    gettername += str(song+1)
+                    gettername += str(songidx+1)
                 data = hdf5_getters.__getattribute__(getter)(h5,songidx)
                 matdata[gettername] = data
     finally:
@@ -151,13 +153,14 @@ if __name__ == '__main__':
         sys.exit(0)
     if os.path.isfile(sys.argv[1]):
         if os.path.splitext(sys.argv[1])[1] != '.h5':
-            print 'we expect a .h5 extension for file:',sys.argv[1])
+            print 'we expect a .h5 extension for file:',sys.argv[1]
             sys.exit(0)
         allh5files = [ os.path.abspath(sys.argv[1]) ]
     elif not os.path.isdir(sys.argv[1]):
         print sys.argv[1],"is neither a file nor a directory? confused... a link? c'est klug?"
         sys.exit(0)
-    allh5files = get_all_files(sys.argv[1],ext='.h5')
+    else:
+        allh5files = get_all_files(sys.argv[1],ext='.h5')
     if len(allh5files) == 0:
         print 'no .h5 file found, sorry, check directory you gave us:',sys.argv[1]
 

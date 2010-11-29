@@ -30,6 +30,7 @@ import os
 import sys
 import thread
 import time
+import shutil
 import HDF5_utils as HDF5
 
 
@@ -118,6 +119,7 @@ def create_track_file(maindir,trackid,track,song,artist):
     hdf5_path = os.path.join(maindir,path_from_trackid(trackid))
     if os.path.exists( hdf5_path ):
         return False # file already exists, no stress
+    hdf5_path_tmp = hdf5_path + '_tmp'
     # lock the file
     got_lock = get_lock_track(trackid)
     if not got_lock:
@@ -131,8 +133,12 @@ def create_track_file(maindir,trackid,track,song,artist):
             try:
                 if not os.path.isdir( os.path.split(hdf5_path)[0] ):
                     os.makedirs( os.path.split(hdf5_path)[0] )
-                HDF5.create_song_file(hdf5_path)
-                h5 = HDF5.open_h5_file_append(hdf5_path)
+                # check / delete tmp file if exist
+                if os.path.isfile(hdf5_path_tmp):
+                    os.remove(hdf5_path_tmp)
+                # create tmp file
+                HDF5.create_song_file(hdf5_path_tmp)
+                h5 = HDF5.open_h5_file_append(hdf5_path_tmp)
                 # TODO fill from artist
                 HDF5.fill_hdf5_from_song(h5,song)
                 HDF5.fill_hdf5_from_track(h5,track)
@@ -149,7 +155,7 @@ def create_track_file(maindir,trackid,track,song,artist):
                     pass
                 # delete path
                 try:
-                    os.remove( hdf5_path )
+                    os.remove( hdf5_path_tmp )
                 except IOError:
                     pass
                 # print and wait
@@ -157,6 +163,9 @@ def create_track_file(maindir,trackid,track,song,artist):
                 print e
                 print '(try again in 15 seconds)'
                 time.sleep(15)
+            # move tmp file to real file
+            shutil.move(hdf5_path_tmp, hdf5_path)
+            # release lock
             release_lock_track(trackid)
             break
     # KeyboardInterrupt, we delete file, clean things up
@@ -169,7 +178,10 @@ def create_track_file(maindir,trackid,track,song,artist):
             pass
         # delete path
         try:
-            os.remove( hdf5_path )
+            if os.path.isfile( hdf5_path_tmp ):
+                os.remove( hdf5_path_tmp )
+            if os.path.isfile( hdf5_path ):
+                os.remove( hdf5_path )
         except IOError:
             pass
         raise

@@ -37,9 +37,19 @@ def die_with_usage():
     print 'T. Bertin-Mahieux (2010) tb2332@columbia.edu'
     print 'to quickly display all we know about a song'
     print 'usage:'
-    print '   python display_song.py <HDF5 file> <OPT: song idx> <OPT: specific getter>'
+    print '   python display_song.py [FLAGS] <HDF5 file> <OPT: song idx> <OPT: getter>'
     print 'example:'
     print '   python display_song.py mysong.h5 0 danceability'
+    print 'INPUTS'
+    print '   <HDF5 file>  - any song / aggregate /summary file'
+    print '   <song idx>   - if file contains many songs, specify one'
+    print '                  starting at 0 (OPTIONAL)'
+    print '   <getter>     - if you want only one field, you can specify it'
+    print '                  e.g. "get_artist_name" or "artist_name" (OPTIONAL)'
+    print 'FLAGS'
+    print '   -summary     - if you use a file that does not have all fields,'
+    print '                  use this flag. If not, you might get an error!'
+    print '                  Specifically desgin to display summary files'
     sys.exit(0)
 
 
@@ -49,6 +59,15 @@ if __name__ == '__main__':
     # help menu
     if len(sys.argv) < 2:
         die_with_usage()
+
+    # flags
+    summary = False
+    while True:
+        if sys.argv[1] == '-summary':
+            summary = True
+        else:
+            break
+        sys.argv.pop(1)
 
     # get params
     hdf5path = sys.argv[1]
@@ -89,7 +108,14 @@ if __name__ == '__main__':
 
     # print them
     for getter in getters:
-        res = hdf5_getters.__getattribute__(getter)(h5,songidx)
+        try:
+            res = hdf5_getters.__getattribute__(getter)(h5,songidx)
+        except AttributeError, e:
+            if summary:
+                continue
+            else:
+                print e
+                print 'forgot -summary flag? specified wrong getter?'
         if res.__class__.__name__ == 'ndarray':
             print getter[4:]+": shape =",res.shape
         else:
@@ -98,6 +124,4 @@ if __name__ == '__main__':
     # done
     print 'DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path
     h5.close()
-
-
     

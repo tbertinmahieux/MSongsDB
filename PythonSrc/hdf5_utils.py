@@ -258,16 +258,18 @@ def fill_hdf5_summary_file(h5,h5_filenames):
         h5tocopy.close()
 
 
-def create_song_file(h5filename,title='H5 Song File',force=False):
+def create_song_file(h5filename,title='H5 Song File',force=False,complevel=complevel):
     """
     Create a new HDF5 file for a new song.
     If force=False, refuse to overwrite an existing file
     Raise a ValueError if it's the case.
     Other optional param is the H5 file.
-
     Setups the groups, each containing a table 'songs' with one row:
     - metadata
     - analysis
+    DETAIL
+    - we set the compression level to 1 by default, it uses the ZLIB library
+      to disable compression, set it to 0
     """
     # check if file exists
     if not force:
@@ -275,6 +277,8 @@ def create_song_file(h5filename,title='H5 Song File',force=False):
             raise ValueError('file exists, can not create HDF5 song file')
     # create the H5 file
     h5 = tables.openFile(h5filename, mode='w', title='H5 Song File')
+    # set filter level
+    h5.filters = tables.Filters(complevel=complevel,complib='zlib')
     # setup the groups and tables
         # group metadata
     group = h5.createGroup("/",'metadata','metadata about the song')

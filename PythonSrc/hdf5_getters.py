@@ -4,8 +4,8 @@ tb2332@columbia.edu
 
 
 This code contains a set of getters functions to access the fields
-from an HDF5 song file (regular file with one song or summary file
-with many songs)
+from an HDF5 song file (regular file with one song or
+aggregate / summary file with many songs)
 
 This is part of the Million Song Dataset project from
 LabROSA (Columbia University) and The Echo Nest.
@@ -199,7 +199,7 @@ def get_track_id(h5,songidx=0):
 
 def get_segments_start(h5,songidx=0):
     """
-    Get segments start array. Takes care of the proper indexing if we are in summary
+    Get segments start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -210,7 +210,7 @@ def get_segments_start(h5,songidx=0):
     
 def get_segments_confidence(h5,songidx=0):
     """
-    Get segments confidence array. Takes care of the proper indexing if we are in summary
+    Get segments confidence array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -221,7 +221,7 @@ def get_segments_confidence(h5,songidx=0):
 
 def get_segments_pitches(h5,songidx=0):
     """
-    Get segments pitches array. Takes care of the proper indexing if we are in summary
+    Get segments pitches array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -232,7 +232,7 @@ def get_segments_pitches(h5,songidx=0):
 
 def get_segments_timbre(h5,songidx=0):
     """
-    Get segments timbre array. Takes care of the proper indexing if we are in summary
+    Get segments timbre array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -243,7 +243,7 @@ def get_segments_timbre(h5,songidx=0):
 
 def get_segments_loudness_max(h5,songidx=0):
     """
-    Get segments loudness max array. Takes care of the proper indexing if we are in summary
+    Get segments loudness max array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -254,7 +254,7 @@ def get_segments_loudness_max(h5,songidx=0):
 
 def get_segments_loudness_max_time(h5,songidx=0):
     """
-    Get segments loudness max time array. Takes care of the proper indexing if we are in summary
+    Get segments loudness max time array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -265,7 +265,7 @@ def get_segments_loudness_max_time(h5,songidx=0):
 
 def get_segments_loudness_start(h5,songidx=0):
     """
-    Get segments loudness start array. Takes care of the proper indexing if we are in summary
+    Get segments loudness start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -276,7 +276,7 @@ def get_segments_loudness_start(h5,songidx=0):
 
 def get_sections_start(h5,songidx=0):
     """
-    Get sections start array. Takes care of the proper indexing if we are in summary
+    Get sections start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -287,7 +287,7 @@ def get_sections_start(h5,songidx=0):
 
 def get_sections_confidence(h5,songidx=0):
     """
-    Get sections confidence array. Takes care of the proper indexing if we are in summary
+    Get sections confidence array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -298,7 +298,7 @@ def get_sections_confidence(h5,songidx=0):
 
 def get_beats_start(h5,songidx=0):
     """
-    Get beats start array. Takes care of the proper indexing if we are in summary
+    Get beats start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -309,7 +309,7 @@ def get_beats_start(h5,songidx=0):
 
 def get_beats_confidence(h5,songidx=0):
     """
-    Get beats confidence array. Takes care of the proper indexing if we are in summary
+    Get beats confidence array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -320,7 +320,7 @@ def get_beats_confidence(h5,songidx=0):
 
 def get_bars_start(h5,songidx=0):
     """
-    Get bars start array. Takes care of the proper indexing if we are in summary
+    Get bars start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -331,7 +331,7 @@ def get_bars_start(h5,songidx=0):
 
 def get_bars_confidence(h5,songidx=0):
     """
-    Get bars start array. Takes care of the proper indexing if we are in summary
+    Get bars start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -342,7 +342,7 @@ def get_bars_confidence(h5,songidx=0):
 
 def get_tatums_start(h5,songidx=0):
     """
-    Get tatums start array. Takes care of the proper indexing if we are in summary
+    Get tatums start array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
@@ -353,7 +353,7 @@ def get_tatums_start(h5,songidx=0):
 
 def get_tatums_confidence(h5,songidx=0):
     """
-    Get tatums confidence array. Takes care of the proper indexing if we are in summary
+    Get tatums confidence array. Takes care of the proper indexing if we are in aggregate
     file. By default, return the array for the first song in the h5 file.
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """

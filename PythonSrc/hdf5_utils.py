@@ -256,7 +256,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
         h5tocopy.close()
 
 
-def create_song_file(h5filename,title='H5 Song File',force=False,complevel=complevel):
+def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     """
     Create a new HDF5 file for a new song.
     If force=False, refuse to overwrite an existing file

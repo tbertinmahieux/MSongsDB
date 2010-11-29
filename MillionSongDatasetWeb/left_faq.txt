@@ -323,8 +323,8 @@ The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.<p>
 HDF5! Why? Because! (regarding this, all complains should definitely
 go to tb2332@columbia.edu). In short, <a href="http://www.hdfgroup.org/HDF5/">HDF5</a> 
 is a format developped by NASA to handle 1) large 2) heterogeneous 3)
-hierarchical datasets. The data can be compressed, and the I/O speed
-is impressive. Also note that the core library comes free of charge and
+hierarchical datasets. The data can be compressed (10%-15% more that matfiles), 
+and the I/O speed is still impressive. Also note that the core library comes free of charge and
 wrappers exist in most languages (see "code" section).<br>
 Is is perfect? No. Does it make more sense that 1M zipped json files or
 matfiles? Yes. Still not happy? Here is a 

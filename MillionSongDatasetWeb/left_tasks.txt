@@ -6,11 +6,22 @@ typical MIR tasks below. We hope to provide snippets of code and benchmarks
 results to help you getting started. If you want to provide additional
 information / link to your code / new results, please send us an email!
 <ol>
+<li><a href="#segmentation">Segmentation</a></li>
 <li><a href="#automatictagging">Automatic tagging</a></li>
 <li><a href="#yearrecognition">Year recognition</a></li>
 <li><a href="#imputation">Imputation of missing data</a></li>
 <li><a href="#nameanalysis">Artist name, release, song title analysis</a></li>
 </ol>
+<a name='segmentation'><h3>Segmentation</h3></a>
+The goal is to divide a song into meaningfull segments, usually
+chorus / verse / bridge or similar. The Echo Nest analysis provides
+some estimated segments, but you can use basic Echo Nest features
+(chroma or MFCC-like features) on the beat level with your own
+algorithms.<br>
+Here we use UCSD <a href="http://cosmal.ucsd.edu/cal/projects/segment/DTMsegment_v1.0.tar">code</a> from this
+<a href="http://cosmal.ucsd.edu/cal/projects/segment/">project</a>.
+We estimate the sections and compare with Echo Nest estimation.<p>
+
 <a name='automatictagging'><h3>Automatic tagging</h3></a>
 <a href="http://scholar.google.com/scholar?q=ismir+automatic+tagging">
 Automatic tagging</a> of audio is the association of appropriate

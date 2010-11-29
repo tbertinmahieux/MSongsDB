@@ -4,7 +4,8 @@ Our main goal is to provide the data because researchers will know what
 they want to do with it. That being said, we give some information regarding
 typical MIR tasks below. We hope to provide snippets of code and benchmarks
 results to help you getting started. If you want to provide additional
-information / link to your code / new results, please send us an email!
+information / link to your code / new results / new tasks, 
+please send us an email!
 <ol>
 <li><a href="#segmentation">Segmentation</a></li>
 <li><a href="#automatictagging">Automatic tagging</a></li>

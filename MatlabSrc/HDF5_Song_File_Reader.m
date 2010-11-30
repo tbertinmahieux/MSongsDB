@@ -156,7 +156,46 @@ classdef HDF5_Song_File_Reader
             res = data(pos1:pos2);
           end
       end
+      
+      function res = get_artist_terms(obj,songidx)
+      % return artist terms for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/metadata/artist_terms');
+          pos1 = obj.metadata.idx_artist_terms(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.metadata.idx_artist_terms(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
 
+      function res = get_artist_terms_freq(obj,songidx)
+      % return artist terms frequencies for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/metadata/artist_terms_freq');
+          pos1 = obj.metadata.idx_artist_terms(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.metadata.idx_artist_terms(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_artist_terms_weight(obj,songidx)
+      % return artist terms weight for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/metadata/artist_terms_weight');
+          pos1 = obj.metadata.idx_artist_terms(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.metadata.idx_artist_terms(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
       function res = get_analysis_sample_rate(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.analysis_sample_rate(songidx);

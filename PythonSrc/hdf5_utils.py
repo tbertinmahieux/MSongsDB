@@ -35,6 +35,7 @@ import tables
 import hdf5_descriptors as DESC
 from hdf5_getters import *
 
+ARRAY_DESC_SIMILAR_ARTISTS = 'array of similar artists Echo Nest id'
 ARRAY_DESC_SEGMENTS_START = 'array of start times of segments'
 ARRAY_DESC_SEGMENTS_CONFIDENCE = 'array of confidence of segments'
 ARRAY_DESC_SEGMENTS_PITCHES = 'array of pitches of segments (chromas)'
@@ -64,6 +65,11 @@ def fill_hdf5_from_artist(h5,artist):
     metadata.cols.artist_id[0] = artist.id
     ambid = artist.get_foreign_id()
     metadata.cols.artist_mbid[0] = ambid.split(':')[2] if ambid.split(':')[0]=='musicbrainz' else ''
+    # fill the metadata arrays
+    group = h5.root.metadata
+    metadata.cols.idx_similar_artists[0] = 0
+    group.similar_artists.append( np.array(map(lambda x : x.id,artist.get_similar(results=100)),dtype='string') )
+    # done, flush
     metadata.flush()
     
 
@@ -195,8 +201,15 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["song_id"] = get_song_id(h5tocopy,songidx)
             row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
             row["title"] = get_title(h5tocopy,songidx)
+            # INDECIES
+            if counter == 0 : # we're first row
+                row["idx_similar_artists"] = 0
+            else:
+                row["idx_similar_artists"] = h5.root.metadata.similar_artists.shape[0]
             row.append()
             h5.root.metadata.songs.flush()
+            # ARRAYS
+            h5.root.metadata.similar_artists.append( get_similar_artists(h5tocopy,songidx) )
             # ANALYSIS
             row = h5.root.analysis.songs.row
             row["analysis_sample_rate"] = get_analysis_sample_rate(h5tocopy,songidx)
@@ -300,6 +313,8 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     r = table.row
     r.append()
     table.flush()
+        # create arrays in group metadata
+    h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
@@ -358,6 +373,8 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     group = h5.createGroup("/",'metadata','metadata about the song')
     table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song',
                            expectedrows=expectedrows)
+        # group metadata arrays
+    h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song',

@@ -51,6 +51,9 @@ class SongMetaData(tables.IsDescription):
     artist_latitude = tables.Float64Col()
     artist_longitude = tables.Float64Col()
     artist_location = tables.StringCol(MAXSTRLEN)
+    # ARRAY INDECES
+    idx_similar_artists = tables.IntCol()
+
 
     # TO ADD
     

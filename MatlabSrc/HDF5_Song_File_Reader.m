@@ -71,7 +71,7 @@ classdef HDF5_Song_File_Reader
       function res = get_num_songs(obj)
       % number of songs contained in the HDF5 file, usually 1,
       % unless it is a 'summary' file.
-        res = size(obj.metadata.duration,1);
+        res = size(obj.metadata.song_id,1);
       end
       
       function res = get_artist_familiarity(obj,songidx)
@@ -86,12 +86,12 @@ classdef HDF5_Song_File_Reader
       
       function res = get_artist_id(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.artist_id(:,songidx);
+        res = deblank(obj.metadata.artist_id(:,songidx)');
       end
       
       function res = get_artist_mbid(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.artist_mbid(:,songidx);
+        res = deblank(obj.metadata.artist_mbid(:,songidx)');
       end
 
       function res = get_artist_latitude(obj,songidx)
@@ -121,7 +121,7 @@ classdef HDF5_Song_File_Reader
 
       function res = get_song_id(obj,songidx)
         if (nargin < 2); songidx = 1; end
-        res = obj.metadata.song_id(songidx);
+        res = deblank(obj.metadata.song_id(:,songidx)');
       end
 
       function res = get_song_hotttnesss(obj,songidx)
@@ -134,6 +134,19 @@ classdef HDF5_Song_File_Reader
         res = deblank(obj.metadata.title(:,songidx)');
       end
       
+      function res = get_similar_artists(obj,songidx)
+      % return similar artists for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/metadata/similar_artists');
+          pos1 = obj.metadata.idx_similar_artists(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.metadata.idx_similar_artists(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+
       function res = get_analysis_sample_rate(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.analysis.analysis_sample_rate(songidx);
@@ -211,7 +224,7 @@ classdef HDF5_Song_File_Reader
 
       function res = get_track_id(obj,songidx) 
         if (nargin < 2); songidx = 1; end
-        res = deblank(obj.analysis.track_id(songidx)');
+        res = deblank(obj.analysis.track_id(:,songidx)');
       end
       
       function res = get_segments_start(obj,songidx)

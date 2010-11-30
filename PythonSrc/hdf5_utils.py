@@ -66,9 +66,10 @@ def fill_hdf5_from_artist(h5,artist):
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
     metadata.cols.artist_id[0] = artist.id
-    metadata.cols.artist_mbid[0] = artist.get_foreign_id(idspace='musicbrainz').split(':')[2]
-    metadata.cols.artist_playmeid[0] = artist.get_foreign_id(idspace='playme').split(':')[2]
-    metadata.cols.artist_7digitalid[0] = artist.get_foreign_id(idspace='7digital').split(':')[2]
+    idsplitter = lambda x: x.split(':')[2] if x else ''
+    metadata.cols.artist_mbid[0] = idsplitter(artist.get_foreign_id(idspace='musicbrainz'))
+    metadata.cols.artist_playmeid[0] = idsplitter(artist.get_foreign_id(idspace='playme'))
+    metadata.cols.artist_7digitalid[0] = idsplitter(artist.get_foreign_id(idspace='7digital'))
     # fill the metadata arrays
     group = h5.root.metadata
     metadata.cols.idx_similar_artists[0] = 0

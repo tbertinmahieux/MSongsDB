@@ -52,6 +52,21 @@ ARRAY_DESC_TATUMS_START = 'array of start times of tatums'
 ARRAY_DESC_TATUMS_CONFIDENCE = 'array of confidence of tatums'
 
 
+def fill_hdf5_from_artist(h5,artist):
+    """
+    Fill an open hdf5 using all content in a artist object
+    from the Echo Nest python API
+    There could be overlap with fill_from_song and fill_from_track,
+    we assume the data is consistent!
+    """
+    # get the metadata table, fill it
+    metadata = h5.root.metadata.songs
+    metadata.cols.artist_id[0] = artist.id
+    ambid = artist.get_foreign_id()
+    metadata.cols.artist_mbid[0] = ambid.split(':')[2] if ambid.split(':')[0]=='musicbrainz' else ''
+    metadata.flush()
+    
+
 def fill_hdf5_from_song(h5,song):
     """
     Fill an open hdf5 using all the content in a song object
@@ -171,6 +186,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["artist_familiarity"] = get_artist_familiarity(h5tocopy,songidx)
             row["artist_hotttnesss"] = get_artist_hotttnesss(h5tocopy,songidx)
             row["artist_id"] = get_artist_id(h5tocopy,songidx)
+            row["artist_mbid"] = get_artist_mbid(h5tocopy,songidx)
             row["artist_latitude"] = get_artist_latitude(h5tocopy,songidx)
             row["artist_location"] = get_artist_location(h5tocopy,songidx)
             row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)

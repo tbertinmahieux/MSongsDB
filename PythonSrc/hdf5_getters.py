@@ -53,6 +53,12 @@ def get_artist_id(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.artist_id[songidx]
 
+def get_artist_mbid(h5,songidx=0):
+    """
+    Get artist musibrainz id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.artist_mbid[songidx]
+
 def get_artist_latitude(h5,songidx=0):
     """
     Get artist latitude from a HDF5 song file, by default the first song in it

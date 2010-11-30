@@ -179,6 +179,24 @@ public class hdf5_getters
 	return get_array_string(h5, songidx, "metadata", "similar_artists");
     }
 
+    public static String[] get_artist_terms(H5File h5) throws Exception { return get_artist_terms(h5, 0); }
+    public static String[] get_artist_terms(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_string(h5, songidx, "metadata", "artist_terms");
+    }
+
+    public static double[] get_artist_terms_freq(H5File h5) throws Exception { return get_artist_terms_freq(h5, 0); }
+    public static double[] get_artist_terms_freq(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "metadata", "artist_terms_freq",1,"idx_artist_terms");
+    }
+
+    public static double[] get_artist_terms_weight(H5File h5) throws Exception { return get_artist_terms_weight(h5, 0); }
+    public static double[] get_artist_terms_weight(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_double(h5, songidx, "metadata", "artist_terms_weight",1,"idx_artist_terms");
+    }
+
     public static double get_analysis_sample_rate(H5File h5) throws Exception { return get_analysis_sample_rate(h5, 0); }
     public static double get_analysis_sample_rate(H5File h5, int songidx) throws Exception
     {    
@@ -412,12 +430,17 @@ public class hdf5_getters
 	return col[songidx];
     }
 
-    public static double[] get_array_double(H5File h5, int songidx, String group, String arrayname, int ndims) throws Exception
+    public static double[] get_array_double(H5File h5, int songidx, String group, String arrayname, int ndims) throws Exception   
+    {
+	return get_array_double(h5,songidx,group,arrayname,ndims,"");
+    }
+    public static double[] get_array_double(H5File h5, int songidx, String group, String arrayname, int ndims, String idxname) throws Exception
     {    
 	// index
 	H5CompoundDS analysis = (H5CompoundDS) h5.get(group + "/songs");
 	analysis.init();
-	int wantedMember = find( analysis.getMemberNames() , "idx_"+arrayname);
+	if (idxname.equals("")) idxname = "idx_"+arrayname;
+	int wantedMember = find( analysis.getMemberNames() , idxname);
 	assert(wantedMember >= 0);		
 	Vector alldata = (Vector) analysis.getData();
 	int[] col = (int[]) alldata.get(wantedMember);
@@ -493,6 +516,9 @@ public class hdf5_getters
 	System.out.println("numberof songs: " + nSongs);
 	if (nSongs > 1) System.out.println("we'll display infor for song 0");
 	try {
+	    double[] res;
+	    String[] resS;
+	    // metadata
 	    System.out.println("artist familiarity: " + get_artist_familiarity(h5));
 	    System.out.println("artist hotttnesss: " + get_artist_hotttnesss(h5));
 	    System.out.println("artist id: " + get_artist_id(h5));
@@ -505,9 +531,15 @@ public class hdf5_getters
 	    System.out.println("artist name: " + get_artist_name(h5));
 	    System.out.println("song hotttnesss: " + get_song_hotttnesss(h5));
 	    System.out.println("title: " + get_title(h5));
-	    String[] resS;
 	    resS = get_similar_artists(h5);
 	    System.out.println("similar artists, length: "+resS.length+", elem 2: "+resS[20]);
+	    resS = get_artist_terms(h5);
+	    System.out.println("artists terms, length: "+resS.length+", elem 0: "+resS[0]);
+	    res = get_artist_terms_freq(h5);
+	    System.out.println("artists terms freq, length: "+res.length+", elem 0: "+res[0]);
+	    res = get_artist_terms_weight(h5);
+	    System.out.println("artists terms weight, length: "+res.length+", elem 0: "+res[0]);
+	    // analysis
 	    System.out.println("duration: " + get_duration(h5));
 	    System.out.println("end_of_fade_in: " + get_end_of_fade_in(h5));
 	    System.out.println("key: " + get_key(h5));
@@ -519,7 +551,6 @@ public class hdf5_getters
 	    System.out.println("tempo: " + get_tempo(h5));
 	    System.out.println("time signature: " + get_time_signature(h5));
 	    System.out.println("time signature confidence: " + get_time_signature_confidence(h5));
-	    double[] res;
 	    res = get_segments_start(h5);
 	    System.out.println("segments start, length: "+res.length+", elem 20: "+res[20]);
 	    res = get_segments_confidence(h5);

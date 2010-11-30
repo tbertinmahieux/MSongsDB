@@ -36,6 +36,9 @@ import hdf5_descriptors as DESC
 from hdf5_getters import *
 
 ARRAY_DESC_SIMILAR_ARTISTS = 'array of similar artists Echo Nest id'
+ARRAY_DESC_ARTIST_TERMS = 'array of terms (Echo Nest tags) for an artist'
+ARRAY_DESC_ARTIST_TERMS_FREQ = 'array of term (Echo Nest tags) frequencies for an artist'
+ARRAY_DESC_ARTIST_TERMS_WEIGHT = 'array of term (Echo Nest tags) weights for an artist'
 ARRAY_DESC_SEGMENTS_START = 'array of start times of segments'
 ARRAY_DESC_SEGMENTS_CONFIDENCE = 'array of confidence of segments'
 ARRAY_DESC_SEGMENTS_PITCHES = 'array of pitches of segments (chromas)'
@@ -70,6 +73,12 @@ def fill_hdf5_from_artist(h5,artist):
     group = h5.root.metadata
     metadata.cols.idx_similar_artists[0] = 0
     group.similar_artists.append( np.array(map(lambda x : x.id,artist.get_similar(results=100)),dtype='string') )
+    metadata.cols.idx_artist_terms[0] = 0
+    group.artist_terms.append( np.array(map(lambda x : x.name,artist.get_terms()),dtype='string') )
+    metadata.cols.idx_artist_terms_freq[0] = 0
+    group.artist_terms_freq.append( np.array(map(lambda x : x.frequency,artist.get_terms()),dtype='float64') )
+    metadata.cols.idx_artist_terms_weight[0] = 0
+    group.artist_terms_weight.append( np.array(map(lambda x : x.weight,artist.get_terms()),dtype='float64') )
     # done, flush
     metadata.flush()
     
@@ -207,12 +216,21 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             # INDECIES
             if counter == 0 : # we're first row
                 row["idx_similar_artists"] = 0
+                row["idx_artist_terms"] = 0
+                row["idx_artist_terms_freq"] = 0
+                row["idx_artist_terms_weight"] = 0
             else:
                 row["idx_similar_artists"] = h5.root.metadata.similar_artists.shape[0]
+                row["idx_artist_terms"] = h5.root.metadata.artist_terms.shape[0]
+                row["idx_artist_terms_freq"] = h5.root.metadata.artist_terms_freq.shape[0]
+                row["idx_artist_terms_weight"] = h5.root.metadata.artist_terms_weight.shape[0]
             row.append()
             h5.root.metadata.songs.flush()
             # ARRAYS
             h5.root.metadata.similar_artists.append( get_similar_artists(h5tocopy,songidx) )
+            h5.root.metadata.artist_terms.append( get_artist_terms(h5tocopy,songidx) )
+            h5.root.metadata.artist_terms_freq.append( get_artist_terms_freq(h5tocopy,songidx) )
+            h5.root.metadata.artist_terms_weight.append( get_artist_terms_weight(h5tocopy,songidx) )
             # ANALYSIS
             row = h5.root.analysis.songs.row
             row["analysis_sample_rate"] = get_analysis_sample_rate(h5tocopy,songidx)
@@ -316,30 +334,14 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     r = table.row
     r.append()
     table.flush()
-        # create arrays in group metadata
-    h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
     r = table.row
     r.append()
     table.flush()
-        # create arrays in group analysis
-    h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
-    h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE)
-    h5.createEArray(group,'segments_pitches',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_PITCHES)
-    h5.createEArray(group,'segments_timbre',tables.Float64Atom(shape=()),(0,12),ARRAY_DESC_SEGMENTS_TIMBRE)
-    h5.createEArray(group,'segments_loudness_max',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX)
-    h5.createEArray(group,'segments_loudness_max_time',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_MAX_TIME)
-    h5.createEArray(group,'segments_loudness_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_LOUDNESS_START)
-    h5.createEArray(group,'sections_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_START)
-    h5.createEArray(group,'sections_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SECTIONS_CONFIDENCE)
-    h5.createEArray(group,'beats_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_START)
-    h5.createEArray(group,'beats_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BEATS_CONFIDENCE)
-    h5.createEArray(group,'bars_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_START)
-    h5.createEArray(group,'bars_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_BARS_CONFIDENCE)
-    h5.createEArray(group,'tatums_start',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_START)
-    h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE)
+    # create arrays
+    create_all_arrays(h5)
     # close it, done
     h5.close()
 
@@ -376,13 +378,32 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     group = h5.createGroup("/",'metadata','metadata about the song')
     table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song',
                            expectedrows=expectedrows)
-        # group metadata arrays
-    h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song',
                            expectedrows=expectedrows)
-        # group analysis arrays
+    # create arrays
+    create_all_arrays(h5)
+    # close it, done
+    h5.close()
+
+
+def create_all_arrays(h5):
+    """
+    Utility functions used by both create_song_file and create_aggregate_files,
+    creates all the EArrays (empty).
+    INPUT
+       h5   - hdf5 file, open with write or append permissions
+              metadata and analysis groups already exist!
+    """
+    # group metadata arrays
+    group = h5.metadata
+    h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
+    h5.createEArray(where=group,name='artist_terms',atom=tables.StringAtom(DESC.MAXSTRLEN,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS)
+    h5.createEArray(where=group,name='artist_terms_freq',atom=tables.Float64(shape=()),shape=(0,),title=ARRAY_DESC_ARTIST_TERMS_FREQ)
+    h5.createEArray(where=group,name='artist_terms_weight',atom=tables.Float64(shape=()),shape=(0,),title=ARRAY_DESC_ARTIST_TERMS_WEIGHT)
+    # group analysis arrays
+    group h5.analysis
     h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
     h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE,
                     expectedrows=expectedrows*300)
@@ -412,9 +433,7 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
                     expectedrows=expectedrows*300)
     h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE,
                     expectedrows=expectedrows*300)
-    # close it, done
-    h5.close()
-    
+
 
 def open_h5_file_read(h5filename):
     """

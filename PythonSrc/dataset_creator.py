@@ -31,7 +31,7 @@ import sys
 import thread
 import time
 import shutil
-import HDF5_utils as HDF5
+import hdf5_utils as HDF5
 
 
 # lock to access the set of tracks being treated
@@ -39,7 +39,7 @@ import HDF5_utils as HDF5
 # of that track in the set TRACKSET
 # use: get_lock_song
 #      release_lock_song
-TRACKSET_LOCK = thread.Lock()
+TRACKSET_LOCK = thread.allocate_lock()
 TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
@@ -59,7 +59,7 @@ def get_lock_track(trackid):
     someone else just got it
     This is a blocking call.
     """
-    got_lock = TRACKSET_LOCK.acquire(blocking=1)
+    got_lock = TRACKSET_LOCK.acquire(1) # blocking=1
     if not got_lock:
         print 'ERROR: could not get TRACKSET_LOCK lock?'
         return False
@@ -79,7 +79,7 @@ def release_lock_track(trackid):
     Should always return True, unless there is a problem
     Releasing a song that you don't have the lock on is dangerous.
     """
-    got_lock = TRACKSET_LOCK.acquire(blocking=1)
+    got_lock = TRACKSET_LOCK.acquire(1) # blocking=1
     if not got_lock:
         print 'ERROR: could not get TRACKSET_LOCK lock?'
         return False
@@ -104,7 +104,7 @@ def path_from_trackid(trackid):
     """
     p = os.path.join(trackid[2],trackid[3])
     p = os.path.join(p,trackid[4])
-    p = os.path.join(p,trackid+'h5')
+    p = os.path.join(p,trackid+'.h5')
     return p
 
 
@@ -139,7 +139,7 @@ def create_track_file(maindir,trackid,track,song,artist):
                 # create tmp file
                 HDF5.create_song_file(hdf5_path_tmp)
                 h5 = HDF5.open_h5_file_append(hdf5_path_tmp)
-                # TODO fill from artist
+                HDF5.fill_hdf5_from_artist(h5,artist)
                 HDF5.fill_hdf5_from_song(h5,song)
                 HDF5.fill_hdf5_from_track(h5,track)
                 # TODO billboard? lastfm?

@@ -43,8 +43,14 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>analysis sample rate</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
+</tr>
+<tr>
+<td>artist 7digitalid</td>
+<td>int</td>
+<td>ID from 7digital.com or -1</td>
+<td><a href='http://www.7digital.com/'>url</a></td>
 </tr>
 <tr>
 <td>artist familiarity</td>
@@ -61,7 +67,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>artist id</td>
 <td>string</td>
-<td></td>
+<td>Echo Nest ID</td>
 <td><a href='http://developer.echonest.com/docs/v4/artist.html#search'>url</a></td>
 </tr>
 <tr>
@@ -83,10 +89,40 @@ For the analysis field, we suggest you first read the Echo Nest
 <td></td>
 </tr>
 <tr>
+<td>artist mbid</td>
+<td>int</td>
+<td>ID from musicbrainz.org</td>
+<td><a href='http://musicbrainz.org/'>url</a></td>
+</tr>
+<tr>
 <td>artist name</td>
 <td>string</td>
 <td>artist name</td>
 <td><a href='http://developer.echonest.com/docs/v4/artist.html#search'>url</a></td>
+</tr>
+<tr>
+<td>artist playmeid</td>
+<td>int</td>
+<td>ID from playme.com, or -1</td>
+<td><a href='http://www.playme.com/'>url</a></td>
+</tr>
+<tr>
+<td>artist terms</td>
+<td>array string</td>
+<td>Echo Nest tags</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#terms'>url</a></td>
+</tr>
+<tr>
+<td>artist terms freq</td>
+<td>array float</td>
+<td>Echo Nest tags freqs</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#terms'>url</a></td>
+</tr>
+<tr>
+<td>artist terms weight</td>
+<td>array float</td>
+<td>Echo Nest tags weight</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#terms'>url</a></td>
 </tr>
 <tr>
 <td>audio md5</td>
@@ -97,25 +133,25 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>bars confidence</td>
 <td>array float</td>
-<td></td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>bars start</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>beats confidence</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>beats start</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -133,43 +169,43 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>end of fade in</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>energy</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td></td>
 </tr>
 <tr>
 <td>key</td>
 <td>int</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>key confidence</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>loudness</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>mode</td>
 <td>int</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>mode confidence</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -181,7 +217,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>sections confidence</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -193,44 +229,50 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>segments confidence</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max time</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max start</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments pitches</td>
 <td>2D array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments start</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments timbre</td>
 <td>2D array float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
+</tr>
+<tr>
+<td>similar artists</td>
+<td>array string</td>
+<td>Echo Nest artist IDs<br>(sim. algo. unpublished)</td>
+<td><a href='http://developer.echonest.com/docs/v4/artist.html#similar'>url</a></td>
 </tr>
 <tr>
 <td>song hotttnesss</td>
@@ -253,7 +295,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>tatums confidence</td>
 <td>array float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -265,19 +307,19 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>tempo</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>time signature</td>
 <td>int</td>
-<td>row 2, cell 2</td>
+<td></td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>time signature confidence</td>
 <td>float</td>
-<td>row 2, cell 2</td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>

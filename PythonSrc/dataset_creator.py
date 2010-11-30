@@ -163,6 +163,7 @@ def create_track_file(maindir,trackid,track,song,artist):
                 print e
                 print '(try again in 15 seconds)'
                 time.sleep(15)
+                continue
             # move tmp file to real file
             shutil.move(hdf5_path_tmp, hdf5_path)
             # release lock

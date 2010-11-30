@@ -21,6 +21,7 @@
 <a href='#howtoorganize'>How do I get it organized?</a><br>
 <a href='#howcreated'>How was the dataset created?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
+<a href='#website'>Why this website doesn't load sometimes?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><br>
 <a href='http://thefullfool.files.wordpress.com/2010/09/wheres-waldo1.jpg'>Where is Waldo?</a><br>
 <a href='#getinvolved'>How can I get involved?</a><p>
@@ -348,7 +349,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <p>
 
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
-See section "Getting the dataset".<p>
+See section <a onclick="clientSideInclude('left','left_getting.txt');" href="#">Getting the dataset</a>.<p>
 
 <a name='notapi'><h3>Why is it not an API?</h3></a>
 API have a lot of merit, and most of this dataset was built using
@@ -435,7 +436,7 @@ section to get inspired. You will also find there some snippets
 of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
-Gordon!<p>
+Gordon! more to come on this.<p>
 
 <a name='howcreated'><h3>How wasthe dataset created?</h3></a>
 Using the Echonest API. Songs were chosen....?????
@@ -446,6 +447,13 @@ GNU Public License? If you're a researcher and want to publish,
 you are fine. If you are a company and want to experiment on the
 dataset, contact the Echo Nest, we will probably give you the
 authorization.<p>
+
+<a name='website'><h3>Why this website doesn't load sometimes?</h3></a>
+You need to enable javascript. We also use a 'non-official' javascript
+function that loads external HTML from the client side.
+This should be supported on the following recent browsers: IE, firefox,
+chrome, safari, opera. If you still have issues, send us an email.<br>
+Our university server isn't perfect either.<p>
 
 <a name='wherehelp'><h3>Where can I get help?</h3></a>
 There is no mailing or user blog so far. Simply contact one

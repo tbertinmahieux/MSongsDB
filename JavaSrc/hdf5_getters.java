@@ -107,7 +107,7 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/metadata/songs","artist_id");
     }
 
-    public static String get_artist_mbid(H5File h5) throws Exception { return get_artist_id(h5, 0); }
+    public static String get_artist_mbid(H5File h5) throws Exception { return get_artist_mbid(h5, 0); }
     public static String get_artist_mbid(H5File h5, int songidx) throws Exception
     {    
 	return get_member_string(h5,songidx,"/metadata/songs","artist_mbid");
@@ -159,6 +159,12 @@ public class hdf5_getters
     public static String get_title(H5File h5, int songidx) throws Exception
     {    
 	return get_member_string(h5,songidx,"/metadata/songs","title");
+    }
+
+    public static String[] get_similar_artists(H5File h5) throws Exception { return get_similar_artists(h5, 0); }
+    public static String[] get_similar_artists(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_string(h5, songidx, "metadata", "similar_artists");
     }
 
     public static double get_analysis_sample_rate(H5File h5) throws Exception { return get_analysis_sample_rate(h5, 0); }
@@ -433,6 +439,28 @@ public class hdf5_getters
 	return null;
     }
 
+    public static String[] get_array_string(H5File h5, int songidx, String group, String arrayname) throws Exception
+    {    
+	// index
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(group + "/songs");
+	analysis.init();
+	int wantedMember = find( analysis.getMemberNames() , "idx_"+arrayname);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	int pos1 = col[songidx];
+	// data
+	H5ScalarDS array = (H5ScalarDS) h5.get("/"+group+"/"+arrayname);
+	String[] data = (String[]) array.getData();
+	int pos2 = data.length;
+	if (songidx + 1 < col.length) pos2 = col[songidx+1];
+	// copy
+	String[] res = new String[pos2-pos1];
+	for (int k = 0; k < res.length; k++)
+	    res[k] = data[pos1+k];
+	return res;
+    }
+
     public static void main(String[] args)
     {
 	if (args.length < 1)
@@ -456,12 +484,16 @@ public class hdf5_getters
 	    System.out.println("artist familiarity: " + get_artist_familiarity(h5));
 	    System.out.println("artist hotttnesss: " + get_artist_hotttnesss(h5));
 	    System.out.println("artist id: " + get_artist_id(h5));
+	    System.out.println("artist mbid: " + get_artist_mbid(h5));
 	    System.out.println("artist latitude: " + get_artist_latitude(h5));
 	    System.out.println("artist longitude: " + get_artist_longitude(h5));
 	    System.out.println("artist location: " + get_artist_location(h5));
 	    System.out.println("artist name: " + get_artist_name(h5));
 	    System.out.println("song hotttnesss: " + get_song_hotttnesss(h5));
 	    System.out.println("title: " + get_title(h5));
+	    String[] resS;
+	    resS = get_similar_artists(h5);
+	    System.out.println("similar artists, length: "+resS.length+", elem 2: "+resS[20]);
 	    System.out.println("duration: " + get_duration(h5));
 	    System.out.println("end_of_fade_in: " + get_end_of_fade_in(h5));
 	    System.out.println("key: " + get_key(h5));

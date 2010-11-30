@@ -130,6 +130,39 @@ def get_similar_artists(h5,songidx=0):
     return h5.root.metadata.similar_artists[h5.root.metadata.songs.cols.idx_similar_artists[songidx]:
                                             h5.root.metadata.songs.cols.idx_similar_artists[songidx+1]]
 
+def get_artist_terms(h5,songidx=0):
+    """
+    Get artist terms array. Takes care of the proper indexing if we are in aggregate
+    file. By default, return the array for the first song in the h5 file.
+    To get a regular numpy ndarray, cast the result to: numpy.array( )
+    """
+    if h5.root.metadata.songs.nrows == songidx + 1:
+        return h5.root.metadata.artist_terms[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
+    return h5.root.metadata.artist_terms[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
+                                            h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+
+def get_artist_terms_freq(h5,songidx=0):
+    """
+    Get artist terms array frequencies. Takes care of the proper indexing if we are in aggregate
+    file. By default, return the array for the first song in the h5 file.
+    To get a regular numpy ndarray, cast the result to: numpy.array( )
+    """
+    if h5.root.metadata.songs.nrows == songidx + 1:
+        return h5.root.metadata.artist_terms_freq[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
+    return h5.root.metadata.artist_terms_freq[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
+                                              h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+
+def get_artist_terms_weight(h5,songidx=0):
+    """
+    Get artist terms array frequencies. Takes care of the proper indexing if we are in aggregate
+    file. By default, return the array for the first song in the h5 file.
+    To get a regular numpy ndarray, cast the result to: numpy.array( )
+    """
+    if h5.root.metadata.songs.nrows == songidx + 1:
+        return h5.root.metadata.artist_terms_weight[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
+    return h5.root.metadata.artist_terms_weight[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
+                                                h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+
 def get_analysis_sample_rate(h5,songidx=0):
     """
     Get analysis sample rate from a HDF5 song file, by default the first song in it

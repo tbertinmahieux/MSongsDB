@@ -75,9 +75,7 @@ def fill_hdf5_from_artist(h5,artist):
     group.similar_artists.append( np.array(map(lambda x : x.id,artist.get_similar(results=100)),dtype='string') )
     metadata.cols.idx_artist_terms[0] = 0
     group.artist_terms.append( np.array(map(lambda x : x.name,artist.get_terms()),dtype='string') )
-    metadata.cols.idx_artist_terms_freq[0] = 0
     group.artist_terms_freq.append( np.array(map(lambda x : x.frequency,artist.get_terms()),dtype='float64') )
-    metadata.cols.idx_artist_terms_weight[0] = 0
     group.artist_terms_weight.append( np.array(map(lambda x : x.weight,artist.get_terms()),dtype='float64') )
     # done, flush
     metadata.flush()
@@ -217,13 +215,9 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             if counter == 0 : # we're first row
                 row["idx_similar_artists"] = 0
                 row["idx_artist_terms"] = 0
-                row["idx_artist_terms_freq"] = 0
-                row["idx_artist_terms_weight"] = 0
             else:
                 row["idx_similar_artists"] = h5.root.metadata.similar_artists.shape[0]
                 row["idx_artist_terms"] = h5.root.metadata.artist_terms.shape[0]
-                row["idx_artist_terms_freq"] = h5.root.metadata.artist_terms_freq.shape[0]
-                row["idx_artist_terms_weight"] = h5.root.metadata.artist_terms_weight.shape[0]
             row.append()
             h5.root.metadata.songs.flush()
             # ARRAYS

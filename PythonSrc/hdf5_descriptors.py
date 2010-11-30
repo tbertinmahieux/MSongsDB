@@ -55,20 +55,13 @@ class SongMetaData(tables.IsDescription):
     artist_location = tables.StringCol(MAXSTRLEN)
     # ARRAY INDECES
     idx_similar_artists = tables.IntCol()
-
-
+    idx_artist_terms = tables.IntCol()
     # TO ADD
     
     # song mbid
     # album mbid
-    # artist mbid
 
-    # tags (from EN) need to create a new table
-    # we just need a start
-    tags_idx = tables.IntCol()
-
-    # url
-    
+    # url    
     # preview url, 7digital, release_image
 
 

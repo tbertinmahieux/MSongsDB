@@ -94,6 +94,16 @@ classdef HDF5_Song_File_Reader
         res = deblank(obj.metadata.artist_mbid(:,songidx)');
       end
 
+      function res = get_artist_playmeid(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.metadata.artist_playmeid(songidx);
+      end
+      
+      function res = get_artist_7digitalid(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.metadata.artist_7digitalid(songidx);
+      end
+      
       function res = get_artist_latitude(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = obj.metadata.artist_latitude(songidx);

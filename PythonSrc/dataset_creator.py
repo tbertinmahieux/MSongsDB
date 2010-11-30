@@ -44,6 +44,9 @@ TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
 
+# HOW LONG DO WE WAIT WHEN SOMETHING GOES WRONG
+SLEEPTIME = 15 # in seconds
+
 def close_trackset():
     """
     When terminating the thread, nothing can add anything
@@ -161,8 +164,8 @@ def create_track_file(maindir,trackid,track,song,artist):
                 # print and wait
                 print 'ERROR creating track:',trackid,'at',time.ctime()
                 print e
-                print '(try again in 15 seconds)'
-                time.sleep(15)
+                print '(try again in',SLEEPTIME,'seconds)'
+                time.sleep(SLEEPTIME)
                 continue
             # move tmp file to real file
             shutil.move(hdf5_path_tmp, hdf5_path)

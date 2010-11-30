@@ -113,6 +113,18 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/metadata/songs","artist_mbid");
     }
 
+    public static int get_artist_playmeid(H5File h5) throws Exception { return get_artist_playmeid(h5, 0); }
+    public static int get_artist_playmeid(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_int(h5,songidx,"/metadata/songs","artist_playmeid");
+    }
+
+    public static int get_artist_7digitalid(H5File h5) throws Exception { return get_artist_7digitalid(h5, 0); }
+    public static int get_artist_7digitalid(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_int(h5,songidx,"/metadata/songs","artist_7digitalid");
+    }
+
     public static double get_artist_latitude(H5File h5) throws Exception { return get_artist_latitude(h5, 0); }
     public static double get_artist_latitude(H5File h5, int songidx) throws Exception
     {    
@@ -485,6 +497,8 @@ public class hdf5_getters
 	    System.out.println("artist hotttnesss: " + get_artist_hotttnesss(h5));
 	    System.out.println("artist id: " + get_artist_id(h5));
 	    System.out.println("artist mbid: " + get_artist_mbid(h5));
+	    System.out.println("artist playmeid: " + get_artist_playmeid(h5));
+	    System.out.println("artist 7digitalid: " + get_artist_7digitalid(h5));
 	    System.out.println("artist latitude: " + get_artist_latitude(h5));
 	    System.out.println("artist longitude: " + get_artist_longitude(h5));
 	    System.out.println("artist location: " + get_artist_location(h5));

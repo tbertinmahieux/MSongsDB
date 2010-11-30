@@ -89,7 +89,7 @@ class SongAnalysis(tables.IsDescription):
     tempo = tables.Float64Col()
     time_signature = tables.IntCol()
     time_signature_confidence = tables.Float64Col()
-    track_id = tables.StringCol(MAXSTRLEN,)
+    track_id = tables.StringCol(32)
     # ARRAY INDECES
     idx_segments_start = tables.IntCol()
     idx_segments_confidence = tables.IntCol()

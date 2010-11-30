@@ -159,7 +159,7 @@ def create_track_file(maindir,trackid,track,song,artist):
                 except IOError:
                     pass
                 # print and wait
-                print 'ERROR creating track:',trackid
+                print 'ERROR creating track:',trackid,'at',time.ctime()
                 print e
                 print '(try again in 15 seconds)'
                 time.sleep(15)

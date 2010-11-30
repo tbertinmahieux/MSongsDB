@@ -341,7 +341,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     r.append()
     table.flush()
     # create arrays
-    create_all_arrays(h5)
+    create_all_arrays(h5,expectedrows=3)
     # close it, done
     h5.close()
 
@@ -383,12 +383,12 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song',
                            expectedrows=expectedrows)
     # create arrays
-    create_all_arrays(h5)
+    create_all_arrays(h5,expectedrows=expectedrows)
     # close it, done
     h5.close()
 
 
-def create_all_arrays(h5):
+def create_all_arrays(h5,expectedrows=1000):
     """
     Utility functions used by both create_song_file and create_aggregate_files,
     creates all the EArrays (empty).
@@ -400,8 +400,8 @@ def create_all_arrays(h5):
     group = h5.root.metadata
     h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
     h5.createEArray(group,'artist_terms',tables.StringAtom(DESC.MAXSTRLEN,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS)
-    h5.createEArray(group,'artist_terms_freq',tables.Float64(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_FREQ)
-    h5.createEArray(group,'artist_terms_weight',tables.Float64(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_WEIGHT)
+    h5.createEArray(group,'artist_terms_freq',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_FREQ)
+    h5.createEArray(group,'artist_terms_weight',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_WEIGHT)
     # group analysis arrays
     group = h5.root.analysis
     h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)

@@ -397,13 +397,13 @@ def create_all_arrays(h5):
               metadata and analysis groups already exist!
     """
     # group metadata arrays
-    group = h5.metadata
+    group = h5.root.metadata
     h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
-    h5.createEArray(where=group,name='artist_terms',atom=tables.StringAtom(DESC.MAXSTRLEN,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS)
-    h5.createEArray(where=group,name='artist_terms_freq',atom=tables.Float64(shape=()),shape=(0,),title=ARRAY_DESC_ARTIST_TERMS_FREQ)
-    h5.createEArray(where=group,name='artist_terms_weight',atom=tables.Float64(shape=()),shape=(0,),title=ARRAY_DESC_ARTIST_TERMS_WEIGHT)
+    h5.createEArray(group,'artist_terms',tables.StringAtom(DESC.MAXSTRLEN,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS)
+    h5.createEArray(group,'artist_terms_freq',tables.Float64(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_FREQ)
+    h5.createEArray(group,'artist_terms_weight',tables.Float64(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_WEIGHT)
     # group analysis arrays
-    group h5.analysis
+    group = h5.root.analysis
     h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
     h5.createEArray(group,'segments_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_SEGMENTS_CONFIDENCE,
                     expectedrows=expectedrows*300)

@@ -40,6 +40,8 @@ class SongMetaData(tables.IsDescription):
     artist_name = tables.StringCol(MAXSTRLEN)
     artist_id = tables.StringCol(32)
     artist_mbid = tables.StringCol(40)
+    artist_playmeid = tables.IntCol()
+    artist_7digitalid = tables.IntCol()
     analyzer_version = tables.StringCol(32)
     genre = tables.StringCol(MAXSTRLEN)
     release = tables.StringCol(MAXSTRLEN)

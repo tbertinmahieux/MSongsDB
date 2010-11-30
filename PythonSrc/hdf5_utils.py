@@ -63,8 +63,9 @@ def fill_hdf5_from_artist(h5,artist):
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
     metadata.cols.artist_id[0] = artist.id
-    ambid = artist.get_foreign_id()
-    metadata.cols.artist_mbid[0] = ambid.split(':')[2] if ambid.split(':')[0]=='musicbrainz' else ''
+    metadata.cols.artist_mbid[0] = artist.get_foreign_id(idspace='musicbrainz').split(':')[2]
+    metadata.cols.artist_playmeid[0] = artist.get_foreign_id(idspace='playme').split(':')[2]
+    metadata.cols.artist_7digitalid[0] = artist.get_foreign_id(idspace='7digital').split(':')[2]
     # fill the metadata arrays
     group = h5.root.metadata
     metadata.cols.idx_similar_artists[0] = 0
@@ -193,6 +194,8 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["artist_hotttnesss"] = get_artist_hotttnesss(h5tocopy,songidx)
             row["artist_id"] = get_artist_id(h5tocopy,songidx)
             row["artist_mbid"] = get_artist_mbid(h5tocopy,songidx)
+            row["artist_playmeid"] = get_artist_playmeid(h5tocopy,songidx)
+            row["artist_7digitalid"] = get_artist_7digitalid(h5tocopy,songidx)
             row["artist_latitude"] = get_artist_latitude(h5tocopy,songidx)
             row["artist_location"] = get_artist_location(h5tocopy,songidx)
             row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)

@@ -59,6 +59,18 @@ def get_artist_mbid(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.artist_mbid[songidx]
 
+def get_artist_playmeid(h5,songidx=0):
+    """
+    Get artist playme id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.artist_playmeid[songidx]
+
+def get_artist_7digitalid(h5,songidx=0):
+    """
+    Get artist playme id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.artist_7digitalid[songidx]
+
 def get_artist_latitude(h5,songidx=0):
     """
     Get artist latitude from a HDF5 song file, by default the first song in it

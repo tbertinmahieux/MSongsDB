@@ -26,7 +26,17 @@
 <a href='#getinvolved'>How can I get involved?</a><p>
 
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
-Good question, a lot of things.<p>
+Good question, a lot of things. Mostly, almost all information
+provided by the Echo Nest API which encompasses both metadata
+and audio analysis. Each file is for one track which corresponds
+to one song, one release and one artist. All the information about
+these four items (track, song, release, artist) are in every file
+(yes, there is redundancy).<br>
+For an in depth look, go to the following
+section describing all <a href='#fields'>fields</a> you will find
+in one song file. Note that the data is quite complete, but some fields
+might be missing for some songs. For instance, we don't know the location
+for all artists.<p>
 
 <a name='fields'><h3>Fields description</h3></a>
 Below are a list of all fields available in the files of the dataset.

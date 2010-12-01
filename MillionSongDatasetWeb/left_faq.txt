@@ -384,7 +384,10 @@ wrappers exist in most languages (see "code" section).<br>
 Is is perfect? No. Does it make more sense that 1M zipped json files or
 matfiles? Yes. Still not happy? Here is a 
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_to_matfile.py">python code</a> 
-to transform the data into matfiles.<p>
+to transform the data into matfiles.<br>
+Note that the new matfile format (v7.3) is 
+<a href="http://mloss.org/community/blog/2009/nov/19/matlabtm-73-file-format-is-actually-hdf5-and-can-b/">
+actually HDF5</a>.
 
 <a name='aggregate'><h3>song / aggregate / summary files</h3></a>
 We usually use song file to refer to the typical HDF5 file that contains

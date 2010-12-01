@@ -48,8 +48,8 @@ function hdf5_to_matfile(hdf5path,matpath)
     idx = cellfun(@(x) ~strcmp(x,'get_num_songs'),getters);
     getters = {getters{idx}};
     % iterate over songs inside file
-    transfer_note = strcat('transferred on ',datestring(now),' from file: ',h5path,' using MATLAB');
-    save(matpath, 'transfer_note');
+    transfer_note = strcat('transferred on ',datestr(now),' from file: ',hdf5path,' using MATLAB');
+    save(matpath, 'transfer_note','-v7');
     for songidx = 1:nSongs
         for getidx = 1:size(getters,2)
             % new matfile field name
@@ -61,7 +61,7 @@ function hdf5_to_matfile(hdf5path,matpath)
             % get value
             eval(strcat(gettername,' = h5.',getters{getidx},'(',num2str(songidx),');'));
             % write value to matfile
-            save(matpath, gettername, '-append');
+            save(matpath, gettername, '-append','-v7');
         end % end iteration over getters
     end % end iteration over songs
     

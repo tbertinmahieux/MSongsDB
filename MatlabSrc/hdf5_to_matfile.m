@@ -34,9 +34,19 @@ function hdf5_to_matfile(hdf5path,matpath)
 % Note: developped with Matlab 2009b
 
     % assert hdf5 file exists
-    
+    if exist(hdf5path,'file') ~= 2
+        disp(strcat('hdf5 file ',hdf5path,' does not exists.'));
+        return;
+    end
     % check matfile path (creates it if necessary)
-    
+    if nargin < 2
+        [pathstr, name, ext] = fileparts(hdf5path);
+        matpath = fullfile(pathstr,strcat(name,'.mat'));
+    end
+    if exist(matpath,'file') == 2
+        disp(strcat('matfile ',matpath,' exist, please delete or change mat path'));
+        return;
+    end
     % open HDF5
     h5 = HDF5_Song_File_Reader(hdf5path);
     % num songs
@@ -53,7 +63,6 @@ function hdf5_to_matfile(hdf5path,matpath)
     for songidx = 1:nSongs
         for getidx = 1:size(getters,2)
             % new matfile field name
-            disp(getters{getidx});
             gettername = getters{getidx}(5:end);
             if nSongs > 1
                 gettername = strcat(gettername,num2str(songidx));

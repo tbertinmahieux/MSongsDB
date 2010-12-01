@@ -71,7 +71,7 @@ classdef HDF5_Song_File_Reader
       function res = get_num_songs(obj)
       % number of songs contained in the HDF5 file, usually 1,
       % unless it is a 'summary' file.
-        res = size(obj.metadata.song_id,1);
+        res = size(obj.metadata.song_id,2);
       end
       
       function res = get_artist_familiarity(obj,songidx)

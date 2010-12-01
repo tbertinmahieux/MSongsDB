@@ -1,0 +1,8 @@
+index.html
+ismirpapers_html.txt
+left_code.txt
+left_contactus.txt
+left_faq.txt
+left_getting.txt
+left_home.txt
+left_tasks.txt

@@ -354,7 +354,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <p>
 
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
-See section <a onClick="window.top.location.reload();" href='#getting'>Getting the dataset</a>.<p>
+See section <a onClick="clientSideInclude('left','left_getting.txt');" href='#'>Getting the dataset</a>.<p>
 <a name='notapi'><h3>Why is it not an API?</h3></a>
 API have a lot of merit, and most of this dataset was built using
 the Echo Nest API (with unlimited access). But APIs have not

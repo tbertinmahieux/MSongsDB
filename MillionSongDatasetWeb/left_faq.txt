@@ -41,6 +41,11 @@ for all artists.<p>
 
 <a name='fields'><h3>Fields description</h3></a>
 Below are a list of all fields available in the files of the dataset.
+The real reference is the code:
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/display_song.py">
+display_song.py</a>. If a field is displayed, the field exists
+and there should be a getter for it (if I forgot some in matlab or java,
+please let me know).
 For the analysis field, we suggest you first read the Echo Nest
 <a href='http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation_2.2.pdf'>analyze documentation</a>.
 

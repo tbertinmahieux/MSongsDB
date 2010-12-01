@@ -1,5 +1,5 @@
 <div class="post">
-<h2>About the Million Song Dataset</h2><p>
+<h2>Contact</h2><p>
 Most questions should be addressed to <a href=http://www.columbia.edu/~tb2332/>Thierry Bertin-Mahieux</a> at tb2332@columbia.edu<p>
 Below are the participant names per organization. The links on the side should help you find them.<br>
 <b>LabROSA</b>: Daniel P.W. Ellis and Thierry Bertin-Mahieux<br>

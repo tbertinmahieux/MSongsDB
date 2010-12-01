@@ -14,8 +14,19 @@
   <script type="text/javascript">
          function mainLoad()
          {
-           clientSideInclude('left', 'left_home.txt');
 	   randomIsmirPaper();
+	   var gethash = document.location.hash;
+	   var pagehash = gethash.split('#')[1];
+	   if (pagehash == 'home') {clientSideInclude('left', 'left_home.txt');}
+	   else if (pagehash == 'getting') {clientSideInclude('left', 'left_getting.txt');}
+	   else if (pagehash == 'code') {clientSideInclude('left', 'left_code.txt');}
+	   else if (pagehash == 'tasks') {clientSideInclude('left', 'left_tasks.txt');}
+	   else if (pagehash == 'faq') {clientSideInclude('left', 'left_faq.txt');}
+	   else if (pagehash == 'contactus') {clientSideInclude('left', 'left_contactus.txt');}
+	   else {
+              clientSideInclude('left', 'left_home.txt');
+           }
+	   window.scrollTo(0,0);
          }
   </script>
 </head><body onload="mainLoad();">
@@ -28,15 +39,15 @@
 </div>
 <div id="menu">
 <ul>
-  <li><a onclick="clientSideInclude('left','left_home.txt');" href="#">
+  <li><a onClick="window.location.reload();" href="#home">
     <span id="home">Home</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_getting.txt'); " href="#"> <span id="getting">Getting the dataset</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_code.txt');" href="#">
+  <li><a onClick="window.location.reload();" href="#getting"> <span id="getting">Getting the dataset</span></a></li>
+  <li><a onClick="window.location.reload();" href="#code">
     <span id="code">Code</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_tasks.txt');" href="#">
+  <li><a onClick="window.location.reload();" href="#tasks">
     <span id="tasks">Tasks</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_faq.txt');" href="#"> <span id="faq">FAQ</span></a></li>
-  <li><a onclick="clientSideInclude('left','left_contactus.txt');" href="#"> <span id="contactus">Contact Us / Cite the dataset</span></a></li>
+  <li><a onClick="window.location.reload();" href="#faq"> <span id="faq">FAQ</span></a></li>
+  <li><a onClick="window.location.reload();" href="#contactus"> <span id="contactus">Contact Us / Cite the dataset</span></a></li>
 </ul>
 </div>
 <div id="content">

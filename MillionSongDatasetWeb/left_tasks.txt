@@ -65,7 +65,7 @@ python code</a> takes a HDF5 song file and
 looks for a preview. It outputs the URL. It first look for the track ID
 if we have it. If we don't, but we have the ID for the release or the
 artist, it pull all song associated with these and check for the closest
-match. If not, it uses 7digital API to search by <artist name> + 
-<track name>.<p>
+match. If not, it uses 7digital API to search by 'artist name' + 
+'track name'.<p>
 
 </div>

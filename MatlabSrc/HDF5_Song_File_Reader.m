@@ -129,6 +129,11 @@ classdef HDF5_Song_File_Reader
         res = deblank(obj.metadata.release(:,songidx)');
       end 
 
+      function res = get_release_7digitalid(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.metadata.release_7digitalid(songidx);
+      end
+
       function res = get_song_id(obj,songidx)
         if (nargin < 2); songidx = 1; end
         res = deblank(obj.metadata.song_id(:,songidx)');
@@ -144,6 +149,11 @@ classdef HDF5_Song_File_Reader
         res = deblank(obj.metadata.title(:,songidx)');
       end
       
+      function res = get_track_7digitalid(obj,songidx) 
+        if (nargin < 2); songidx = 1; end
+        res = obj.metadata.track_7digitalid(songidx);
+      end
+
       function res = get_similar_artists(obj,songidx)
       % return similar artists for a given song (songs start at 1)
           if (nargin < 2); songidx = 1; end

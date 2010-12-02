@@ -58,7 +58,7 @@ The dataset does not come with audio, but there are many services out
 there that provide audio samples for free (at least a few thousand per day).
 We use such a service, <a href='http:www.7digital.com'>7digital</a>, 
 and the different 7digital ID (artist, release, track) are already in 
-the dataset.</br>
+the dataset.<br>
 The following 
 <a href='https://github.com/tb2332/MSongsDB/blob/master/Tasks/Preview7digital/get_preview_url.py'>
 python code</a> takes a HDF5 song file and

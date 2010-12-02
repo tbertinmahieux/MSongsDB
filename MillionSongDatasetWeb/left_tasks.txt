@@ -51,7 +51,12 @@ Code available here ????.<p>
 Many analysis of the metadata is possible. How do the words of the artist
 names or their song titles cluster? Can we predict tags based on that, or
 is the clustering similar? What is "the most typical song title"
-imagineable.<p>
+imagineable. See 
+<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks/NamesAnalysis/">
+NamesAnlysis</a> folder for sample python code.<br>
+Not that these scripts can
+be useful for other task, for instance to create the list of all artists
+in the dataset.<p>
 
 <a name='preview'><h3>Preview audio</h3></a>
 The dataset does not come with audio, but there are many services out

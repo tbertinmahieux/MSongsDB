@@ -156,4 +156,41 @@ if __name__ == '__main__':
         f.write(aid+'<SEP>'+ambid+'<SEP>'+tid+'<SEP>'+aname+'\n')
     f.close()
 
-
+    # FUN STATS! (require numpy)
+    try:
+        import numpy as np
+    except ImportError:
+        print 'no numpy, no fun stats!'
+        sys.exit(0)
+    import re
+    print 'FUN STATS!'
+    # name length
+    name_lengths = map(lambda x: len(dArtists[x][2]), artistids)
+    print 'average artist name length:',np.mean(name_lengths),'(std =',str(np.std(name_lengths))+')'
+    # most common word
+    dWords = {}
+    for ambid,tid,aname in dArtists.values():
+        words = re.findall(r'\w+', aname.lower())
+        for w in words:
+            if w in dWords.keys():
+                dWords[w] += 1
+            else:
+                dWords[w] = 1
+    words = dWords.keys()
+    wfreqs = map(lambda x: dWords[x], words)
+    pos = np.argsort(wfreqs)
+    pos = pos[-1::-1]
+    print 'number of different words used:',len(words)
+    print 'the most used words in artist names are:'
+    for p in pos[:5]:
+        print '*',words[p],'(freq='+str(wfreqs[p])+')'
+    print 'some artists using the 30th most frequent word ('+words[pos[30]]+'):'
+    frequentword = words[pos[30]]
+    cnt = 0
+    for ambid,tid,aname in dArtists.values():
+        words = re.findall(r'\w+', aname.lower())
+        if frequentword in words:
+            print '*',aname
+            cnt += 1
+        if cnt >= min(5,wfreqs[pos[10]]):
+            break

@@ -231,6 +231,12 @@ For the analysis field, we suggest you first read the Echo Nest
 <td></td>
 </tr>
 <tr>
+<td>release 7digitalid</td>
+<td>int</td>
+<td>ID from 7digital.com or -1</td>
+<td><a href='http://www.7digital.com/'>url</a></td>
+</tr>
+<tr>
 <td>sections confidence</td>
 <td>array float</td>
 <td></td>
@@ -349,6 +355,12 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>string</td>
 <td>Echo Nest track ID</td>
 <td></td>
+</tr>
+<tr>
+<td>track 7digitalid</td>
+<td>int</td>
+<td>ID from 7digital.com or -1</td>
+<td><a href='http://www.7digital.com/'>url</a></td>
 </tr>
 </table><br>
 <p>

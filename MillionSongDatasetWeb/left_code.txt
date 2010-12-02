@@ -27,14 +27,15 @@ If you just want to use the HDF5 provided in the dataset, the file
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_getters.py">
 hdf5_getters.py</a> should be enough:<p>
 <small>
-<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 50px; margin-right: 150px;">
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 140px;">
 <div style="margin-left: 25px;">
-import hdf5_utils<br />
-import hdf5_getters<br>
-h5 = hdf5_utils.open_h5_file_read(<path some file>)<br>
-duration = hdf5_hetters.get_duration(h5)<br>
+<pre>
+import hdf5_utils
+import hdf5_getters
+h5 = hdf5_utils.open_h5_file_read(<path some file>)
+duration = hdf5_hetters.get_duration(h5)
 h5.close()
-</code>
+</pre>
 </div>
 </div>
 </small><p>

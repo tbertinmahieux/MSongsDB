@@ -67,5 +67,16 @@ if we have it. If we don't, but we have the ID for the release or the
 artist, it pull all song associated with these and check for the closest
 match. If not, it uses 7digital API to search by 'artist name' + 
 'track name'.<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 40px;">
+<div style="margin-left: 25px;">
+<pre>
+python get_preview_url.py HDF5file
+python get_preview_url.py -7digitalkey 98sdjwdd HDF5file
+</pre>
+</div>
+</div>
+</small>
+<p>
 
 </div>

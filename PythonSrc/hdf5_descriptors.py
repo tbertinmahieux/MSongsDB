@@ -45,6 +45,7 @@ class SongMetaData(tables.IsDescription):
     analyzer_version = tables.StringCol(32)
     genre = tables.StringCol(MAXSTRLEN)
     release = tables.StringCol(MAXSTRLEN)
+    release_7digitalid = tables.IntCol()
     title = tables.StringCol(MAXSTRLEN)
     artist_familiarity = tables.Float64Col()
     artist_hotttnesss = tables.Float64Col()
@@ -53,6 +54,7 @@ class SongMetaData(tables.IsDescription):
     artist_latitude = tables.Float64Col()
     artist_longitude = tables.Float64Col()
     artist_location = tables.StringCol(MAXSTRLEN)
+    track_7digitalid = tables.IntCol()
     # ARRAY INDECES
     idx_similar_artists = tables.IntCol()
     idx_artist_terms = tables.IntCol()

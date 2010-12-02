@@ -67,7 +67,7 @@ def get_artist_playmeid(h5,songidx=0):
 
 def get_artist_7digitalid(h5,songidx=0):
     """
-    Get artist playme id from a HDF5 song file, by default the first song in it
+    Get artist 7digital id from a HDF5 song file, by default the first song in it
     """
     return h5.root.metadata.songs.cols.artist_7digitalid[songidx]
 
@@ -101,6 +101,12 @@ def get_release(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.release[songidx]
 
+def get_release_7digitalid(h5,songidx=0):
+    """
+    Get release 7digital id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.release_7digitalid[songidx]
+
 def get_song_id(h5,songidx=0):
     """
     Get song id from a HDF5 song file, by default the first song in it
@@ -118,6 +124,12 @@ def get_title(h5,songidx=0):
     Get title from a HDF5 song file, by default the first song in it
     """
     return h5.root.metadata.songs.cols.title[songidx]
+
+def get_release_7digitalid(h5,songidx=0):
+    """
+    Get track 7digital id from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.metadata.songs.cols.track_7digitalid[songidx]
 
 def get_similar_artists(h5,songidx=0):
     """

@@ -68,8 +68,8 @@ def fill_hdf5_from_artist(h5,artist):
     metadata.cols.artist_id[0] = artist.id
     idsplitter = lambda x,y: x.split(':')[2] if x else y
     metadata.cols.artist_mbid[0] = idsplitter(artist.get_foreign_id(idspace='musicbrainz'),'')
-    metadata.cols.artist_playmeid[0] = idsplitter(artist.get_foreign_id(idspace='playme'),-1)
-    metadata.cols.artist_7digitalid[0] = idsplitter(artist.get_foreign_id(idspace='7digital'),-1)
+    metadata.cols.artist_playmeid[0] = int(idsplitter(artist.get_foreign_id(idspace='playme'),-1))
+    metadata.cols.artist_7digitalid[0] = int(idsplitter(artist.get_foreign_id(idspace='7digital'),-1))
     # fill the metadata arrays
     group = h5.root.metadata
     metadata.cols.idx_similar_artists[0] = 0
@@ -119,6 +119,9 @@ def fill_hdf5_from_track(h5,track):
     metadata.cols.artist_name[0] = track.artist.encode('utf-8') if track.artist else ''
     metadata.cols.release[0] = track.release.encode('utf-8') if track.release else ''
     metadata.cols.title[0] = track.title.encode('utf-8') if track.title else ''
+    idsplitter_7digital = lambda x: int(x.split(':')[2]) if x and x.split(':')[0]=='7digital' else -1
+    metadata.cols.release_7digitalid[0] = idsplitter_7digital(track.foreign_release_id)
+    metadata.cols.track_7digitalid[0] = idsplitter_7digital(track.foreign_id)
     metadata.flush()
     # get the analysis table, fill it
     analysis = h5.root.analysis.songs
@@ -209,9 +212,11 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["artist_longitude"] = get_artist_longitude(h5tocopy,songidx)
             row["artist_name"] = get_artist_name(h5tocopy,songidx)
             row["release"] = get_release(h5tocopy,songidx)
+            row["release_7digitalid"] = get_release_7digitalid(h5tocopy,songidx)
             row["song_id"] = get_song_id(h5tocopy,songidx)
             row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
             row["title"] = get_title(h5tocopy,songidx)
+            row["track_7digitalid"] = get_track_7digitalid(h5tocopy,songidx)
             # INDECIES
             if counter == 0 : # we're first row
                 row["idx_similar_artists"] = 0

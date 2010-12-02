@@ -125,7 +125,7 @@ def get_title(h5,songidx=0):
     """
     return h5.root.metadata.songs.cols.title[songidx]
 
-def get_release_7digitalid(h5,songidx=0):
+def get_track_7digitalid(h5,songidx=0):
     """
     Get track 7digital id from a HDF5 song file, by default the first song in it
     """

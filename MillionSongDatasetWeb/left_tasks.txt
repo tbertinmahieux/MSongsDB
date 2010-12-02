@@ -53,7 +53,7 @@ names or their song titles cluster? Can we predict tags based on that, or
 is the clustering similar? What is "the most typical song title"
 imagineable. See 
 <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks/NamesAnalysis/">
-NamesAnlysis</a> folder for sample python code.<br>
+NamesAnalysis</a> folder for sample python code.<br>
 Not that these scripts can
 be useful for other tasks, for instance to create the list of all artists
 in the dataset.<p>

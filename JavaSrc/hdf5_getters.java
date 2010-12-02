@@ -155,6 +155,12 @@ public class hdf5_getters
 	return get_member_string(h5,songidx,"/metadata/songs","release");
     }
 
+    public static int get_release_7digitalid(H5File h5) throws Exception { return get_release_7digitalid(h5, 0); }
+    public static int get_release_7digitalid(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_int(h5,songidx,"/metadata/songs","release_7digitalid");
+    }
+
     public static String get_song_id(H5File h5) throws Exception { return get_song_id(h5, 0); }
     public static String get_song_id(H5File h5, int songidx) throws Exception
     {    
@@ -171,6 +177,12 @@ public class hdf5_getters
     public static String get_title(H5File h5, int songidx) throws Exception
     {    
 	return get_member_string(h5,songidx,"/metadata/songs","title");
+    }
+
+    public static int get_track_7digitalid(H5File h5) throws Exception { return get_track_7digitalid(h5, 0); }
+    public static int get_track_7digitalid(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_int(h5,songidx,"/metadata/songs","track_7digitalid");
     }
 
     public static String[] get_similar_artists(H5File h5) throws Exception { return get_similar_artists(h5, 0); }
@@ -529,8 +541,11 @@ public class hdf5_getters
 	    System.out.println("artist longitude: " + get_artist_longitude(h5));
 	    System.out.println("artist location: " + get_artist_location(h5));
 	    System.out.println("artist name: " + get_artist_name(h5));
+	    System.out.println("release: " + get_release(h5));
+	    System.out.println("release 7digitalid: " + get_release_7digitalid(h5));
 	    System.out.println("song hotttnesss: " + get_song_hotttnesss(h5));
 	    System.out.println("title: " + get_title(h5));
+	    System.out.println("track 7digitalid: " + get_track_7digitalid(h5));
 	    resS = get_similar_artists(h5);
 	    System.out.println("similar artists, length: "+resS.length+", elem 2: "+resS[20]);
 	    resS = get_artist_terms(h5);

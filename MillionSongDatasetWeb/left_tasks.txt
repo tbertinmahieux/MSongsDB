@@ -57,6 +57,16 @@ NamesAnalysis</a> folder for sample python code.<br>
 Not that these scripts can
 be useful for other tasks, for instance to create the list of all artists
 in the dataset.<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 40px;">
+<div style="margin-left: 25px;">
+<pre>
+python list_all_artists.py DATASETDIR allartists.txt
+</pre>
+</div>
+</div>
+</small>
+<p>
 
 <a name='preview'><h3>Preview audio</h3></a>
 The dataset does not come with audio, but there are many services out

@@ -1,23 +1,35 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
-The dataset is around 300 MB. We do not have access to servers that
-can distribute this load (we are looking at online solutions like
-<a href="http://www.onlinestoragesolution.com/index.html">this</a>). 
-But we want you to get the dataset! Below
+The dataset is around 300 MB. Below
 is a subset of ??? songs so you can get started.
 <p>
 DOWNLOAD SUBSET HERE.
 <p>
-Then, we have some hard drives with the dataset on it ready to be sent.
-Please send us an email with your lab coordinates, and we should be able
-to arrange something. The dataset can also fit on a couple of DVD.
+To get the whole dataset, first see if you know someone that has it!
+We have sent hard drives with the data to labs at UCSD, Queen Mary
+University in London and UPF among others. We might be able to send
+other disk on request.
 <p>
-Another option, if you are interested in cloud computing, we plan to
-make the dataset part of
+You can download it from Amazon, cost is around 40$. Send us an
+email, and we will forward you a link valid for 24 hours. This
+is the best solution in terms of speed / cost / simplicity. The cost
+is solely Amazaon's banwdwith, we do not receive any money!
+You can also access the dataset directly on Amazon Web Services
+(<a href="http://aws.amazon.com/ec2/">EC2 service</a>) as the
+dataset will be hosted on 
 <a href="http://aws.amazon.com/publicdatasets/">aws public datasets</a>.
-You will be able to access it and and do computations using 
-your AWS virtual machine (<a href="http://aws.amazon.com/ec2/">EC2 
-service</a>).
+<p>
+On demand, we can consider a ssh transfer from our lab server.
+You must have a good connection that can stay open for days!
+Also, if your final goal is to buy and put the data and an external
+hard drive, you can buy it and send it to us through 
+<a href="http://amzn.com/B003ICWB5Y">Amazon</a>.
+We'll fill the drive and send it back to you. Contact us to know
+where to send it to here at Columbia.
+<p>
+We can bring such a device at conferences (e.g. ISMIR, WASPAA, ICASSP, ...)!
+If you will attend one of these soon and would like the dataset,
+let us know, and we'll figure out a way to de to the transfer there.
 <p>
 Finally, if you have space on your lab servers to host such a dataset,
 please let us know! A solution involving a few bittorrent servers might

@@ -36,6 +36,26 @@ import numpy as np
 NUMBUCKETS=10000 # hashing parameter
 
 
+def path_from_trackid(trackid):
+    """
+    Creates the path from a given trackid
+    """
+    s = os.path.join(trackid[2],trackid[3])
+    s = os.path.join(s,trackid[4])
+    s = os.path.join(s,trackid)
+    s = s.upper() + '.h5'
+    return s
+
+def put_term_in_hash_table(hash_table,term):
+    """
+    Function to get the hash code of a term and put it in the
+    given table
+    """
+    np.random.seed(hash(term))
+    bucket_idx = np.random.randint(NUMBUCKETS)
+    hash_table[bucket_idx].add(term)
+
+
 def die_with_usage():
     """ HELP MENU """
     print 'get_unique_terms.py'
@@ -43,10 +63,11 @@ def die_with_usage():
     print 'GOAL'
     print '  creates a list of unique tags as fast as possible'
     print 'USAGE'
-    print '  python get_unique_terms.py <MillionSong dir> <output.txt>'
+    print '  python get_unique_terms.py <MillionSong dir> <output.txt> (OPTIONAL <artist list>)'
     print 'PARAM'
     print '   MillionSong dir   - MillionSongDataset root directory'
     print '   output.txt        - result text file, one tag per line'
+    print '   artist list       - text file: artistID<SEP>artistMBID<SEP>track<SEP>...   OPTIONAL BUT FASTER'
     sys.exit(0)
 
 
@@ -66,6 +87,9 @@ if __name__ == '__main__':
     # read params
     maindir = os.path.abspath(sys.argv[1])
     output = os.path.abspath(sys.argv[2])
+    artistfile = ''
+    if len(sys.argv) > 3:
+        artistfile = sys.argv[3]
 
     # check if file exists!
     if os.path.exists(output):
@@ -82,17 +106,33 @@ if __name__ == '__main__':
     
     # iterate HDF5 files
     cnt_files = 0
-    for root, dirs, files in os.walk(maindir):
-        files = glob.glob(os.path.join(root,'*.h5'))
-        for f in files :
+    if artistfile == '':
+        for root, dirs, files in os.walk(maindir):
+            files = glob.glob(os.path.join(root,'*.h5'))
+            for f in files :
+                h5 = hdf5_utils.open_h5_file_read(f)
+                terms = get_artist_terms(h5)
+                h5.close()
+                # iterate over terms
+                for t in terms:
+                    put_term_in_hash_table(hash_table,t)
+                cnt_files += 1
+    else:
+        f = open(artistfile,'r')
+        trackids = []
+        for line in f.xreadlines():
+            if line == '' or line.strip() == '':
+                continue
+            trackids.append( line.split('<SEP>')[2] )
+        print 'found',len(trackids),'artist in file:',artistfile
+        for trackid in trackids:
+            f = os.path.join(maindir,path_from_trackid(trackid))
             h5 = hdf5_utils.open_h5_file_read(f)
             terms = get_artist_terms(h5)
             h5.close()
             # iterate over terms
             for t in terms:
-                np.random.seed(hash(t))
-                bucket_idx = np.random.randint(NUMBUCKETS)
-                hash_table[bucket_idx].add(t)
+                put_term_in_hash_table(hash_table,t)
             cnt_files += 1
 
     # list all terms

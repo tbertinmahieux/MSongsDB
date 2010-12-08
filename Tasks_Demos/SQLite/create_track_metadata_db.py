@@ -30,6 +30,7 @@ import sys
 import glob
 import time
 import datetime
+import numpy as np
 try:
     import sqlite3
 except ImportError:
@@ -90,12 +91,12 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ', '+encode_string(artist_mbid)
     artist_name = get_artist_name(h5)
     q += ', '+encode_string(artist_name)
-    duration = str(get_duration(h5))
-    q += ", "+duration
-    familiarity = str(get_artist_familiarity(h5))
-    q += ", "+familiarity
-    hotttnesss = str(get_artist_hotttnesss(h5))
-    q += ", "+hotttnesss
+    duration = get_duration(h5)
+    q += ", "+str(duration) if not np.isnan(duration) else ",NONE"
+    familiarity = get_artist_familiarity(h5)
+    q += ", "+str(familiarity) if not np.isnan(familiarity) else ",NONE"
+    hotttnesss = get_artist_hotttnesss(h5)
+    q += ", "+str(hotttnesss) if not np.isnan(hotttnesss) else ",NONE"
     # query done, close h5, commit
     h5.close()
     q += ')'

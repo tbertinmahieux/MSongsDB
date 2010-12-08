@@ -125,7 +125,7 @@ if __name__ == '__main__':
                 continue
             trackids.append( line.split('<SEP>')[2] )
         f.close()
-        print 'found',len(trackids),'artist in file:',artistfile
+        print 'found',len(trackids),'artists in file:',artistfile
         for trackid in trackids:
             f = os.path.join(maindir,path_from_trackid(trackid))
             h5 = hdf5_utils.open_h5_file_read(f)

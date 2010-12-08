@@ -90,7 +90,7 @@ if __name__ == '__main__':
             h5.close()
             # iterate over terms
             for t in terms:
-                np.ranomd.seed(t)
+                np.random.seed(hash(t))
                 bucket_idx = np.random.randint(NUMBUCKETS)
                 hash_table[bucket_idx].add(t)
             cnt_files += 1
@@ -120,3 +120,5 @@ if __name__ == '__main__':
 
     # end time
     t3 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t3-t1))
+    print 'all done in',stimelength

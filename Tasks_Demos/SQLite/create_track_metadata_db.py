@@ -58,7 +58,7 @@ def create_db(filename):
     c = conn.cursor()
     q = 'CREATE TABLE SONGS (track_id text, title text, song_id text, '
     q += 'artist_id text, artist_name text, duration real, '
-    q += 'artist_familiarity real)'
+    q += 'artist_familiarity real, artist_hotttnesss real)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -90,6 +90,8 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ", "+duration
     familiarity = str(get_artist_familiarity(h5))
     q += ", "+familiarity
+    hotttnesss = str(get_artist_hotttnesss(h5))
+    q += ", "+hotttnesss
     # query done, close h5, commit
     h5.close()
     q += ')'

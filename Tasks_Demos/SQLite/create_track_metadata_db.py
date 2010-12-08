@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import glob
+import time
+import datetime
 try:
     import sqlite3
 except ImportError:
@@ -118,6 +120,9 @@ if __name__ == '__main__':
         print dbfile,'already exists! delete or provide a new name'
         sys.exit(0)
 
+    # start time
+    t1 = time.time()
+
     # create dataset
     create_db(dbfile)
 
@@ -138,6 +143,11 @@ if __name__ == '__main__':
     conn.commit()
     conn.close()
 
+    # end time
+    t2 = time.time()
+
     # DONE
     print 'done! added the content of',cnt_files,'files to database:',dbfile
+    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    print 'execution time:', stimelength
     

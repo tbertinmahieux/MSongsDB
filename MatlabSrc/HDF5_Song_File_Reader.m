@@ -165,6 +165,12 @@ classdef HDF5_Song_File_Reader
             pos2 = obj.metadata.idx_similar_artists(songidx+1); % +1 -1
             res = data(pos1:pos2);
           end
+          % convert to cell array
+          c = cell(size(res,1),1);
+          for k = 1:size(c,1)
+              c{k} = res(k).Data;
+          end
+          res = c;
       end
       
       function res = get_artist_terms(obj,songidx)

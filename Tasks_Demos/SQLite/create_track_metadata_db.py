@@ -57,7 +57,7 @@ def create_db(filename):
     conn = sqlite3.connect(filename)
     # add stuff
     c = conn.cursor()
-    q = 'CREATE TABLE SONGS (track_id text, title text, song_id text, '
+    q = 'CREATE TABLE songs (track_id text, title text, song_id text, '
     q += 'release text, artist_id text, artist_mbid text, artist_name text, '
     q += 'duration real, artist_familiarity real, artist_hotttnesss real)'
     c.execute(q)
@@ -70,13 +70,13 @@ def create_db(filename):
 
 def fill_from_h5(conn,h5path,verbose=0):
     """
-    Add a row witht he information from this .h5 file
+    Add a row with he information from this .h5 file
     Doesn't commit, doesn't close conn at the end!
     """
     h5 = hdf5_utils.open_h5_file_append(h5path)
     c = conn.cursor()
     # build query
-    q = 'INSERT INTO SONGS VALUES ('
+    q = 'INSERT INTO songs VALUES ('
     track_id = get_track_id(h5)
     q += encode_string(track_id)
     title = get_title(h5)

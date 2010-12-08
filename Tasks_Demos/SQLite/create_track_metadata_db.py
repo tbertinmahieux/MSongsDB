@@ -92,11 +92,11 @@ def fill_from_h5(conn,h5path,verbose=0):
     artist_name = get_artist_name(h5)
     q += ', '+encode_string(artist_name)
     duration = get_duration(h5)
-    q += ", "+str(duration) if not np.isnan(duration) else ",NONE"
+    q += ", "+str(duration) if not np.isnan(duration) else ",-1"
     familiarity = get_artist_familiarity(h5)
-    q += ", "+str(familiarity) if not np.isnan(familiarity) else ",NONE"
+    q += ", "+str(familiarity) if not np.isnan(familiarity) else ",-1"
     hotttnesss = get_artist_hotttnesss(h5)
-    q += ", "+str(hotttnesss) if not np.isnan(hotttnesss) else ",NONE"
+    q += ", "+str(hotttnesss) if not np.isnan(hotttnesss) else ",-1"
     # query done, close h5, commit
     h5.close()
     q += ')'

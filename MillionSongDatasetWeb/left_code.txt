@@ -3,7 +3,7 @@
 All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>
 (you don't need git installed).<p>
 Files are in HDF5 format. Why? See FAQ.
-You need the HDF5 library to use the dataset 
+Except for new MATLABs (2009b), you need the HDF5 library to use the dataset 
 <a href="http://www.hdfgroup.org/downloads/">here</a>.
 Other requirements depend on the language you use, see the following
 section. Note that in Ubuntu, install everything (including optional packages) with:<p>

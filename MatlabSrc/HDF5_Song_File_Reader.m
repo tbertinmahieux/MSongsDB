@@ -166,6 +166,10 @@ classdef HDF5_Song_File_Reader
             res = data(pos1:pos2);
           end
           % convert to cell array
+          if isempty(res)
+              res = {};
+              return
+          end
           c = cell(size(res,1),1);
           for k = 1:size(c,1)
               c{k} = res(k).Data;
@@ -185,6 +189,10 @@ classdef HDF5_Song_File_Reader
             res = data(pos1:pos2);
           end
           % convert to cell array
+          if isempty(res)
+              res = {};
+              return
+          end
           c = cell(size(res,1),1);
           for k = 1:size(c,1)
               c{k} = res(k).Data;

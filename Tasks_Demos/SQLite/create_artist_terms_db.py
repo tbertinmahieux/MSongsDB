@@ -107,8 +107,6 @@ def fill_from_h5(conn,h5path):
     h5.close()
     # add a row with artist_id and zeros
     c = conn.cursor()
-    res = c.execute('SELECT Count(*) FROM songs;')
-    print 'num tables = ',res.fetchall()
     q = "INSERT INTO songs ('artist_id') VALUES ("
     q += encode_string(artist_id) + ")"
     c.execute(q)

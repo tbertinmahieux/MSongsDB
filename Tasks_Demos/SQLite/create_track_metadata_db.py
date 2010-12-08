@@ -56,8 +56,9 @@ def create_db(filename):
     conn = sqlite3.connect(filename)
     # add stuff
     c = conn.cursor()
-    q = 'CREATE TABLE SONGS (track_id text, song_id text, '
-    q += 'artist_id text, duration real, artist_familiarity real)'
+    q = 'CREATE TABLE SONGS (track_id text, title text, song_id text, '
+    q += 'artist_id text, artist_name text, duration real, '
+    q += 'artist_familiarity real)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -66,7 +67,7 @@ def create_db(filename):
 
 
 
-def fill_from_h5(conn,h5path):
+def fill_from_h5(conn,h5path,verbose=0):
     """
     Add a row witht he information from this .h5 file
     Doesn't commit, doesn't close conn at the end!
@@ -77,10 +78,14 @@ def fill_from_h5(conn,h5path):
     q = 'INSERT INTO SONGS VALUES ('
     track_id = get_track_id(h5)
     q += encode_string(track_id)
+    title = get_title(h5)
+    q += ', '+encode_string(title)
     song_id = get_song_id(h5)
     q += ', '+encode_string(song_id)
     artist_id = get_artist_id(h5)
     q += ', '+encode_string(artist_id)
+    artist_name = get_artist_name(h5)
+    q += ', '+encode_string(artist_name)
     duration = str(get_duration(h5))
     q += ", "+duration
     familiarity = str(get_artist_familiarity(h5))
@@ -88,6 +93,8 @@ def fill_from_h5(conn,h5path):
     # query done, close h5, commit
     h5.close()
     q += ')'
+    if verbose > 0:
+        print q
     c.execute(q)
     #conn.commit() # we don't take care of the commit!
     c.close()
@@ -97,10 +104,12 @@ def die_with_usage():
     """ HELP MENU """
     print 'Command to create the track_metadata SQLite database'
     print 'to launch (it might take a while!):'
-    print '   python create_track_metadata_db.py <MillionSong dir> <track_metadata.db>'
+    print '   python create_track_metadata_db.py [FLAGS] <MillionSong dir> <track_metadata.db>'
     print 'PARAMS'
     print '  MillionSong dir   - directory containing .h5 song files in sub dirs'
     print '  track_metadata.db - filename for the database'
+    print 'FLAGS'
+    print '  -verbose    - print every query'
     sys.exit(0)
 
 
@@ -116,6 +125,14 @@ if __name__ == '__main__':
     sys.path.append( pythonsrc )
     import hdf5_utils
     from hdf5_getters import *
+
+    verbose = 0
+    while True:
+        if sys.argv[1] == '-verbose':
+            verbose = 1
+        else:
+            break
+        sys.argv.pop(1)
 
     # read params
     maindir = os.path.abspath(sys.argv[1])
@@ -140,7 +157,7 @@ if __name__ == '__main__':
     for root, dirs, files in os.walk(maindir):
         files = glob.glob(os.path.join(root,'*.h5'))
         for f in files :
-            fill_from_h5(conn,f)
+            fill_from_h5(conn,f,verbose=verbose)
             cnt_files += 1
             if cnt_files % 50 == 0:
                 conn.commit() # we commit only every 50 files!

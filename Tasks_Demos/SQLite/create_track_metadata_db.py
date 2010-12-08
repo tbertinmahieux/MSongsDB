@@ -57,8 +57,8 @@ def create_db(filename):
     # add stuff
     c = conn.cursor()
     q = 'CREATE TABLE SONGS (track_id text, title text, song_id text, '
-    q += 'artist_id text, artist_name text, duration real, '
-    q += 'artist_familiarity real, artist_hotttnesss real)'
+    q += 'release text, artist_id text, artist_mbid text, artist_name text, '
+    q += 'duration real, artist_familiarity real, artist_hotttnesss real)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -82,8 +82,12 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ', '+encode_string(title)
     song_id = get_song_id(h5)
     q += ', '+encode_string(song_id)
+    release = get_release(h5)
+    q += ', '+encode_string(release)
     artist_id = get_artist_id(h5)
     q += ', '+encode_string(artist_id)
+    artist_mbid = get_artist_mbid(h5)
+    q += ', '+encode_string(artist_mbid)
     artist_name = get_artist_name(h5)
     q += ', '+encode_string(artist_name)
     duration = str(get_duration(h5))

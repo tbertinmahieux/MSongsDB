@@ -32,16 +32,6 @@ import glob
 import time
 import datetime
 
-# Million Song Dataset imports, works under Linux
-# otherwise, put the PythonSrc directory in the PYTHONPATH!
-pythonsrc = os.path.abspath('__file__')
-pythonsrc = os.path.join(pythonsrc,'../../PythonSrc')
-pythonsrc = os.path.abspath( pythonsrc )
-sys.path.append( pythonsrc )
-import hdf5_utils
-import hdf5_getters as GETTERS
-
-
 
 def get_artistid_trackid_artistname(trackfile):
     """
@@ -122,6 +112,14 @@ if __name__ == '__main__':
     # help menu
     if len(sys.argv) < 3:
         die_with_usage()
+
+    # Million Song Dataset imports, works under Linux
+    # otherwise, put the PythonSrc directory in the PYTHONPATH!
+    pythonsrc = os.path.join(sys.argv[0],'../../../PythonSrc')
+    pythonsrc = os.path.abspath( pythonsrc )
+    sys.path.append( pythonsrc )
+    import hdf5_utils
+    import hdf5_getters as GETTERS
 
     # params
     maindir = sys.argv[1]

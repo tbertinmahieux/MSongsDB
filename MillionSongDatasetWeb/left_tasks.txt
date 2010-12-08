@@ -52,7 +52,7 @@ Many analysis of the metadata is possible. How do the words of the artist
 names or their song titles cluster? Can we predict tags based on that, or
 is the clustering similar? What is "the most typical song title"
 imagineable. See 
-<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks/NamesAnalysis/">
+<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/NamesAnalysis/">
 NamesAnalysis</a> folder for sample python code.<br>
 Not that these scripts can
 be useful for other tasks, for instance to create the list of all artists
@@ -75,7 +75,7 @@ We use such a service, <a href='http:www.7digital.com'>7digital</a>,
 and the different 7digital ID (artist, release, track) are already in 
 the dataset.<br>
 The following 
-<a href='https://github.com/tb2332/MSongsDB/blob/master/Tasks/Preview7digital/get_preview_url.py'>
+<a href='https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Preview7digital/get_preview_url.py'>
 python code</a> takes a HDF5 song file and
 looks for a preview. It outputs the URL. It first look for the track ID
 if we have it. If we don't, but we have the ID for the release or the

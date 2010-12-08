@@ -107,14 +107,15 @@ def fill_from_h5(conn,h5path):
     h5.close()
     # add a row with artist_id and zeros
     c = conn.cursor()
-    q = "INSERT INTO songs ('artist_id') VALUES ('"
-    q += artist_id + "'"
+    res = c.execute('SELECT Count(*) FROM songs;')
+    print 'num tables = ',res.fetchall()
+    q = "INSERT INTO songs ('artist_id') VALUES ("
+    q += encode_string(artist_id) + ")"
     c.execute(q)
     # alter info for cols corresponding to artist terms
     for t in terms:
-        q = "UPDATE songs SET " + encode_str(t)
+        q = "UPDATE songs SET " + encode_string(t)
         q += "=1 WHERE 'artist_id'='" + artist_id + "'"
-        q += encode_string(t) + ") 1"
         c.execute(q)
     # done
     c.close()
@@ -159,6 +160,11 @@ if __name__ == '__main__':
     artistfile = sys.argv[3]
     dbfile = os.path.abspath(sys.argv[4])
 
+   # check if file exists!
+    if os.path.exists(dbfile):
+        print dbfile,'already exists! delete or provide a new name'
+        sys.exit(0) 
+
     # start time
     t1 = time.time()
 
@@ -170,7 +176,7 @@ if __name__ == '__main__':
             continue
         alltags.append(line.strip())
     f.close()
-    print 'found',len(alltags),'in file:',tagfile
+    print 'found',len(alltags),'tags in file:',tagfile
 
     # get all track ids
     trackids = []
@@ -181,6 +187,15 @@ if __name__ == '__main__':
         trackids.append( line.split('<SEP>')[2] )
     f.close()
     print 'found',len(trackids),'artists in file:',artistfile
+
+    # create database
+    create_db(dbfile,alltags)
+    t2 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    print 'table created after', stimelength
+
+    # open connection
+    conn = sqlite3.connect(dbfile)
 
     # iterate over file
     cnt_files = 0
@@ -194,8 +209,8 @@ if __name__ == '__main__':
     conn.close()
 
     # done
-    t2 = time.time()
-    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    t3 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t3-t1))
     print 'Looked at',cnt_files,'files, done in',stimelength
 
     

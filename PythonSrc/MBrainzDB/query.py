@@ -36,6 +36,14 @@ USER='gordon'
 PASSWD='gordon'
 
 
+def encode_string(s):
+    """
+    Simple utility function to make sure a string is proper
+    to be used in a SQL query
+    """
+    return s.replace("'","''")
+
+
 def connect_mbdb():
     """
     Simple connection to the musicbrainz database, returns a pgobject
@@ -84,7 +92,7 @@ def closest_song_by_name_and_aid(connect,artistid,title):
     If no song is found, return None
     """
     q = "SELECT * FROM track WHERE artist="+str(artistid)
-    q += " ORDER BY levenshtein(name,'"+title.replace("'"," ")+"') LIMIT 1"
+    q += " ORDER BY levenshtein(name,N'"+encode_string(title)+"') LIMIT 1"
     res = connect.query(q)
     if len(res.dictresult())>0:
         return res.dictresult()[0]
@@ -123,7 +131,7 @@ def debug_from_song_file(connect,h5path):
         return
     aid = get_aid_from_artist_mbid(connect,ambid)
     song = closest_song_by_name_and_aid(connect,aid,title)
-    if (song['name'] != title):
+    if (song['name'].lower() != title.lower()):
         print '***************************************************'
         print 'artist:',artist,'song:',title
         print 'closest song:',song['name']

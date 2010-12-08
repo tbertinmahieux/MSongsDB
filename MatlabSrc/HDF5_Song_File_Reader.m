@@ -31,7 +31,7 @@ classdef HDF5_Song_File_Reader
 % Any question / comment: tb2332@columbia.edu
 
     % PROPERTIES, we cache all requested information + handles
-    properties (SetAccess = private) % after debugging, should be private instead of public
+    properties (SetAccess = public) % after debugging, should be private instead of public
         h5filename='';   % stores the filename to the HDF5 object
         h5fileID=0;      % stores the handle to the HDF5 object
         % datasets ID
@@ -178,6 +178,12 @@ classdef HDF5_Song_File_Reader
             pos2 = obj.metadata.idx_artist_terms(songidx+1); % +1 -1
             res = data(pos1:pos2);
           end
+          % convert to cell array
+          c = cell(size(res,1),1);
+          for k = 1:size(c,1)
+              c{k} = res(k).Data;
+          end
+          res = c;
       end
 
       function res = get_artist_terms_freq(obj,songidx)

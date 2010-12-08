@@ -56,7 +56,9 @@ def create_db(filename):
     conn = sqlite3.connect(filename)
     # add stuff
     c = conn.cursor()
-    c.execute('''CREATE TABLE SONGS (track_id text, artist_id text, duration real)''')
+    q = 'CREATE TABLE SONGS (track_id text, song_id text, '
+    q += 'artist_id text, duration real, artist_familiarity real)'
+    c.execute(q)
     # commit and close
     conn.commit()
     c.close()
@@ -75,10 +77,14 @@ def fill_from_h5(conn,h5path):
     q = 'INSERT INTO SONGS VALUES ('
     track_id = get_track_id(h5)
     q += encode_string(track_id)
+    song_id = get_song_id(h5)
+    q += ', '+encode_string(song_id)
     artist_id = get_artist_id(h5)
     q += ', '+encode_string(artist_id)
     duration = str(get_duration(h5))
     q += ", "+duration
+    familiarity = str(get_artist_familiarity(h5))
+    q += ", "+familiarity
     # query done, close h5, commit
     h5.close()
     q += ')'

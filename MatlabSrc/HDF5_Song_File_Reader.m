@@ -31,7 +31,7 @@ classdef HDF5_Song_File_Reader
 % Any question / comment: tb2332@columbia.edu
 
     % PROPERTIES, we cache all requested information + handles
-    properties (SetAccess = public) % after debugging, should be private
+    properties (SetAccess = private) % after debugging, should be private instead of public
         h5filename='';   % stores the filename to the HDF5 object
         h5fileID=0;      % stores the handle to the HDF5 object
         % datasets ID

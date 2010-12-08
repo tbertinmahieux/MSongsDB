@@ -124,6 +124,7 @@ if __name__ == '__main__':
             if line == '' or line.strip() == '':
                 continue
             trackids.append( line.split('<SEP>')[2] )
+        f.close()
         print 'found',len(trackids),'artist in file:',artistfile
         for trackid in trackids:
             f = os.path.join(maindir,path_from_trackid(trackid))

@@ -1,11 +1,23 @@
 <div class="post">
 <h2>General / Requirements</h2><p>
-All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>.<p>
+All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>
+(you don't need git installed).<p>
 Files are in HDF5 format. Why? See FAQ.
 You need the HDF5 library to use the dataset 
 <a href="http://www.hdfgroup.org/downloads/">here</a>.
-Other requirements depend on the language you use, see the foillowing
-section.<p>
+Other requirements depend on the language you use, see the following
+section. Note that in Ubuntu, install everything (including optional packages) with:<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 0px;">
+<div style="margin-left: 25px;">
+<pre>
+sudo apt-get install libhdf5-serial-1.8.4 libhdf5-serial-dev 
+    python-tables python-tables-doc libjhdf5-java h5utils hdfview
+</pre>
+</div>
+</div>
+</small>
+<p>
 We believe that more than 90% of the researchers using the dataset will not
 need to understand the structure of the HDF5 files. Therefore, the wrappers
 below simply provide getters to the different fields saved in each file.

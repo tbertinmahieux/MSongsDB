@@ -119,6 +119,7 @@ def fill_from_h5(conn,h5path):
     c.close()
 
 
+
 def die_with_usage():
     """ HELP MENU """
     print 'Command to create the track_metadata SQLite database'

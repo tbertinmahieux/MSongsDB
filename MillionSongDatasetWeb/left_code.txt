@@ -3,8 +3,9 @@
 All our code is available on <a href="https://github.com/tb2332/MSongsDB">github</a>
 (you don't need git installed).<p>
 Files are in HDF5 format. Why? See FAQ.
-Except for new MATLABs (2009b), you need the HDF5 library to use the dataset 
-<a href="http://www.hdfgroup.org/downloads/">here</a>.
+Except for new MATLABs (2009b-), you need the
+<a href="http://www.hdfgroup.org/downloads/">HDF5 library</a> 
+to use the dataset .
 Other requirements depend on the language you use, see the following
 section. Note that in Ubuntu, install everything (including optional packages) with:<p>
 <small>
@@ -39,12 +40,12 @@ If you just want to use the HDF5 provided in the dataset, the file
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_getters.py">
 hdf5_getters.py</a> should be enough:<p>
 <small>
-<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 140px;">
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 70px;">
 <div style="margin-left: 25px;">
 <pre>
 import hdf5_utils
 import hdf5_getters
-h5 = hdf5_utils.open_h5_file_read(<path some file>)
+h5 = hdf5_utils.open_h5_file_read(path to some file)
 duration = hdf5_hetters.get_duration(h5)
 h5.close()
 </pre>
@@ -57,7 +58,19 @@ dataset, or want to combine many files into one, see the section on
 
 <a name='matlab'><h3>Matlab</h3></a>
 MATLAB requires no additional libraries (tested on Matlab 2009b). We created the basic 
-getters through this class ?????.
+getters through this 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/MatlabSrc/HDF5_Song_File_Reader.m">class</a>.<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 70px;">
+<div style="margin-left: 25px;">
+<pre>
+h5 = HDF5_Song_File_Reader(path to some file);
+duration = h5.get_duration();
+clear 'h5';
+</pre>
+</div>
+</div>
+</small><p>
 Also, you might be interested by more in-depths examples of using HDF5 with Matlab,
 available <a href="http://www.hdfgroup.org/ftp/HDF5/examples/examples-by-api/api18-m.html">
 here</a>.<p>

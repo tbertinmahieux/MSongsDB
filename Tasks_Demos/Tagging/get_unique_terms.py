@@ -68,6 +68,8 @@ def die_with_usage():
     print '   MillionSong dir   - MillionSongDataset root directory'
     print '   output.txt        - result text file, one tag per line'
     print '   artist list       - text file: artistID<SEP>artistMBID<SEP>track<SEP>...   OPTIONAL BUT FASTER'
+    print ''
+    print 'for artist list, check: /Tasks_Demos/NamesAnalysis/list_all_artists.py'
     sys.exit(0)
 
 

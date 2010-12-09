@@ -38,6 +38,16 @@ except ImportError:
 
 
 
+def encode_string(s):
+    """
+    Simple utility function to make sure a string is proper
+    to be used in a SQLite query
+    (different than posgtresql, no N to specify unicode)
+    EXAMPLE:
+      That's my boy! -> 'That''s my boy!'
+    """
+    return "'"+s.replace("'","''")+"'"
+
 
 def die_with_usage():
     """ HELP MENU """
@@ -69,11 +79,12 @@ if __name__ == '__main__':
     # so there is no confusion, the table name is 'songs'
     TABLENAME = 'songs'
 
+    print '*************** DEMOS AROUND ARTIST_ID ************************'
+
     # query for all the artists Echo Nest ID
     # the column name is 'artist_id'
     # DISTINCT makes sure you get each ID returned only once
     q = "SELECT DISTINCT artist_id FROM " + TABLENAME
-    print 'query =',q
     res = c.execute(q)
     artists = res.fetchall() # does the actual job of searching the db
     print '* found',len(artists),'unique artist IDs, response looks like:'
@@ -90,13 +101,36 @@ if __name__ == '__main__':
 
     # get artists with no musicbrainz ID
     # of course, we want only once each artist
-    # for demo purpose, we ask for only one at RANDOM
+    # for demo purpose, we ask for only two at RANDOM
     q = "SELECT artist_id,artist_mbid FROM songs WHERE artist_mbid=''"
     q += " GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
-    q += " ORDER BY RANDOM LIMIT 1"
+    q += " ORDER BY RANDOM() LIMIT 2"
     res = c.execute(q)
+    print '* two random unique artists with no musicbrainz ID:'
+    print res.fetchall()
+
+
+    print '*************** DEMOS AROUND NAMES ****************************'
+
+    # get all tracks by artist The Beatles
+    # artist name must be exact!
+    # the encode_string function simply deals with ' (by doubling them)
+    # and add ' after and before the string.
+    q = "SELECT track_id FROM songs WHERE artist_name="
+    q += encode_string('The Beatles')
+    res = c.execute(q)
+    print "* two track id from 'The Beatles', found by looking up the artist by name:"
+    print res.fetchall()[:2]
+
+    # we find all release starting by letter 'T'
+    # T != t, we're just looking at albums starting with capital T
+    # here we can use DISTINCT instead of GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )
+    # since its fine that we find twice the same artist, as long as it is not
+    # the same (artist,release) pair
+    q = "SELECT DISTINCT artist_name,release FROM songs WHERE SUBSTR(release,1,1)='T'"
+    res = c.execute(q)
+    print '* one unique artist/release pair where album starts with capital T:'
     print res.fetchone()
-    
 
     # close the cursor and the connection
     # (if for some reason you added stuff to the db or alter

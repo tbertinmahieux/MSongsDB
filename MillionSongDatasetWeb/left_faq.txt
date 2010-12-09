@@ -467,10 +467,11 @@ instance, to get all tracks from the same artist as some song file.
 The second one gives terms per artist. You can use it to get the
 full list of artists, full list of tags, the usage of tags, etc.
 For demos using this database with SQL queries in python, see
-????.
+demo_*.py in <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/SQLite">
+SQLite folder</a>.
 <p>
 
-<a name='howcreated'><h3>How wasthe dataset created?</h3></a>
+<a name='howcreated'><h3>How was the dataset created?</h3></a>
 Using the Echonest API. Songs were chosen....?????
 FOr more techincal details, see "dataset creation" in "code" section.<p>
 

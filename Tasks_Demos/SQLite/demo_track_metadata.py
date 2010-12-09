@@ -88,6 +88,16 @@ if __name__ == '__main__':
     print '* one unique artist with some track (chosen at random) associated with it:'
     print artist_track_pair
 
+    # get artists with no musicbrainz ID
+    # of course, we want only once each artist
+    # for demo purpose, we ask for only one at RANDOM
+    q = "SELECT artist_id,artist_mbid FROM songs WHERE artist_mbid=''"
+    q += " GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
+    q += " ORDER BY RANDOM LIMIT 1"
+    res = c.execute(q)
+    print res.fetchone()
+    
+
     # close the cursor and the connection
     # (if for some reason you added stuff to the db or alter
     #  a table, you need to also do a conn.commit())

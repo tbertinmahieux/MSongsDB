@@ -129,18 +129,25 @@ if __name__ == '__main__':
     # more cumbersome, get unique artist ID but with one track ID for each.
     # very usefull, it gives you a HDF5 file to query if you want more
     # information about this artist
-    q = "SELECT artist_id,track_id FROM songs GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
+    q = "SELECT artist_id,track_id FROM songs GROUP BY artist_id"
     res = c.execute(q)
     artist_track_pair = res.fetchone()
     print '* one unique artist with some track (chosen at random) associated with it:'
+    print artist_track_pair
+
+    # get artists having only one track in the database
+    q = "SELECT artist_id,track_id FROM songs GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
+    q += " ORDER BY RANDOM()"
+    res = c.execute(q)
+    artist_track_pair = res.fetchone()
+    print '* one artist that has only one track in the dataset:'
     print artist_track_pair
 
     # get artists with no musicbrainz ID
     # of course, we want only once each artist
     # for demo purpose, we ask for only two at RANDOM
     q = "SELECT artist_id,artist_mbid FROM songs WHERE artist_mbid=''"
-    q += " GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
-    q += " ORDER BY RANDOM() LIMIT 2"
+    q += " GROUP BY artist_id ORDER BY RANDOM() LIMIT 2"
     res = c.execute(q)
     print '* two random unique artists with no musicbrainz ID:'
     print res.fetchall()
@@ -160,7 +167,7 @@ if __name__ == '__main__':
 
     # we find all release starting by letter 'T'
     # T != t, we're just looking at albums starting with capital T
-    # here we can use DISTINCT instead of GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )
+    # here we use DISTINCT instead of GROUP BY artist_id
     # since its fine that we find twice the same artist, as long as it is not
     # the same (artist,release) pair
     q = "SELECT DISTINCT artist_name,release FROM songs WHERE SUBSTR(release,1,1)='T'"

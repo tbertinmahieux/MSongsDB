@@ -79,6 +79,21 @@ if __name__ == '__main__':
     # so there is no confusion, the table name is 'songs'
     TABLENAME = 'songs'
 
+    print '*************** GENERAL SQLITE DEMO ***************************'
+
+    # list all tables in that dataset
+    q = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+    res = c.execute(q)
+    print "* tables contained in that SQLite file/database (should be only 'songs'):"
+    print res.fetchall()
+
+    # list all columns names
+
+    # list all indices
+
+    # find ROWID
+    
+
     print '*************** DEMOS AROUND ARTIST_ID ************************'
 
     # query for all the artists Echo Nest ID
@@ -131,6 +146,12 @@ if __name__ == '__main__':
     res = c.execute(q)
     print '* one unique artist/release pair where album starts with capital T:'
     print res.fetchone()
+
+
+    print '*************** DEMOS AROUND FLOATS ***************************'
+
+    # get all artists whose artist familiarity is > .8
+    
 
     # close the cursor and the connection
     # (if for some reason you added stuff to the db or alter

@@ -70,11 +70,23 @@ if __name__ == '__main__':
     TABLENAME = 'songs'
 
     # query for all the artists Echo Nest ID
-    q = "SELECT UNIQUE artists_id FROM " + TABLENAME
+    # the column name is 'artist_id'
+    # DISTINCT makes sure you get each ID returned only once
+    q = "SELECT DISTINCT artist_id FROM " + TABLENAME
     print 'query =',q
     res = c.execute(q)
     artists = res.fetchall() # does the actual job of searching the db
-    print artists[:10]
+    print '* found',len(artists),'unique artist IDs, response looks like:'
+    print artists[:3]
+
+    # more cumbersome, get unique artist ID but with one track ID for each.
+    # very usefull, it gives you a HDF5 file to query if you want more
+    # information about this artist
+    q = "SELECT artist_id,track_id FROM songs GROUP BY artist_id HAVING ( COUNT(artist_id) = 1 )"
+    res = c.execute(q)
+    artist_track_pair = res.fetchone()
+    print '* one unique artist with some track (chosen at random) associated with it:'
+    print artist_track_pair
 
     # close the cursor and the connection
     # (if for some reason you added stuff to the db or alter

@@ -82,17 +82,38 @@ if __name__ == '__main__':
     print '*************** GENERAL SQLITE DEMO ***************************'
 
     # list all tables in that dataset
+    # note that sqlite does the actual job when we call fetchall() or fetchone()
     q = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
     res = c.execute(q)
     print "* tables contained in that SQLite file/database (should be only 'songs'):"
     print res.fetchall()
 
-    # list all columns names
+    # list all columns names from table 'songs'
+    q = "SELECT sql FROM sqlite_master WHERE tbl_name = 'songs' AND type = 'table'"
+    res = c.execute(q)
+    print '* get info on columns names (we show the beginning of the result string):'
+    print res.fetchall()[0][0][:58]+' ...'
 
     # list all indices
+    q = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name='songs' ORDER BY name"
+    res = c.execute(q)
+    print '* one of the index we added to the table to make things faster:'
+    print res.fetchone()
 
-    # find ROWID
+    # find the PRIMARY KEY of a query
+    # by default it's called ROWID, it would have been redefined if our primary key
+    # was of type INTEGER
+    q = "SELECT ROWID FROM songs WHERE artist_name='The Beatles'"
+    res = c.execute(q)
+    print '* get the primary key (row id) of one entry where the artist is The Beatles:'
+    print res.fetchone()
     
+    # find an entry with The Beatles as artist_name
+    # returns all info (the full table row)
+    q = "SELECT * FROM songs WHERE artist_name='The Beatles' LIMIT 1"
+    res = c.execute(q)
+    print '* get all we have about one track from The Beatles:'
+    print res.fetchone()
 
     print '*************** DEMOS AROUND ARTIST_ID ************************'
 
@@ -151,7 +172,18 @@ if __name__ == '__main__':
     print '*************** DEMOS AROUND FLOATS ***************************'
 
     # get all artists whose artist familiarity is > .8
-    
+    q = "SELECT DISTINCT artist_name, artist_familiarity FROM songs WHERE artist_familiarity>.8"
+    res = c.execute(q)
+    print '* one artist having familiaryt >0.8:'
+    print res.fetchone()
+
+    # get one artist with the highest artist_familiarity but no artist_hotttnesss
+    # notice the alias af and ah, makes things more readable
+    q = "SELECT DISTINCT artist_name, artist_familiarity as af, artist_hotttnesss as ah"
+    q += " FROM songs WHERE ah<0 ORDER BY af"
+    res = c.execute(q)
+    print '* get the artist with the highest familiarity that has no computed hotttnesss:'
+    print res.fetchone()
 
     # close the cursor and the connection
     # (if for some reason you added stuff to the db or alter

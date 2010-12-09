@@ -460,6 +460,15 @@ of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
 Gordon! more to come on this.<p>
+We also created (and you have the code to recreate / adapt them)
+two SQLite databases (available here ????? and here ????). The
+first one gives most metadata per track. It is usefull, for
+instance, to get all tracks from the same artist as some song file.
+The second one gives terms per artist. You can use it to get the
+full list of artists, full list of tags, the usage of tags, etc.
+For demos using this database with SQL queries in python, see
+????.
+<p>
 
 <a name='howcreated'><h3>How wasthe dataset created?</h3></a>
 Using the Echonest API. Songs were chosen....?????

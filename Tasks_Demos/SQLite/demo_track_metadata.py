@@ -91,8 +91,8 @@ if __name__ == '__main__':
     # list all columns names from table 'songs'
     q = "SELECT sql FROM sqlite_master WHERE tbl_name = 'songs' AND type = 'table'"
     res = c.execute(q)
-    print '* get info on columns names (we show the beginning of the result string):'
-    print res.fetchall()[0][0][:58]+' ...'
+    print '* get info on columns names (original table creation command):'
+    print res.fetchall()[0][0]
 
     # list all indices
     q = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name='songs' ORDER BY name"

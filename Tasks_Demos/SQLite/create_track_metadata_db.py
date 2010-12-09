@@ -57,7 +57,7 @@ def create_db(filename):
     conn = sqlite3.connect(filename)
     # add stuff
     c = conn.cursor()
-    q = 'CREATE TABLE songs (track_id text, title text, song_id text, '
+    q = 'CREATE TABLE songs (track_id text PRIMARY KEY, title text, song_id text, '
     q += 'release text, artist_id text, artist_mbid text, artist_name text, '
     q += 'duration real, artist_familiarity real, artist_hotttnesss real)'
     c.execute(q)
@@ -105,6 +105,52 @@ def fill_from_h5(conn,h5path,verbose=0):
     c.execute(q)
     #conn.commit() # we don't take care of the commit!
     c.close()
+
+
+def add_indices_to_db(conn):
+    """
+    Since the db is considered final, we can add all sorts of indecies
+    to make sure the retrieval time is as fast as possible.
+    Indecies take up a little space, but they hurt performance only when
+    we modify the data (which should not happen)
+    This function commits its changes at the end
+    
+    You might want to add your own indices if you do weird query, e.g. on title
+    and artist musicbrainz ID.
+    Indices should be on the columns of the WHERE of your search, the goal is to
+    quickly find the few rows that match the query. The index does not care of the
+    field (column) you actually want, finding the row is the important step.
+    track_id is implicitely indexed as it is the PRIMARY KEY of the table.
+    Note: tutorial on MySQL (close enough to SQLite):
+    http://www.databasejournal.com/features/mysql/article.php/10897_1382791_1/Optimizing-MySQL-Queries-and-Indexes.htm
+    """
+    c = conn.cursor()
+    # index to search by (artist_id) or by (artist_id,release)
+    # the 20 tells the index to only use the first 20 characters
+    q = "CREATE INDEX idx_artist_id ON songs ('artist_id','release')"
+    c.execute(q)
+    # index to search by (artist_mbid) or by (artist_mbid,release)
+    q = "CREATE INDEX idx_artist_mbid ON songs ('artist_mbid','release')"
+    c.execute(q)
+    # index to search by (artist_familiarity) or by (artist_familiarity,artist_hotttnesss)
+    q = "CREATE INDEX idx_familiarity ON songs ('artist_familiarity','artist_hotttnesss')"
+    c.execute(q)
+    # index to search by (artist_hotttnesss) or by (artist_hotttnesss,artist_familiarity)
+    q = "CREATE INDEX idx_hotttnesss ON songs ('artist_hotttnesss','artist_familiarity')"
+    c.execute(q)
+    # index to search by (artist_name) or by (artist_name,title) or by (artist_name,title,release)
+    q = "CREATE INDEX idx_artist_name ON songs ('artist_name','title','release')"
+    c.execute(q)
+    # index to search by (title) or by (title,artist_name) or by (title,artist_name,release)
+    q = "CREATE INDEX idx_title ON songs ('title','artist_name','release')"
+    c.execute(q)
+    # index to search by (release) or by (release,artist_name) or by (release,artist_name,title)
+    q = "CREATE INDEX idx_release ON songs ('release','artist_name','title')"
+    # index to search by (duration) or by (duration,artist_id)
+    q = "CREATE INDEX idx_duration ON songs ('duration','artist_id')"
+    c.execute(q)
+    # done, commit
+    conn.commit()
 
 
 def die_with_usage():
@@ -168,16 +214,30 @@ if __name__ == '__main__':
             cnt_files += 1
             if cnt_files % 50 == 0:
                 conn.commit() # we commit only every 50 files!
-
-    # commit and close connection
     conn.commit()
+    t2 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    print 'added the content of',cnt_files,'files to database:',dbfile
+    print 'it took:',stimelength
+
+    # add indices
+    c = conn.cursor()
+    res = c.execute('SELECT Count(*) FROM songs')
+    nrows_before = res.fetchall()[0][0]
+    add_indices_to_db(conn)
+    res = c.execute('SELECT Count(*) FROM songs')
+    nrows_after = res.fetchall()[0][0]
+    c.close()
+    assert nrows_before == nrows_after,'you lost rows during indexing???' # sanity check
+
+    # close connection
     conn.close()
 
     # end time
-    t2 = time.time()
+    t3 = time.time()
 
     # DONE
-    print 'done! added the content of',cnt_files,'files to database:',dbfile
-    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    print 'done! (indices included) database:',dbfile
+    stimelength = str(datetime.timedelta(seconds=t3-t1))
     print 'execution time:', stimelength
     

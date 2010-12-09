@@ -107,7 +107,7 @@ def fill_from_h5(conn,h5path,verbose=0):
     c.close()
 
 
-def add_indices_to_db(conn):
+def add_indices_to_db(conn,verbose=0):
     """
     Since the db is considered final, we can add all sorts of indecies
     to make sure the retrieval time is as fast as possible.
@@ -126,28 +126,35 @@ def add_indices_to_db(conn):
     """
     c = conn.cursor()
     # index to search by (artist_id) or by (artist_id,release)
-    # the 20 tells the index to only use the first 20 characters
     q = "CREATE INDEX idx_artist_id ON songs ('artist_id','release')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (artist_mbid) or by (artist_mbid,release)
     q = "CREATE INDEX idx_artist_mbid ON songs ('artist_mbid','release')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (artist_familiarity) or by (artist_familiarity,artist_hotttnesss)
     q = "CREATE INDEX idx_familiarity ON songs ('artist_familiarity','artist_hotttnesss')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (artist_hotttnesss) or by (artist_hotttnesss,artist_familiarity)
     q = "CREATE INDEX idx_hotttnesss ON songs ('artist_hotttnesss','artist_familiarity')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (artist_name) or by (artist_name,title) or by (artist_name,title,release)
     q = "CREATE INDEX idx_artist_name ON songs ('artist_name','title','release')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (title) or by (title,artist_name) or by (title,artist_name,release)
     q = "CREATE INDEX idx_title ON songs ('title','artist_name','release')"
+    if verbose > 0: print q
     c.execute(q)
     # index to search by (release) or by (release,artist_name) or by (release,artist_name,title)
     q = "CREATE INDEX idx_release ON songs ('release','artist_name','title')"
+    if verbose > 0: print q
     # index to search by (duration) or by (duration,artist_id)
     q = "CREATE INDEX idx_duration ON songs ('duration','artist_id')"
+    if verbose > 0: print q
     c.execute(q)
     # done, commit
     conn.commit()
@@ -224,11 +231,13 @@ if __name__ == '__main__':
     c = conn.cursor()
     res = c.execute('SELECT Count(*) FROM songs')
     nrows_before = res.fetchall()[0][0]
-    add_indices_to_db(conn)
+    add_indices_to_db(conn,verbose=verbose)
     res = c.execute('SELECT Count(*) FROM songs')
     nrows_after = res.fetchall()[0][0]
     c.close()
     assert nrows_before == nrows_after,'you lost rows during indexing???' # sanity check
+    if nrows_before != 1000000:
+        print 'we got',nrows_before,'rows, this is not the full MillionSongDataset, just checking...'
 
     # close connection
     conn.close()

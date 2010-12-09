@@ -31,7 +31,13 @@ keywords to some specific sound segment. In MIR research, this class
 can encompass "music genre recognition", "mood detection", and
 some aspects of "audio scene analysis". This dataset provides
 audio features and tags, therefore is a good set to compare algorithms
-on such tasks.<p>
+on such tasks.
+<p>
+To get you started, download these indices, the list of unique
+tags ???? and the two databases (for track metadata ???? and for
+artist tags ????). From this, you can easily see which artist
+got what term, find all tracks from that artist, etc.
+<p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>
 This is a simple supervised task easy to set up with the dataset.

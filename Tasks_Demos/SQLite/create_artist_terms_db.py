@@ -67,7 +67,7 @@ def encode_string(s):
     return "'"+s.replace("'","''")+"'"
 
 
-def create_db(filename,taglist):
+def create_db(filename,artistlist,taglist):
     """
     Create a SQLite database where 3 tables
     table1: artists
@@ -76,6 +76,9 @@ def create_db(filename,taglist):
             contains one column, terms (tags)
     table3: artist_term
             contains two columns, artist_id and term
+    INPUT
+    - artistlist    list of all artist Echo Nest IDs
+    - tag list      list of all terms (tags)
     """
     # creates file
     conn = sqlite3.connect(filename)
@@ -83,6 +86,12 @@ def create_db(filename,taglist):
     # create table 1
     q = "CREATE TABLE artists (artist_id text PRIMARY KEY)"
     c.execute(q)
+    conn.commit()
+    artistlist = np.sort(artistlist)
+    for aid in artistlist:
+        q = "INSERT INTO artists VALUES ("
+        q += encode_string(aid) + ")"
+        c.execute(q)
     conn.commit()
     # create table 2, fill with tags
     q = "CREATE TABLE terms (term text PRIMARY KEY)"
@@ -112,9 +121,8 @@ def fill_from_h5(conn,h5path):
     This h5 file must be for a new artist, we can't have twice the
     same artist entered in the database!
 
-    The info is added to two tables: artists and artist_term
-    one row is added to the first one, as many row as needed are
-    added to the second one.
+    The info is added to tables: artist_term
+    as many row as term are added
     """
     # get info from h5 file
     h5 = hdf5_utils.open_h5_file_append(h5path)
@@ -123,10 +131,6 @@ def fill_from_h5(conn,h5path):
     h5.close()
     # get cursor
     c = conn.cursor()
-    # add a row with the new artist_id in artists table
-    # if we've seen this artist before, it will be refused
-    q = "INSERT INTO artists VALUES ("+encode_string(artist_id)+")"
-    c.execute(q)
     # add as many rows as terms in artist_term table
     for t in terms:
         q = "INSERT INTO artist_term VALUES ("
@@ -221,16 +225,18 @@ if __name__ == '__main__':
 
     # get all track ids
     trackids = []
+    artistids = []
     f = open(artistfile,'r')
     for line in f.xreadlines():
         if line == '' or line.strip() == '':
             continue
+        artistids.append( line.split('<SEP>')[0] )
         trackids.append( line.split('<SEP>')[2] )
     f.close()
     print 'found',len(trackids),'artists in file:',artistfile
 
     # create database
-    create_db(dbfile,alltags)
+    create_db(dbfile,artistids,alltags)
     t2 = time.time()
     stimelength = str(datetime.timedelta(seconds=t2-t1))
     print 'tables created after', stimelength
@@ -244,7 +250,7 @@ if __name__ == '__main__':
         f = os.path.join(maindir,path_from_trackid(trackid))
         fill_from_h5(conn,f)
         cnt_files += 1
-        if cnt_files % 50 == 0:
+        if cnt_files % 500 == 0:
             conn.commit()
     conn.commit()
 

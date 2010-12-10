@@ -54,7 +54,7 @@ def die_with_usage():
     print 'demo_track_metadata.py'
     print '  by T. Bertin-Mahieux (2010) Columbia University'
     print '     tb2332@columbia.edu'
-    print 'This codes gives example on how to query the database track_metadata.db'
+    print 'This codes gives examples on how to query the database track_metadata.db'
     print 'To first create this database, see: create_track_metadata_db.py'
     print 'usage:'
     print '   python demo_track_metadata.py <database path>'

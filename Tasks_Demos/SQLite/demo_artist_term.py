@@ -122,6 +122,12 @@ if __name__ == '__main__':
     print '* list artists whose ID starts with ARB (we ask for 2 of them):'
     print res.fetchall()
 
+    # count all artists
+    q = "SELECT COUNT(artist_id) FROM artists"
+    res = c.execute(q)
+    print '* count the number of artists (with or without tags):'
+    print res.fetchone()
+    
 
     print '*************** TERMS TABLE DEMO ******************************'
 
@@ -137,6 +143,16 @@ if __name__ == '__main__':
     print "* list terms that start with 'indie' (we ask for 3 of them):"
     print res.fetchall()
 
+    # check if a tag is inthe dataset
+    q1 = "SELECT term FROM terms WHERE term='rock' LIMIT 1"
+    q2 = "SELECT term FROM terms WHERE term='abc123xyz'"
+    res = c.execute(q1)
+    res1_str = str(res.fetchone())
+    res = c.execute(q2)
+    res2_str = str(res.fetchone())
+    print '* we check if two tags are in the database, (the first one is):'
+    print 'rock:',res1_str,', abc123xyz:',res2_str
+
     # get one badly encoded, fix it...
     # is it a problem only when we write to file???
     # we want to show the usage of t.encode('utf-8')  with t a term
@@ -144,9 +160,53 @@ if __name__ == '__main__':
 
     print '*************** ARTIST / TERM TABLE DEMO **********************'
 
-    #
+    # note that the Beatles artist ID is: AR6XZ861187FB4CECD
 
+    # get all tags from the Beatles
+    q = "SELECT term FROM artist_term WHERE artist_id='AR6XZ861187FB4CECD'"
+    res = c.execute(q)
+    print "* we get all tags applied to the Beatles (we know their artist ID), we show 4:"
+    print res.fetchall()[:4]
 
+    # count number of tags applied to The Beatles
+    q = "SELECT COUNT(term) FROM artist_term WHERE artist_id='AR6XZ861187FB4CECD'"
+    res = c.execute(q)
+    print "* we count the number of unique tags applied to The Beatles:"
+    print res.fetchone()
+
+    # get artist IDs that ahve been tagged with 'jazz'
+    # note the encode_string function, that mostly doubles the ' sign
+    q = "SELECT artist_id FROM artist_term WHERE term="+encode_string('jazz')
+    q += " ORDER BY RANDOM() LIMIT 2"
+    res = c.execute(q)
+    print "* we get artists tagged with 'jazz', we display 2 at random:"
+    print res.fetchall()
+
+    # count number of artists tagged with 'rock'
+    q = "SELECT COUNT(artist_id) FROM artist_term WHERE term="+encode_string('rock')
+    res = c.execute(q)
+    print "* we count the number of unique artists tagged with 'rock':"
+    print res.fetchone()
+
+    # get artists that have no tags
+    # simple with the EXCEPT keyword
+    # other cool keywords: UNION, UNION ALL, INTERSECT
+    q = "SELECT artist_id FROM artists EXCEPT SELECT artist_id FROM artist_term LIMIT 1"
+    res = c.execute(q)
+    artist_notag = res.fetchone()
+    print '* we show an artist with no tags:'
+    if artist_notag is None:
+        # debug, make sure all artists have at least one tag, can be slow
+        q = "SELECT * FROM artists"
+        res = c.execute(q)
+        allartists = map(lambda x: x[0], res.fetchall())
+        for art in allartists:
+            q = "SELECT COUNT(term) FROM artist_term WHERE artist_id='"+art+"'"
+            res = c.execute(q)
+            assert res.fetchone()[0] > 0
+        print '(found no artist with no tags, we double-checked)'
+    else:
+        print artist_notag
 
     
     # DONE

@@ -69,25 +69,38 @@ def encode_string(s):
 
 def create_db(filename,taglist):
     """
-    Create a SQLite database where the first column
-    is artist_id and contains the ECHONEST ID,
-    then one column per tag.
+    Create a SQLite database where 3 tables
+    table1: artists
+            contains one column, artist_id
+    table2: terms
+            contains one column, terms (tags)
+    table3: artist_term
+            contains two columns, artist_id and term
     """
     # creates file
     conn = sqlite3.connect(filename)
-    # create table, first column
     c = conn.cursor()
-    q = "CREATE TABLE songs (artist_id text PRIMARY KEY)"
+    # create table 1
+    q = "CREATE TABLE artists (artist_id text PRIMARY KEY)"
     c.execute(q)
     conn.commit()
-    # add one column to the table for each tag
-    taglist = np.sort(taglist)
-    for tag in taglist:
-        q = 'ALTER TABLE songs ADD COLUMN '
-        q += encode_string(tag) + ' integer DEFAULT 0'
-        c.execute(q)
-    # commit and close
+    # create table 2, fill with tags
+    q = "CREATE TABLE artists (terms text PRIMARY KEY)"
+    c.execute(q)
     conn.commit()
+    taglist = np.sort(taglist)
+    for t in taglist: 
+        q = "INSERT INTO terms VALUES ("
+        q += encode_string(t) + ")"
+        c.execute(q)
+    conn.commit()
+    # create table 3
+    q = "CREATE TABLE artist_term (artist_id text, term text) "
+    q += "FOREIGN KEY(artist_id) REFERENCES artists(artist_id) "
+    q += "FOREIGN KEY(term) REFERENCES terms(term)"
+    c.execute(q)
+    conn.commit()
+    # close
     c.close()
     conn.close()
 
@@ -98,27 +111,58 @@ def fill_from_h5(conn,h5path):
     Doesn't commit, doesn't close conn at the end!
     This h5 file must be for a new artist, we can't have twice the
     same artist entered in the database!
-    (artist_id is the primary key, therefore unique)
+
+    The info is added to two tables: artists and artist_term
+    one row is added to the first one, as many row as needed are
+    added to the second one.
     """
     # get info from h5 file
     h5 = hdf5_utils.open_h5_file_append(h5path)
     artist_id = get_artist_id(h5)
     terms = get_artist_terms(h5)
     h5.close()
-    # add a row with artist_id and zeros
+    # get cursor
     c = conn.cursor()
-    q = "INSERT INTO songs ('artist_id') VALUES ("
-    q += encode_string(artist_id) + ")"
+    # add a row with the new artist_id in artists table
+    # if we've seen this artist before, it will be refused
+    q = "INSERT INTO artists VALUES ("+encode_string(artist_id)+")"
     c.execute(q)
-    # alter info for cols corresponding to artist terms
+    # add as many rows as terms in artist_term table
     for t in terms:
-        q = "UPDATE songs SET " + encode_string(t)
-        q += "=1 WHERE 'artist_id'='" + artist_id + "'"
+        q = "INSERT INTO artists VALUES ("
+        q += encode_string(artist_id) + "," + encode_string(t)
+        q += ")"
         c.execute(q)
     # done
     c.close()
 
-
+def add_indices_to_db(conn,verbose=0):
+    """
+    Since the db is considered final, we can add all sorts of indecies
+    to make sure the retrieval time is as fast as possible.
+    Indecies take up a little space, but they hurt performance only when
+    we modify the data (which should not happen)
+    This function commits its changes at the end
+    
+    Note: tutorial on MySQL (close enough to SQLite):
+    http://www.databasejournal.com/features/mysql/article.php/10897_1382791_1/Optimizing-MySQL-Queries-and-Indexes.htm
+    """
+    c = conn.cursor()
+    # index to search by (artist_id) or (artist_id,term) on artist_terms table
+    q = "CREATE INDEX idx_artist_id ON artist_term ('artist_id','term')"
+    if verbose > 0: print q
+    c.execute(q)
+    # index to search by (term) or (term,artist_id) on artist_terms table
+    # might be redundant, we probably just need an index on term since the first
+    # one can do the join search
+    q = "CREATE INDEX idx_term ON artist_term ('artist_id','term')"
+    if verbose > 0: print q
+    c.execute(q)
+    # we're done, we don't need to add keys to artists and tersm
+    # since they have only one column that is a PRIMARY KEY, they have
+    # an implicit index
+    conn.commit()
+    
 
 def die_with_usage():
     """ HELP MENU """
@@ -132,14 +176,13 @@ def die_with_usage():
     print '  artist_terms.db   - filename for the database'
     print ''
     print 'for artist list, check: /Tasks_Demos/NamesAnalysis/list_all_artists.py'
+    print '          or (faster!): /Tasks_Demos/SQLite/list_all_artists_from_db.py'
     print 'for taglist, check: /Tasks_Demos/Tagging/get_unique_terms.py'
     sys.exit(0)
 
 
 
-
 if __name__ == '__main__':
-
 
     # help menu
     if len(sys.argv) < 5:
@@ -151,7 +194,6 @@ if __name__ == '__main__':
     sys.path.append( pythonsrc )
     import hdf5_utils
     from hdf5_getters import *
-
 
     # params
     maindir = sys.argv[1]
@@ -191,12 +233,12 @@ if __name__ == '__main__':
     create_db(dbfile,alltags)
     t2 = time.time()
     stimelength = str(datetime.timedelta(seconds=t2-t1))
-    print 'table created after', stimelength
+    print 'tables created after', stimelength
 
     # open connection
     conn = sqlite3.connect(dbfile)
 
-    # iterate over file
+    # iterate over files
     cnt_files = 0
     for trackid in trackids:
         f = os.path.join(maindir,path_from_trackid(trackid))
@@ -205,11 +247,21 @@ if __name__ == '__main__':
         if cnt_files % 50 == 0:
             conn.commit()
     conn.commit()
-    conn.close()
 
-    # done
+    # time update
     t3 = time.time()
     stimelength = str(datetime.timedelta(seconds=t3-t1))
     print 'Looked at',cnt_files,'files, done in',stimelength
+
+    # creates indices
+    add_indices_to_db(conn,verbose=0):    
+
+    # close connection
+    conn.close()
+
+    # done
+    t4 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t4-t1))
+    print 'All done (including indices) in',stimelength
 
     

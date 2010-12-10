@@ -85,7 +85,7 @@ def create_db(filename,taglist):
     c.execute(q)
     conn.commit()
     # create table 2, fill with tags
-    q = "CREATE TABLE artists (terms text PRIMARY KEY)"
+    q = "CREATE TABLE terms (term text PRIMARY KEY)"
     c.execute(q)
     conn.commit()
     taglist = np.sort(taglist)
@@ -95,9 +95,9 @@ def create_db(filename,taglist):
         c.execute(q)
     conn.commit()
     # create table 3
-    q = "CREATE TABLE artist_term (artist_id text, term text) "
-    q += "FOREIGN KEY(artist_id) REFERENCES artists(artist_id) "
-    q += "FOREIGN KEY(term) REFERENCES terms(term)"
+    q = "CREATE TABLE artist_term (artist_id text, term text, "
+    q += "FOREIGN KEY(artist_id) REFERENCES artists(artist_id), "
+    q += "FOREIGN KEY(term) REFERENCES terms(term) )"
     c.execute(q)
     conn.commit()
     # close
@@ -129,7 +129,7 @@ def fill_from_h5(conn,h5path):
     c.execute(q)
     # add as many rows as terms in artist_term table
     for t in terms:
-        q = "INSERT INTO artists VALUES ("
+        q = "INSERT INTO artist_term VALUES ("
         q += encode_string(artist_id) + "," + encode_string(t)
         q += ")"
         c.execute(q)
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     print 'Looked at',cnt_files,'files, done in',stimelength
 
     # creates indices
-    add_indices_to_db(conn,verbose=0):    
+    add_indices_to_db(conn,verbose=0)
 
     # close connection
     conn.close()

@@ -146,7 +146,7 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 HDF5.fill_hdf5_from_artist(h5,artist)
                 HDF5.fill_hdf5_from_song(h5,song)
                 HDF5.fill_hdf5_from_track(h5,track)
-                if mbconnect not None:
+                if mbconnect is not None:
                     HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
                 # TODO billboard? lastfm?
                 h5.close()

@@ -346,19 +346,19 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     group = h5.createGroup("/",'metadata','metadata about the song')
     table = h5.createTable(group,'songs',DESC.SongMetaData,'table of metadata for one song')
     r = table.row
-    r.append()
+    r.append() # filled with default values 0 or '' (depending on type)
     table.flush()
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
     r = table.row
-    r.append()
+    r.append() # filled with default values 0 or '' (depending on type)
     table.flush()
         # group musicbrainz
     group = h5.createGroup("/",'musicbrainz','data about the song coming from MusicBrainz')
     table = h5.createTable(group,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz')
     r = table.row
-    r.append()
+    r.append() # filled with default values 0 or '' (depending on type)
     table.flush()
     # create arrays
     create_all_arrays(h5,expectedrows=3)

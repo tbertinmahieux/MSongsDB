@@ -137,7 +137,7 @@ def find_year_safemode_nombid(connect,title,release,artist):
     # find all albums based on tracks found by exact track title match
     # return the earliest release year of one of these albums
     q = "SELECT min(release.releasedate) FROM track INNER JOIN artist"
-    q += " ON lower(artist.name)='"+artist.lower()+"' AND artist.id=track.artist"
+    q += " ON lower(artist.name)='"+encode_string(artist.lower())+"' AND artist.id=track.artist"
     q += " AND lower(track.name)="+encode_string(title.lower())
     q += " INNER JOIN albumjoin ON albumjoin.track=track.id"
     q += " INNER JOIN album ON album.id=albumjoin.album"
@@ -149,7 +149,7 @@ def find_year_safemode_nombid(connect,title,release,artist):
     # we relax the condition that we have to find an exact string match for the title
     # if we find the good album name (our 'release' param)
     q = "SELECT min(release.releasedate) FROM artist INNER JOIN album"
-    q += " ON lower(artist.name)='"+artist.lower()+"' AND artist.id=album.artist"
+    q += " ON lower(artist.name)='"+encode_string(artist.lower())+"' AND artist.id=album.artist"
     q += " AND lower(album.name)="+encode_string(release.lower())
     q += " INNER JOIN release ON release.album=album.id"
     q += " AND release.releasedate!='0000-00-00' LIMIT 1"
@@ -158,43 +158,6 @@ def find_year_safemode_nombid(connect,title,release,artist):
         return int(res.getresult()[0][0].split('-')[0])
     # not found
     return 0
-
-
-
-def get_aid_from_artist_mbid(connect,artist_mbid):
-    """
-    Get internal id for an artist from his musicbrainz id    
-    """
-    res = connect.query("SELECT * FROM artist WHERE gid='"+artist_mbid+"'")
-    if len(res.dictresult()) == 0:
-        return None
-    return res.dictresult()[0]['id']
-
-def closest_song_by_name_and_aid(connect,artistid,title):
-    """
-    Return the closest song according to Levenshtein difference with a
-    given id and title. All ' are replaced by spaces in the tile.
-    Artistid is an integer, e.g. a musicbrainz internal ID.
-    If no song is found, return None
-    """
-    q = "SELECT * FROM track WHERE artist="+str(artistid)
-    q += " ORDER BY levenshtein(name,"+encode_string(title)+") LIMIT 1"
-    res = connect.query(q)
-    if len(res.dictresult())>0:
-        return res.dictresult()[0]
-    return None
-
-
-def track_durations_match(dur_target,dur_cand,threshold=.03):
-    """
-    Receives durations in same unit (seconds?), check if they are within
-    the threshold. By default, threshold = 0.03, meaning 3% difference
-    is tolerated.
-    Return True if durations are close enough, False otherwise
-    """
-    if np.abs(dur_target-dur_cand * 1. / dur_target) < threshold:
-        return True
-    return False
 
 
 def debug_from_song_file(connect,h5path):
@@ -207,39 +170,22 @@ def debug_from_song_file(connect,h5path):
     import hdf5_getters as GETTERS
     h5 = HDF5.open_h5_file_read(h5path)
     title = GETTERS.get_title(h5)
+    release = GETTERS.get_release(h5)
     artist = GETTERS.get_artist_name(h5)
     ambid = GETTERS.get_artist_mbid(h5)
-    if ambid == '':
-        print '***************************************************'
-        print 'artist:',artist,'song:',title
-        print 'NO ARTIST MUSICBRAINZ ID'
-        h5.close()
-        return
-    aid = get_aid_from_artist_mbid(connect,ambid)
-    if aid is None:
-        print '***************************************************'
-        print 'ambid no more valid:', ambid
-        h5.close()
-        return
-    song = closest_song_by_name_and_aid(connect,aid,title)
-    if song is None:
-        print '***************************************************'
-        print 'no song found for artist:',artist,'song:',title
-        h5.close()
-        return
-    if (song['name'].lower() != title.lower()):
-        print '***************************************************'
-        print 'artist:',artist,'song:',title
-        print 'closest song:',song['name']
     h5.close()
+    year = find_year_safemode(connect,ambid,title,release,artist)
+    if year > 0:
+        return 1
+    else:
+        print 'no years for:',artist,'|',release,'|',title
+        return 0
 
 
 def die_with_usage():
     """ HELP MENU """
     print 'This contains library functions to query the musicbrainz database'
     print 'For debugging:'
-    print '    python query.py -go'
-    print 'or'
     print '    python query.py -hdf5 <list of songs>'
     print '    e.g. python query.py -hdf5 MillionSong/A/A/*/*.h5'
     sys.exit(0)
@@ -253,59 +199,19 @@ if __name__ == '__main__':
 
     # DEBUGGING
     if sys.argv[1] == '-hdf5':
+        import time
+        import datetime
         sys.path.append( os.path.abspath('..') )
         connect = connect_mbdb()
         paths = sys.argv[2:]
+        t1 = time.time()
+        cnt = 0
         for p in paths:
-            debug_from_song_file(connect,p)
+            cnt += debug_from_song_file(connect,p)
         connect.close()
+        t2 = time.time()
+        stimelength = str(datetime.timedelta(seconds=t2-t1))
+        print 'found years for',cnt,'out of',len(paths),'in',stimelength
         sys.exit(0)
 
-    # connect
-    connect = connect_mbdb()
-    if connect is None:
-        print 'could not connect to the database'
-        sys.exit(0)
 
-    # check all tables
-    res = connect.query('select * from pg_tables')
-    tablenames = map(lambda x: x['tablename'],res.dictresult())
-    tablenames = np.sort(tablenames)
-    print 'table names:',tablenames
-
-    # get first and random artist
-    res = connect.query('SELECT * FROM artist LIMIT 1')
-    print 'first artist:',res.dictresult()
-    res = connect.query('SELECT * FROM artist ORDER BY random() LIMIT 1')
-    print 'random artist:',res.dictresult()
-
-    # get Radiohead by artist id
-    radiohead_mbid='a74b1b7f-71a5-4011-9441-d0b5e4122711'
-    res = connect.query("SELECT * FROM artist WHERE gid='"+radiohead_mbid+"'")
-    print 'Radiohead:',res.dictresult()
-    if res.ntuples() > 1:
-        print 'MORE THAN ONE RADIOHEAD????'
-    print '***********************************************************'
-
-    # get all albums from Radiohead
-    
-    # get all tracks from Radiohead
-    artistid = res.dictresult()[0]['id']
-    res = connect.query("SELECT * FROM track WHERE artist="+str(artistid))
-    print 'we found',res.ntuples(),'tracks for Radiohead'
-    alltracks = res.dictresult() # make sure the order doesn't change
-    tracknames = map(lambda x: x['name'],alltracks)
-    trackyears = map(lambda x: x['year'],alltracks)
-    trackdurs = map(lambda x: x['length'],alltracks)
-    trackgids = map(lambda x: x['gid'],alltracks)
-
-    # get the track with the closest name
-    target='No Surprises2'
-    q = "SELECT * FROM track WHERE artist="+str(artistid)
-    q += " ORDER BY levenshtein(name,'"+target.replace("'"," ")+"') LIMIT 1"
-    res = connect.query(q)
-    print 'closest track from Radiohead with name:',target
-    print res.dictresult()[0]
-    
-    # close connect
-    connect.close()

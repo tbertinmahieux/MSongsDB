@@ -489,10 +489,19 @@ Using the Echonest API. Songs were chosen....?????
 FOr more techincal details, see "dataset creation" in "code" section.<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
-GNU Public License? If you're a researcher and want to publish,
-you are fine. If you are a company and want to experiment on the
+The code is released under GNU Public License.<p> 
+The Echo Nest data is released under ...??????
+If you're a researcher and want to publish results on the dataset,
+you are fine. 
+If you are a company and are concern about experimenting on the
 dataset, contact the Echo Nest, we will probably give you the
 authorization.<p>
+Regarding the MusicBrainz data contained in the dataset,
+the track 'year' is under 
+<a href="http://creativecommons.org/licenses/publicdomain/">
+public domain</a> and the 'tags' and 'tag count' are under
+<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">
+Attribution-NonCommercial-ShareAlike 2.0</a> license.<p>
 
 <a name='website'><h3>Why this website doesn't load sometimes?</h3></a>
 You need to enable javascript. We also use a 'non-official' javascript

@@ -27,7 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import hdf5_getters
-import hdf5_utils
 import numpy as np
 
 
@@ -82,7 +81,7 @@ if __name__ == '__main__':
     if not os.path.isfile(hdf5path):
         print 'ERROR: file',hdf5path,'does not exist.'
         sys.exit(0)
-    h5 = hdf5_utils.open_h5_file_read(hdf5path)
+    h5 = hdf5_getters.open_h5_file_read(hdf5path)
     numSongs = hdf5_getters.get_num_songs(h5)
     if songidx >= numSongs:
         print 'ERROR: file contains only',numSongs

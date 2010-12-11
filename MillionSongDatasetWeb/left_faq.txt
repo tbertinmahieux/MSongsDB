@@ -3,6 +3,8 @@
 <a href='#whatisindataset'>What is in the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#fields'>Fields description</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#mbrainz'>MusicBrainz data</a><br>
 <a href='#gettingdataset'>How to get the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#notapi'>Why is it not an API?</a><br>
@@ -363,6 +365,17 @@ For the analysis field, we suggest you first read the Echo Nest
 <td><a href='http://www.7digital.com/'>url</a></td>
 </tr>
 </table><br>
+<p>
+
+<a name='mbrainz'><h3>MusicBrainz data</h3></a>
+Fields 'year', 'artist_mbtags' and 'artist_mbtags_count'
+have been extracted from
+the <a href="http://musicbrainz.org/">MusicBrainz</a>. We used a local copy 
+of the <a href="http://wiki.musicbrainz.org/Server_Setup">
+server</a>, our version is this 
+<a href="http://svn.musicbrainz.org/mb_server/branches/RELEASE_20090524-BRANCH/">
+branch</a>, the data dumps were of December 4th, 2010.
+Note that the field 'artist_mbid' is provided by the EchoNest API.
 <p>
 
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>

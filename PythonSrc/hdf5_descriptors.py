@@ -111,4 +111,4 @@ class SongMusicBrainz(tables.IsDescription):
     """
     year = tables.IntCol()
     # ARRAY INDEX
-    idx_artist_mbtags = tablesIntCol()
+    idx_artist_mbtags = tables.IntCol()

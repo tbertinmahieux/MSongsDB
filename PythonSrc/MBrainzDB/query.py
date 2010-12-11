@@ -98,14 +98,6 @@ def find_year_safemode(connect,artist_mbid,title,release,artist):
     res = connect.query(q)
     if len(res.getresult()) == 0: # mb does not know that ID... yes it happens
         return find_year_safemode_nombid(connect,title,release,artist)
-    # find all track years for this artist and title
-    q = "SELECT min(track.year) FROM track INNER JOIN artist"
-    q += " ON artist.gid='"+artist_mbid+"' AND artist.id=track.artist"
-    q += " AND lower(track.name)="+encode_string(title.lower())
-    q += " AND track.year > 0 LIMIT 1"
-    res = connect.query(q)
-    if not res.getresult()[0][0] is None:
-        return int(res.getresult()[0][0])
     # find all album release dates from albums from tracks that match artist, title, and release
     # i.e. we take all the tracks found in the previous query, check their album names
     # and if an album name matches 'release', we take its release date
@@ -142,15 +134,6 @@ def find_year_safemode_nombid(connect,title,release,artist):
     or (artist_name / release)
     RETURN 0 if not found, or year as int
     """
-    # find all track years for this artist and title
-    q = "SELECT min(track.year) FROM track INNER JOIN artist"
-    q += " ON lower(artist.name)="+encode_string(artist.lower())
-    q += " AND artist.id=track.artist"
-    q += " AND lower(track.name)="+encode_string(title.lower())
-    q += " AND track.year > 0 LIMIT 1"
-    res = connect.query(q)
-    if not res.getresult()[0][0] is None:
-        return int(res.getresult()[0][0])
     # find all albums based on tracks found by exact track title match
     # return the earliest release year of one of these albums
     q = "SELECT min(release.releasedate) FROM track INNER JOIN artist"

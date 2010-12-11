@@ -28,6 +28,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
+import tables
+
+
+def open_h5_file_read(h5filename):
+    """
+    Open an existing H5 in read mode.
+    Same function as in hdf5_utils, here so we avoid one import
+    """
+    return tables.openFile(h5filename, mode='r')
+
+
 def get_num_songs(h5):
     """
     Return the number of songs contained in this h5 file, i.e. the number of rows

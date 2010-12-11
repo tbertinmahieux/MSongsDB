@@ -160,11 +160,32 @@ def find_year_safemode_nombid(connect,title,release,artist):
     return 0
 
 
+def get_artist_tags(connect, artist_mbid, maxtags=20):
+    """
+    Get the musicbrainz tags and tag count given a musicbrainz
+    artist. Returns two list of length max 'maxtags'
+    Always return two lists, eventually empty
+    """
+    if artist_mbid is None or artist_mbid == '':
+        return [],[]
+    # find all tags
+    q = "SELECT tag.name,artist_tag.count FROM artist"
+    q += " INNER JOIN artist_tag ON artist.id=artist_tag.artist"
+    q += " INNER JOIN tag ON tag.id=artist_tag.tag"
+    q += " WHERE artist.gid='"+artist_mbid+"'"
+    q += " ORDER BY count DESC LIMIT "+str(maxtags)
+    res = connect.query(q)
+    if len(res.getresult()) == 0:
+        return [],[]
+    return map(lambda x: x[0],res.getresult()),map(lambda x: x[1],res.getresult())
+
+
 def debug_from_song_file(connect,h5path,verbose=0):
     """
     Slow debugging function that takes a h5 file, reads the info,
     check the match with musicbrainz db, prints out the result.
     Only prints when we dont get exact match!
+    RETURN counts of how many files we filled for years, tags
     """
     import hdf5_utils as HDF5
     import hdf5_getters as GETTERS
@@ -174,12 +195,21 @@ def debug_from_song_file(connect,h5path,verbose=0):
     artist = GETTERS.get_artist_name(h5)
     ambid = GETTERS.get_artist_mbid(h5)
     h5.close()
+    # mbid
+    gotmbid=1
+    if ambid=='':
+        gotmbid = 0
+        if verbose>0: print 'no mb id for:',artist
+    # year
     year = find_year_safemode(connect,ambid,title,release,artist)
-    if year > 0:
-        return 1
-    else:
-        if verbose>0: print 'no years for:',artist,'|',release,'|',title
-        return 0
+    gotyear = 1 if year > 0 else 0
+    if verbose>0: print 'no years for:',artist,'|',release,'|',title
+    # tags
+    tags,counts = get_artist_tags(connect,ambid)
+    gottags = 1 if len(tags) > 0 else 0
+    if gottags == 0 and verbose>0: print 'no tags for:',artist
+    # return indicator for mbid, year, tag
+    return gotmbid,gotyear,gottags
 
 
 def die_with_usage():
@@ -213,13 +243,21 @@ if __name__ == '__main__':
         connect = connect_mbdb()
         paths = sys.argv[2:]
         t1 = time.time()
-        cnt = 0
+        cntmbid = 0
+        cntyears = 0
+        cnttags = 0
         for p in paths:
-            cnt += debug_from_song_file(connect,p,verbose=verbose)
+            mbid,year,tag = debug_from_song_file(connect,p,verbose=verbose)
+            cntmbid += mbid
+            cntyears += year
+            cnttags += tag
         connect.close()
         t2 = time.time()
         stimelength = str(datetime.timedelta(seconds=t2-t1))
-        print 'found years for',cnt,'out of',len(paths),'in',stimelength
+        print 'has musicbrainz id for',cntmbid,'out of',len(paths)
+        print 'found years for',cntyears,'out of',len(paths)
+        print 'found tags for',cnttags,'out of',len(paths)
+        print 'all done in',stimelength
         sys.exit(0)
 
 

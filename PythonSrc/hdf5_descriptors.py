@@ -55,7 +55,7 @@ class SongMetaData(tables.IsDescription):
     artist_longitude = tables.Float64Col()
     artist_location = tables.StringCol(MAXSTRLEN)
     track_7digitalid = tables.IntCol()
-    # ARRAY INDECES
+    # ARRAY INDICES
     idx_similar_artists = tables.IntCol()
     idx_artist_terms = tables.IntCol()
     # TO ADD
@@ -87,7 +87,7 @@ class SongAnalysis(tables.IsDescription):
     time_signature = tables.IntCol()
     time_signature_confidence = tables.Float64Col()
     track_id = tables.StringCol(32)
-    # ARRAY INDECES
+    # ARRAY INDICES
     idx_segments_start = tables.IntCol()
     idx_segments_confidence = tables.IntCol()
     idx_segments_pitches = tables.IntCol()
@@ -104,3 +104,11 @@ class SongAnalysis(tables.IsDescription):
     idx_tatums_start = tables.IntCol()
     idx_tatums_confidence = tables.IntCol()
     
+class SongMusicbrainz(tables.IsDescription):
+    """
+    Class to hold information coming from
+    MusicBrainz for one song
+    """
+    year = tables.IntCol()
+    # ARRAY INDEX
+    idx_artist_mbtags = tablesIntCol()

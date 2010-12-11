@@ -64,14 +64,14 @@ def connect_mbdb():
         print 'CONNECT_MBDB, internal error:', e
         return None
     # check for levenshtein function
-    q = "SELECT levenshtein('allo','allo2')"
-    try:
-        res = connect.query(q)
-    except pg.ProgrammingError:
-        print 'we need levenshtein (contrib) added to the database:'
-        print 'psql -d musicbrainz_db -f /usr/share/postgresql/8.4/contrib/fuzzystrmatch.sq'
-        connect.close()
-        return None
+    #q = "SELECT levenshtein('allo','allo2')"
+    #try:
+    #    res = connect.query(q)
+    #except pg.ProgrammingError:
+    #    print 'we need levenshtein (contrib) added to the database:'
+    #    print 'psql -d musicbrainz_db -f /usr/share/postgresql/8.4/contrib/fuzzystrmatch.sq'
+    #    connect.close()
+    #    return None
     # done
     return connect
 
@@ -93,6 +93,10 @@ def find_year_safemode(connect,artist_mbid,title,release,artist):
     """
     # case where we have no musicbrainz_id for the artist
     if artist_mbid is None or artist_mbid == '':
+        return find_year_safemode_nombid(connect,title,release,artist)
+    q = "SELECT artist id FROM artist WHERE gid='"+artist_mbid+"'"
+    res = connect.query(q)
+    if len(res.getresult()) == 0: # mb does not know that ID... yes it happens
         return find_year_safemode_nombid(connect,title,release,artist)
     # find all track years for this artist and title
     q = "SELECT min(track.year) FROM track INNER JOIN artist"

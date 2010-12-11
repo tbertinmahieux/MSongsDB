@@ -111,10 +111,11 @@ def path_from_trackid(trackid):
     return p
 
 
-def create_track_file(maindir,trackid,track,song,artist):
+def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
     """
     Main function to create an HDF5 song file.
     You got to have the track, song and artist already.
+    If you pass an open connection to the musicbrainz database, we also use it.
     Returns True if song was created, False otherwise.
     False can mean another thread is already doing that song.
     We also check whether the path exists.
@@ -145,6 +146,8 @@ def create_track_file(maindir,trackid,track,song,artist):
                 HDF5.fill_hdf5_from_artist(h5,artist)
                 HDF5.fill_hdf5_from_song(h5,song)
                 HDF5.fill_hdf5_from_track(h5,track)
+                if mbconnect not None:
+                    HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
                 # TODO billboard? lastfm?
                 h5.close()
             except KeyboardInterrupt:

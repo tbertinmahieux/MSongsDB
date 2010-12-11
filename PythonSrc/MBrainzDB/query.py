@@ -160,7 +160,7 @@ def find_year_safemode_nombid(connect,title,release,artist):
     return 0
 
 
-def debug_from_song_file(connect,h5path):
+def debug_from_song_file(connect,h5path,verbose=0):
     """
     Slow debugging function that takes a h5 file, reads the info,
     check the match with musicbrainz db, prints out the result.
@@ -178,7 +178,7 @@ def debug_from_song_file(connect,h5path):
     if year > 0:
         return 1
     else:
-        print 'no years for:',artist,'|',release,'|',title
+        if verbose>0: print 'no years for:',artist,'|',release,'|',title
         return 0
 
 
@@ -198,6 +198,14 @@ if __name__ == '__main__':
         die_with_usage()
 
     # DEBUGGING
+    verbose=0
+    while True:
+        if sys.argv[1]=='-verbose':
+            verbose=1
+        else:
+            break
+        sys.argv.pop(1)
+    
     if sys.argv[1] == '-hdf5':
         import time
         import datetime
@@ -207,7 +215,7 @@ if __name__ == '__main__':
         t1 = time.time()
         cnt = 0
         for p in paths:
-            cnt += debug_from_song_file(connect,p)
+            cnt += debug_from_song_file(connect,p,verbose=verbose)
         connect.close()
         t2 = time.time()
         stimelength = str(datetime.timedelta(seconds=t2-t1))

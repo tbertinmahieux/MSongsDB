@@ -436,4 +436,30 @@ def get_tatums_confidence(h5,songidx=0):
     return h5.root.analysis.tatums_confidence[h5.root.analysis.songs.cols.idx_tatums_confidence[songidx]:
                                               h5.root.analysis.songs.cols.idx_tatums_confidence[songidx+1]]
 
+def get_artist_mbtags(h5,songidx=0):
+    """
+    Get artist musicbrainz tag array. Takes care of the proper indexing if we are in aggregate
+    file. By default, return the array for the first song in the h5 file.
+    To get a regular numpy ndarray, cast the result to: numpy.array( )
+    """
+    if h5.root.musicbrainz.songs.nrows == songidx + 1:
+        return h5.root.musicbrainz.artist_mbtags[h5.root.musicbrainz.songs.cols.idx_artist_mbtags[songidx]:]
+    return h5.root.musicbrainz.artist_mbtags[h5.root.metadata.songs.cols.idx_artist_mbtags[songidx]:
+                                             h5.root.metadata.songs.cols.idx_artist_mbtags[songidx+1]]
 
+def get_artist_mbtags_count(h5,songidx=0):
+    """
+    Get artist musicbrainz tag count array. Takes care of the proper indexing if we are in aggregate
+    file. By default, return the array for the first song in the h5 file.
+    To get a regular numpy ndarray, cast the result to: numpy.array( )
+    """
+    if h5.root.musicbrainz.songs.nrows == songidx + 1:
+        return h5.root.musicbrainz.artist_mbtags_count[h5.root.musicbrainz.songs.cols.idx_artist_mbtags[songidx]:]
+    return h5.root.musicbrainz.artist_mbtags_count[h5.root.metadata.songs.cols.idx_artist_mbtags[songidx]:
+                                                   h5.root.metadata.songs.cols.idx_artist_mbtags[songidx+1]]
+
+def get_year(h5,songidx=0):
+    """
+    Get release year from a HDF5 song file, by default the first song in it
+    """
+    return h5.root.musicbrainz.songs.cols.year[songidx]

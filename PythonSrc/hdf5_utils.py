@@ -209,7 +209,7 @@ def fill_hdf5_from_musicbrainz(h5,connect):
     musicbrainz.cols.year[0] = QUERYMB.find_year_safemode(connect,ambid,title,release,artist_name)
     # fill the musicbrainz arrays
     group = h5.root.musicbrainz
-    metadata.cols.idx_artist_mbtags[0] = 0
+    musicbrainz.cols.idx_artist_mbtags[0] = 0
     tags,tagcount = QUERYMB.get_artist_tags(connect, ambid, maxtags=20)
     group.artist_mbtags.append( np.array(tags,dtype='string') )
     group.artist_mbtags_count.append( np.array(tagcount,dtype='float64') )

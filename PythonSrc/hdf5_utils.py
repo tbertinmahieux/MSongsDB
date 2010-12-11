@@ -54,7 +54,8 @@ ARRAY_DESC_BARS_START = 'array of start times of bars'
 ARRAY_DESC_BARS_CONFIDENCE = 'array of confidence of bars'
 ARRAY_DESC_TATUMS_START = 'array of start times of tatums'
 ARRAY_DESC_TATUMS_CONFIDENCE = 'array of confidence of tatums'
-
+ARRAY_DESC_ARTIST_MBTAGS = 'array of tags from MusicBrainz for an artist'
+ARRAY_DESC_ARTIST_MBTAGS_COUNT = 'array of tag counts from MusicBrainz for an artist'
 
 def fill_hdf5_from_artist(h5,artist):
     """
@@ -217,7 +218,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["song_hotttnesss"] = get_song_hotttnesss(h5tocopy,songidx)
             row["title"] = get_title(h5tocopy,songidx)
             row["track_7digitalid"] = get_track_7digitalid(h5tocopy,songidx)
-            # INDECIES
+            # INDICES
             if counter == 0 : # we're first row
                 row["idx_similar_artists"] = 0
                 row["idx_artist_terms"] = 0
@@ -249,7 +250,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["time_signature"] = get_time_signature(h5tocopy,songidx)
             row["time_signature_confidence"] = get_time_signature_confidence(h5tocopy,songidx)
             row["track_id"] = get_track_id(h5tocopy,songidx)
-            # INDECIES
+            # INDICES
             if counter == 0 : # we're first row
                 row["idx_segments_start"] = 0
                 row["idx_segments_confidence"] = 0
@@ -300,6 +301,19 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             h5.root.analysis.bars_confidence.append( get_bars_confidence(h5tocopy,songidx) )
             h5.root.analysis.tatums_start.append( get_tatums_start(h5tocopy,songidx) )
             h5.root.analysis.tatums_confidence.append( get_tatums_confidence(h5tocopy,songidx) )
+            # MUSICBRAINZ
+            row = h5.root.musicbrainz.songs.row
+            row["year"] = get_year(h5tocopy,songidx)
+            # INDICES
+            if counter == 0 : # we're first row
+                row["idx_artist_mbtags"] = 0
+            else:
+                row["idx_artist_mbtags"] = h5.root.musicbrainz.artist_mbtags.shape[0]
+            row.append()
+            h5.root.metadata.songs.flush()
+            # ARRAYS
+            h5.root.musicbrainz.artist_mbtags.append( get_artist_mbtags(h5tocopy,songidx) )
+            h5.root.musicbrainz.artist_mbtags_count.append( get_artist_mbtags_count(h5tocopy,songidx) )
             # counter
             counter += 1
         # close h5 file
@@ -337,6 +351,12 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
         # group analysis
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song')
+    r = table.row
+    r.append()
+    table.flush()
+        # group musicbrainz
+    group = h5.createGroup("/",'musicbrainz','data about the song coming from MusicBrainz')
+    table = h5.createTable(groupe,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz')
     r = table.row
     r.append()
     table.flush()
@@ -382,6 +402,10 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     group = h5.createGroup("/",'analysis','Echo Nest analysis of the song')
     table = h5.createTable(group,'songs',DESC.SongAnalysis,'table of Echo Nest analysis for one song',
                            expectedrows=expectedrows)
+        # group musicbrainz
+    group = h5.createGroup("/",'musicbrainz','data about the song coming from MusicBrainz')
+    table = h5.createTable(groupe,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz',
+                           expectedrows=expectedrows)
     # create arrays
     create_all_arrays(h5,expectedrows=expectedrows)
     # close it, done
@@ -399,9 +423,12 @@ def create_all_arrays(h5,expectedrows=1000):
     # group metadata arrays
     group = h5.root.metadata
     h5.createEArray(where=group,name='similar_artists',atom=tables.StringAtom(20,shape=()),shape=(0,),title=ARRAY_DESC_SIMILAR_ARTISTS)
-    h5.createEArray(group,'artist_terms',tables.StringAtom(256,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS)
-    h5.createEArray(group,'artist_terms_freq',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_FREQ)
-    h5.createEArray(group,'artist_terms_weight',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_WEIGHT)
+    h5.createEArray(group,'artist_terms',tables.StringAtom(256,shape=()),(0,),ARRAY_DESC_ARTIST_TERMS,
+                    expectedrows=expectedrows*40)
+    h5.createEArray(group,'artist_terms_freq',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_FREQ,
+                    expectedrows=expectedrows*40)
+    h5.createEArray(group,'artist_terms_weight',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_ARTIST_TERMS_WEIGHT,
+                    expectedrows=expectedrows*40)
     # group analysis arrays
     group = h5.root.analysis
     h5.createEArray(where=group,name='segments_start',atom=tables.Float64Atom(shape=()),shape=(0,),title=ARRAY_DESC_SEGMENTS_START)
@@ -433,6 +460,12 @@ def create_all_arrays(h5,expectedrows=1000):
                     expectedrows=expectedrows*300)
     h5.createEArray(group,'tatums_confidence',tables.Float64Atom(shape=()),(0,),ARRAY_DESC_TATUMS_CONFIDENCE,
                     expectedrows=expectedrows*300)
+    # group musicbrainz arrays
+    group = h5.root.musicbrainz
+    h5.createEArray(where=group,name='artist_mbtags',atom=tables.StringAtom(256,shape=()),shape=(0,),title=ARRAY_DESC_ARTIST_MBTAGS,
+                    expectedrows=expectedrows*5)
+    h5.createEArray(group,'artist_mbtags_count',tables.IntAtom(shape=()),(0,),ARRAY_DESC_ARTIST_MBTAGS_COUNT,
+                    expectedrows=expectedrows*5)
 
 
 def open_h5_file_read(h5filename):

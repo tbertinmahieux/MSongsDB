@@ -104,7 +104,7 @@ class SongAnalysis(tables.IsDescription):
     idx_tatums_start = tables.IntCol()
     idx_tatums_confidence = tables.IntCol()
     
-class SongMusicbrainz(tables.IsDescription):
+class SongMusicBrainz(tables.IsDescription):
     """
     Class to hold information coming from
     MusicBrainz for one song

@@ -39,7 +39,6 @@ except ImportError:
     raise
 # project code
 import hdf5_getters
-import hdf5_utils
 
 
 
@@ -97,7 +96,7 @@ def transfer(h5path,matpath=None,force=False):
     getters = filter(lambda x: x[:4] == 'get_', hdf5_getters.__dict__.keys())
     getters.remove("get_num_songs") # special case
     # open h5 file
-    h5 = hdf5_utils.open_h5_file_read(h5path)
+    h5 = hdf5_getters.open_h5_file_read(h5path)
     # transfer
     nSongs = hdf5_getters.get_num_songs(h5)
     matdata = {'transfer_note':'transferred on '+time.ctime()+' from file: '+h5path}

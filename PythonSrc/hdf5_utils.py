@@ -356,7 +356,7 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     table.flush()
         # group musicbrainz
     group = h5.createGroup("/",'musicbrainz','data about the song coming from MusicBrainz')
-    table = h5.createTable(groupe,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz')
+    table = h5.createTable(group,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz')
     r = table.row
     r.append()
     table.flush()

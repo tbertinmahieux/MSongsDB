@@ -137,7 +137,7 @@ def find_year_safemode_nombid(connect,title,release,artist):
     # find all albums based on tracks found by exact track title match
     # return the earliest release year of one of these albums
     q = "SELECT min(release.releasedate) FROM track INNER JOIN artist"
-    q += " ON lower(artist.name)='"+encode_string(artist.lower())+"' AND artist.id=track.artist"
+    q += " ON lower(artist.name)="+encode_string(artist.lower())+" AND artist.id=track.artist"
     q += " AND lower(track.name)="+encode_string(title.lower())
     q += " INNER JOIN albumjoin ON albumjoin.track=track.id"
     q += " INNER JOIN album ON album.id=albumjoin.album"
@@ -149,7 +149,7 @@ def find_year_safemode_nombid(connect,title,release,artist):
     # we relax the condition that we have to find an exact string match for the title
     # if we find the good album name (our 'release' param)
     q = "SELECT min(release.releasedate) FROM artist INNER JOIN album"
-    q += " ON lower(artist.name)='"+encode_string(artist.lower())+"' AND artist.id=album.artist"
+    q += " ON lower(artist.name)="+encode_string(artist.lower())+" AND artist.id=album.artist"
     q += " AND lower(album.name)="+encode_string(release.lower())
     q += " INNER JOIN release ON release.album=album.id"
     q += " AND release.releasedate!='0000-00-00' LIMIT 1"

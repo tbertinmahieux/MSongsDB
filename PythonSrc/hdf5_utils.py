@@ -34,7 +34,15 @@ import numpy as np
 import tables
 import hdf5_descriptors as DESC
 from hdf5_getters import *
+# musicbrainz related stuff
+try:
+    from MBrainzDB import query as QUERYMB
+except ImportError:
+    print 'need pg module and MBrainzDB folder of Python source code if you'
+    print 'want to use musicbrainz related functions, e.g. fill_hdf5_from_musicbrainz'
 
+
+# description of the different arrays in the song file
 ARRAY_DESC_SIMILAR_ARTISTS = 'array of similar artists Echo Nest id'
 ARRAY_DESC_ARTIST_TERMS = 'array of terms (Echo Nest tags) for an artist'
 ARRAY_DESC_ARTIST_TERMS_FREQ = 'array of term (Echo Nest tags) frequencies for an artist'
@@ -56,6 +64,7 @@ ARRAY_DESC_TATUMS_START = 'array of start times of tatums'
 ARRAY_DESC_TATUMS_CONFIDENCE = 'array of confidence of tatums'
 ARRAY_DESC_ARTIST_MBTAGS = 'array of tags from MusicBrainz for an artist'
 ARRAY_DESC_ARTIST_MBTAGS_COUNT = 'array of tag counts from MusicBrainz for an artist'
+
 
 def fill_hdf5_from_artist(h5,artist):
     """
@@ -179,6 +188,33 @@ def fill_hdf5_from_track(h5,track):
     group.tatums_confidence.append( np.array(map(lambda x : x['confidence'],track.tatums),dtype='float64') )
     analysis.flush()
     # DONE
+
+
+def fill_hdf5_from_musicbrainz(h5,connect):
+    """
+    Fill an open hdf5 using the musicbrainz server and data.
+    We assume this code is run after fill_hdf5_from_artist/song
+    because we need artist_mbid, artist_name, release and title
+    INPUT
+       h5        - open song file (append mode)
+       connect   - open pg connection to musicbrainz_db
+    """
+    # get info from h5 song file
+    ambid = h5.root.metadata.songs.cols.artist_mbid[0]
+    artist_name = h5.root.metadata.songs.cols.artist_name[0]
+    release = h5.root.metadata.songs.cols.release[0]
+    title = h5.root.metadata.songs.cols.title[0]
+    # get the musicbrainz table, fill it
+    musicbrainz = h5.root.musicbrainz.songs
+    musicbrainz.cols.year[0] = QUERYMB.find_year_safemode(connect,ambid,title,release,artist_name)
+    # fill the musicbrainz arrays
+    group = h5.root.musicbrainz
+    metadata.cols.idx_artist_mbtags[0] = 0
+    tags,tagcount = QUERYMB.get_artist_tags(connect, ambid, maxtags=20)
+    group.artist_mbtags.append( np.array(tags,dtype='string') )
+    group.artist_mbtags_count.append( np.array(tagcount,dtype='float64') )
+    # done, flush
+    musicbrainz.flush()
 
 
 def fill_hdf5_aggregate_file(h5,h5_filenames):

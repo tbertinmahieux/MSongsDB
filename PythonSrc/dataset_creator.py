@@ -31,7 +31,10 @@ import sys
 import thread
 import time
 import shutil
+import numpy.random as npr
 import hdf5_utils as HDF5
+
+
 # pyechonest objects
 # API_KEY should be found automatically, if not, set pyechonest.config
 from pyechonest import artist as artistEN
@@ -39,10 +42,13 @@ from pyechonest import song as songEN
 from pyechonest import track as trackEN
 CATALOG='7digital'
 
+# posgresql import and info for musicbrainz dataset
+import pg
+MBUSER='gordon'
+MBPASSWD='gordon'
 
 # HOW LONG DO WE WAIT WHEN SOMETHING GOES WRONG
 SLEEPTIME = 15 # in seconds
-
 
 # lock to access the set of tracks being treated
 # getting a track on the lock means having put the EN id
@@ -156,7 +162,7 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 HDF5.fill_hdf5_from_track(h5,track)
                 if mbconnect is not None:
                     HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
-                # TODO billboard? lastfm?
+                # TODO billboard? lastfm? ...?
                 h5.close()
             except KeyboardInterrupt:
                 raise
@@ -213,7 +219,7 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
     This function should create only one file!
     GOAL: mostly, it checks if we have the track already created before
           calling EchoNest API. It saves some calls/time
-          Also, handles some error.
+          Also, handles some errors.
     INPUT
         maindir    - MillionSongDataset root directory
         trackid    - Echo Nest track ID (string: TRABC.....)
@@ -250,7 +256,7 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
     We assume we already have song and artist.
     We can have a connection to musicbrainz as an option.
     This function should create only one file!
-    GOAL: handles some error.
+    GOAL: handles some errors.
     INPUT
         maindir    - MillionSongDataset root directory
         song       - pyechonest song object for that track
@@ -277,3 +283,54 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
     # we got the track id, call for its creation
     # if a file for that trackid already exists, it will be caught immediately in the next function
     return create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=mbconnect)
+
+
+def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
+    """
+    Get all songs from an artist, for each song call for its creation
+    We assume we already have artist.
+    We can have a connection to musicbrainz as an option.
+    This function should create only one file!
+    GOAL: handles some errors.
+    INPUT
+        maindir    - MillionSongDataset root directory
+        artist     - pyechonest artist object for that song/track
+        mbconnect  - open musicbrainz pg connection
+        maxsongs   - maximum number of files retrieved, default=100, should be 500 or 1k
+    RETURN
+        number fo files created, 0<=...<=1000?
+    """
+    if maxsongs==100:
+        print 'WARNING,create_track_files_from_artist, start param should be implemented'
+    # get all the songs we want
+    allsongs = []
+    while True:
+        try:
+            n_missing = maxsongs - len(allsongs)
+            n_askfor = min(n_missing,100)
+            start = len(allsongs)
+            songs = songEN.search(artist_id=artist.id, buckets=['id:'+CATALOG, 'tracks', 'audio_summary',
+                                                                'artist_familiarity','artist_hotttnesss',
+                                                                'artist_location','song_hotttnesss'],
+                                  limit=True, results=n_askfor)
+            allsongs.extend(songs)
+            if len(allsongs) >= maxsongs or len(songs) < n_askfor:
+                break
+        except KeyboardInterrupt:
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in create_track_file_from_artist, aid=',artist.id,'(we wait 15 seconds)'
+            time.sleep(15)
+            continue
+    # shuffle the songs, to help multithreading
+    npr.shuffle(allsongs)
+    # iterate over the songs, call for their creation, count how many actually created
+    cnt_created = 0
+    for song in allsongs:
+        created = create_track_file_from_song(maindir,song,artist,mbconnect=mbconnect)
+        if created:
+            cnt_created += 1
+    # done
+    return cnt_created
+    

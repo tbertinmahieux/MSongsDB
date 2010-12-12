@@ -113,6 +113,18 @@ For the analysis field, we suggest you first read the Echo Nest
 <td><a href='http://musicbrainz.org/'>url</a></td>
 </tr>
 <tr>
+<td>artist mbtags</td>
+<td>array string</td>
+<td>tags from musicbrainz.org</td>
+<td><a href='http://musicbrainz.org/'>url</a></td>
+</tr>
+<tr>
+<td>artist mbtags count</td>
+<td>array int</td>
+<td>tag counts for musicbrainz tags</td>
+<td><a href='http://musicbrainz.org/'>url</a></td>
+</tr>
+<tr>
 <td>artist name</td>
 <td>string</td>
 <td>artist name</td>
@@ -363,6 +375,12 @@ For the analysis field, we suggest you first read the Echo Nest
 <td>int</td>
 <td>ID from 7digital.com or -1</td>
 <td><a href='http://www.7digital.com/'>url</a></td>
+</tr>
+<tr>
+<td>year</td>
+<td>int</td>
+<td>song release year from MusicBrainz or 0</td>
+<td><a href='http://musicbrainz.org/'>url</a></td>
 </tr>
 </table><br>
 <p>

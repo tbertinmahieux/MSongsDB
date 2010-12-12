@@ -545,7 +545,7 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
         print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
         # sanity stop
         if nh5 > TOTALNFILES - nfilesbuffer:
-            break
+            return cnt_created
     # done
     return cnt_created
 

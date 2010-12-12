@@ -395,7 +395,23 @@ public class hdf5_getters
 	return get_array_double(h5, songidx, "analysis", "tatums_confidence", 1);
     }
 
-    // TO DO: ADD ARRAY GETTERS
+    public static int get_year(H5File h5) throws Exception { return get_year(h5, 0); }
+    public static int get_year(H5File h5, int songidx) throws Exception
+    {    
+	return get_member_int(h5,songidx,"/musicbrainz/songs","year");
+    }
+
+    public static String[] get_artist_mbtags(H5File h5) throws Exception { return get_artist_mbtags(h5, 0); }
+    public static String[] get_artist_mbtags(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_string(h5, songidx, "musicbrainz", "artist_mbtags");
+    }
+
+    public static int[] get_artist_mbtags_count(H5File h5) throws Exception { return get_artist_mbtags_count(h5, 0); }
+    public static int[] get_artist_mbtags_count(H5File h5, int songidx) throws Exception
+    {    
+	return get_array_int(h5, songidx, "musicbrainz", "artist_mbtags_count","idx_artist_mbtags");
+    }
 
     /********************************** UTILITY FUNCTIONS ************************************/
 
@@ -486,6 +502,33 @@ public class hdf5_getters
 	return null;
     }
 
+    public static int[] get_array_int(H5File h5, int songidx, String group, String arrayname) throws Exception
+    {
+	return get_array_int(h5, songidx, group, arrayname, "");
+    }
+    public static int[] get_array_int(H5File h5, int songidx, String group, String arrayname, String idxname) throws Exception
+    {    
+	// index
+	H5CompoundDS analysis = (H5CompoundDS) h5.get(group + "/songs");
+	analysis.init();
+	if (idxname.equals("")) idxname = "idx_"+arrayname;
+	int wantedMember = find( analysis.getMemberNames() , idxname);
+	assert(wantedMember >= 0);		
+	Vector alldata = (Vector) analysis.getData();
+	int[] col = (int[]) alldata.get(wantedMember);
+	int pos1 = col[songidx];
+	// data
+	H5ScalarDS array = (H5ScalarDS) h5.get("/"+group+"/"+arrayname);
+	int[] data = (int[]) array.getData();
+	int pos2 = data.length;
+	if (songidx + 1 < col.length) pos2 = col[songidx+1];
+	// copy
+	int[] res = new int[pos2-pos1];
+	for (int k = 0; k < res.length; k++)
+	    res[k] = data[pos1+k];
+	return res;
+    }
+
     public static String[] get_array_string(H5File h5, int songidx, String group, String arrayname) throws Exception
     {    
 	// index
@@ -507,6 +550,11 @@ public class hdf5_getters
 	    res[k] = data[pos1+k];
 	return res;
     }
+
+
+
+    /****************************************** MAIN *****************************************/
+
 
     public static void main(String[] args)
     {
@@ -530,6 +578,7 @@ public class hdf5_getters
 	try {
 	    double[] res;
 	    String[] resS;
+	    int[] resI;
 	    // metadata
 	    System.out.println("artist familiarity: " + get_artist_familiarity(h5));
 	    System.out.println("artist hotttnesss: " + get_artist_hotttnesss(h5));
@@ -596,6 +645,16 @@ public class hdf5_getters
 	    System.out.println("tatums start, length: "+res.length+", elem 3: "+res[3]);
 	    res = get_tatums_confidence(h5);
 	    System.out.println("tatums confidence, length: "+res.length+", elem 3: "+res[3]);
+	    // musicbrainz
+	    System.out.println("year: " + get_year(h5));
+	    resS = get_artist_mbtags(h5);
+	    resI = get_artist_mbtags_count(h5);
+	    if (resS.length > 0) {
+		System.out.println("artists mbtags, length: "+resS.length+", elem 0: "+resS[0]);
+		System.out.println("artists mbtags count, length: "+resI.length+", elem 0: "+resI[0]);}
+	    else {
+		System.out.println("artists mbtags, length: "+resS.length);
+		System.out.println("artists mbtags count, length: "+resI.length);}
 	} catch (Exception e) {
 	    System.out.println("something went wrong:");
 	    e.printStackTrace();

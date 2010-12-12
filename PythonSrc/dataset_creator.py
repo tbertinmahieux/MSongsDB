@@ -470,6 +470,29 @@ def get_top_terms(nresults=1000):
     return terms
 
 
+def get_most_familiar_artists(nresults=100):
+    """
+    Get the most familiar artists according to the Echo Nest
+    """
+    assert nresults <= 100,'we cant ask for more than 100 artists at the moment'
+    # get top artists
+    while True:
+        try:
+            artists = artistEN.search(sort='familiarity-desc',results=nresults,
+                                      buckets=['familiarity','hotttnesss','terms',
+                                               'id:musicbrainz','id:7digital','id:playme'])
+            break
+        except KeyboardInterrupt:
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_most_familiar_artists (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # done
+    return artists
+
+
 def get_artists_from_description(description,nresults=100):
     """
     Return artists given a string description,
@@ -493,7 +516,7 @@ def get_artists_from_description(description,nresults=100):
     return artists
     
 
-def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
+def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     """
     Most likely the first step to the databse creation.
     Get artists from the EchoNest based on familiarity
@@ -508,16 +531,16 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
        number of songs actually created
     """
     # get all artists ids
-    artist_ids = []
-    raise NotImplementedError
+    artists = get_most_familiar_artists(nresults=100)
     # shuffle them
-    npr.shuffle(artist_ids)
+    npr.shuffle(artists)
     # for each of them create all songs
     cnt_created = 0
-    for artistid in artist_ids:
-        cnt_created += create_track_files_from_artistid(maindir,artistid,
-                                                        mbconnect=mbconnect,
-                                                        maxsongs=maxsongs)
+    for artist in artists:
+        if verbose>0: print 'doing artist:',artist; sys.stdout.flush()
+        cnt_created += create_track_files_from_artist(maindir,artist,
+                                                      mbconnect=mbconnect,
+                                                      maxsongs=maxsongs)
         nh5 = count_h5_files(maindir)
         print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
         # sanity stop

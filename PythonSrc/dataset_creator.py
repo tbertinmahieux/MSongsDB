@@ -32,25 +32,31 @@ import glob
 import thread
 import time
 import shutil
+import urllib2
 import numpy.random as npr
 import hdf5_utils as HDF5
 
 
 # pyechonest objects
-# API_KEY should be found automatically, if not, set pyechonest.config
 import pyechonest
 from pyechonest import artist as artistEN
 from pyechonest import song as songEN
 from pyechonest import track as trackEN
 CATALOG='7digital'
-
+try:
+    _api_dev_key = os.environ['ECHO_NEST_API_KEY']
+except KeyError:
+    _api_dev_key = os.environ['ECHONEST_API_KEY']
 # posgresql import and info for musicbrainz dataset
 import pg
 MBUSER='gordon'
 MBPASSWD='gordon'
 
 # HOW LONG DO WE WAIT WHEN SOMETHING GOES WRONG
-SLEEPTIME = 15 # in seconds
+SLEEPTIME=15 # in seconds
+
+# total number of files in the dataset, should be 1M
+TOTALNFILES=1000000
 
 # lock to access the set of tracks being treated
 # getting a track on the lock means having put the EN id
@@ -427,4 +433,143 @@ def create_track_files_from_artistid(maindir,artistid,mbconnect=None,maxsongs=10
             continue
     # get his songs, creates his song files, return number of actual files created
     return create_track_files_from_artist(maindir,artist,mbconnect=mbconnect,maxsongs=maxsongs)    
+
+
+
+
+
+def get_top_terms(nresults=1000):
+    """
+    Get the top terms from the Echo Nest, up to 1000
+    """
+    assert nresults <= 1000,'cannot ask for more than 1000 top terms'
+    url = "http://developer.echonest.com/api/v4/artist/top_terms?api_key="
+    url += _api_dev_key + "&format=json&results=" + str(nresults)
+    # get terms
+    while True:
+        try:
+            f = urllib2.urlopen(url,timeout=60.)
+            response = eval( f.readline() )
+            if response['response']['status']['message'] != 'Success':
+                print 'EN response failure at time',time.ctime(),'in get_top_terms (we wait',SLEEPTIME,'seconds)'
+                time.sleep(SLEEPTIME)
+                continue
+            break
+        except (KeyboardInterrupt,NameError):
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_top_terms (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # parse, return
+    term_pairs = response['response']['terms']
+    terms = map(lambda x: x['name'],term_pairs)
+    if len(terms) != nresults:
+        print 'WARNING: asked for',nresults,'top terms from EN, got',len(terms)
+    return terms
+
+
+def get_artists_from_description(description,nresults=100):
+    """
+    Return artists given a string description,
+    for instance a tag.
+    """
+    assert nresults <= 100,'we cant do more than 100 artists for the moment...'
+    # get the artists for that description
+    while True:
+        try:
+            artists = artistEN.search(description=description,sort='familiarity-desc',results=nresults,
+                                      buckets=['familiarity','hotttnesss','terms','id:musicbrainz','id:7digital','id:playme'])
+            break
+        except (KeyboardInterrupt,NameError):
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_artistids_from_description (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # done
+    return artists
+    
+
+def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
+    """
+    Most likely the first step to the databse creation.
+    Get artists from the EchoNest based on familiarity
+    INPUT
+       maindir       - MillionSongDataset main directory
+       mbconnect     - open musicbrainz pg connection
+       maxsongs      - max number of songs per artist
+       nfilesbuffer  - number of files to leave when we reach the M songs,
+                       e.g. we stop adding new ones if there are more
+                            than 1M-nfilesbuffer already 
+    RETURN
+       number of songs actually created
+    """
+    # get all artists ids
+    artist_ids = []
+    raise NotImplementedError
+    # shuffle them
+    npr.shuffle(artist_ids)
+    # for each of them create all songs
+    cnt_created = 0
+    for artistid in artist_ids:
+        cnt_created += create_track_files_from_artistid(maindir,artistid,
+                                                        mbconnect=mbconnect,
+                                                        maxsongs=maxsongs)
+        nh5 = count_h5_files(maindir)
+        print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+        # sanity stop
+        if nh5 > TOTALNFILES - nfilesbuffer:
+            break
+    # done
+    return cnt_created
+
+
+def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
+    """
+    Get artists based on most used Echo Nest terms. Encode all their
+    songs (up to maxsongs)
+    INPUT
+       maindir       - MillionSongDataset main directory
+       mbconnect     - open musicbrainz pg connection
+       maxsongs      - max number of songs per artist
+       nfilesbuffer  - number of files to leave when we reach the M songs,
+                       e.g. we stop adding new ones if there are more
+                            than 1M-nfilesbuffer already
+       verbose       - tells which term and artist is being done
+    RETURN
+       number of songs actually created
+    """
+    # get all terms
+    most_used_terms = get_top_terms(nresults=1000)
+    npr.shuffle(most_used_terms)
+    if verbose>0: print 'most used terms retrievend, got',len(most_used_terms)
+    # keep in mind artist ids we have done already
+    done_artists = set()
+    # for each term, find all artists then create all songs
+    # keep a list of artist id so we don't do one artist twice
+    cnt_created = 0
+    for term in most_used_terms:
+        # get all artists from that term as a description
+        artists = get_artists_from_description(term,nresults=100)
+        npr.shuffle(artists)
+        for artist in artists:
+            # check if this artists has been done
+            if artist.id in done_artists:
+                continue
+            done_artists.add(artist.id)
+            # create all his tracks
+            if verbose>0: print 'doing artist:',artist.name,'(term =',term,')'
+            cnt_created += create_track_files_from_artist(maindir,artist,
+                                                          mbconnect=mbconnect,
+                                                          maxsongs=maxsongs)
+            # sanity stop
+            nh5 = count_h5_files(maindir)
+            print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+            if nh5 > TOTALNFILES - nfilesbuffer:
+                return cnt_created
+    # done
+    return cnt_created
 

@@ -32,6 +32,16 @@ import thread
 import time
 import shutil
 import hdf5_utils as HDF5
+# pyechonest objects
+# API_KEY should be found automatically, if not, set pyechonest.config
+from pyechonest import artist as artistEN
+from pyechonest import song as songEN
+from pyechonest import track as trackEN
+CATALOG='7digital'
+
+
+# HOW LONG DO WE WAIT WHEN SOMETHING GOES WRONG
+SLEEPTIME = 15 # in seconds
 
 
 # lock to access the set of tracks being treated
@@ -44,8 +54,6 @@ TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
 
-# HOW LONG DO WE WAIT WHEN SOMETHING GOES WRONG
-SLEEPTIME = 15 # in seconds
 
 def close_trackset():
     """
@@ -194,3 +202,78 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
         raise
     # IF WE GET HERE WE'RE GOOD
     return True
+
+
+
+def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
+    """
+    Get a track from a track id and calls for its creation.
+    We assume we already have song and artist.
+    We can have a connection to musicbrainz as an option.
+    This function should create only one file!
+    GOAL: mostly, it checks if we have the track already created before
+          calling EchoNest API. It saves some calls/time
+          Also, handles some error.
+    INPUT
+        maindir    - MillionSongDataset root directory
+        trackid    - Echo Nest track ID (string: TRABC.....)
+        song       - pyechonest song object for that track
+        artist     - pyechonest artist object for that song/track
+        mbconnect  - open musicbrainz pg connection
+    RETURN
+        true if a song file is created, false otherwise
+    """
+    # do we already have this track in the dataset?
+    track_path = os.path.join(maindir,path_from_trackid(trackid))
+    if os.path.exists(track_path):
+        return False
+    # get that track!
+    while True:
+        try:
+            track = trackEN.track_from_id(trackid)
+            break
+        except KeyboardInterrupt:
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in create_track_file_from_trackid, tid=',trackid,'(we wait 15 seconds)'
+            time.sleep(15)
+            continue
+    # we have everything, launch create track file
+    return create_track_file(maindir,trackid,track,song,artist,mbconnect=mbconnect)
+
+
+
+def create_track_file_from_song(maindir,song,artist,mbconnect=None):
+    """
+    Get tracks from a song, choose the first one and calls for its creation.
+    We assume we already have song and artist.
+    We can have a connection to musicbrainz as an option.
+    This function should create only one file!
+    GOAL: handles some error.
+    INPUT
+        maindir    - MillionSongDataset root directory
+        song       - pyechonest song object for that track
+        artist     - pyechonest artist object for that song/track
+        mbconnect  - open musicbrainz pg connection
+    RETURN
+        true if a song file is created, false otherwise
+    """
+    # get that track id
+    while True:
+        try:
+            tracks = song.get_tracks(CATALOG)
+            trackid = tracks[0]['id']
+            break
+        except IndexError:
+            return False # should not happen according to EN guys, but still does...
+        except KeyboardInterrupt:
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in create_track_file_from_song, sid=',song.id,'(we wait 15 seconds)'
+            time.sleep(15)
+            continue
+    # we got the track id, call for its creation
+    # if a file for that trackid already exists, it will be caught immediately in the next function
+    return create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=mbconnect)

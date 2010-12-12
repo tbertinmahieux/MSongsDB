@@ -147,6 +147,15 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
     Returns True if song was created, False otherwise.
     False can mean another thread is already doing that song.
     We also check whether the path exists.
+    INPUT
+       maindir      - main directory of the Million Song Dataset
+       trackid      - Echo Nest track id of the track object
+       track        - pyechonest track object
+       song         - pyechonest song object
+       artist       - pyechonest artist object
+       mbconnect    - open musicbrainz pg connection
+    RETURN
+       True if a track file was created, False otherwise
     """
     hdf5_path = os.path.join(maindir,path_from_trackid(trackid))
     if os.path.exists( hdf5_path ):

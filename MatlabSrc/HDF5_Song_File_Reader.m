@@ -37,9 +37,11 @@ classdef HDF5_Song_File_Reader
         % datasets ID
         analysisID=0;    % handle for /analysis/songs
         metadataID=0;    % handle for /metadata/songs
+        musicbrainzID=0; % handle for /musicbrainz/songs
         % data
         analysis
         metadata
+        musicbrainz
     end
     
     % METHODS: constructor, destructor, getters
@@ -53,6 +55,8 @@ classdef HDF5_Song_File_Reader
          obj.metadata = H5D.read(obj.metadataID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
          obj.analysisID = H5D.open(obj.h5fileID,'/analysis/songs');
          obj.analysis = H5D.read(obj.analysisID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
+         obj.musicbrainzID = H5D.open(obj.h5fileID,'/musicbrainz/songs');
+         obj.musicbrainz = H5D.read(obj.musicbrainzID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
       end % topo
       
       function delete(obj)
@@ -60,6 +64,7 @@ classdef HDF5_Song_File_Reader
         % these data ID are always open
         H5D.close(obj.analysisID);
         H5D.close(obj.metadataID);
+        H5D.close(obj.musicbrainzID);
         % close the fileID
         H5F.close(obj.h5fileID);
       end
@@ -497,6 +502,47 @@ classdef HDF5_Song_File_Reader
             res = data(pos1:end);
           else
             pos2 = obj.analysis.idx_tatums_confidence(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+      end
+      
+      function res = get_year(obj,songidx)
+        if (nargin < 2); songidx = 1; end
+        res = obj.musicbrainz.year(songidx);
+      end
+      
+      function res = get_artist_mbtags(obj,songidx)
+      % return artist musicbrainz tags for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/musicbrainz/artist_mbtags');
+          pos1 = obj.musicbrainz.idx_artist_mbtags(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.musicbrainz.idx_artist_mbtags(songidx+1); % +1 -1
+            res = data(pos1:pos2);
+          end
+          % convert to cell array
+          if isempty(res)
+              res = {};
+              return
+          end
+          c = cell(size(res,1),1);
+          for k = 1:size(c,1)
+              c{k} = res(k).Data;
+          end
+          res = c;
+      end
+
+      function res = get_artist_mbtags_count(obj,songidx)
+      % return artist musicbrainz tag count for a given song (songs start at 1)
+          if (nargin < 2); songidx = 1; end
+          data = hdf5read(obj.h5filename,'/musicbrainz/artist_mbtags_count');
+          pos1 = obj.musicbrainz.idx_artist_mbtags(songidx)+1;
+          if songidx == obj.get_num_songs()
+            res = data(pos1:end);
+          else
+            pos2 = obj.musicbrainz.idx_artist_mbtags(songidx+1); % +1 -1
             res = data(pos1:pos2);
           end
       end

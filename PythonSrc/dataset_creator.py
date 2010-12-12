@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import glob
 import thread
 import time
 import shutil
@@ -124,6 +125,18 @@ def path_from_trackid(trackid):
     p = os.path.join(p,trackid[4])
     p = os.path.join(p,trackid+'.h5')
     return p
+
+
+def count_h5_files(basedir):
+    """
+    Return the number of hdf5 files contained in all
+    subdirectories of base
+    """
+    cnt = 0
+    for root, dirs, files in os.walk(basedir):
+        files = glob.glob(os.path.join(root,'*.h5'))
+        cnt += len(files)
+    return cnt
 
 
 def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):

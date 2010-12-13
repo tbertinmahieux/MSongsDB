@@ -511,13 +511,15 @@ def get_top_terms(nresults=1000):
     return terms
 
 
-FAMILIARARTISTS_LOCK = thread.allocate_lock()
+#FAMILIARARTISTS_LOCK = thread.allocate_lock()
+FAMILIARARTISTS_LOCK = multiprocess.Lock()
 def get_most_familiar_artists(nresults=100):
     """
     Get the most familiar artists according to the Echo Nest
     """
     assert nresults <= 100,'we cant ask for more than 100 artists at the moment'
-    locked = FAMILIARARTISTS_LOCK.acquire(1) # blocking=1
+    locked = FAMILIARARTISTS_LOCK.acquire()
+    print 'familiar artist lock acquired';sys.stdout.flush()
     assert locked,'FAMILIARARTISTS_LOCK could not lock?'
     # get top artists
     while True:
@@ -536,6 +538,7 @@ def get_most_familiar_artists(nresults=100):
             continue
     # done
     FAMILIARARTISTS_LOCK.release()
+    print 'familiar artist lock released';sys.stdout.flush()
     return artists
 
 

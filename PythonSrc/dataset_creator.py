@@ -512,7 +512,7 @@ def get_top_terms(nresults=1000):
 
 
 #FAMILIARARTISTS_LOCK = thread.allocate_lock()
-FAMILIARARTISTS_LOCK = multiprocess.Lock()
+FAMILIARARTISTS_LOCK = multiprocessing.Lock()
 def get_most_familiar_artists(nresults=100):
     """
     Get the most familiar artists according to the Echo Nest

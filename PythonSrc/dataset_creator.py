@@ -511,11 +511,13 @@ def get_top_terms(nresults=1000):
     return terms
 
 
+FAMILIARARTISTS_LOCK = thread.allocate_lock()
 def get_most_familiar_artists(nresults=100):
     """
     Get the most familiar artists according to the Echo Nest
     """
     assert nresults <= 100,'we cant ask for more than 100 artists at the moment'
+    FAMILIARARTISTS_LOCK.acquire(1) # blocking=1
     # get top artists
     while True:
         try:
@@ -531,6 +533,8 @@ def get_most_familiar_artists(nresults=100):
             print 'at time',time.ctime(),'in get_most_familiar_artists (we wait',SLEEPTIME,'seconds)'
             time.sleep(SLEEPTIME)
             continue
+        finally:
+            FAMILIARARTISTS_LOCK.release()
     # done
     return artists
 
@@ -672,7 +676,7 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
     # sanity check
     assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
     # to avoid thread accessing the same ressources
-    time.sleep(30 * idxthread)
+    #time.sleep(30 * idxthread)
     # check only step and startstep
     if onlystep > -1:
         startstep = 9999999

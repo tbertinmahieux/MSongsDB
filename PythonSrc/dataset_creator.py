@@ -30,7 +30,6 @@ import os
 import sys
 import glob
 import copy
-import thread
 import time
 import shutil
 import urllib2
@@ -66,7 +65,6 @@ TOTALNFILES=1000000
 # of that track in the set TRACKSET
 # use: get_lock_song
 #      release_lock_song
-#TRACKSET_LOCK = thread.allocate_lock()
 TRACKSET_LOCK = multiprocessing.Lock()
 TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
@@ -512,7 +510,6 @@ def get_top_terms(nresults=1000):
     return terms
 
 
-#FAMILIARARTISTS_LOCK = thread.allocate_lock()
 FAMILIARARTISTS_LOCK = multiprocessing.Lock()
 def get_most_familiar_artists(nresults=100):
     """

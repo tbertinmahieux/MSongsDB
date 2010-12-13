@@ -29,16 +29,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import glob
+import copy
 import thread
 import time
 import shutil
 import urllib2
+import multiprocessing
 import numpy.random as npr
 import hdf5_utils as HDF5
 
-
 # pyechonest objects
 import pyechonest
+import pyechonest.config
+pyechonest.config.CALL_TIMEOUT=30 # instead of 10 seconds
 from pyechonest import artist as artistEN
 from pyechonest import song as songEN
 from pyechonest import track as trackEN
@@ -596,3 +599,149 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     # done
     return cnt_created
 
+
+# error passing problems
+class KeyboardInterruptError(Exception):pass
+
+# for multiprocessing
+def run_steps_wrapper(args):
+    """ wrapper function for multiprocessor, calls run_steps """
+    run_steps(**args)
+
+def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthread=0):
+    """
+    Main function to run the different steps of the dataset creation.
+    Each thread should be initialized by calling this function.
+    INPUT
+       maindir       - main directory of the Million Song Dataset
+       nomb          - if True, don't use musicbrainz
+       nfilesbuffer  -
+    """
+    print 'run_steps is launched on dir:',maindir
+    # sanity check
+    assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
+    # check only step and startstep
+    if onlystep > -1:
+        startstep = 9999999
+    # connect to musicbrainz
+    if nomb:
+        connect = None
+    else:
+        connect = pg.connect('musicbrainz_db','localhost',-1,None,None,MBUSER,MBPASSWD)
+
+    cnt_created = 0
+    try:
+        # step 10
+        if startstep <= 10 or onlystep==10:
+            cnt_created += create_step10(maindir,connect)
+        # step 20
+        if startstep <= 20 or onlystep==20:
+            cnt_created += create_step20(maindir,connect)
+    except KeyboardInterrupt:
+        raise KeyboardInterruptError()
+    finally:
+        # done, close pg connection
+        if not connect is None:
+            connect.close()
+
+
+
+def die_with_usage():
+    """ HELP MENU """
+    print 'dataset_creator.py'
+    print '    by T. Bertin-Mahieux (2010) Columbia University'
+    print '       tb2332@columbia.edu'
+    print 'Download data from the EchoNest to create the MillionSongDataset'
+    print 'usage:'
+    print '   python dataset_creator.py [FLAGS] <maindir>'
+    print 'FLAGS'
+    print '  -nthreads n      - number of threads to use'
+    print '  -nomb            - do not musicbrainz'
+    print '  -nfilesbuffer n  - each thread stop if there is less than that many files'
+    print '                     left to be put in the Million Song dataset'
+    print '  -t1nobuffer      - removes the filesbuffer for first thread'
+    print '  -startstep n     - start at step >= n'
+    print '  -onlystep n      - only do step n'
+    print 'INPUT'
+    print '   maindir  - main directory of the Million Song Dataset'
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+
+    # help menu
+    if len(sys.argv) < 2:
+        die_with_usage()
+
+    # flags
+    nthreads = 1
+    nomb = False
+    nfilesbuffer = 5000
+    t1nobuffer = False
+    onlystep = -1
+    startstep = 0
+    while True:
+        if sys.argv[1] == '-nthreads':
+            nthreads = int(sys.argv[2])
+            sys.argv.pop(1)
+        elif sys.argv[1] == '-nobm':
+            nomusicbrainz = True
+        elif sys.argv[1] == '-nfilesbuffer':
+            nfilesbuffer = int(sys.argv[2])
+            sys.argv.pop(1)
+        elif sys.argv[1] == 't1nobuffer':
+            t1nobuffer = True
+        elif sys.argv[1] == '-startstep':
+            startstep = int(sys.argv[2])
+            sys.argv.pop(1)
+        elif sys.argv[1] == '-onlystep':
+            onlystep = int(sys.argv[2])
+            sys.argv.pop(1)
+        else:
+            break
+        sys.argv.pop(1)
+
+    # inputs
+    maindir = sys.argv[1]
+
+    # add params to dict
+    params = {'maindir':maindir,
+              'nomb':nomb,'nfilesbuffer':nfilesbuffer,
+              'onlystep':onlystep,'startstep':startstep}
+
+
+    # verbose
+    print 'PARAMS:',params
+
+    # LAUNCH THREADS
+    params_list = []
+    for k in range(nthreads):
+        # params for one specific thread
+        p = copy.deepcopy(params)
+        # add thread id and deals with t1nobufer option
+        p['idxthread'] = k
+        if k == 0 and t1nobuffer:
+            p['nfilesbuffer'] == 0
+        params_list.append(p)
+    # create pool, launch using the list of params
+    # we underuse multiprocessing, we will have as many processes
+    # as jobs needed
+    pool = multiprocessing.Pool(processes=nthreads)
+    try:
+        pool.map(run_steps_wrapper, params_list)
+        pool.close()
+        pool.join()
+    except KeyboardInterrupt:
+        print 'MULTIPROCESSING'
+        print 'stopping multiprocessing due to a keyboard interrupt'
+        pool.terminate()
+        pool.join()
+    except Exception, e:
+        print 'MULTIPROCESSING'
+        print 'got exception: %r, terminating the pool' % (e,)
+        pool.terminate()
+        pool.join()
+
+    #runsteps(nomb=nomb,nfilesbuffer=nfilesbuffer,startstep=startstep,onlystep=onlystep)
+    
+    

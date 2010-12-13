@@ -618,8 +618,12 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
        nfilesbuffer  -
     """
     print 'run_steps is launched on dir:',maindir
+    # init random seed
+    npr.seed(idxthread)
     # sanity check
     assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
+    # to avoid thread accessing the same ressources
+    time.sleep(30 * idxthread)
     # check only step and startstep
     if onlystep > -1:
         startstep = 9999999

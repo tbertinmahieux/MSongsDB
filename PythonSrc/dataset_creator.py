@@ -66,7 +66,8 @@ TOTALNFILES=1000000
 # of that track in the set TRACKSET
 # use: get_lock_song
 #      release_lock_song
-TRACKSET_LOCK = thread.allocate_lock()
+#TRACKSET_LOCK = thread.allocate_lock()
+TRACKSET_LOCK = multiprocessing.Lock()
 TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
@@ -102,7 +103,7 @@ def get_lock_track(trackid):
     someone else just got it
     This is a blocking call.
     """
-    got_lock = TRACKSET_LOCK.acquire(1) # blocking=1
+    got_lock = TRACKSET_LOCK.acquire() # blocking by default
     if not got_lock:
         print 'ERROR: could not get TRACKSET_LOCK lock?'
         return False
@@ -122,7 +123,7 @@ def release_lock_track(trackid):
     Should always return True, unless there is a problem
     Releasing a song that you don't have the lock on is dangerous.
     """
-    got_lock = TRACKSET_LOCK.acquire(1) # blocking=1
+    got_lock = TRACKSET_LOCK.acquire() # blocking by default
     if not got_lock:
         print 'ERROR: could not get TRACKSET_LOCK lock?'
         return False
@@ -519,7 +520,6 @@ def get_most_familiar_artists(nresults=100):
     """
     assert nresults <= 100,'we cant ask for more than 100 artists at the moment'
     locked = FAMILIARARTISTS_LOCK.acquire()
-    print 'familiar artist lock acquired';sys.stdout.flush()
     assert locked,'FAMILIARARTISTS_LOCK could not lock?'
     # get top artists
     while True:
@@ -538,7 +538,6 @@ def get_most_familiar_artists(nresults=100):
             continue
     # done
     FAMILIARARTISTS_LOCK.release()
-    print 'familiar artist lock released';sys.stdout.flush()
     return artists
 
 

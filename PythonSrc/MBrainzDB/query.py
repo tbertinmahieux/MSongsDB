@@ -89,7 +89,6 @@ def find_year_safemode(connect,artist_mbid,title,release,artist):
         release       string ('' if unknown)  album name
         artist        string                  artist name
     RETURN 0 or year as a int
-    
     """
     # case where we have no musicbrainz_id for the artist
     if artist_mbid is None or artist_mbid == '':
@@ -102,18 +101,22 @@ def find_year_safemode(connect,artist_mbid,title,release,artist):
     # i.e. we take all the tracks found in the previous query, check their album names
     # and if an album name matches 'release', we take its release date
     # if more than one match, take earliest year
+    # CHECK commented lines if you also want to return the track.id
     q = "SELECT min(release.releasedate) FROM track INNER JOIN artist"
+    #q = "SELECT release.releasedate,track.gid FROM track INNER JOIN artist"
     q += " ON artist.gid='"+artist_mbid+"' AND artist.id=track.artist"
     q += " AND lower(track.name)="+encode_string(title.lower())
     q += " INNER JOIN albumjoin ON albumjoin.track=track.id"
     q += " INNER JOIN album ON album.id=albumjoin.album"
     q += " INNER JOIN release ON release.album=album.id"
     q += " AND release.releasedate!='0000-00-00' LIMIT 1"
+    #q += " AND release.releasedate!='0000-00-00' ORDER BY release.releasedate LIMIT 1"
     res = connect.query(q)
     if not res.getresult()[0][0] is None:
         return int(res.getresult()[0][0].split('-')[0])
     # we relax the condition that we have to find an exact string match for the title
     # if we find the good album name (our 'release' param)
+    #q = "SELECT min(release.releasedate) FROM artist INNER JOIN album"
     q = "SELECT min(release.releasedate) FROM artist INNER JOIN album"
     q += " ON artist.gid='"+artist_mbid+"' AND artist.id=album.artist"
     q += " AND lower(album.name)="+encode_string(release.lower())

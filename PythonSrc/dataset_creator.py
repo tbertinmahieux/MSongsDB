@@ -687,9 +687,11 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         # step 10
         if startstep <= 10 or onlystep==10:
             cnt_created += create_step10(maindir,connect)
+            if CREATION_CLOSED: startstep = onlystep = 999999
         # step 20
         if startstep <= 20 or onlystep==20:
             cnt_created += create_step20(maindir,connect)
+            if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()
         time.sleep(5) # give time to other processes to end

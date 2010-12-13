@@ -70,7 +70,22 @@ TRACKSET_LOCK = thread.allocate_lock()
 TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
+CREATION_CLOSED = False # use to end all threads at a higher level
+                        # than trackset closed, it is more a matter
+                        # of printing and returning than the risk of
+                        # creating a corrupted file
 
+def close_creation():
+    """
+    Function to use to help stop all processes in a clean way.
+    It is usefull because of multithreading: only one thread
+    will get the keyboard interrupt, this function tries to
+    propagate the info
+    """
+    close_trackset()
+    global CREATION_CLOSED
+    CREATION_CLOSED = True
+    
 
 def close_trackset():
     """
@@ -197,6 +212,7 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 # TODO billboard? lastfm? ...?
                 h5.close()
             except KeyboardInterrupt:
+                close_creation()
                 raise
             # we dont panic, delete file, wait and retry
             except Exception as e:
@@ -223,7 +239,6 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
             break
     # KeyboardInterrupt, we delete file, clean things up
     except KeyboardInterrupt:
-        close_trackset()
         # close hdf5
         try:
             h5.close()
@@ -261,6 +276,9 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
     RETURN
         true if a song file is created, false otherwise
     """
+    # CLOSED CREATION?
+    if CREATION_CLOSED:
+        return False
     # do we already have this track in the dataset?
     track_path = os.path.join(maindir,path_from_trackid(trackid))
     if os.path.exists(track_path):
@@ -271,6 +289,7 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
             track = trackEN.track_from_id(trackid)
             break
         except KeyboardInterrupt:
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -297,6 +316,9 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
     RETURN
         true if a song file is created, false otherwise
     """
+    # CLOSED CREATION?
+    if CREATION_CLOSED:
+        return False
     # get that track id
     while True:
         try:
@@ -306,6 +328,7 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
         except IndexError:
             return False # should not happen according to EN guys, but still does...
         except KeyboardInterrupt:
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -331,12 +354,16 @@ def create_track_file_from_song_noartist(maindir,song,mbconnect=None):
     RETURN
         true if a song file is created, false otherwise
     """
+    # CLOSED CREATION?
+    if CREATION_CLOSED:
+        return False
     # get that artist
     while True:
         try:
             artist = artistEN.artist(song.artist_id)
             break
         except KeyboardInterrupt:
+            close_creation()
             raise
         except pyechonest.util.EchoNestAPIError,e:
             print 'MAJOR ERROR, wrong artist id?'
@@ -384,6 +411,7 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             if len(allsongs) >= maxsongs or len(songs) < n_askfor:
                 break
         except KeyboardInterrupt:
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -395,6 +423,10 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
     # iterate over the songs, call for their creation, count how many actually created
     cnt_created = 0
     for song in allsongs:
+        # CLOSED CREATION?
+        if CREATION_CLOSED:
+            return cnt_created
+        # create
         created = create_track_file_from_song(maindir,song,artist,mbconnect=mbconnect)
         if created:
             cnt_created += 1
@@ -424,6 +456,7 @@ def create_track_files_from_artistid(maindir,artistid,mbconnect=None,maxsongs=10
             artist = artistEN.artist(artistid)
             break
         except KeyboardInterrupt:
+            close_creation()
             raise
         except pyechonest.util.EchoNestAPIError,e:
             print 'MAJOR ERROR, wrong artist id?',artistid
@@ -434,6 +467,10 @@ def create_track_files_from_artistid(maindir,artistid,mbconnect=None,maxsongs=10
             print 'at time',time.ctime(),'in create_track_files_from_artistid, aid=',artistid,'(we wait',SLEEPTIME,'seconds)'
             time.sleep(SLEEPTIME)
             continue
+
+    # CLOSED CREATION?
+    if CREATION_CLOSED:
+        return 0
     # get his songs, creates his song files, return number of actual files created
     return create_track_files_from_artist(maindir,artist,mbconnect=mbconnect,maxsongs=maxsongs)    
 
@@ -459,6 +496,7 @@ def get_top_terms(nresults=1000):
                 continue
             break
         except (KeyboardInterrupt,NameError):
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -486,6 +524,7 @@ def get_most_familiar_artists(nresults=100):
                                                'id:musicbrainz','id:7digital','id:playme'])
             break
         except KeyboardInterrupt:
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -509,6 +548,7 @@ def get_artists_from_description(description,nresults=100):
                                       buckets=['familiarity','hotttnesss','terms','id:musicbrainz','id:7digital','id:playme'])
             break
         except (KeyboardInterrupt,NameError):
+            close_creation()
             raise
         except Exception,e:
             print type(e),':',e
@@ -540,6 +580,9 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     # for each of them create all songs
     cnt_created = 0
     for artist in artists:
+        # CLOSED CREATION?
+        if CREATION_CLOSED:
+            break
         if verbose>0: print 'doing artist:',artist; sys.stdout.flush()
         cnt_created += create_track_files_from_artist(maindir,artist,
                                                       mbconnect=mbconnect,
@@ -578,10 +621,16 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     # keep a list of artist id so we don't do one artist twice
     cnt_created = 0
     for term in most_used_terms:
+        # CLOSED CREATION?
+        if CREATION_CLOSED:
+            return cnt_created
         # get all artists from that term as a description
         artists = get_artists_from_description(term,nresults=100)
         npr.shuffle(artists)
         for artist in artists:
+            # CLOSED CREATION?
+            if CREATION_CLOSED:
+                return cnt_created
             # check if this artists has been done
             if artist.id in done_artists:
                 continue
@@ -618,8 +667,8 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
        nfilesbuffer  -
     """
     print 'run_steps is launched on dir:',maindir
-    # init random seed
-    npr.seed(idxthread)
+    # init random seed based on time AND thread id
+    npr.seed(idxthread + npr.randint(1000) )
     # sanity check
     assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
     # to avoid thread accessing the same ressources
@@ -642,6 +691,8 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         if startstep <= 20 or onlystep==20:
             cnt_created += create_step20(maindir,connect)
     except KeyboardInterrupt:
+        close_creation()
+        time.sleep(5) # give time to other processes to end
         raise KeyboardInterruptError()
     finally:
         # done, close pg connection

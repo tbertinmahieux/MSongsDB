@@ -643,7 +643,7 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         # done, close pg connection
         if not connect is None:
             connect.close()
-
+        print 'run_steps terminating, at least',cnt_created,'files created'
 
 
 def die_with_usage():

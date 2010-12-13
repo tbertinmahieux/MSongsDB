@@ -517,7 +517,8 @@ def get_most_familiar_artists(nresults=100):
     Get the most familiar artists according to the Echo Nest
     """
     assert nresults <= 100,'we cant ask for more than 100 artists at the moment'
-    FAMILIARARTISTS_LOCK.acquire(1) # blocking=1
+    locked = FAMILIARARTISTS_LOCK.acquire(1) # blocking=1
+    assert locked,'FAMILIARARTISTS_LOCK could not lock?'
     # get top artists
     while True:
         try:
@@ -533,9 +534,8 @@ def get_most_familiar_artists(nresults=100):
             print 'at time',time.ctime(),'in get_most_familiar_artists (we wait',SLEEPTIME,'seconds)'
             time.sleep(SLEEPTIME)
             continue
-        finally:
-            FAMILIARARTISTS_LOCK.release()
     # done
+    FAMILIARARTISTS_LOCK.release()
     return artists
 
 

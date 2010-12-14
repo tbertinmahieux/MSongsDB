@@ -100,21 +100,21 @@ def fill_hdf5_from_song(h5,song):
     """
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
-    metadata.cols.artist_familiarity[0] = song.artist_familiarity
-    metadata.cols.artist_hotttnesss[0] = song.artist_hotttnesss
+    metadata.cols.artist_familiarity[0] = song.get_artist_familiarity()
+    metadata.cols.artist_hotttnesss[0] = song.get_artist_hotttnesss()
     metadata.cols.artist_id[0] = song.artist_id
-    metadata.cols.artist_latitude[0] = song.artist_location.latitude
-    metadata.cols.artist_location[0] = song.artist_location.location.encode('utf-8') if song.artist_location.location else ''
-    metadata.cols.artist_longitude[0] = song.artist_location.longitude
+    metadata.cols.artist_latitude[0] = song.get_artist_location().latitude
+    metadata.cols.artist_location[0] = song.get_artist_location().location.encode('utf-8') if song.get_artist_location().location else ''
+    metadata.cols.artist_longitude[0] = song.get_artist_location().longitude
     metadata.cols.artist_name[0] = song.artist_name.encode('utf-8') if song.artist_name else ''
     metadata.cols.song_id[0] = song.id
-    metadata.cols.song_hotttnesss[0] = song.song_hotttnesss
+    metadata.cols.song_hotttnesss[0] = song.get_song_hotttnesss()
     metadata.cols.title[0] = song.title.encode('utf-8') if song.title else ''
     metadata.flush()
     # get the analysis table
     analysis = h5.root.analysis.songs
-    analysis.danceability = song.audio_summary.danceability
-    analysis.energy = song.audio_summary.energy
+    analysis.danceability = song.get_audio_summary().danceability
+    analysis.energy = song.get_audio_summary().energy
     analysis.flush()
 
 

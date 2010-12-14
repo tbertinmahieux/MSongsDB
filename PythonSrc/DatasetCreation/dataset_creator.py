@@ -543,6 +543,29 @@ def get_most_familiar_artists(nresults=100):
     return artists
 
 
+def search_songs(**args):
+    """
+    Use the Search song API, wrapped in our usual error handling
+    try/except. All the args are passed toward songEN.search,
+    if there is an error... good luck!
+    RETURN list of songs, can be empty
+    """
+    while True:
+        try:
+            songs = songEN.search(**args)
+            break
+        except (KeyboardInterrupt,NameError):
+            close_creation()
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in search songs [params='+str(args)+'] (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # done
+    return songs
+
+
 def get_artists_from_description(description,nresults=100):
     """
     Return artists given a string description,
@@ -709,7 +732,7 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     return cnt_created
 
 
-def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
+def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
     """
     Get artists and songs from the CAL500 dataset.
     First search for a particular pair artist/song, then from
@@ -727,7 +750,7 @@ def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     RETURN
        number of songs actually created
     """
-    # get the txt file, parse it
+    # get the txt file, get the lines
     while True:
         try:
             f = urllib2.urlopen(CAL500)
@@ -755,6 +778,12 @@ def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     for line in lines:
         if CREATION_CLOSED:
             return cnt_created
+        # sanity stop
+        nh5 = count_h5_files(maindir)
+        print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+        if nh5 > TOTALNFILES - nfilesbuffer:
+            return cnt_created
+        # parse line
         artiststr = line.split('<SEP>')[0]
         songstr = line.split('<SEP>')[1]
         # artist and song
@@ -773,9 +802,57 @@ def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
             return cnt_created
         cnt_created += create_track_files_from_artist(maindir,artist,
                                                       mbconnect=mbconnect)
-    # done
+    # done with step 30
     return cnt_created
 
+
+def create_step40(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
+    """
+    Search for songs with different attributes, danceability, energy, ...
+    INPUT
+       maindir       - root directory of the Million Song dataset
+       mbconnect     - open pg connection to Musicbrainz
+       maxsongs      - max number of song per search (max=100)
+       nfilesbuffer  - number of files we leave unfilled in the dataset
+    RETURN
+       the number of songs actually created
+       tempo-asc, duration-asc, loudness-asc, artist_familiarity-asc, artist_hotttnesss-asc, song_hotttness-asc, latitude-asc, longitude-asc, mode-asc, key-asc, tempo-desc, duration-desc, loudness-desc, artist_familiarity-desc, artist_hotttnesss-desc, song_hotttnesss-desc, latitude-desc, longitude-desc, mode-desc, key-desc, energy-asc, energy-desc, danceability-asc, danceability-desc
+    """
+    assert maxsongs <= 100,'create_step40, cannot search for more than 100 songs'
+    # list all the args
+    types_of_sorts = ['tempo-asc', 'duration-asc', 'loudness-asc', 'artist_hotttnesss-asc', 'song_hotttness-asc',
+                      'latitude-asc', 'longitude-asc', 'mode-asc', 'key-asc', 'tempo-desc', 'duration-desc',
+                      'loudness-desc', 'artist_hotttnesss-desc', 'song_hotttnesss-desc', 'latitude-desc',
+                      'longitude-desc', 'mode-desc', 'key-desc', 'energy-asc', 'energy-desc',
+                      'danceability-asc', 'danceability-desc']
+    all_args = []
+    for tsort in types_of_sorts:
+        args = {'sort':tsort, 'results':maxsongs}
+        args['buckets'] = ['artist_familiarity','artist_hotttnesss','artist_location',
+                           'tracks','id:musicbrainz','id:7digital','id:playme']
+        args['limit'] = True
+        all_args.append(args)
+    npr.shuffle(all_args)
+    # iteratoe voer set of args
+    cnt_created = 0
+    for args in all_args:
+        # sanity stops
+        if CREATION_CLOSED:
+            return cnt_created
+        nh5 = count_h5_files(maindir)
+        print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+        if nh5 > TOTALNFILES - nfilesbuffer:
+            return cnt_created
+        # songs
+        songs = search_songs(**args)
+        if len(songs) == 0:
+            continue
+        for song in songs:
+            cnt_created += create_track_file_from_song_noartist(maindir,
+                                                                song,
+                                                                mbconnect=mbconnect)
+    # done
+    return cnt_created
 
 
 
@@ -801,9 +878,7 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
     npr.seed(idxthread + npr.randint(1000) )
     # sanity check
     assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
-    # to avoid thread accessing the same ressources
-    #time.sleep(30 * idxthread)
-    # check only step and startstep
+    # check onlystep and startstep
     if onlystep > -1:
         startstep = 9999999
     # connect to musicbrainz
@@ -826,6 +901,10 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         if startstep <= 30 or onlystep==30:
             cnt_created += create_step30(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999
+        # step 40
+        if startstep <= 40 or onlystep==40:
+            cnt_created += create_step40(maindir,connect)
+            if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()
         time.sleep(5) # give time to other processes to end
@@ -835,6 +914,8 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         if not connect is None:
             connect.close()
         print 'run_steps terminating, at least',cnt_created,'files created'
+
+
 
 
 def die_with_usage():

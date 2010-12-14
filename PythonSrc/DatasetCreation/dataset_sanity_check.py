@@ -154,6 +154,7 @@ if __name__ == '__main__':
     t1 = time.time()
 
     # launch the processes
+    got_probs = False
     pool = multiprocessing.Pool(processes=nthreads)
     try:
         pool.map(sanity_check_1thread_wrapper, params_list)
@@ -169,9 +170,11 @@ if __name__ == '__main__':
         print 'got exception: %r, terminating the pool' % (e,)
         pool.terminate()
         pool.join()
+        got_probs = True
     
     # end time
     t2 = time.time()
     stimelength = str(datetime.timedelta(seconds=t2-t1))
-    print 'ALL DONE, no apparent problem'
+    if not got_probs:
+        print 'ALL DONE, no apparent problem'
     print 'execution time:', stimelength

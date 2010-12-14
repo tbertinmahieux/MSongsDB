@@ -413,12 +413,7 @@ can link this data to other existing resources.<p>
 <a name='whatisformat'><h3>What is the format?</h3></a>
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
-Usually one track is one song, though we added several tracks representing
-the same song in case someone wants to measure the variability.
-In this rare case, the tracks are very similar but not identical. A typical
-reason for this is two different releases of a same album (USA and Europe
-versions?). Here is the list of songs that have multiple tracks and
-the code ???? used to find them.<br>
+Usually one track is one song, though ????<br>
 The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.<p>
 
 <a name='hdfwhat'><h3>HDF what?</h3></a>
@@ -493,7 +488,7 @@ section to get inspired. You will also find there some snippets
 of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
-Gordon! more to come on this.<p>
+Gordon! more to come on this.<br>
 We also created (and you have the code to recreate / adapt them)
 two SQLite databases (available here ????? and here ????). The
 first one gives most metadata per track. It is usefull, for
@@ -523,13 +518,13 @@ If you're a researcher and want to publish results on the dataset,
 you are fine. 
 If you are a company and are concern about experimenting on the
 dataset, contact the Echo Nest, we will probably give you the
-authorization.<p>
+authorization.<br>
 Regarding the MusicBrainz data contained in the dataset,
 the track 'year' is under 
 <a href="http://creativecommons.org/licenses/publicdomain/">
 public domain</a> and the 'tags' and 'tag count' are under
 <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">
-Attribution-NonCommercial-ShareAlike 2.0</a> license.<p>
+Attribution-NonCommercial-ShareAlike 2.0</a> license.<br>
 The code is released under GNU Public License.<p> 
 
 <a name='website'><h3>Why this website doesn't load sometimes?</h3></a>

@@ -35,7 +35,10 @@ import shutil
 import urllib2
 import multiprocessing
 import numpy.random as npr
-import hdf5_utils as HDF5
+try:
+    import hdf5_utils as HDF5
+except ImportError:
+    pass # will be imported in command line
 
 # pyechonest objects
 import pyechonest
@@ -59,6 +62,9 @@ SLEEPTIME=15 # in seconds
 
 # total number of files in the dataset, should be 1M
 TOTALNFILES=1000000
+
+# CAL 500 artist and song txt file
+CAL500='https://github.com/tb2332/MSongsDB/raw/master/PythonSrc/DatasetCreation/cal500_artist_song.txt'
 
 # lock to access the set of tracks being treated
 # getting a track on the lock means having put the EN id
@@ -359,7 +365,7 @@ def create_track_file_from_song_noartist(maindir,song,mbconnect=None):
     # get that artist
     while True:
         try:
-            artist = artistEN.artist(song.artist_id)
+            artist = artistEN.Artist(song.artist_id)
             break
         except KeyboardInterrupt:
             close_creation()
@@ -414,7 +420,7 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             raise
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_file_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_files_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds)'
             time.sleep(SLEEPTIME)
             continue
     # shuffle the songs, to help multithreading
@@ -472,7 +478,6 @@ def create_track_files_from_artistid(maindir,artistid,mbconnect=None,maxsongs=10
         return 0
     # get his songs, creates his song files, return number of actual files created
     return create_track_files_from_artist(maindir,artist,mbconnect=mbconnect,maxsongs=maxsongs)    
-
 
 
 
@@ -560,6 +565,58 @@ def get_artists_from_description(description,nresults=100):
             continue
     # done
     return artists
+
+
+def get_artist_song_from_names(artistname,songtitle):
+    """
+    Get an artist and a song from their artist name and title,
+    return the two: artist,song or None,None if problem
+    """
+    while True:
+        try:
+            songs = songEN.search(artist=artistname,
+                                  title=songtitle,results=1,
+                                  buckets=['artist_familiarity',
+                                           'artist_hotttnesss',
+                                           'artist_location',
+                                           'tracks',
+                                           'id:musicbrainz',
+                                           'id:7digital','id:playme'])
+            break
+        except (KeyboardInterrupt,NameError,TypeError):
+            close_creation()
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_artist_song_from_names (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # sanity checks
+    if len(songs) == 0:
+        print 'no song found for:',artistname,'(',songtitle,')'
+        return None,None
+    if CREATION_CLOSED:
+        return None, None
+    # get artist
+    song = songs[0]
+    while True:
+        try:
+            artist = artistEN.Artist(song.artist_id)
+            break
+        except KeyboardInterrupt:
+            close_creation()
+            raise
+        except pyechonest.util.EchoNestAPIError,e:
+            print 'MAJOR ERROR, wrong artist id?',song.artist_id
+            print e # means the ID does not exist
+            return None,None
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_artist_song_from_names, aid=',song.artist_id,'(we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # done
+    return artist,song
     
 
 def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
@@ -652,6 +709,76 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     return cnt_created
 
 
+def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
+    """
+    Get artists and songs from the CAL500 dataset.
+    First search for a particular pair artist/song, then from
+    that artist, get all possible songs (up to maxsongs)
+    We assume the file 'cal500_artist_song.txt' is in CAL500 param
+    which is an online URL (to github probably)
+    INPUT
+       maindir       - MillionSongDataset main directory
+       mbconnect     - open musicbrainz pg connection
+       maxsongs      - max number of songs per artist
+       nfilesbuffer  - number of files to leave when we reach the M songs,
+                       e.g. we stop adding new ones if there are more
+                            than 1M-nfilesbuffer already
+       verbose       - tells which term and artist is being done
+    RETURN
+       number of songs actually created
+    """
+    # get the txt file, parse it
+    while True:
+        try:
+            f = urllib2.urlopen(CAL500)
+            lines = f.readlines()
+            f.close()
+            lines[499] # sanity check, get IndexError if something's wrong
+            break
+        except KeyboardInterrupt:
+            close_creation()
+            raise
+        except IndexError, e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in step20 retrieving CAL500 - response too short! (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in step20 retrieving CAL500 (we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    lines = map(lambda x:x.strip(),lines)
+    npr.shuffle(lines)
+    # get song specifically, then all songs for the artist
+    cnt_created = 0
+    for line in lines:
+        if CREATION_CLOSED:
+            return cnt_created
+        artiststr = line.split('<SEP>')[0]
+        songstr = line.split('<SEP>')[1]
+        # artist and song
+        artist,song = get_artist_song_from_names(artistname=artiststr,
+                                                 songtitle=songstr)
+        if artist is None or song is None:
+            continue
+        # create file for that song
+        if CREATION_CLOSED:
+            return cnt_created
+        created = create_track_file_from_song(maindir,song,artist,
+                                              mbconnect=mbconnect)
+        if created: cnt_created += 1
+        # create files for that artist
+        if CREATION_CLOSED:
+            return cnt_created
+        cnt_created += create_track_files_from_artist(maindir,artist,
+                                                      mbconnect=mbconnect)
+    # done
+    return cnt_created
+
+
+
+
 # error passing problems
 class KeyboardInterruptError(Exception):pass
 
@@ -695,6 +822,10 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
         if startstep <= 20 or onlystep==20:
             cnt_created += create_step20(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999
+        # step 30
+        if startstep <= 30 or onlystep==30:
+            cnt_created += create_step30(maindir,connect)
+            if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()
         time.sleep(5) # give time to other processes to end
@@ -732,6 +863,10 @@ if __name__ == '__main__':
     # help menu
     if len(sys.argv) < 2:
         die_with_usage()
+
+    # local imports
+    sys.path.append(os.path.abspath(os.path.join(sys.argv[0],'../..')))
+    import hdf5_utils as HDF5
 
     # flags
     nthreads = 1

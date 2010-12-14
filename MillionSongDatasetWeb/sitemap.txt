@@ -1,8 +1,8 @@
-index.html
-ismirpapers_html.txt
-left_code.txt
-left_contactus.txt
-left_faq.txt
-left_getting.txt
-left_home.txt
-left_tasks.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/index.html
+http://labrosa.ee.columbia.edu/projects/millionsong/ismirpapers_html.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_code.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_contactus.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_faq.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_getting.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_home.txt
+http://labrosa.ee.columbia.edu/projects/millionsong/left_tasks.txt

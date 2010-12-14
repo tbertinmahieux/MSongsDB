@@ -473,8 +473,11 @@ We mean quickly glance at the content of a file.
 Once again, it depends on the language you want to use, and you
 need the HDF5 library installed (see "code" section). In python
 (with <a href='http://www.pytables.org/'>pytables</a> installed), 
-use display_songs.py????. In Java, you can use the great tool 
-<a href=http://www.hdfgroup.org/hdf-java-html/hdfview/index.html>HDFVIEW</a>.<p>
+use <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/display_song.py">
+display_songs.py</a>. In Java, you can use the great tool 
+<a href=http://www.hdfgroup.org/hdf-java-html/hdfview/index.html>HDFVIEW</a>.
+MATLAB should also let you see the content, try opening the file.
+<p>
 
 <a name='filepaths'><h3>What are the file paths?</h3></a>
 We could not put a million files in one folder. Even a few thousands

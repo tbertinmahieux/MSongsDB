@@ -501,7 +501,9 @@ SQLite folder</a>.
 <p>
 
 <a name='howcreated'><h3>How was the dataset created?</h3></a>
-Using the Echonest API. Songs were chosen....?????
+Using the Echonest API and some info from a local copy of the
+musicbrainz server. Data was downloaded during December 2010 and
+January 2011.
 Choosing a million songs is surprisingly challenging. We followed these steps:
 <ol>
 <li>Get the most 'familiar' artists according to Echo Nest, download as many
@@ -509,6 +511,8 @@ songs from them as possible</li>
 <li>Get the 1000 top terms from Echo Nest, use each term as a descriptor to 
 find 100 artists, download as many songs as possible</li>
 <li>Get the songs and artists from the CAL500 dataset</li>
+<li>Get 'extreme' songs from the Echo Nest search params, e.g. songs
+with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 <li>Random walk on similar artists starting from The Beatles</li>
 </ol>
 For more techincal details, see "dataset creation" in "code" section.<p>

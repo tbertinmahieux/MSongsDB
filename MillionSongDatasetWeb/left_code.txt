@@ -90,8 +90,10 @@ If you need these for your application, let us know, we'll work on it!<p>
 <div class="post">
 <a name='datacreation'><h2>Dataset Creation</h2></a><p>
 Here is the python code used to create the dataset.
-Note that we add an unrestricted access to the Echo
+????
+Note that we had an unrestricted access to the Echo
 Nest API, but nothing special other than that.
+We also installed a local copy of the Musicbrainz server.
 </div>
 
 

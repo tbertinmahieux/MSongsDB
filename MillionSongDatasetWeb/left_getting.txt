@@ -21,7 +21,7 @@ dataset will be hosted on
 <p>
 On demand, we can consider a ssh transfer from our lab server.
 You must have a good connection that can stay open for days!
-Also, if your final goal is to buy and put the data and an external
+Also, if your final goal is to buy and put the data on an external
 hard drive, you can buy it and send it to us through 
 <a href="http://amzn.com/B003ICWB5Y">Amazon</a>.
 We'll fill the drive and send it back to you. Contact us to know

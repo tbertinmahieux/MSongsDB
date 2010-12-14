@@ -508,6 +508,7 @@ Choosing a million songs is surprisingly challenging. We followed these steps:
 songs from them as possible</li>
 <li>Get the 1000 top terms from Echo Nest, use each term as a descriptor to 
 find 100 artists, download as many songs as possible</li>
+<li>Get the songs and artists from the CAL500 dataset</li>
 <li>Random walk on similar artists starting from The Beatles</li>
 </ol>
 For more techincal details, see "dataset creation" in "code" section.<p>

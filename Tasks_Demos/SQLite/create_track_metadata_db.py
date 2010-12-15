@@ -59,7 +59,7 @@ def create_db(filename):
     c = conn.cursor()
     q = 'CREATE TABLE songs (track_id text PRIMARY KEY, title text, song_id text, '
     q += 'release text, artist_id text, artist_mbid text, artist_name text, '
-    q += 'duration real, artist_familiarity real, artist_hotttnesss real)'
+    q += 'duration real, artist_familiarity real, artist_hotttnesss real, year int)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -97,6 +97,8 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ", "+str(familiarity) if not np.isnan(familiarity) else ",-1"
     hotttnesss = get_artist_hotttnesss(h5)
     q += ", "+str(hotttnesss) if not np.isnan(hotttnesss) else ",-1"
+    year = get_year(h5)
+    q += ", "+str(year)
     # query done, close h5, commit
     h5.close()
     q += ')'
@@ -154,6 +156,14 @@ def add_indices_to_db(conn,verbose=0):
     if verbose > 0: print q
     # index to search by (duration) or by (duration,artist_id)
     q = "CREATE INDEX idx_duration ON songs ('duration','artist_id')"
+    if verbose > 0: print q
+    c.execute(q)
+    # index to search by (year) or by (year,artist_id) or by (year,artist_id,title)
+    q = "CREATE INDEX idx_year ON songs ('year','artist_id','title')"
+    if verbose > 0: print q
+    c.execute(q)
+    # index to search by (year) or by (year,artist_name)
+    q = "CREATE INDEX idx_year2 ON songs ('year','artist_name')"
     if verbose > 0: print q
     c.execute(q)
     # done, commit

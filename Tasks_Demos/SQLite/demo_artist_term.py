@@ -153,6 +153,12 @@ if __name__ == '__main__':
     print '* we check if two tags are in the database, (the first one is):'
     print 'rock:',res1_str,', abc123xyz:',res2_str
 
+    # similar for mtags, list all mbtags
+    q = "SELECT * FROM mbtags"
+    res = c.execute(q)
+    print '* btags work the same as terms, e.g. list all known mbtags (display first 3):'
+    print res.fetchall()[:3]
+
     # get one badly encoded, fix it...
     # is it a problem only when we write to file???
     # we want to show the usage of t.encode('utf-8')  with t a term
@@ -185,16 +191,30 @@ if __name__ == '__main__':
     # count number of artists tagged with 'rock'
     q = "SELECT COUNT(artist_id) FROM artist_term WHERE term="+encode_string('rock')
     res = c.execute(q)
-    print "* we count the number of unique artists tagged with 'rock':"
+    print "* we count the number of unique artists that got term 'rock':"
     print res.fetchone()
 
-    # get artists that have no tags
+    # count number of artists mb tagged with 'rock'
+    q = "SELECT COUNT(artist_id) FROM artist_mbtag WHERE mbtag="+encode_string('rock')
+    res = c.execute(q)
+    print "* samething with musicbrainz tag 'rock':"
+    print res.fetchone()
+
+    # get artists that have term 'rock' but not mbtag 'rock'
+    q = "SELECT artist_id FROM artist_term WHERE term="+encode_string('rock')
+    q += " EXCEPT SELECT artist_id FROM artist_mbtag WHERE mbtag="+encode_string('rock')
+    q += " ORDER BY RANDOM LIMIT 1"
+    re s = c.execute(q)
+    print "* one artist that has term 'rock' but not mbtag 'rock':"
+    print res.fetchone()
+
+    # get artists that have no terms
     # simple with the EXCEPT keyword
     # other cool keywords: UNION, UNION ALL, INTERSECT
     q = "SELECT artist_id FROM artists EXCEPT SELECT artist_id FROM artist_term LIMIT 1"
     res = c.execute(q)
     artist_notag = res.fetchone()
-    print '* we show an artist with no tags:'
+    print '* we show an artist with no terms:'
     if artist_notag is None:
         # debug, make sure all artists have at least one tag, can be slow
         q = "SELECT * FROM artists"
@@ -204,10 +224,9 @@ if __name__ == '__main__':
             q = "SELECT COUNT(term) FROM artist_term WHERE artist_id='"+art+"'"
             res = c.execute(q)
             assert res.fetchone()[0] > 0
-        print '(found no artist with no tags, we double-checked)'
+        print '(found no artist with no terms, we double-checked)'
     else:
         print artist_notag
-
     
     # DONE
     # close the cursor and the connection

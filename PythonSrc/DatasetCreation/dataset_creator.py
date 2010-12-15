@@ -330,7 +330,8 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
             tracks = song.get_tracks(CATALOG)
             trackid = tracks[0]['id']
             break
-        except IndexError:
+        except (IndexError, TypeError):
+            print 'ERROR: something happened that should not, song.id =',song.id
             return False # should not happen according to EN guys, but still does...
         except KeyboardInterrupt:
             close_creation()

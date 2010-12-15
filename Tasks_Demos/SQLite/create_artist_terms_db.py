@@ -67,15 +67,19 @@ def encode_string(s):
     return "'"+s.replace("'","''")+"'"
 
 
-def create_db(filename,artistlist,taglist):
+def create_db(filename,artistlist,termlist,mbtaglist):
     """
-    Create a SQLite database where 3 tables
+    Create a SQLite database where 5 tables
     table1: artists
             contains one column, artist_id
     table2: terms
-            contains one column, terms (tags)
+            contains one column, term (tags)
     table3: artist_term
             contains two columns, artist_id and term
+    table4: mbtags
+            contains one column, mbtag (musicbrainz tags)
+    table5: artist_mbtag
+            contains two columns, artist_id and mbtag
     INPUT
     - artistlist    list of all artist Echo Nest IDs
     - tag list      list of all terms (tags)
@@ -97,8 +101,8 @@ def create_db(filename,artistlist,taglist):
     q = "CREATE TABLE terms (term text PRIMARY KEY)"
     c.execute(q)
     conn.commit()
-    taglist = np.sort(taglist)
-    for t in taglist: 
+    termlist = np.sort(termlist)
+    for t in termlist: 
         q = "INSERT INTO terms VALUES ("
         q += encode_string(t) + ")"
         c.execute(q)
@@ -107,6 +111,22 @@ def create_db(filename,artistlist,taglist):
     q = "CREATE TABLE artist_term (artist_id text, term text, "
     q += "FOREIGN KEY(artist_id) REFERENCES artists(artist_id), "
     q += "FOREIGN KEY(term) REFERENCES terms(term) )"
+    c.execute(q)
+    conn.commit()
+    # create table 4
+    q = "CREATE TABLE mbtags (mbtag text PRIMARY KEY)"
+    c.execute(q)
+    conn.commit()
+    mbtaglist = np.sort(mbtaglist)
+    for t in mbtaglist: 
+        q = "INSERT INTO mbtags VALUES ("
+        q += encode_string(t) + ")"
+        c.execute(q)
+    conn.commit()
+    # create table 5
+    q = "CREATE TABLE artist_mbtag (artist_id text, mbtag text, "
+    q += "FOREIGN KEY(artist_id) REFERENCES artists(artist_id), "
+    q += "FOREIGN KEY(mbtag) REFERENCES mbtags(mbtag) )"
     c.execute(q)
     conn.commit()
     # close
@@ -128,12 +148,19 @@ def fill_from_h5(conn,h5path):
     h5 = hdf5_utils.open_h5_file_append(h5path)
     artist_id = get_artist_id(h5)
     terms = get_artist_terms(h5)
+    mbtags = get_artist_mbtags(h5)
     h5.close()
     # get cursor
     c = conn.cursor()
     # add as many rows as terms in artist_term table
     for t in terms:
         q = "INSERT INTO artist_term VALUES ("
+        q += encode_string(artist_id) + "," + encode_string(t)
+        q += ")"
+        c.execute(q)
+    # add as many rows as mtgs in artist_mbtag table
+    for t in mbtags:
+        q = "INSERT INTO artist_mbtag VALUES ("
         q += encode_string(artist_id) + "," + encode_string(t)
         q += ")"
         c.execute(q)
@@ -152,14 +179,22 @@ def add_indices_to_db(conn,verbose=0):
     http://www.databasejournal.com/features/mysql/article.php/10897_1382791_1/Optimizing-MySQL-Queries-and-Indexes.htm
     """
     c = conn.cursor()
-    # index to search by (artist_id) or (artist_id,term) on artist_terms table
-    q = "CREATE INDEX idx_artist_id ON artist_term ('artist_id','term')"
+    # index to search by (artist_id) or (artist_id,term) on artist_term table
+    # samething for      (artist_id)    (artist_id,mbtag)   artist_mbtag
+    q = "CREATE INDEX idx_artist_id_term ON artist_term ('artist_id','term')"
+    if verbose > 0: print q
+    c.execute(q)
+    q = "CREATE INDEX idx_artist_id_mbtag ON artist_mbtag ('artist_id','mbtag')"
     if verbose > 0: print q
     c.execute(q)
     # index to search by (term) or (term,artist_id) on artist_terms table
     # might be redundant, we probably just need an index on term since the first
     # one can do the join search
-    q = "CREATE INDEX idx_term ON artist_term ('artist_id','term')"
+    # samehting for (mbtag,artist_id)
+    q = "CREATE INDEX idx_term_artist_id ON artist_term ('term,'artist_id')"
+    if verbose > 0: print q
+    c.execute(q)
+    q = "CREATE INDEX idx_mbtag_artist_id ON artist_mbtag ('mbtag','artist_id')"
     if verbose > 0: print q
     c.execute(q)
     # we're done, we don't need to add keys to artists and tersm
@@ -170,18 +205,19 @@ def add_indices_to_db(conn,verbose=0):
 
 def die_with_usage():
     """ HELP MENU """
-    print 'Command to create the track_metadata SQLite database'
+    print 'Command to create the artist_terms SQLite database'
     print 'to launch (it might take a while!):'
-    print '   python create_artist_terms_db.py <MillionSong dir> <taglist> <artistlist> <artist_term.db>'
+    print '   python create_artist_terms_db.py <MillionSong dir> <termlist> <mbtaglist> <artistlist> <artist_term.db>'
     print 'PARAMS'
     print '  MillionSong dir   - directory containing .h5 song files in sub dirs'
-    print '  taglist           - list of all possible tags'
+    print '  termlist          - list of all possible terms (Echo Nest tags)'
+    print '  mbtaglist         - list of all possible musicbrainz tags'
     print '  artist list       - list in form: artistid<SEP>artist_mbid<SEP>track_id<SEP>...'
     print '  artist_terms.db   - filename for the database'
     print ''
-    print 'for artist list, check: /Tasks_Demos/NamesAnalysis/list_all_artists.py'
-    print '          or (faster!): /Tasks_Demos/SQLite/list_all_artists_from_db.py'
-    print 'for taglist, check: /Tasks_Demos/Tagging/get_unique_terms.py'
+    print 'for artist list, check:       /Tasks_Demos/NamesAnalysis/list_all_artists.py'
+    print '          or (faster!):       /Tasks_Demos/SQLite/list_all_artists_from_db.py'
+    print 'for termlist and mbtaglist:   /Tasks_Demos/Tagging/get_unique_terms.py'
     sys.exit(0)
 
 
@@ -189,7 +225,7 @@ def die_with_usage():
 if __name__ == '__main__':
 
     # help menu
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 6:
         die_with_usage()
 
     # import HDF5 stuff
@@ -201,9 +237,10 @@ if __name__ == '__main__':
 
     # params
     maindir = sys.argv[1]
-    tagfile = sys.argv[2]
-    artistfile = sys.argv[3]
-    dbfile = os.path.abspath(sys.argv[4])
+    termfile = sys.argv[2]
+    mbtagfile = sys.argv[3]
+    artistfile = sys.argv[4]
+    dbfile = os.path.abspath(sys.argv[5])
 
    # check if file exists!
     if os.path.exists(dbfile):
@@ -213,15 +250,25 @@ if __name__ == '__main__':
     # start time
     t1 = time.time()
 
-    # get all tags
-    alltags = []
-    f = open(tagfile,'r')
+    # get all terms
+    allterms = []
+    f = open(termfile,'r')
     for line in f.xreadlines():
         if line == '' or line.strip() == '':
             continue
-        alltags.append(line.strip())
+        allterms.append(line.strip())
     f.close()
-    print 'found',len(alltags),'tags in file:',tagfile
+    print 'found',len(allterms),'terms in file:',termfile
+
+    # get all mbtags
+    allmbtags = []
+    f = open(mbtagfile,'r')
+    for line in f.xreadlines():
+        if line == '' or line.strip() == '':
+            continue
+        allmbtags.append(line.strip())
+    f.close()
+    print 'found',len(allmbtags),'mbtags in file:',mbtagfile
 
     # get all track ids
     trackids = []
@@ -236,7 +283,7 @@ if __name__ == '__main__':
     print 'found',len(trackids),'artists in file:',artistfile
 
     # create database
-    create_db(dbfile,artistids,alltags)
+    create_db(dbfile,artistids,allterms,allmbtags)
     t2 = time.time()
     stimelength = str(datetime.timedelta(seconds=t2-t1))
     print 'tables created after', stimelength

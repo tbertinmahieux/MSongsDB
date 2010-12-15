@@ -61,12 +61,13 @@ def die_with_usage():
     print 'get_unique_terms.py'
     print '  by T. Bertin-Mahieux (2010) Colubia University'
     print 'GOAL'
-    print '  creates a list of unique tags as fast as possible'
+    print '  creates a list of unique terms and unique musicbrainz tags as fast as possible'
     print 'USAGE'
-    print '  python get_unique_terms.py <MillionSong dir> <output.txt> (OPTIONAL <artist list>)'
+    print '  python get_unique_terms.py <MillionSong dir> <output_terms.txt> <output_mbtags.txt> (OPTIONAL <artist list>)'
     print 'PARAM'
     print '   MillionSong dir   - MillionSongDataset root directory'
-    print '   output.txt        - result text file, one tag per line'
+    print '   output_terms.txt  - result text file for the terms, one term per line'
+    print '   output_mbtags.txt - results text file for the musicbrainz tags, on tag per line'
     print '   artist list       - text file: artistID<SEP>artistMBID<SEP>track<SEP>...   OPTIONAL BUT FASTER'
     print ''
     print 'for artist list, check: /Tasks_Demos/NamesAnalysis/list_all_artists.py'
@@ -83,7 +84,7 @@ if __name__ == '__main__':
     print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
     # help menu
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         die_with_usage()
 
     # import HDF5 stuff
@@ -95,23 +96,33 @@ if __name__ == '__main__':
 
     # read params
     maindir = os.path.abspath(sys.argv[1])
-    output = os.path.abspath(sys.argv[2])
+    output_terms = os.path.abspath(sys.argv[2])
+    output_mbtags = os.path.abspath(sys.argv[3])
     artistfile = ''
-    if len(sys.argv) > 3:
-        artistfile = sys.argv[3]
+    if len(sys.argv) > 4:
+        artistfile = sys.argv[4]
 
     # check if file exists!
-    if os.path.exists(output):
-        print output,'already exists! delete or provide a new name'
+    if output_terms == output_mbtags:
+        print 'output files most be different'
         sys.exit(0)
+    if os.path.exists(output_terms):
+        print output_terms,'already exists! delete or provide a new name'
+        sys.exit(0)
+    if os.path.exists(output_mbtags):
+        print output_mbtags,'already exists! delete or provide a new name'
+        sys.exit(0)
+    
 
     # start time
     t1 = time.time()
 
-    # create hash table
-    hash_table = [None] * NUMBUCKETS
+    # create hash tables
+    hash_table_terms = [None] * NUMBUCKETS
+    hash_table_mbtags = [None] * NUMBUCKETS
     for k in range(NUMBUCKETS):
-        hash_table[k] = set()
+        hash_table_terms[k] = set()
+        hash_table_mbtags[k] = set()
     
     # iterate HDF5 files
     cnt_files = 0
@@ -121,10 +132,13 @@ if __name__ == '__main__':
             for f in files :
                 h5 = hdf5_utils.open_h5_file_read(f)
                 terms = get_artist_terms(h5)
+                mbtags = get_artist_mbtags(h5)
                 h5.close()
                 # iterate over terms
                 for t in terms:
-                    put_term_in_hash_table(hash_table,t)
+                    put_term_in_hash_table(hash_table_terms,t)
+                for t in mbtags:
+                    put_term_in_hash_table(hash_table_mbtags,t)
                 cnt_files += 1
     else:
         f = open(artistfile,'r')
@@ -139,32 +153,53 @@ if __name__ == '__main__':
             f = os.path.join(maindir,path_from_trackid(trackid))
             h5 = hdf5_utils.open_h5_file_read(f)
             terms = get_artist_terms(h5)
+            mbtags = get_artist_mbtags(h5)
             h5.close()
             # iterate over terms
             for t in terms:
-                put_term_in_hash_table(hash_table,t)
+                put_term_in_hash_table(hash_table_terms,t)
+            for t in mbtags:
+                put_term_in_hash_table(hash_table_mbtags,t)
             cnt_files += 1
 
-    # list all terms
+    # count all terms and mbtags
     t2 = time.time()
     stimelength = str(datetime.timedelta(seconds=t2-t1))
-    print 'all terms added from',cnt_files,'files in',stimelength
-    nUniqueTags = 0
+    print 'all terms/mbtags added from',cnt_files,'files in',stimelength
+    nUniqueTerms = 0
     for k in range(NUMBUCKETS):
-        nUniqueTags += len(hash_table[k])
-    print 'There are',nUniqueTags,'unique tags.'
+        nUniqueTerms += len(hash_table_terms[k])
+    print 'There are',nUniqueTerms,'unique terms.'
+    nUniqueMbtags = 0
+    for k in range(NUMBUCKETS):
+        nUniqueMbtags += len(hash_table_mbtags[k])
+    print 'There are',nUniqueMbtags,'unique mbtags.'
 
-    alltags = [None] * nUniqueTags
+    # list all terms and mbtags
+    allterms = [None] * nUniqueTerms
     cnt = 0
     for k in range(NUMBUCKETS):
-        for t in hash_table[k]:
-            alltags[cnt] = t
+        for t in hash_table_terms[k]:
+            allterms[cnt] = t
             cnt += 1
-    alltags = np.sort(alltags)
+    allterms = np.sort(allterms)
+    allmbtags = [None] * nUniqueMbtags
+    cnt = 0
+    for k in range(NUMBUCKETS):
+        for t in hash_table_mbtags[k]:
+            allmbtags[cnt] = t
+            cnt += 1
+    allmbtags = np.sort(allmbtags)
+    
 
-    # write to file
-    f = open(output,'w')
-    for t in alltags:
+    # write to file (terms)
+    f = open(output_terms,'w')
+    for t in allterms:
+        f.write(t + '\n')
+    f.close()
+    # write to file (mbtags)
+    f = open(output_mbtags,'w')
+    for t in allmbtags:
         f.write(t + '\n')
     f.close()
 

@@ -5,6 +5,8 @@
 <a href='#fields'>Fields description</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#mbrainz'>MusicBrainz data</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#termsmbtags'>Terms versus mbtags?</a><br>
 <a href='#gettingdataset'>How to get the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#notapi'>Why is it not an API?</a><br>
@@ -22,6 +24,8 @@
 <a href='#whatcanido'>What can I do with this data?</a><br>
 <a href='#howtoorganize'>How do I get it organized?</a><br>
 <a href='#howcreated'>How was the dataset created?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#myaudio'>Can I add my audio to the dataset?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
 <a href='#website'>Why this website doesn't load sometimes?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><br>
@@ -396,6 +400,15 @@ branch</a>, the data dumps were of December 4th, 2010.
 Note that the field 'artist_mbid' is provided by the EchoNest API.
 <p>
 
+<a name='termsmbtags'><h3>Terms versus mbtags?</h3></a>
+Terms are the Echo Nest tags. They can come from a number of places, but
+mostly blogs as far as we understand it.<br>
+Mbtags are the musicbrainz tags, applied by humans to a particular artist.
+This explains why there are less of them (see 'mbtags_count'), but they
+are usually very clean and informative. For instance, if you want to
+create a genre recognition task where classes are mutually exclusive,
+mbtags are probably more reliable then terms.<p>
+
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
 See section <a onClick="clientSideInclude('left','left_getting.txt');" href='#'>Getting the dataset</a>.<p>
 <a name='notapi'><h3>Why is it not an API?</h3></a>
@@ -516,6 +529,19 @@ with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 <li>Random walk on similar artists starting from The Beatles</li>
 </ol>
 For more techincal details, see "dataset creation" in "code" section.<p>
+
+<a name='myaudio'><h3>Can I add my audio to the dataset?</h3></a>
+In the sense that you want your audio file to be analyzed and put in
+HDF5 format as the rest of the dataset, the answer is mostly yes,
+the following python
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/enpyapi_to_hdf5.py">code</a>
+should do the trick. Note that it uses pyechonest, and to have the
+full data ('year','mbtags' and 'mbtags_count'), you need a local
+musicbrainz server.<br>
+The code is not perfect for the following reasons: 1) it is unclear what
+happens if the song is not recognized by the Echo Nest fingerprinter and
+2) even if it is recognized, if you upload audio associated with a song 
+in the dataset, there is no guarantee you get the same track ID.<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
 The Echo Nest data is released under ...??????

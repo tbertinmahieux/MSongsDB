@@ -926,6 +926,7 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
             artist_queue.put_nowait(a)
     return cnt_created
 
+
 # error passing problems
 class KeyboardInterruptError(Exception):pass
 
@@ -974,8 +975,8 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
             cnt_created += create_step40(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 60
-        if startstep <= 40 or onlystep==40:
-            cnt_created += create_step40(maindir,connect)
+        if startstep <= 60 or onlystep==60:
+            cnt_created += create_step60(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()

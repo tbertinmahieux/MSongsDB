@@ -425,6 +425,7 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             time.sleep(SLEEPTIME)
             continue
     # shuffle the songs, to help multithreading
+    npr.seed(npr.randint(1000))
     npr.shuffle(allsongs)
     # iterate over the songs, call for their creation, count how many actually created
     cnt_created = 0
@@ -660,6 +661,7 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     # get all artists ids
     artists = get_most_familiar_artists(nresults=100)
     # shuffle them
+    npr.seed(npr.randint(1000))
     npr.shuffle(artists)
     # for each of them create all songs
     cnt_created = 0
@@ -697,6 +699,7 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     """
     # get all terms
     most_used_terms = get_top_terms(nresults=1000)
+    npr.seed(npr.randint(1000))
     npr.shuffle(most_used_terms)
     if verbose>0: print 'most used terms retrievend, got',len(most_used_terms)
     # keep in mind artist ids we have done already
@@ -710,6 +713,7 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
             return cnt_created
         # get all artists from that term as a description
         artists = get_artists_from_description(term,nresults=100)
+        npr.seed(npr.randint(1000))
         npr.shuffle(artists)
         for artist in artists:
             # CLOSED CREATION?
@@ -773,6 +777,7 @@ def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
             time.sleep(SLEEPTIME)
             continue
     lines = map(lambda x:x.strip(),lines)
+    npr.seed(npr.randint(1000))
     npr.shuffle(lines)
     # get song specifically, then all songs for the artist
     cnt_created = 0
@@ -832,6 +837,7 @@ def create_step40(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
                            'tracks','id:musicbrainz','id:7digital','id:playme']
         args['limit'] = True
         all_args.append(args)
+    npr.seed(npr.randint(1000))
     npr.shuffle(all_args)
     # iteratoe voer set of args
     cnt_created = 0
@@ -874,8 +880,6 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
        nfilesbuffer  -
     """
     print 'run_steps is launched on dir:',maindir
-    # init random seed based on time AND thread id
-    npr.seed(idxthread + npr.randint(1000) )
     # sanity check
     assert os.path.isdir(maindir),'maindir: '+str(maindir)+' does not exist'
     # check onlystep and startstep

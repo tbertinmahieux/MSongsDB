@@ -31,6 +31,7 @@ import sys
 import glob
 import copy
 import time
+from Queue import Queue   # from 'queue' in python 3.0
 import shutil
 import urllib2
 import multiprocessing
@@ -592,6 +593,26 @@ def get_artists_from_description(description,nresults=100):
     return artists
 
 
+def get_similar_artists(artist):
+    """
+    Get the list of similar artists from a target one, might be empty
+    """
+    while True:
+        try:
+            similars = artist.get_similar()
+            break
+        except (KeyboardInterrupt,NameError):
+            close_creation()
+            raise
+        except Exception,e:
+            print type(e),':',e
+            print 'at time',time.ctime(),'in get_similar_artists from aid =',artist.id,'(we wait',SLEEPTIME,'seconds)'
+            time.sleep(SLEEPTIME)
+            continue
+    # done
+    return similars
+
+
 def get_artist_song_from_names(artistname,songtitle):
     """
     Get an artist and a song from their artist name and title,
@@ -861,6 +882,49 @@ def create_step40(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
     return cnt_created
 
 
+def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
+    """
+    Makes sure we have the similar artists to the top 100 most familiar
+    artists, and then go on with more similar artists.
+    INPUT
+       maindir       - root directory of the Million Song dataset
+       mbconnect     - open pg connection to Musicbrainz
+       maxsongs      - max number of song per search (max=100)
+       nfilesbuffer  - number of files we leave unfilled in the dataset
+    RETURN
+       the number of songs actually created
+    """
+    # will contain artists TID that are done or already in the queue
+    artists_done = set()
+    # get all artists ids
+    artist_queue = Queue()
+    artists = get_most_familiar_artists(nresults=100)
+    npr.seed(npr.randint(1000))
+    npr.shuffle(artists)
+    for a in artists:
+        artists_done.add( a.id )
+        artist_queue.put_nowait( a )
+    # for each of them create all songs
+    cnt_created = 0
+    while not artist_queue.empty():
+        artist = artist_queue.get_nowait()
+        # CLOSED CREATION?
+        if CREATION_CLOSED:
+            break
+        # encode that artist
+        cnt_created += create_track_files_from_artist(maindir,artist,
+                                                      mbconnect=mbconnect,
+                                                      maxsongs=maxsongs)
+        # get similar artists, add to queue
+        similars = get_similar_artists(artist)
+        npr.seed(npr.randint(1000))
+        npr.shuffle(similars)
+        for a in similars:
+            if a.id in artists_done:
+                continue
+            artists_done.add(a)
+            artist_queue.put_nowait(a)
+    return cnt_created
 
 # error passing problems
 class KeyboardInterruptError(Exception):pass
@@ -906,6 +970,10 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
             cnt_created += create_step30(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 40
+        if startstep <= 40 or onlystep==40:
+            cnt_created += create_step40(maindir,connect)
+            if CREATION_CLOSED: startstep = onlystep = 999999
+        # step 60
         if startstep <= 40 or onlystep==40:
             cnt_created += create_step40(maindir,connect)
             if CREATION_CLOSED: startstep = onlystep = 999999

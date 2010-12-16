@@ -48,7 +48,7 @@ classdef HDF5_Song_File_Reader
     methods
         
       function obj = HDF5_Song_File_Reader(h5filename)
-      % Constructor, receives a filename
+      % Constructor, receives a filename, open with READONLY permission
          obj.h5filename=h5filename;
          obj.h5fileID=H5F.open(h5filename,'H5F_ACC_RDONLY','H5P_DEFAULT');
          obj.metadataID = H5D.open(obj.h5fileID,'/metadata/songs');

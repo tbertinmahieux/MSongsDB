@@ -427,7 +427,10 @@ can link this data to other existing resources.<p>
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
 Usually one track is one song, though ????<br>
-The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.<p>
+The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.
+A schema of the inner organization of a HDF5 song file can be found
+<a href="files/FileSchema.pdf">here</a>.
+<p>
 
 <a name='hdfwhat'><h3>HDF what?</h3></a>
 HDF5! Why? Because! (regarding this, all complains should definitely

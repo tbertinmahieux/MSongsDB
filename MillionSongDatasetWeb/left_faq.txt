@@ -475,7 +475,10 @@ All data was downloaded in utf-8 format and was saved in the HDF5
 file in utf-8 format. Does it mean every name / release / title
 should display correctly if you set your display to utf-8? We sure
 hope so, but in practice some string with uncommon elements will never 
-be correctly recorded. Conclusion: use the strings like titles and artist
+be correctly recorded. In particular, it seems difficult to tell MATLAB
+to read HDF5 as UTF-8 instead of Unicode. If you have a work-around, let
+us know!<br>
+Conclusion: use the strings like titles and artist
 names as indications, the real identifiers should be the musicbrainz ID
 or the echonest ID.<p>
 

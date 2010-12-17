@@ -233,10 +233,14 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
     if os.path.exists( hdf5_path ):
         release_lock_track(trackid)
         return False # got the lock too late, file exists
+    # count errors (=tries), stop after 100 tries
+    try_cnt = 0
     # create file and fill it
     try:
         while True: # try until we make it work!
             try:
+                # we try one more time
+                try_cnt += 1
                 if not os.path.isdir( os.path.split(hdf5_path)[0] ):
                     os.makedirs( os.path.split(hdf5_path)[0] )
                 # check / delete tmp file if exist
@@ -252,8 +256,6 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                     HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
                 # TODO billboard? lastfm? ...?
                 h5.close()
-                # move tmp file to real file
-                shutil.move(hdf5_path_tmp, hdf5_path)
             except KeyboardInterrupt:
                 close_creation()
                 raise
@@ -272,9 +274,17 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 # print and wait
                 print 'ERROR creating track:',trackid,'on',time.ctime()
                 print e
-                print '(try again in',SLEEPTIME,'seconds)'
-                time.sleep(SLEEPTIME)
-                continue
+                if try_cnt < 100:
+                    print '(try again in',SLEEPTIME,'seconds)'
+                    time.sleep(SLEEPTIME)
+                    continue
+                # give up
+                else:
+                    print 'we give up after',try_cnt,'tries'
+                    release_lock_track(trackid)
+                    return False
+            # move tmp file to real file
+            shutil.move(hdf5_path_tmp, hdf5_path)
             # release lock
             release_lock_track(trackid)
             break

@@ -338,8 +338,10 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
     if os.path.exists(track_path):
         return False
     # get that track!
+    try_cnt = 0
     while True:
         try:
+            try_cnt += 1
             track = trackEN.track_from_id(trackid)
             break
         except KeyboardInterrupt:
@@ -348,8 +350,12 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
         except Exception,e:
             print type(e),':',e
             print 'at time',time.ctime(),'in create_track_file_from_trackid, tid=',trackid,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
-            time.sleep(SLEEPTIME)
-            continue
+            if try_cnt < 50:
+                time.sleep(SLEEPTIME)
+                continue
+            else:
+                print 'we give up after',try_cnt,'tries.'
+                return False
     # we have everything, launch create track file
     res = create_track_file(maindir,trackid,track,song,artist,mbconnect=mbconnect)
     return res

@@ -73,13 +73,45 @@ CAL500='https://github.com/tb2332/MSongsDB/raw/master/PythonSrc/DatasetCreation/
 # use: get_lock_song
 #      release_lock_song
 TRACKSET_LOCK = multiprocessing.Lock()
-TRACKSET = set()
+#TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
 CREATION_CLOSED = False # use to end all threads at a higher level
                         # than trackset closed, it is more a matter
                         # of printing and returning than the risk of
                         # creating a corrupted file
+
+class my_trackset():
+    """
+    class works with multiprocessing
+    should look like a set from outside
+    """
+    def __init__(self):
+        array_length = 10
+        self.ar = multiprocessing.Array('l',array_length) # l for long, i not enough
+        for k in range(len(self.ar)):
+            self.ar[k] = 0
+    def remove(self,obj):
+        objh = hash(obj)
+        for k in range(len(self.ar)):
+            if self.ar[k] == objh:
+                self.ar[k] = 0
+                return
+        print 'ERROR: my_trackset, tried to remove inexisting element, obj=',obj,'and hash=',objh
+    def add(self,obj):
+        objh = hash(obj)
+        for k in range(len(self.ar)):
+            if self.ar[k] == 0:
+                self.ar[k] = objh
+                return
+        print 'ERROR: shared memory trackset full!!! fake a keyboardinterrupt to stop'
+        raise KeyboardInterrupt
+    def __contains__(self,obj):
+        return hash(obj) in self.ar
+    def __str__(self):
+        return str(list(self.ar))
+    
+TRACKSET=my_trackset()
 
 def close_creation():
     """
@@ -110,10 +142,11 @@ def get_lock_track(trackid):
     """
     got_lock = TRACKSET_LOCK.acquire() # blocking by default
     if not got_lock:
-        print 'ERROR: could not get TRACKSET_LOCK lock?'
+        print 'ERROR: could not get TRACKSET_LOCK locked?'
         return False
     if TRACKSET_CLOSED:
         TRACKSET_LOCK.release()
+        print 'RELEASED LOCK BECAUSE TRACKSET_CLOSED'
         return False
     if trackid in TRACKSET:
         TRACKSET_LOCK.release()
@@ -134,10 +167,11 @@ def release_lock_track(trackid):
         return False
     if TRACKSET_CLOSED:
         TRACKSET_LOCK.release()
+        print 'RELEASED LOCK BECAUSE TRACKSET_CLOSED, track=',trackid
         return False
     if not trackid in TRACKSET:
         TRACKSET_LOCK.release()
-        print 'WARNING: releasing a song you dont own'
+        print 'WARNING: releasing a song you dont own, trackid=',trackid;sys.stdout.flush()
         return False
     TRACKSET.remove(trackid)
     TRACKSET_LOCK.release()
@@ -220,6 +254,8 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                     HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
                 # TODO billboard? lastfm? ...?
                 h5.close()
+                # move tmp file to real file
+                shutil.move(hdf5_path_tmp, hdf5_path)
             except KeyboardInterrupt:
                 close_creation()
                 raise
@@ -241,8 +277,6 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 print '(try again in',SLEEPTIME,'seconds)'
                 time.sleep(SLEEPTIME)
                 continue
-            # move tmp file to real file
-            shutil.move(hdf5_path_tmp, hdf5_path)
             # release lock
             release_lock_track(trackid)
             break
@@ -261,6 +295,9 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 os.remove( hdf5_path )
         except IOError:
             pass
+        raise
+    except (IOError,OSError),e:
+        print 'GOT Error',e,'deep deep in creation process, threading problem?'
         raise
     # IF WE GET HERE WE'RE GOOD
     return True
@@ -306,7 +343,8 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
             time.sleep(SLEEPTIME)
             continue
     # we have everything, launch create track file
-    return create_track_file(maindir,trackid,track,song,artist,mbconnect=mbconnect)
+    res = create_track_file(maindir,trackid,track,song,artist,mbconnect=mbconnect)
+    return res
 
 
 
@@ -334,8 +372,8 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
             tracks = song.get_tracks(CATALOG)
             trackid = tracks[0]['id']
             break
-        except (IndexError, TypeError):
-            print 'ERROR: something happened that should not, song.id =',song.id
+        except (IndexError, TypeError),e:
+            print 'ERROR:',e,' something happened that should not, song.id =',song.id
             return False # should not happen according to EN guys, but still does...
         except KeyboardInterrupt:
             close_creation()
@@ -347,7 +385,8 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
             continue
     # we got the track id, call for its creation
     # if a file for that trackid already exists, it will be caught immediately in the next function
-    return create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=mbconnect)
+    res = create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=mbconnect)
+    return res
 
 
 def create_track_file_from_song_noartist(maindir,song,mbconnect=None):

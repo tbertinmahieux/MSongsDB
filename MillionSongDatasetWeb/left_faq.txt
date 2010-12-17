@@ -534,6 +534,7 @@ find 100 artists, download as many songs as possible</li>
 with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 <li>Random walk on similar artists starting from The Beatles</li>
 </ol>
+The number of songs was approximately: 8950 after step 1), ....
 For more techincal details, see "dataset creation" in "code" section.<p>
 
 <a name='myaudio'><h3>Can I add my audio to the dataset?</h3></a>

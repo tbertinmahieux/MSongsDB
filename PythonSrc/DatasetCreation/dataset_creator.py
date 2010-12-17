@@ -390,7 +390,7 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
             raise
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_file_from_song, sid=',song.id,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_file_from_song, sid=',song.id,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
             time.sleep(SLEEPTIME)
             continue
     # we got the track id, call for its creation
@@ -430,7 +430,7 @@ def create_track_file_from_song_noartist(maindir,song,mbconnect=None):
             return False
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_files_from_song_noartist, sid=',song.id,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_files_from_song_noartist, sid=',song.id,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
             time.sleep(SLEEPTIME)
             continue
     # get his songs, creates his song files, return number of actual files created
@@ -474,7 +474,7 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             raise
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_files_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_files_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
             time.sleep(SLEEPTIME)
             continue
     # shuffle the songs, to help multithreading
@@ -523,7 +523,7 @@ def create_track_files_from_artistid(maindir,artistid,mbconnect=None,maxsongs=10
             return 0
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_files_from_artistid, aid=',artistid,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_files_from_artistid, aid=',artistid,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
             time.sleep(SLEEPTIME)
             continue
 

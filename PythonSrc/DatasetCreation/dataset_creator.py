@@ -469,6 +469,8 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             allsongs.extend(songs)
             if len(allsongs) >= maxsongs or len(songs) < n_askfor:
                 break
+            print 'WARNING tracks from artists, we cant search for more than 100 songs for the moment (pid='+str(os.getpid())+')'
+            break # we have not implemented the start yet
         except KeyboardInterrupt:
             close_creation()
             raise

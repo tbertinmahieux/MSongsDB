@@ -163,11 +163,14 @@ def count_h5_files(basedir):
     subdirectories of base
     """
     cnt = 0
-    for root, dirs, files in os.walk(basedir):
-        files = glob.glob(os.path.join(root,'*.h5'))
-        cnt += len(files)
-    return cnt
-
+    try:
+        for root, dirs, files in os.walk(basedir):
+            files = glob.glob(os.path.join(root,'*.h5'))
+            cnt += len(files)
+        return cnt
+    except (IOError,OSError),e:
+        print 'ERROR:',e,'in count_h5_files, return 0'
+        return 0
 
 def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
     """

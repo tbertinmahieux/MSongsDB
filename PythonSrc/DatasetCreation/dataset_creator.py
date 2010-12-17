@@ -1010,23 +1010,23 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
     try:
         # step 10
         if startstep <= 10 or onlystep==10:
-            cnt_created += create_step10(maindir,connect,maxsongs=100,nfilesbuffer=100)
+            cnt_created += create_step10(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 20
         if startstep <= 20 or onlystep==20:
-            cnt_created += create_step20(maindir,connect,maxsongs=100,nfilesbuffer=100)
+            cnt_created += create_step20(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 30
         if startstep <= 30 or onlystep==30:
-            cnt_created += create_step30(maindir,connect,maxsongs=100,nfilesbuffer=100)
+            cnt_created += create_step30(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 40
         if startstep <= 40 or onlystep==40:
-            cnt_created += create_step40(maindir,connect,maxsongs=100,nfilesbuffer=100)
+            cnt_created += create_step40(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 60
         if startstep <= 60 or onlystep==60:
-            cnt_created += create_step60(maindir,connect,maxsongs=100,nfilesbuffer=100)
+            cnt_created += create_step60(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()

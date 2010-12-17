@@ -31,13 +31,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
-from Queue import PriorityQueue # from queue for Python 3.0
-
+import time
+import glob
+try:
+    from Queue import PriorityQueue # from queue for Python 3.0
+except ImportError:
+    from queue import PriorityQueue # Python 3.0
 
 # put in tuples likes -modifdate, fname
 # highest priority = lowest first number
 MODIFQUEUE = PriorityQueue()
 
+# list of leaves ordered by number of files
+# get filled up when we count leaves (by default)
+MAP_NFILES_DIR = {}
 
 
 def get_all_files(basedir,ext='.h5') :
@@ -54,19 +61,27 @@ def get_all_files(basedir,ext='.h5') :
     return allfiles
 
 
-def count_normal_leaves(basedir):
+def count_normal_leaves(basedir,revindex=True):
     """
     Count how many directories are of the form
     basedir/A/B/C
+    If revindex, we fill up MAP_NFILES_DIR where
+    the keys are number of files, and the value is
+    a set of directory filenames
     """
     cnt = 0
     for root, dirs, files in os.walk(basedir):
         level3up = os.path.abspath(os.path.join(root,'../../..'))
         if os.path.exists(level3up) and os.path.samefile(level3up,basedir):
             cnt += 1
+            if revindex:
+                nfiles = len(glob.glob(os.path.join(root,'*.h5')))
+                if not nfiles in MAP_NFILES_DIR.keys():
+                    MAP_NFILES_DIR[nfiles] = set()
+                MAP_NFILES_DIR[nfiles].add(root)
     return cnt
 
-def get_all_files_modif_date(basedir,ext='.5'):
+def get_all_files_modif_date(basedir,ext='.h5'):
     """
     From a root directory, look at all the file,
     get their last modification date, put in in priority
@@ -106,4 +121,25 @@ if __name__ == '__main__':
 
     # number of leaves
     n_leaves = count_normal_leaves(maindir)
-    print 'got',n_leaves,'out of',26*26*26
+    print '******************************************************'
+    print 'got',n_leaves,'leaves out of',26*26*26,'possible ones.'
+
+    # empty and full leaves
+    print '******************************************************'
+    min_nfiles = min(MAP_NFILES_DIR.keys())
+    print 'most empty leave(s) have',min_nfiles,'files, they are:'
+    print MAP_NFILES_DIR[min_nfiles]
+    max_nfiles = max(MAP_NFILES_DIR.keys())
+    print 'most full leave(s) have',max_nfiles,'files, they are:'
+    print MAP_NFILES_DIR[max_nfiles]
+
+    # find modif date for all files, and pop out the most recent ones
+    get_all_files_modif_date(maindir)
+    print '******************************************************'
+    print 'most recent files are:'
+    for k in range(5):
+        t,f = MODIFQUEUE.get_nowait()
+        print f,'(',time.ctime(-t),')'
+
+    # done
+    print '******************************************************'

@@ -749,7 +749,7 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
         t1 = time.time()
         nh5 = count_h5_files(maindir)
         t2 = time.time()
-        print 'found',nh5,'h5 song files in',maindir,'in',int(t2-t1),'seconds'; sys.stdout.flush()
+        print 'found',nh5,'h5 song files in',maindir,'in',int(t2-t1),'seconds (pid='+str(os.getpid())+')'; sys.stdout.flush()
         # sanity stop
         if nh5 > TOTALNFILES - nfilesbuffer:
             return cnt_created

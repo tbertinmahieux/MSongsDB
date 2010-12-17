@@ -744,8 +744,10 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
         cnt_created += create_track_files_from_artist(maindir,artist,
                                                       mbconnect=mbconnect,
                                                       maxsongs=maxsongs)
+        t1 = time.time()
         nh5 = count_h5_files(maindir)
-        print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+        t2 = time.time()
+        print 'found',nh5,'h5 song files in',maindir,'in',int(t2-t1),'seconds'; sys.stdout.flush()
         # sanity stop
         if nh5 > TOTALNFILES - nfilesbuffer:
             return cnt_created

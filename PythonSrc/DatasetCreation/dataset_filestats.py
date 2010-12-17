@@ -132,6 +132,11 @@ if __name__ == '__main__':
     max_nfiles = max(MAP_NFILES_DIR.keys())
     print 'most full leave(s) have',max_nfiles,'files, they are:'
     print MAP_NFILES_DIR[max_nfiles]
+    nfiles = 0
+    for k in MAP_NFILES_DIR:
+        nfiles += k * len(MAP_NFILES_DIR[k])
+    print 'we found',nfiles,'files in total'
+    print 'average number of files per leaf:',nfiles * 1. / n_leaves
 
     # find modif date for all files, and pop out the most recent ones
     get_all_files_modif_date(maindir)

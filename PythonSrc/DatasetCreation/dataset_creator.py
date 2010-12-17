@@ -73,14 +73,12 @@ CAL500='https://github.com/tb2332/MSongsDB/raw/master/PythonSrc/DatasetCreation/
 # use: get_lock_song
 #      release_lock_song
 TRACKSET_LOCK = multiprocessing.Lock()
-#TRACKSET = set()
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
 CREATION_CLOSED = False # use to end all threads at a higher level
                         # than trackset closed, it is more a matter
                         # of printing and returning than the risk of
                         # creating a corrupted file
-
 class my_trackset():
     """
     class works with multiprocessing
@@ -110,7 +108,7 @@ class my_trackset():
         return hash(obj) in self.ar
     def __str__(self):
         return str(list(self.ar))
-    
+# instanciate object for trackset
 TRACKSET=my_trackset()
 
 def close_creation():
@@ -373,7 +371,9 @@ def create_track_file_from_song(maindir,song,artist,mbconnect=None):
             trackid = tracks[0]['id']
             break
         except (IndexError, TypeError),e:
-            print 'ERROR:',e,' something happened that should not, song.id =',song.id
+            return False # should not happen according to EN guys, but still does...
+        except TypeError,e:
+            print 'ERROR:',e,' something happened that should not, song.id =',song.id,'(pid='+str(os.getpid())+')'
             return False # should not happen according to EN guys, but still does...
         except KeyboardInterrupt:
             close_creation()
@@ -468,7 +468,6 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             time.sleep(SLEEPTIME)
             continue
     # shuffle the songs, to help multithreading
-    npr.seed(npr.randint(1000))
     npr.shuffle(allsongs)
     # iterate over the songs, call for their creation, count how many actually created
     cnt_created = 0
@@ -724,7 +723,6 @@ def create_step10(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     # get all artists ids
     artists = get_most_familiar_artists(nresults=100)
     # shuffle them
-    npr.seed(npr.randint(1000))
     npr.shuffle(artists)
     # for each of them create all songs
     cnt_created = 0
@@ -762,7 +760,6 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     """
     # get all terms
     most_used_terms = get_top_terms(nresults=1000)
-    npr.seed(npr.randint(1000))
     npr.shuffle(most_used_terms)
     if verbose>0: print 'most used terms retrievend, got',len(most_used_terms)
     # keep in mind artist ids we have done already
@@ -776,7 +773,6 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
             return cnt_created
         # get all artists from that term as a description
         artists = get_artists_from_description(term,nresults=100)
-        npr.seed(npr.randint(1000))
         npr.shuffle(artists)
         for artist in artists:
             # CLOSED CREATION?
@@ -840,7 +836,6 @@ def create_step30(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0):
             time.sleep(SLEEPTIME)
             continue
     lines = map(lambda x:x.strip(),lines)
-    npr.seed(npr.randint(1000))
     npr.shuffle(lines)
     # get song specifically, then all songs for the artist
     cnt_created = 0
@@ -900,7 +895,6 @@ def create_step40(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
                            'tracks','id:musicbrainz','id:7digital','id:playme']
         args['limit'] = True
         all_args.append(args)
-    npr.seed(npr.randint(1000))
     npr.shuffle(all_args)
     # iteratoe voer set of args
     cnt_created = 0
@@ -941,7 +935,6 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
     # get all artists ids
     artist_queue = Queue()
     artists = get_most_familiar_artists(nresults=100)
-    npr.seed(npr.randint(1000))
     npr.shuffle(artists)
     for a in artists:
         artists_done.add( a.id )
@@ -959,7 +952,6 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
                                                       maxsongs=maxsongs)
         # get similar artists, add to queue
         similars = get_similar_artists(artist)
-        npr.seed(npr.randint(1000))
         npr.shuffle(similars)
         for a in similars:
             if a.id in artists_done:
@@ -992,6 +984,8 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
     # check onlystep and startstep
     if onlystep > -1:
         startstep = 9999999
+    # set a seed for this process
+    npr.seed(npr.randint(1000) + idxthread)
     # connect to musicbrainz
     if nomb:
         connect = None

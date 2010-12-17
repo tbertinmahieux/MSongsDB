@@ -454,7 +454,8 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
     """
     assert maxsongs <= 1000,'dont think we can query for more than 1K songs per artist'
     if maxsongs==100:
-        print 'WARNING,create_track_files_from_artist, start param should be implemented'
+        #print 'WARNING,create_track_files_from_artist, start param should be implemented'
+        pass
     # get all the songs we want
     allsongs = []
     while True:
@@ -805,7 +806,7 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
                                                           maxsongs=maxsongs)
             # sanity stop
             nh5 = count_h5_files(maindir)
-            print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+            print 'found',nh5,'h5 song files in',maindir,'(pid='+str(os.getpid())+')'; sys.stdout.flush()
             if nh5 > TOTALNFILES - nfilesbuffer:
                 return cnt_created
     # done

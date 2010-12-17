@@ -272,7 +272,7 @@ def create_track_file(maindir,trackid,track,song,artist,mbconnect=None):
                 except IOError:
                     pass
                 # print and wait
-                print 'ERROR creating track:',trackid,'on',time.ctime()
+                print 'ERROR creating track:',trackid,'on',time.ctime(),'(pid='+str(os.getpid())+')'
                 print e
                 if try_cnt < 100:
                     print '(try again in',SLEEPTIME,'seconds)'
@@ -347,7 +347,7 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
             raise
         except Exception,e:
             print type(e),':',e
-            print 'at time',time.ctime(),'in create_track_file_from_trackid, tid=',trackid,'(we wait',SLEEPTIME,'seconds)'
+            print 'at time',time.ctime(),'in create_track_file_from_trackid, tid=',trackid,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
             time.sleep(SLEEPTIME)
             continue
     # we have everything, launch create track file

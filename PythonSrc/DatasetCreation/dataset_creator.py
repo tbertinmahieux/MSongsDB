@@ -604,6 +604,8 @@ def search_songs(**args):
     Use the Search song API, wrapped in our usual error handling
     try/except. All the args are passed toward songEN.search,
     if there is an error... good luck!
+    Note that this implies we only look once, so not good for the step param if
+    implemented (or you must call that function again)
     RETURN list of songs, can be empty
     """
     while True:

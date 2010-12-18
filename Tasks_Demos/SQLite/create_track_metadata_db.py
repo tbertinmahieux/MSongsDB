@@ -73,7 +73,7 @@ def fill_from_h5(conn,h5path,verbose=0):
     Add a row with he information from this .h5 file
     Doesn't commit, doesn't close conn at the end!
     """
-    h5 = hdf5_utils.open_h5_file_append(h5path)
+    h5 = open_h5_file_read(h5path)
     c = conn.cursor()
     # build query
     q = 'INSERT INTO songs VALUES ('
@@ -193,7 +193,6 @@ if __name__ == '__main__':
     pythonsrc = os.path.join(sys.argv[0],'../../../PythonSrc')
     pythonsrc = os.path.abspath( pythonsrc )
     sys.path.append( pythonsrc )
-    import hdf5_utils
     from hdf5_getters import *
 
     verbose = 0

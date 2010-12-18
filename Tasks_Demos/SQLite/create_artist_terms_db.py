@@ -141,8 +141,8 @@ def fill_from_h5(conn,h5path):
     This h5 file must be for a new artist, we can't have twice the
     same artist entered in the database!
 
-    The info is added to tables: artist_term
-    as many row as term are added
+    The info is added to tables: artist_term, artist_mbtag
+    as many row as term/mbtag are added
     """
     # get info from h5 file
     h5 = hdf5_utils.open_h5_file_append(h5path)

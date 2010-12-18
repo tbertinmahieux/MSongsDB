@@ -44,7 +44,7 @@ function hdf5_to_matfile(hdf5path,matpath)
         matpath = fullfile(pathstr,strcat(name,'.mat'));
     end
     if exist(matpath,'file') == 2
-        disp(strcat('matfile ',matpath,' exist, please delete or change mat path'));
+        disp(strcat('matfile ',matpath,' exists, please delete or change mat path'));
         return;
     end
     % open HDF5

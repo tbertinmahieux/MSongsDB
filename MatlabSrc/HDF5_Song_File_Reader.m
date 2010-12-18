@@ -513,6 +513,15 @@ classdef HDF5_Song_File_Reader
       
       function res = get_artist_mbtags(obj,songidx)
       % return artist musicbrainz tags for a given song (songs start at 1)
+          % hack!!! for some reason, if there is no tags, it crashes
+          % so we first check the size of the dataset
+          info = hdf5info(obj.h5filename);
+          d = info.GroupHierarchy.Groups(3).Datasets(1).Dims;
+          if d == 0
+              res = {};
+              return
+          end
+          % END HACK
           if (nargin < 2); songidx = 1; end
           data = hdf5read(obj.h5filename,'/musicbrainz/artist_mbtags');
           pos1 = obj.musicbrainz.idx_artist_mbtags(songidx)+1;
@@ -536,6 +545,15 @@ classdef HDF5_Song_File_Reader
 
       function res = get_artist_mbtags_count(obj,songidx)
       % return artist musicbrainz tag count for a given song (songs start at 1)
+          % hack!!! for some reason, if there is no tags, it crashes
+          % so we first check the size of the dataset
+          info = hdf5info(obj.h5filename);
+          d = info.GroupHierarchy.Groups(3).Datasets(1).Dims;
+          if d == 0
+              res = [];
+              return
+          end
+          % END HACK
           if (nargin < 2); songidx = 1; end
           data = hdf5read(obj.h5filename,'/musicbrainz/artist_mbtags_count');
           pos1 = obj.musicbrainz.idx_artist_mbtags(songidx)+1;

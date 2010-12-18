@@ -81,7 +81,8 @@ def create_db(filename,artistlist,termlist,mbtaglist):
             contains two columns, artist_id and mbtag
     INPUT
     - artistlist    list of all artist Echo Nest IDs
-    - tag list      list of all terms (tags)
+    - term list     list of all terms (Echo Nest tags)
+    - mbtag list    list of all music brainz tags
     """
     # creates file
     conn = sqlite3.connect(filename)

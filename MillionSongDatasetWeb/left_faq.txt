@@ -509,12 +509,14 @@ of code that let's you easily crawl through the whole data.<p>
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
 Gordon! more to come on this.<br>
 We also created (and you have the code to recreate / adapt them)
-two SQLite databases (available here ????? and here ????). The
+three SQLite databases (available here ?????, here ???? and here ????). The
 first one gives most metadata per track. It is usefull, for
 instance, to get all tracks from the same artist as some song file.
 The second one gives terms per artist. You can use it to get the
 full list of artists, full list of tags, the usage of tags, etc.
-For demos using this database with SQL queries in python, see
+The third one summarizes artist similarity. In particular, it only lists
+artists that actually are in the dataset.<br>
+For demos using this databases with SQL queries in python, see
 demo_*.py in <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/SQLite">
 SQLite folder</a>.
 <p>

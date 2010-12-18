@@ -958,21 +958,25 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
     # get all artists ids
     artist_queue = Queue()
     artists = get_most_familiar_artists(nresults=100)
+    n_most_familiars = len(artists)
     npr.shuffle(artists)
     for a in artists:
         artists_done.add( a.id )
         artist_queue.put_nowait( a )
     # for each of them create all songs
     cnt_created = 0
+    cnt_artists = 0
     while not artist_queue.empty():
         artist = artist_queue.get_nowait()
+        cnt_artists += 1
         # CLOSED CREATION?
         if CREATION_CLOSED:
             break
-        # encode that artist
-        cnt_created += create_track_files_from_artist(maindir,artist,
-                                                      mbconnect=mbconnect,
-                                                      maxsongs=maxsongs)
+        # encode that artist unless it was done in step10
+        if cnt_artists > n_most_familiars:
+            cnt_created += create_track_files_from_artist(maindir,artist,
+                                                          mbconnect=mbconnect,
+                                                          maxsongs=maxsongs)
         # get similar artists, add to queue
         similars = get_similar_artists(artist)
         npr.shuffle(similars)

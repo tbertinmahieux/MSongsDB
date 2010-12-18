@@ -136,7 +136,7 @@ def create_db(filename,artistlist,termlist,mbtaglist):
 
 def fill_from_h5(conn,h5path):
     """
-    Add a row from h5 with he information from this .h5 file
+    Add information rgarding the artist in that one h5 song file.
     Doesn't commit, doesn't close conn at the end!
     This h5 file must be for a new artist, we can't have twice the
     same artist entered in the database!

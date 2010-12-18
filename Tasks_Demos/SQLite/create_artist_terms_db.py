@@ -2,12 +2,11 @@
 Thierry Bertin-Mahieux (2010) Columbia University
 tb2332@columbia.edu
 
-This code creates an SQLite dataset that contains one row
-per artist and one column per tag. Data is binary, 1 if
-an artist was tagged with this tag, 0 otherwise.
-Once you found an artist tagged as you want, use the
-track_metadata.db database to find a track (or all tracks)
-from that artist.
+This code creates an SQLite database with 5 tables.
+One per unique artist, one per unique Echo Nest term,
+one per unique musicbrainz tag, then one table
+to link artists and terms, and one table to link
+artists and mbtags.
 
 This is part of the Million Song Dataset project from
 LabROSA (Columbia University) and The Echo Nest.

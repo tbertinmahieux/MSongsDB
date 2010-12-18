@@ -269,7 +269,7 @@ if __name__ == '__main__':
     f.close()
     print 'found',len(allmbtags),'mbtags in file:',mbtagfile
 
-    # get all track ids
+    # get all track ids per artist
     trackids = []
     artistids = []
     f = open(artistfile,'r')

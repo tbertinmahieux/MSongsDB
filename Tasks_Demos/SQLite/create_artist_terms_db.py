@@ -68,7 +68,7 @@ def encode_string(s):
 
 def create_db(filename,artistlist,termlist,mbtaglist):
     """
-    Create a SQLite database where 5 tables
+    Create a SQLite database with 5 tables
     table1: artists
             contains one column, artist_id
     table2: terms

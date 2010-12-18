@@ -129,7 +129,32 @@ def create_db(filename,artistlist,termlist,mbtaglist):
             conn.execute(q)
     # done
     return
+
+
+def add_indices_to_db(conn,verbose=0):
+    """
+    Since the db is considered final, we can add all sorts of indecies
+    to make sure the retrieval time is as fast as possible.
+    Indecies take up a little space, but they hurt performance only when
+    we modify the data (which should not happen)
+    This function commits its changes at the end
     
+    Note: tutorial on MySQL (close enough to SQLite):
+    http://www.databasejournal.com/features/mysql/article.php/10897_1382791_1/Optimizing-MySQL-Queries-and-Indexes.htm
+    """
+    c = conn.cursor()
+    # index to search by (target) or (target,sims)
+    q = "CREATE INDEX idx_target_sim ON similarity ('target','similar')"
+    if verbose > 0: print q
+    c.execute(q)
+    # index to search by (sims) or (sims,target)
+    q = "CREATE INDEX idx_sim_target ON similarity ('similar','target')"
+    if verbose > 0: print q
+    c.execute(q)
+    # done (artists table as an implicit index as artist_id is the
+    # primary key)
+    conn.commit()
+
 
 def die_with_usage():
     """ HELP MENU """
@@ -200,6 +225,7 @@ if __name__ == '__main__':
     conn.commit()
 
     # create indices
+    add_indices_to_db(conn,verbose=0)
 
     # close connection
     conn.close()

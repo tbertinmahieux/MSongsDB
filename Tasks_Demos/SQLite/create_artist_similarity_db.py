@@ -64,7 +64,7 @@ def encode_string(s):
     return "'"+s.replace("'","''")+"'"
 
 
-def create_db(filename,artistlist,termlist,mbtaglist):
+def create_db(filename,artistlist):
     """
     Create a SQLite database with 2 tables
     table1: artists
@@ -99,7 +99,7 @@ def create_db(filename,artistlist,termlist,mbtaglist):
     c.execute(q)
     conn.commit()
 
-    def fill_from_h5(conn,h5path):
+def fill_from_h5(conn,h5path):
     """
     Fill 'similarity' table from the information regarding the
     artist in that file, i.e. we get his similar artists, check
@@ -174,7 +174,7 @@ def die_with_usage():
 if __name__ == '__main__':
 
     # help menu
-    if len(sys.argv) < 6:
+    if len(sys.argv) < 4:
         die_with_usage()
 
     # import HDF5 stuff

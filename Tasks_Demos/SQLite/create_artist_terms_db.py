@@ -145,7 +145,7 @@ def fill_from_h5(conn,h5path):
     as many row as term/mbtag are added
     """
     # get info from h5 file
-    h5 = hdf5_utils.open_h5_file_append(h5path)
+    h5 = open_h5_file_read(h5path)
     artist_id = get_artist_id(h5)
     terms = get_artist_terms(h5)
     mbtags = get_artist_mbtags(h5)
@@ -232,7 +232,6 @@ if __name__ == '__main__':
     pythonsrc = os.path.join(sys.argv[0],'../../../PythonSrc')
     pythonsrc = os.path.abspath( pythonsrc )
     sys.path.append( pythonsrc )
-    import hdf5_utils
     from hdf5_getters import *
 
     # params

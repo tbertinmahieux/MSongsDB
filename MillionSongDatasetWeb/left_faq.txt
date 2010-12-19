@@ -2,6 +2,8 @@
 <h2>FAQ</h2><br>
 <a href='#whatisindataset'>What is in the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#stats'>Stats</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#fields'>Fields description</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#mbrainz'>MusicBrainz data</a><br>
@@ -44,6 +46,16 @@ section describing all <a href='#fields'>fields</a> you will find
 in one song file. Note that the data is quite complete, but some fields
 might be missing for some songs. For instance, we don't know the location
 for all artists.<p>
+
+<a name='stats'><h3>Stats</h3></a>
+<ol>
+<li>1.000.000 songs / files</li>
+<li>???? GB of data</li>
+<li>???? unique artists</li>
+<li>???? unique terms (Echo Nest tags)</li>
+<li>???? unique musicbrainz tags</li>
+</ol>
+<p>
 
 <a name='fields'><h3>Fields description</h3></a>
 Below are a list of all fields available in the files of the dataset.

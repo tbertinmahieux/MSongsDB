@@ -34,6 +34,26 @@
     var sc_invisible=0; 
     var sc_security="8db4fea2"; 
   </script>
+  <!-- share buttons -->
+  <script type="text/javascript">
+      (function() {
+      var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://widgets.digg.com/buttons.js';
+      s1.parentNode.insertBefore(s, s1);
+      })();
+  </script>
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  <meta property="og:title" content="Million Song Dataset"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://labrosa.ee.columbia.edu/projects/millionsong/"/>
+    <meta property="og:image" content="http://labrosa.ee.columbia.edu/labrosa-new.jpg"/>
+    <meta property="og:site_name" content="LabROSA @ Columbia"/>
+    <meta property="fb:admins" content="thierrybm"/>
+    <meta property="og:description"
+          content="A dataset of metadata and audio analysis for a million songs
+                   provided by The Echo Nest and LabROSA to scale MIR research."/>
 </head><body onload="mainLoad();">
 <div id="wrapper">
 <div id="header">
@@ -93,6 +113,28 @@
 </span><p>
 <center><button type="button" onclick="randomIsmirPaper();">new paper</button>
 </center>
+<h2>Share</h2>
+<div> <!-- share buttons -->
+  <p>
+  <!-- Digg Compact Button -->
+  <a class="DiggThisButton DiggCompact"
+     href="http://labrosa.ee.columbia.edu/projects/millionsong/;title=Million%20Song%20Dataset">
+    <span>Million Song Dataset: audio features and metadata to scale MIR research.</span>
+  </a>
+  <!-- reddit -->
+  <a href="http://reddit.com/submit" 
+   onclick="window.location = 'http://reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> 
+   <img src="http://reddit.com/static/spreddit7.gif" alt="submit to reddit" border="0" /> 
+  </a>
+  <!-- twitter -->
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://labrosa.ee.columbia.edu/projects/millionsong/" data-text="Million Song Dataset: scaling MIR research! by The Echo Nest and LabROSA" data-count="none">Tweet
+  </a>
+  <!-- facebook -->
+  <br>
+  <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flabrosa.ee.columbia.edu%2Fprojects%2Fmillionsong%2F&amp;layout=standard&amp;show_faces=false&amp;width=250&amp;action=like&amp;colorscheme=light&amp;height=25" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:25px;" allowTransparency="true">
+  </iframe>
+</p><br>
+</div> <!-- end of share buttons -->
 </div> <!-- end of right panel -->
 </div> <!-- end of content -->
 <div id="footer">

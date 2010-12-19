@@ -1,13 +1,14 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
-The dataset is around 300 MB. Below
-is a subset of 10000 random songs so you can get started.
+The dataset is around 300 gb, which makes more idfficult to share. 
+Below is a subset of 10000 random songs (1.8 gb) so you can get started.
 <p>
-<a href="">MILLION SONG SUBSET.</a>
+<a href="http://www.adrive.com/public/19e134041e55d794ee849b7cf03c5ae7423ee16a6b1f0a0c54f977300e8c525f.html">MILLION SONG SUBSET</a> (the link might
+expire, send me an email it it happens).
 <p>
 To get the whole dataset, first see if you know someone that has it!
-We have sent hard drives with the data to labs at UCSD, Queen Mary
-University in London and UPF among others. We might be able to send
+We have sent hard drives with the data to labs at UCSD, QMUL
+and UPF among others. We might be able to send
 other disks on request.
 <p>
 You can download it from Amazon, cost is around 40$. Send us an

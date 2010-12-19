@@ -347,6 +347,10 @@ def create_track_file_from_trackid(maindir,trackid,song,artist,mbconnect=None):
         except KeyboardInterrupt:
             close_creation()
             raise
+        except urllib2.HTTPError,e:
+            print type(e),':',e
+            print 'we dont retry for that error, trackid=',trackid,'(pid='+str(os.getpid())+')'
+            return False
         except Exception,e:
             print type(e),':',e
             print 'at time',time.ctime(),'in create_track_file_from_trackid, tid=',trackid,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'

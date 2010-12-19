@@ -594,7 +594,9 @@ section.<p>
 
 <a name='getinvolved'><h3>How can I get involved?</h3></a>
 Simple! Use the dataset and share your code. We will be happy
-to put it on this website. Also, put on your website the list of songs 
+to put it on this website. You can also share this website using
+the buttons on the right menu.
+Then, put on your website the list of songs 
 (e.g. their Echo Nest ID) you use when you publish something.
 With a simple list of IDs in a text file, one can recreate a test
 set in a few minutes, and compare results with his own algorithm!<p>

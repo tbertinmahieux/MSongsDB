@@ -1,9 +1,9 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
 The dataset is around 300 MB. Below
-is a subset of ??? songs so you can get started.
+is a subset of 10000 random songs so you can get started.
 <p>
-DOWNLOAD SUBSET HERE.
+<a href="">MILLION SONG SUBSET.</a>
 <p>
 To get the whole dataset, first see if you know someone that has it!
 We have sent hard drives with the data to labs at UCSD, Queen Mary
@@ -51,6 +51,12 @@ reverse indecies:
 <li>SQLite database linking artist ID to the most used tags ????</li>
 </ol>
 The code to create these lists is usually available in one of the different
-/Tasks_Demos/ folders when you download the code.<p>
+/Tasks_Demos/ folders when you download the code.
+<p>
+<h2>MLcomp</h2><p>
+A subset of the data will be made available on <a href="http://mlcomp.org/">
+MLcomp</a>. It is difficult to say how results will translate to the larger
+dataset, but it is definitely a way to get an intuition on which algorithm
+appears to work better.
 </div>
 

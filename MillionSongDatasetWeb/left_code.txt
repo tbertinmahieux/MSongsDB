@@ -79,7 +79,8 @@ here</a>.<p>
 You need some JAR files accessible <a href="http://www.hdfgroup.org/hdf-java-html/">here</a>. 
 Read the <a href="https://github.com/tb2332/MSongsDB/tree/master/JavaSrc/">README</a> file, 
 but the class hdf5_getters.java should give
-you all you need.<p>
+you all you need. This code is not optimize at all, in particular it copies data from
+arrays, you might want to access it directly.<p>
 
 <a name='cplusplus'><h3>C/C++</h3></a>
 We do not have these wrappers for the moment. That being said, HDF5 is
@@ -94,7 +95,12 @@ Here is the python
 code</a> used to create the dataset.
 Note that we had an unrestricted access to the Echo
 Nest API, but nothing special other than that.
-We also installed a local copy of the Musicbrainz server.
+We also installed a local copy of the Musicbrainz server.<br>
+To create the hdf5 files, we use these two python scripts:
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_descriptors.py">hdf5_descriptors.py</a> and
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_utils.py">hdf5_utils.py</a>. 
+The first one gives you the structure
+of each hdf5 song file, the second puts the pieces together.
 </div>
 
 <div class="post">

@@ -54,7 +54,7 @@ for all artists.<p>
 <li>???? unique artists</li>
 <li>???? unique terms (Echo Nest tags)</li>
 <li>???? unique musicbrainz tags</li>
-<li>11 pastries lost in a releated hackday</li>
+<li>11 pastries lost in a related hackday</li>
 </ol>
 <p>
 

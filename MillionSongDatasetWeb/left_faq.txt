@@ -541,7 +541,7 @@ Choosing a million songs is surprisingly challenging. We followed these steps:
 <ol>
 <li>Get the most 'familiar' artists according to Echo Nest, download as many
 songs from them as possible</li>
-<li>Get the 1000 top terms from Echo Nest, use each term as a descriptor to 
+<li>Get the 200 top terms from Echo Nest, use each term as a descriptor to 
 find 100 artists, download as many songs as possible</li>
 <li>Get the songs and artists from the CAL500 dataset</li>
 <li>Get 'extreme' songs from the Echo Nest search params, e.g. songs

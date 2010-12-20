@@ -229,6 +229,10 @@ if __name__ == '__main__':
         die_with_usage()
 
     # import HDF5 stuff
+    # yes, it is worth of a WTF like this last one:
+    # http://thedailywtf.com/Articles/CompareObjectAsIAlertDocumentOrNullIfNotCastable-and-More.aspx
+    # but I plan to buy some bad code offsets anyway
+    # http://codeoffsets.com/
     pythonsrc = os.path.join(sys.argv[0],'../../../PythonSrc')
     pythonsrc = os.path.abspath( pythonsrc )
     sys.path.append( pythonsrc )

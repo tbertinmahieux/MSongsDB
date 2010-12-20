@@ -787,6 +787,7 @@ def create_step20(maindir,mbconnect=None,maxsongs=500,nfilesbuffer=0,verbose=0):
     """
     # get all terms
     most_used_terms = get_top_terms(nresults=1000)
+    most_used_terms = most_used_terms[:200]
     npr.shuffle(most_used_terms)
     if verbose>0: print 'most used terms retrievend, got',len(most_used_terms)
     # keep in mind artist ids we have done already

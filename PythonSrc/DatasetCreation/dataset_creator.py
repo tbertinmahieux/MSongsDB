@@ -1052,7 +1052,7 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
             if CREATION_CLOSED: startstep = onlystep = 999999
         # step 60
         if startstep <= 60 or onlystep==60:
-            cnt_created += create_step60(maindir,connect,maxsongs=100,nfilesbuffer=nfilesbuffer)
+            cnt_created += create_step60(maindir,connect,maxsongs=50,nfilesbuffer=nfilesbuffer)
             if CREATION_CLOSED: startstep = onlystep = 999999
     except KeyboardInterrupt:
         close_creation()
@@ -1101,7 +1101,7 @@ if __name__ == '__main__':
     # flags
     nthreads = 1
     nomb = False
-    nfilesbuffer = 5000
+    nfilesbuffer = 1000
     t1nobuffer = False
     onlystep = -1
     startstep = 0

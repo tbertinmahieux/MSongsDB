@@ -549,7 +549,8 @@ with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 <li>Random walk on similar artists starting from the 100 most similar ones</li>
 <li>Finish up with a list of random existing track ID to select from</li>
 </ol>
-The number of songs was approximately: 8950 after step 1), ....
+The number of songs was approximately 8950 after step 1), step 3) added
+around 15000 songs, ...
 For more techincal details, see "dataset creation" in "code" section.<p>
 
 <a name='myaudio'><h3>Can I add my audio to the dataset?</h3></a>

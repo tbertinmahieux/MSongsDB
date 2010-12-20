@@ -53,7 +53,7 @@ def die_with_usage():
     print 'to recreate it, see create_track_metadata.py'
     print ''
     print 'usage:'
-    print '   python list_all_artists_from_db.py track_metadata.py output.txt'
+    print '   python list_all_artists_from_db.py track_metadata.db output.txt'
     print 'creates a file where each line is: (one line per artist)'
     print 'artist id<SEP>artist mbid<SEP>track id<SEP>artist name'
     sys.exit(0)

@@ -17,9 +17,12 @@ samples can be fetched from services like 7digital, code provided).<br />
 <div class="post">
 <h2>How to get started<br />
 </h2>
-<p>Get the dataset somehow. Then, look at the FAQ, in particular the
+<p>Get the dataset somehow (more on this in the appropriate tab). 
+A subset of 10000 songs is provided and easy to download.
+Then, look at the FAQ, in particular the
 list of fields. Finally, we suggest
-a set of task and give snippets of code to get you started. Don't
+a set of task and give snippets of code to get you started
+(Tasks / Demos tab). Don't
 hesitate to contact us for any question regarding the dataset and its
 usage.<br />
 </p>

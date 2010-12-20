@@ -422,7 +422,10 @@ create a genre recognition task where classes are mutually exclusive,
 mbtags are probably more reliable then terms.<p>
 
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
-See section <a onClick="clientSideInclude('left','left_getting.txt');" href='#'>Getting the dataset</a>.<p>
+See tab <a onClick="clientSideInclude('left','left_getting.txt');" href='#'>Getting the dataset</a>.
+A subset is also available there to quickly get you started.
+<p>
+
 <a name='notapi'><h3>Why is it not an API?</h3></a>
 API have a lot of merit, and most of this dataset was built using
 the Echo Nest API (with unlimited access). But APIs have not
@@ -567,12 +570,13 @@ happens if the song is not recognized by the Echo Nest fingerprinter and
 in the dataset, there is no guarantee you get the same track ID.<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
-The Echo Nest data is released under ...??????
-If you're a researcher and want to publish results on the dataset,
-you are fine. 
-If you are a company and are concern about experimenting on the
-dataset, contact the Echo Nest, we will probably give you the
-authorization.<br>
+The Echo Nest data is released under the same 
+<a href="http://developer.echonest.com/terms">terms of use</a> 
+as their API.
+If you are a researcher and want to publish results on the dataset,
+you are fine.
+If you are a company and are concerned about experimenting on the
+dataset, send an email to The Echo Nest.<br>
 Regarding the MusicBrainz data contained in the dataset,
 the track 'year' is under 
 <a href="http://creativecommons.org/licenses/publicdomain/">
@@ -591,7 +595,8 @@ Our university server isn't perfect either.<p>
 <a name='wherehelp'><h3>Where can I get help?</h3></a>
 There is no mailing or user blog so far. Simply contact one
 of the creator at LabROSA or the Echo Nest, see the "contact us"
-section.<p>
+section. <a href="mailto:tb2332@columbia.edu">Thierry Bertin-Mahieux</a> 
+is a good first try.<p>
 
 <a name='getinvolved'><h3>How can I get involved?</h3></a>
 Simple! Use the dataset and share your code. We will be happy
@@ -600,7 +605,11 @@ the buttons on the right menu.
 Then, put on your website the list of songs 
 (e.g. their Echo Nest ID) you use when you publish something.
 With a simple list of IDs in a text file, one can recreate a test
-set in a few minutes, and compare results with his own algorithm!<p>
+set in a few minutes, and compare results with his own algorithm!
+Finally, talk to other researchers about using larger datasets.
+<a href="http://marsyas.info/download/data_sets">GZTAN genre collection</a>
+was amazingly useful, but we need to move on.
+<p>
 
 </div>
 

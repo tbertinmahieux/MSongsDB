@@ -44,6 +44,7 @@ def encode_string(s):
       That's my boy! -> N'That''s my boy!'
     """
     res = "N'"+s.replace("'","''")+"'"
+    res = res.replace("\\''","''")
     res = res.replace("\''","''")
     return res
 

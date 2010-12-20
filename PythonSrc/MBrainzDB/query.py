@@ -43,7 +43,9 @@ def encode_string(s):
     EXAMPLE:
       That's my boy! -> N'That''s my boy!'
     """
-    return "N'"+s.replace("'","''")+"'"
+    res = "N'"+s.replace("'","''")+"'"
+    res = res.replace("\''","''")
+    return res
 
 
 def connect_mbdb():

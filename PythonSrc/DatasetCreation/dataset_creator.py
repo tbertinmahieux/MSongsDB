@@ -915,7 +915,7 @@ def create_step40(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
     """
     assert maxsongs <= 100,'create_step40, cannot search for more than 100 songs'
     # list all the args
-    types_of_sorts = ['tempo-asc', 'duration-asc', 'loudness-asc', 'artist_hotttnesss-asc', 'song_hotttness-asc',
+    types_of_sorts = ['tempo-asc', 'duration-asc', 'loudness-asc', 'artist_hotttnesss-asc', 'song_hotttnesss-asc',
                       'latitude-asc', 'longitude-asc', 'mode-asc', 'key-asc', 'tempo-desc', 'duration-desc',
                       'loudness-desc', 'artist_hotttnesss-desc', 'song_hotttnesss-desc', 'latitude-desc',
                       'longitude-desc', 'mode-desc', 'key-desc', 'energy-asc', 'energy-desc',

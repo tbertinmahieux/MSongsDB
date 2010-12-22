@@ -7,7 +7,7 @@ Nest and LabROSA at Columbia University. The main goals are:<br />
 commercial sizes</li>
 <li>setting a reference dataset to report results on in academic
 papers</li>
-<li>easing the task of downloading a large dataset using APIs</li>
+<li>easing the task of downloading a large dataset using Echo Nest's API</li>
 <li>helping new researchers in the MIR field getting started</li>
 </ol>
 NO AUDIO IS PROVIDED HERE. The core of the dataset is the analysis of a

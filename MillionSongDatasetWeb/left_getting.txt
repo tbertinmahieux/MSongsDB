@@ -11,30 +11,20 @@ We have sent hard drives with the data to labs at UCSD, QMUL
 and UPF among others. We might be able to send
 other disks on request.
 <p>
-You can download it from Amazon, cost is around 40$. Send us an
-email, and we will forward you a link valid for 24 hours. This
-is the best solution in terms of speed / cost / simplicity. The cost
-is solely Amazaon's banwdwith, we do not receive any money!
-You can also access the dataset directly on Amazon Web Services
-(<a href="http://aws.amazon.com/ec2/">EC2 service</a>) as the
-dataset will be hosted on 
-<a href="http://aws.amazon.com/publicdatasets/">aws public datasets</a>.
+<h3>infochimps</h3><p>
+The whole dataset is available through infochimps url=??????.
+
 <p>
-On demand, we can consider a ssh transfer from our lab server.
-You must have a good connection that can stay open for days!
-Also, if your final goal is to buy and put the data on an external
-hard drive, you can buy it and send it to us through 
-<a href="http://amzn.com/B003ICWB5Y">Amazon</a>.
-We'll fill the drive and send it back to you. Contact us to know
-where to send it to, here at Columbia.
+<h3>Amazon Public Datasets</h3><p>
+The dataset should be hosted on 
+<a href="http://aws.amazon.com/publicdatasets/">aws public datasets</a>,
+with probably an option to download it, or you can work on it directly
+using Amazon Web Services url=????.
 <p>
-We can bring such a device at conferences (e.g. ISMIR, WASPAA, ICASSP, ...)!
-If you will attend one of these soon and would like the dataset,
-let us know, and we'll figure out a way to do to the transfer there.
-<p>
-Finally, if you have space on your lab servers to host such a dataset,
-please let us know! A solution involving a few bittorrent servers might
-also be viable.
+<h3>Still can not get it?</h3><p>
+If for some reason, none of the methods above work, please contact us
+and we will figure out another way to do the transfer. For instance,
+we can bring an external drive at conferences (e.g. ISMIR, WASPAA, ICASSP, ...).
 <p>
 Note on the content of the dataset, if you just want a list of songs
 contained in it, here is a text file with that information: ????
@@ -46,7 +36,11 @@ reverse indecies:
 <li>List of all track Echo Nest ID ????</li>
 <li>List of all artist ID ????. The format is:<br>
     artist id&lt;SEP&gt;artist mbid&lt;SEP&gt;track id&lt;SEP&gt;artist name<br>
-    The code to recreate that file is available ?????.</li>
+    The code to recreate that file is available
+    <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/NamesAnalysis/list_all_artists.py">
+    here</a> (and a faster version using the SQLite databases
+    <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/SQLite/list_all_artists_from_db.py">
+    here</a>).</li>
 <li>List of all unique artist terms ????</li>
 <li>SQLite database containing most metadata about each track ????</li>
 <li>SQLite database linking artist ID to the most used tags ????</li>

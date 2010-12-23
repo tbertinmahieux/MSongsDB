@@ -983,6 +983,10 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
         # CLOSED CREATION?
         if CREATION_CLOSED:
             break
+        nh5 = count_h5_files(maindir)
+        print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
+        if nh5 > TOTALNFILES - nfilesbuffer:
+            return cnt_created
         # verbose
         print 'doing artist',cnt_artists,'(pid='+str(os.getpid())+')'; sys.stdout.flush()
         # encode that artist unless it was done in step10

@@ -991,7 +991,9 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
         # verbose
         print 'doing artist',cnt_artists,'(pid='+str(os.getpid())+')'; sys.stdout.flush()
         # encode that artist unless it was done in step10
-        if cnt_artists > n_most_familiars:
+        #if cnt_artists > n_most_familiars:
+        # we had to relaunch this function, lets not redo all the same artists over and over
+        if cnt_artists > 1000:
             cnt_created += create_track_files_from_artist(maindir,artist,
                                                           mbconnect=mbconnect,
                                                           maxsongs=maxsongs)

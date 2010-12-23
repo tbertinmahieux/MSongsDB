@@ -1114,7 +1114,7 @@ if __name__ == '__main__':
         elif sys.argv[1] == '-nfilesbuffer':
             nfilesbuffer = int(sys.argv[2])
             sys.argv.pop(1)
-        elif sys.argv[1] == 't1nobuffer':
+        elif sys.argv[1] == '-t1nobuffer':
             t1nobuffer = True
         elif sys.argv[1] == '-startstep':
             startstep = int(sys.argv[2])

@@ -998,6 +998,9 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
         # get similar artists, add to queue
         similars = get_similar_artists(artist)
         npr.shuffle(similars)
+        similars = similars[:5] # we keep five at random, the radius of artists grows faster
+                                # the thread dont redo the same artists over and over
+                                # too bad for the artists we miss (if any...)
         for a in similars:
             if a.id in artists_done:
                 continue

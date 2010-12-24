@@ -73,8 +73,10 @@ CAL500='https://github.com/tb2332/MSongsDB/raw/master/PythonSrc/DatasetCreation/
 # use: get_lock_song
 #      release_lock_song
 TRACKSET_LOCK = multiprocessing.Lock()
+TRACKSET_CLOSED = multiprocessing.Value('b')
 TRACKSET_CLOSED = False # use to end the process, nothing can get a
                         # track lock if this is turn to True
+CREATION_CLOSED = multiprocessing.Value('b')
 CREATION_CLOSED = False # use to end all threads at a higher level
                         # than trackset closed, it is more a matter
                         # of printing and returning than the risk of

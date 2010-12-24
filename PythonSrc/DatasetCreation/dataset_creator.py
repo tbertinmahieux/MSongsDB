@@ -81,6 +81,7 @@ CREATION_CLOSED = False # use to end all threads at a higher level
                         # than trackset closed, it is more a matter
                         # of printing and returning than the risk of
                         # creating a corrupted file
+                        
 class my_trackset():
     """
     class works with multiprocessing

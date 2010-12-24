@@ -670,6 +670,14 @@ def get_similar_artists(artist):
         except (KeyboardInterrupt,NameError):
             close_creation()
             raise
+        except pyechonest.util.EchoNestAPIError,e:
+            if str(e)[:21] == 'Echo Nest API Error 5': # big hack, wrong artist ID
+                return []
+            else:
+                print type(e),':',e
+                print 'at time',time.ctime(),'in get_similar_artists from aid =',artist.id,'(we wait',SLEEPTIME,'seconds)'
+                time.sleep(SLEEPTIME)
+                continue
         except Exception,e:
             print type(e),':',e
             print 'at time',time.ctime(),'in get_similar_artists from aid =',artist.id,'(we wait',SLEEPTIME,'seconds)'
@@ -999,6 +1007,7 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
                                                           maxsongs=maxsongs)
         # get similar artists, add to queue
         similars = get_similar_artists(artist)
+        if len(similars) == 0: continue
         npr.shuffle(similars)
         similars = similars[:10] # we keep 10 at random, the radius of artists grows faster
                                  # the thread dont redo the same artists over and over

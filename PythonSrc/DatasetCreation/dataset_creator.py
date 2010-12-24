@@ -488,6 +488,14 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
         except KeyboardInterrupt:
             close_creation()
             raise
+        except pyechonest.util.EchoNestAPIError,e:
+            if str(e)[:21] == 'Echo Nest API Error 5': # big hack, wrong artist ID
+                return 0
+            else:
+                print type(e),':',e
+                print 'at time',time.ctime(),'in create_track_file_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'
+                time.sleep(SLEEPTIME)
+                continue
         except Exception,e:
             print type(e),':',e
             print 'at time',time.ctime(),'in create_track_files_from_artist, aid=',artist.id,'(we wait',SLEEPTIME,'seconds) (pid='+str(os.getpid())+')'

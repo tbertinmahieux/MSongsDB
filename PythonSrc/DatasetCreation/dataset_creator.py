@@ -490,6 +490,7 @@ def create_track_files_from_artist(maindir,artist,mbconnect=None,maxsongs=100):
             raise
         except pyechonest.util.EchoNestAPIError,e:
             if str(e)[:21] == 'Echo Nest API Error 5': # big hack, wrong artist ID
+                print 'SKIPPING ARTIST',artist.id,'FOR NONEXISTENCE'
                 return 0
             else:
                 print type(e),':',e
@@ -683,6 +684,7 @@ def get_similar_artists(artist):
             raise
         except pyechonest.util.EchoNestAPIError,e:
             if str(e)[:21] == 'Echo Nest API Error 5': # big hack, wrong artist ID
+                print 'SKIPPING ARTIST',artist.id,'FOR NONEXISTENCE'
                 return []
             else:
                 print type(e),':',e

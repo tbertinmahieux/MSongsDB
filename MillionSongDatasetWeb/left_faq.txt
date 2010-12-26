@@ -78,7 +78,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>analysis sample rate</td>
 <td>float</td>
-<td></td>
+<td>sample rate of the audio used</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -186,7 +186,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>bars start</td>
 <td>array float</td>
-<td></td>
+<td>beginning of bars, usually on a beat</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>beats start</td>
 <td>array float</td>
-<td></td>
+<td>result of beat tracking</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -216,19 +216,19 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>end of fade in</td>
 <td>float</td>
-<td></td>
+<td>seconds at the beginning of the song</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>energy</td>
 <td>float</td>
-<td></td>
+<td>energy from listener point of view</td>
 <td></td>
 </tr>
 <tr>
 <td>key</td>
 <td>int</td>
-<td></td>
+<td>key the song is in</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -240,13 +240,13 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>loudness</td>
 <td>float</td>
-<td></td>
+<td>overall loudness in dB</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>mode</td>
 <td>int</td>
-<td></td>
+<td>major or minor</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -270,13 +270,13 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>sections confidence</td>
 <td>array float</td>
-<td></td>
+<td>confidence measure</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>sections start</td>
 <td>array float</td>
-<td></td>
+<td>largest grouping in a song, e.g. verse</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -288,37 +288,37 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>segments loudness max</td>
 <td>array float</td>
-<td></td>
+<td>max dB value</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max time</td>
 <td>array float</td>
-<td></td>
+<td>time of max dB value, i.e. end of attack</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments loudness max start</td>
 <td>array float</td>
-<td></td>
+<td>dB value at onset</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments pitches</td>
 <td>2D array float</td>
-<td></td>
+<td>chroma feature, one value per note</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments start</td>
 <td>array float</td>
-<td></td>
+<td>musical events, ~ note onsets</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>segments timbre</td>
 <td>2D array float</td>
-<td></td>
+<td>texture features (MFCC+PCA-like)</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
@@ -360,13 +360,13 @@ For the analysis field, we suggest you first read the Echo Nest
 <tr>
 <td>tempo</td>
 <td>float</td>
-<td></td>
+<td>estimated tempo in BPM</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>
 <td>time signature</td>
 <td>int</td>
-<td></td>
+<td>estimate of number of beats per bar, e.g. 4</td>
 <td><a href='http://developer.echonest.com/docs/v4/track.html'>url</a></td>
 </tr>
 <tr>

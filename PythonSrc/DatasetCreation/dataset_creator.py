@@ -1004,7 +1004,7 @@ def create_step60(maindir,mbconnect=None,maxsongs=100,nfilesbuffer=0):
         # CLOSED CREATION?
         if CREATION_CLOSED:
             break
-        if cnt_artists % 5 == 0:
+        if cnt_artists % 10 == 0:
             nh5 = count_h5_files(maindir)
             print 'found',nh5,'h5 song files in',maindir; sys.stdout.flush()
             if nh5 > TOTALNFILES - nfilesbuffer:

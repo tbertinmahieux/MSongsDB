@@ -549,8 +549,7 @@ find 100 artists, download as many songs as possible</li>
 <li>Get the songs and artists from the CAL500 dataset</li>
 <li>Get 'extreme' songs from the Echo Nest search params, e.g. songs
 with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
-<li>Random walk on similar artists starting from the 100 most similar ones</li>
-<li>Finish up with a list of random existing track ID to select from</li>
+<li>Random walk on similar artists starting from the 100 most familiar ones</li>
 </ol>
 The number of songs was approximately 8950 after step 1), step 3) added
 around 15000 songs, and we add approx. 500000 songs before starting step 5.

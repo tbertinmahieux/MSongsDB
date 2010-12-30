@@ -141,7 +141,7 @@ if __name__ == '__main__':
     # tmp files
     ntmpfiles = get_all_files(maindir,ext='.h5_tmp')
     print 'we found',ntmpfiles,'temp files'
-    if ntmpfiles > 0: print 'WATCHOUT FO TMP FILES!!!!'
+    if ntmpfiles > 0: print 'WATCHOUT FOR TMP FILES!!!!'
 
     # find modif date for all files, and pop out the most recent ones
     get_all_files_modif_date(maindir)

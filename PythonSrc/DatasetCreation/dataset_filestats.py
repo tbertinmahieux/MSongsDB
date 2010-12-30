@@ -138,6 +138,11 @@ if __name__ == '__main__':
     print 'we found',nfiles,'files in total'
     print 'average number of files per leaf:',nfiles * 1. / n_leaves
 
+    # tmp files
+    ntmpfiles = get_all_files(maindir,ext='.h5_tmp')
+    print 'we found',ntmpfiles,'temp files'
+    if ntmpfiles > 0: print 'WATCHOUT FO TMP FILES!!!!'
+
     # find modif date for all files, and pop out the most recent ones
     get_all_files_modif_date(maindir)
     print '******************************************************'

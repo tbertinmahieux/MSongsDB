@@ -117,6 +117,22 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         die_with_usage()
 
+    trimdryrun = False
+    trim = False
+    while True:
+        if sys.argv[1] == '-trimdryrun':
+            trimdryrun = True
+            trim = False
+        elif sys.argv[1] == '-trim':
+            if trimdryrun:
+                pass
+            else:
+                trim = True
+                print 'WE TRIM FOR REAL!!!!'
+        else:
+            break
+        sys.argv.pop(1)
+
     maindir = sys.argv[1]
 
     # number of leaves
@@ -139,17 +155,25 @@ if __name__ == '__main__':
     print 'average number of files per leaf:',nfiles * 1. / n_leaves
 
     # tmp files
-    ntmpfiles = get_all_files(maindir,ext='.h5_tmp')
+    ntmpfiles = len( get_all_files(maindir,ext='.h5_tmp') )
     print 'we found',ntmpfiles,'temp files'
     if ntmpfiles > 0: print 'WATCHOUT FOR TMP FILES!!!!'
 
     # find modif date for all files, and pop out the most recent ones
     get_all_files_modif_date(maindir)
     print '******************************************************'
-    print 'most recent files are:'
-    for k in range(5):
-        t,f = MODIFQUEUE.get_nowait()
-        print f,'(',time.ctime(-t),')'
-
+    if not trim and not trimdryrun:
+        print 'most recent files are:'
+        for k in range(5):
+            t,f = MODIFQUEUE.get_nowait()
+            print f,'(',time.ctime(-t),')'
+    elif trim or trimdryrun:
+        ntoomany = nfiles - 1000000
+        print 'we have',ntoomany,'too many files.'
+        for k in range(ntoomany):
+            t,f = MODIFQUEUE.get_nowait()
+            print f,'(',time.ctime(-t),')'
+            if trim:
+                os.remove(f)
     # done
     print '******************************************************'

@@ -1,6 +1,6 @@
 <div class="post">
 <h2>General / Requirements</h2><p>
-GET ALL THE CODE FROM <a href="https://github.com/tb2332/MSongsDB">GiTHUB</a>
+GET ALL THE CODE FROM <a href="https://github.com/tb2332/MSongsDB">GITHUB</a>
 (you don't need git installed).<p>
 Files are in HDF5 format. Why? See FAQ.
 Except for new MATLABs (2009b-), you need the

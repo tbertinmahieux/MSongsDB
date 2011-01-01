@@ -41,3 +41,66 @@ except ImportError:
     sys.exit(0)
 
 
+def die_with_usage():
+    """ HELP MENU """
+    print 'list_all_tracks_from_db.py'
+    print '   by T. Bertin-Mahieux (2010) Columbia University'
+    print 'Code to create a list of all tracks in the dataset as'
+    print 'a text file. Assumes track_metadata.db already exists.'
+    print "Format is (IDs are EchoNest's):"
+    print 'trackID<SEP>songID<SEP>artist name<SEP>song title'
+    print ' '
+    print 'usage:'
+    print '   python list_all_tracks_from_db.py <track_metadata.db> <output.txt>'
+    print ''
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+
+    # help menu
+    if len(sys.argv) < 3:
+        die_with_usage()
+
+    # params
+    dbfile = sys.argv[1]
+    output = sys.argv[2]
+
+    # sanity check
+    if not os.path.isfile(dbfile):
+        print 'ERROR: can not find database:',dbfile
+        sys.exit(0)
+    if os.path.exists(output):
+        print 'ERROR: file',output,'exists, delete or provide a new name'
+        sys.exit(0)
+
+    # start time
+    t1 = time.time()
+
+    # connect to the db
+    conn = sqlite3.connect(dbfile)
+
+    # get what we want
+    q = 'SELECT track_id,song_id,artist_name,title FROM songs'
+    res = c.execute(q)
+    alldata = res.fetchall() # takes time and memory!
+    
+    # close connection to db
+    conn.close()
+
+    # sanity check
+    if len(alldata) != 1000000:
+        print 'NOT A MILLION TRACKS FOUND!'
+
+    # write to file
+    f = open(output,'w')
+    for data in alldata:
+        f.write(data[0]+'<SEP>'+data[1]+'<SEP>')
+        f.write( data[2].encode('utf-8') +'<SEP>')
+        f.write( data[3].encode('utf-8') + '\n' )
+    f.close()
+
+    # done
+    t2 = time.time()
+    stimelength = str(datetime.timedelta(seconds=t2-t1))
+    print 'file',output,'created in',stimelength

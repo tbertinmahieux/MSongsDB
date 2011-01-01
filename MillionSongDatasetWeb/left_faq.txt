@@ -601,7 +601,7 @@ Our university server isn't perfect either.<p>
 <a name='wherehelp'><h3>Where can I get help?</h3></a>
 There is no mailing or user blog so far. Simply contact one
 of the creator at LabROSA or the Echo Nest, see the "contact us"
-section. <a href="mailto:tb2332@columbia.edu">Thierry Bertin-Mahieux</a> 
+tab. <a href="mailto:tb2332@columbia.edu">Thierry Bertin-Mahieux</a> 
 is a good first try.<p>
 
 <a name='getinvolved'><h3>How can I get involved?</h3></a>

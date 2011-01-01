@@ -7,7 +7,7 @@ Except for new MATLABs (2009b-), you need the
 <a href="http://www.hdfgroup.org/downloads/">HDF5 library</a> 
 to use the dataset .
 Other requirements depend on the language you use, see the following
-section. Note that in Ubuntu, install everything (including optional packages) with:<p>
+section. For Ubuntu, install everything (including optional packages) with:<p>
 <small>
 <div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 0px;">
 <div style="margin-left: 25px;">

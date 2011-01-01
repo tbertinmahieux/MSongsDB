@@ -528,7 +528,11 @@ of code that let's you easily crawl through the whole data.<p>
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
 Gordon! more to come on this.<br>
 We also created (and you have the code to recreate / adapt them)
-three SQLite databases (available here ?????, here ???? and here ????). The
+three SQLite databases (available 
+<a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">here</a>, 
+<a href="http://www.ee.columbia.edu/~thierry/artist_term.db">here</a> and
+<a href="http://www.ee.columbia.edu/~thierry/artist_similarity.db">here</a>). 
+The
 first one gives most metadata per track. It is usefull, for
 instance, to get all tracks from the same artist as some song file.
 The second one gives terms per artist. You can use it to get the

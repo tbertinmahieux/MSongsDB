@@ -32,14 +32,16 @@ contained in it, here is a text file with that information
 <p>
 <h2>Useful Additional Files</h2><p>
 To help you get started we provide additional files, mostly different
-reverse indecies:
+reverse indices:
 <ol>
 <li>List of all track Echo Nest ID
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_tracks.txt">here</a>.
 The format is:<br>
 track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title
 </li>
-<li>List of all artist ID ????. The format is:<br>
+<li>List of all artist ID
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_artists.txt">here</a>.
+    The format is:<br>
     artist id&lt;SEP&gt;artist mbid&lt;SEP&gt;track id&lt;SEP&gt;artist name<br>
     The code to recreate that file is available
     <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/NamesAnalysis/list_all_artists.py">
@@ -52,8 +54,15 @@ track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title
 <li>List of all unique artist musicbrainz tags
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_mbtags.txt">here</a>.
 </li>
-<li>SQLite database containing most metadata about each track ????</li>
-<li>SQLite database linking artist ID to the most used tags ????</li>
+<li>SQLite database containing most metadata about each track 
+<a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">here</a>.
+</li>
+<li>SQLite database linking artist ID to the tags (Echo Nest and musicbrainz ones)
+<a href="http://www.ee.columbia.edu/~thierry/artist_term.db">here</a>.
+</li>
+<li>SQLite database containing similarity among artists
+<a href="http://www.ee.columbia.edu/~thierry/artist_similarity.db">here</a>.
+</li>
 </ol>
 The code to create these lists is usually available in one of the different
 /Tasks_Demos/ folders when you download the code.

@@ -27,7 +27,8 @@ and we will figure out another way to do the transfer. For instance,
 we can bring an external drive at conferences (e.g. ISMIR, WASPAA, ICASSP, ...).
 <p>
 Note on the content of the dataset, if you just want a list of songs
-contained in it, here is a text file with that information: ????
+contained in it, here is a text file with that information
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_tracks.txt">here</a>.
 <p>
 <h2>Useful Additional Files</h2><p>
 To help you get started we provide additional files, mostly different

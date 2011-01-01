@@ -52,8 +52,8 @@ for all artists.<p>
 <li>1.000.000 songs / files</li>
 <li>273 GB of data</li>
 <li>44745 unique artists</li>
-<li>???? unique terms (Echo Nest tags)</li>
-<li>???? unique musicbrainz tags</li>
+<li>7643 unique terms (Echo Nest tags)</li>
+<li>2321 unique musicbrainz tags</li>
 <li>11 pastries lost in a related hackday</li>
 </ol>
 <p>

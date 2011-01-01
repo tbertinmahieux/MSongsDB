@@ -49,7 +49,7 @@ def die_with_usage():
     print 'mimic the program /Tasks_Demo/NamesAnalysis/list_all_artist.py'
     print 'but assumes the sqlite db track_metadata.py is available'
     print 'i.e. it takes a few second instead of a few hours!'
-    print 'to download track_metadata.py, see Million Song website'
+    print 'to download track_metadata.db, see Million Song website'
     print 'to recreate it, see create_track_metadata.py'
     print ''
     print 'usage:'

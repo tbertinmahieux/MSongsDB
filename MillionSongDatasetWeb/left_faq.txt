@@ -560,7 +560,7 @@ with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 </ol>
 The number of songs was approximately 8950 after step 1), step 3) added
 around 15000 songs, and we add approx. 500000 songs before starting step 5.
-For more techincal details, see "dataset creation" in "code" section.<p>
+For more techincal details, see "dataset creation" in "code" tab.<p>
 
 <a name='myaudio'><h3>Can I add my audio to the dataset?</h3></a>
 In the sense that you want your audio file to be analyzed and put in

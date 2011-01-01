@@ -191,7 +191,7 @@ def add_indices_to_db(conn,verbose=0):
     # might be redundant, we probably just need an index on term since the first
     # one can do the join search
     # samehting for (mbtag,artist_id)
-    q = "CREATE INDEX idx_term_artist_id ON artist_term ('term,'artist_id')"
+    q = "CREATE INDEX idx_term_artist_id ON artist_term ('term','artist_id')"
     if verbose > 0: print q
     c.execute(q)
     q = "CREATE INDEX idx_mbtag_artist_id ON artist_mbtag ('mbtag','artist_id')"

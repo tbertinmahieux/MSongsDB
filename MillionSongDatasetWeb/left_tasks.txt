@@ -34,14 +34,16 @@ audio features and tags, therefore is a good set to compare algorithms
 on such tasks.
 <p>
 To get you started, download these indices, the list of unique
-tags ???? and the two databases (for track metadata ???? and for
-artist tags ????). From this, you can easily see which artist
-got what term, find all tracks from that artist, etc.
+terms (Echo Nest tags) <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_terms.txt">here</a>
+and the two databases (for track metadata <a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">here</a>
+and for artist tags <a href="http://www.ee.columbia.edu/~thierry/artist_term.db">here</a>). 
+From this, you can easily see which artist got what term, find all tracks from that artist, etc.
 <p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>
 This is a simple supervised task easy to set up with the dataset.
 From audio features, probably "segments_timbre", and possibly some
+
 other information like "energy", "danceability", etc, try to predict
 the year or decade when this song was released.<p>
 
@@ -60,9 +62,9 @@ is the clustering similar? What is "the most typical song title"
 imagineable. See 
 <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/NamesAnalysis/">
 NamesAnalysis</a> folder for sample python code.<br>
-Not that these scripts can
+Note that these scripts can
 be useful for other tasks, for instance to create the list of all artists
-in the dataset.<p>
+in the dataset (that is how we created the file unique_artists.txt).<p>
 <small>
 <div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 40px;">
 <div style="margin-left: 25px;">
@@ -71,7 +73,12 @@ python list_all_artists.py DATASETDIR allartists.txt
 </pre>
 </div>
 </div>
-</small>
+</small><p>
+The previous code goes through the million songs, which can take hours.
+A smarter code would use the SQLite database track_metadata.db which already
+summarizes most metadata from all tracks. See for instance
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/SQLite/list_all_artists_from_db.py">
+list_all_artists_from_db.py</a>.
 <p>
 
 <a name='preview'><h3>Preview audio</h3></a>

@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
     # get what we want
     q = 'SELECT track_id,song_id,artist_name,title FROM songs'
-    res = c.execute(q)
+    res = conn.execute(q)
     alldata = res.fetchall() # takes time and memory!
     
     # close connection to db

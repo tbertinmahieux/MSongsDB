@@ -39,6 +39,11 @@ and the two databases (for track metadata <a href="http://www.ee.columbia.edu/~t
 and for artist tags <a href="http://www.ee.columbia.edu/~thierry/artist_term.db">here</a>). 
 From this, you can easily see which artist got what term, find all tracks from that artist, etc.
 <p>
+NOTE: we already provide a train/test split among artists! Please use it
+so your results are more easily comparable. The two files come with the
+code: <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/artists_train.txt">train</a> and 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/artists_test.txt">test</a>.
+<p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>
 This is a simple supervised task easy to set up with the dataset.

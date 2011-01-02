@@ -5,3 +5,7 @@
 
 This folder contains every code related to automatic tagging using
 Echo Nest artist terms.
+
+A SPLIT BETWEEN TRAIN AND TEST ARTISTS HAS BEEN MADE.
+Please report results using this split, so they are easily comparable.
+File are: artists_train.txt and artists_test.txt

@@ -61,4 +61,55 @@ if __name__ == '__main__':
     output_train = sys.argv[2]
     output_test = sys.argv[3]
 
+    # sanity checks
+    if not os.path.isfile(dbfile):
+        print 'ERROR: database not found:',dbfile
+        sys.exit(0)
+    if os.path.exists(output_train):
+        print 'ERROR:',output_train,'already exists! delete or provide a new name'
+        sys.exit(0)
+    if os.path.exists(output_test):
+        print 'ERROR:',output_test,'already exists! delete or provide a new name'
+        sys.exit(0)
 
+
+    # open connection
+    conn = sqlite3.connect(dbfile)
+
+    # get all terms
+    q = "SELECT DISTINCT term FROM terms ORDER BY term" # DISTINCT useless
+    res = conn.execute(q)
+    allterms = map(lambda x: x[0],res.fetchall())
+    print 'found',len(allterms),'distinct terms'
+
+    # get frequency
+    term_freq = {}
+    for t in allterms:
+        term_freq[t] = 0
+    q = "SELECT term FROM artist_term"
+    res = conn.execute(q)
+    allterms_nonunique = map(lambda x: x[0],res.fetchall())
+    for t in allterms_nonunique:
+        term_freq[t] += 1
+    ordered_terms = sorted(term_freq, key=term_freq.__getitem__, reverse=True)
+    print ordered_terms[:4]
+
+    # try plotting
+    try:
+        import pylab as P
+        P.figure()
+        P.plot(map(lambda t: term_freq[t],ordered_terms[:500]))
+        P.title('Frequencies of the 500 most used terms')
+        P.show(False)
+    except ImportError:
+        print 'cant plot frequencies, no pylab?'
+
+    # close connection
+    conn.close()
+
+    # keep frequency plot open
+    try:
+        import pylab as P
+        P.show(True)
+    except ImportError:
+        pass

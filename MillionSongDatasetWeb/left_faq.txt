@@ -457,7 +457,7 @@ go to tb2332@columbia.edu). In short, <a href="http://www.hdfgroup.org/HDF5/">HD
 is a format developped by NASA to handle 1) large 2) heterogeneous 3)
 hierarchical datasets. The data can be compressed (10%-15% more that matfiles), 
 and the I/O speed is still impressive. Also note that the core library comes free of charge and
-wrappers exist in most languages (see "code" section).<br>
+wrappers exist in most languages (see "code" tab).<br>
 Is is perfect? No. Does it make more sense that 1M zipped json files or
 matfiles? Yes. 
 Note that the new matfile format (v7.3) is 
@@ -504,7 +504,7 @@ or the echonest ID.<p>
 <a name='visualize'><h3>How can I visualize a file?</h3></a>
 We mean quickly glance at the content of a file.
 Once again, it depends on the language you want to use, and you
-need the HDF5 library installed (see "code" section). In python
+need the HDF5 library installed (see "code" tab). In python
 (with <a href='http://www.pytables.org/'>pytables</a> installed), 
 use <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/display_song.py">
 display_songs.py</a>. In Java, you can use the great tool 
@@ -522,7 +522,7 @@ extension ".h5".<p>
 
 <a name='whatcanido'><h3>What can I do with this data?</h3></a>
 Surprise us! But you might want a take a look at the "tasks"
-section to get inspired. You will also find there some snippets
+tab to get inspired. You will also find there some snippets
 of code that let's you easily crawl through the whole data.<p>
 
 <a name='howtoorganize'><h3>How do I get it organized?</h3></a>
@@ -539,8 +539,9 @@ The second one gives terms per artist. You can use it to get the
 full list of artists, full list of tags, the usage of tags, etc.
 The third one summarizes artist similarity. In particular, it only lists
 artists that actually are in the dataset.<br>
-For demos using this databases with SQL queries in python, see
-demo_*.py in <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/SQLite">
+For demos using these databases with SQL queries in python, see
+demo_*.py in the
+<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/SQLite">
 SQLite folder</a>.
 <p>
 

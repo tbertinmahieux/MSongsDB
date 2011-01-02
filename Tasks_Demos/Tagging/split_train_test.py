@@ -102,7 +102,16 @@ if __name__ == '__main__':
         P.title('Frequencies of the 500 most used terms')
         P.show(False)
     except ImportError:
-        print 'cant plot frequencies, no pylab?'
+        print 'can not plot term frequencies, no pylab?'
+
+    # print basic stats
+    print 'term pos\tterm\tfrequency'
+    print '0\t'+ordered_terms[0]+'\t'+term_freq[ordered_term[0]]
+    print '50\t'+ordered_terms[50]+'\t'+term_freq[ordered_term[50]]
+    print '100\t'+ordered_terms[100]+'\t'+term_freq[ordered_term[100]]
+    print '200\t'+ordered_terms[200]+'\t'+term_freq[ordered_term[200]]
+    print '300\t'+ordered_terms[300]+'\t'+term_freq[ordered_term[300]]
+    print '500\t'+ordered_terms[500]+'\t'+term_freq[ordered_term[500]]
 
     # close connection
     conn.close()

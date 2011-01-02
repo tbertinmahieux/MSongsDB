@@ -1,12 +1,29 @@
+MILLION SONG DATASET
 
-WORK IN PROGRESS
+http://labrosa.ee.columbia.edu/projects/millionsong/
 
-The long term goal is to have a large collection of music
-and features for MIR research.
+January 2011
 
-Project still not well defined.
+************************************************************
 
-If you have any question or want to collaborate:
+The dataset contains the analysis and metadata for a million songs.
+The goal is to provide a large dataset for researchers to report results 
+on, hence encouraging algorithms that scale to commercial sizes.
 
+Most of the information is provided by The Echo Nest.
+The dataset is the result of a collaboration between The Echo Nest
+and LabROSA at Columbia University.
+
+Most of the data is licensed the same way as Echo Nest's API.
+The code is under GNU public license.
+See LICENSE for details.
+
+Most details and instructions on how to get the dataset can be found
+on the project's website:
+http://labrosa.ee.columbia.edu/projects/millionsong/
+
+************************************************************
+
+If you have any question or comment:
 Thierry Bertin-Mahieux
 tb2332@columbia.edu

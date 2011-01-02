@@ -51,10 +51,11 @@ def die_with_usage():
     print '  creates a list of unique tags as fast as possible'
     print '  actually, this code just extracts it from a SQLite db'
     print 'USAGE'
-    print '  python get_unique_terms.py <artist_term.db> <output.txt>'
+    print '  python get_unique_terms_from_db.py <artist_term.db> <unique_terms.txt> <unique_mbtags.txt>'
     print 'PARAM'
     print '   artist_term.db    - SQLite database of artists/terms'
-    print '   output.txt        - result text file, one tag per line'
+    print '   unique_terms.txt  - result text file, one term per line'
+    print '   unique_mbtags.txt - result text file, one mbtag per line'
     print ''
     print 'if you do not have the artist_term.db SQLite, check the slower code:'
     print '                        /Tasks_Demos/NamesAnalysis/get_unique_terms.py'
@@ -71,28 +72,42 @@ if __name__ == '__main__':
 
     # params
     dbfile = os.path.abspath(sys.argv[1])
-    output = os.path.abspath(sys.argv[2])
+    output_term = os.path.abspath(sys.argv[2])
+    output_mbtag = os.path.abspath(sys.argv[3])
 
     # sanity checks
     if not os.path.isfile(dbfile):
         print 'ERROR: database not found:',dbfile
         sys.exit(0)
-    if os.path.exists(output):
-        print 'ERROR:',output,'already exists! delete or provide a new name'
+    if os.path.exists(output_term):
+        print 'ERROR:',output_term,'already exists! delete or provide a new name'
+        sys.exit(0)
+    if os.path.exists(output_mbtag):
+        print 'ERROR:',output_mbtag,'already exists! delete or provide a new name'
         sys.exit(0)
 
     # query the database
-    q = "SELECT DISTINCT term FROM terms ORDER BY term" # DISTINCT useless
+    q1 = "SELECT DISTINCT term FROM terms ORDER BY term" # DISTINCT useless
+    q2 = "SELECT DISTINCT mbtag FROM mbtags ORDER BY mbtag" # DISTINCT useless
     conn = sqlite3.connect(dbfile)
     c = conn.cursor()
-    res = c.execute(q)
-    alltags = map(lambda x: x[0],res.fetchall())
+    res = c.execute(q1)
+    allterms = map(lambda x: x[0],res.fetchall())
+    res = c.execute(q2)
+    allmbtags = map(lambda x: x[0],res.fetchall())
     c.close()
     conn.close()
-    print 'found',len(alltags),'unique terms.'
+    print 'found',len(allterms),'unique terms.'
+    print 'found',len(allmbtags),'unique mbtags.'
+    
+    # write to file terms
+    f = open(output_term,'w')
+    for t in allterms:
+        f.write(t.encode('utf-8') + '\n')
+    f.close()
 
-    # write to file
-    f = open(output,'w')
-    for t in alltags:
-        f.write(t + '\n')
+    # write to file mbtags
+    f = open(output_mbtag,'w')
+    for t in allmbtags:
+        f.write(t.encode('utf-8') + '\n')
     f.close()

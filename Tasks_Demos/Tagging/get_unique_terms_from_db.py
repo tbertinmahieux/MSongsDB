@@ -46,7 +46,7 @@ except ImportError:
 def die_with_usage():
     """ HELP MENU """
     print 'get_unique_terms_from_db.py'
-    print '  by T. Bertin-Mahieux (2010) Colubia University'
+    print '  by T. Bertin-Mahieux (2010) Columbia University'
     print 'GOAL'
     print '  creates a list of unique tags as fast as possible'
     print '  actually, this code just extracts it from a SQLite db'

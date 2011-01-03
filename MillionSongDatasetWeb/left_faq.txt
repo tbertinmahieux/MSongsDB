@@ -450,7 +450,16 @@ There is a slight possibility that in the future, Echo Nest could run
 another feature extractor on the songs, and release the result as an add-on
 to the dataset. But as you can imagine the work and time involved for
 re-analyzing a million song, such feature would need a lot of ISMIR/ICASSP/...
-papers to back its merit, plus be extremely fast and reliable to compute.
+papers to back its merit, plus be extremely fast and reliable to compute.<br>
+That said, note that you can use services like 
+<a href="http://www.7digital.com/"> 7digital</a> or 
+<a href="http://www.playme.com/">playme</a> to preview a song,
+a demo comes with the code. 
+<a href="http://listen.grooveshark.com/">Grooveshark</a> is also very
+powerful, but probably illegal...<br>
+If you do have audio, you can analyze it and
+turn it into the same format as the rest of this dataset (see this
+<a href='#myaudio'>help section</a>).
 <p>
 
 <a name='whatisformat'><h3>What is the format?</h3></a>

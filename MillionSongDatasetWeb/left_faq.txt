@@ -58,6 +58,7 @@ for all artists.<p>
 <li>7.643 unique terms (Echo Nest tags)</li>
 <li>2.321 unique musicbrainz tags</li>
 <li>2.201.916 asymmetric similarity relationships</li>
+<li>1922, first dated song</li>
 <li>11 pastries lost in a related hackday</li>
 </ol>
 <p>

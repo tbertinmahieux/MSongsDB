@@ -37,7 +37,8 @@ reverse indices:
 <li>List of all track Echo Nest ID
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_tracks.txt">here</a>.
 The format is:<br>
-track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title
+track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title<br>
+(Careful, large to open in a web browser)
 </li>
 <li>List of all artist ID
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_artists.txt">here</a>.

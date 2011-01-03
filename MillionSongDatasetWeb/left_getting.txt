@@ -1,6 +1,6 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
-The dataset is around 300 gb, which makes more idfficult to share. 
+The dataset is around 300 gb, which makes it difficult to share. 
 Below is a subset of 10000 random songs (1.8 gb) so you can get started.
 <p>
 <a href="http://www.adrive.com/public/19e134041e55d794ee849b7cf03c5ae7423ee16a6b1f0a0c54f977300e8c525f.html">MILLION SONG SUBSET</a> (the link might

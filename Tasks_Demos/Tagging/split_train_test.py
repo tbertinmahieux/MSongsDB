@@ -127,7 +127,7 @@ def die_with_usage():
     print '       train.txt    - list of Echo Nest artist ID'
     print '        test.txt    - list of Echo Nest artist ID'
     print ''
-    print 'With the current settings, we get 4699 out of 44745 artists in the test set.'
+    print 'With the current settings, we get 4699 out of 44745 artists in the test set, corresponding to 122125 test tracks.'
     sys.exit(0)
 
 

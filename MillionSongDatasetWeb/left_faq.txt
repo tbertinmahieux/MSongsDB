@@ -12,6 +12,8 @@
 <a href='#gettingdataset'>How to get the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#notapi'>Why is it not an API?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#writeforaudio'>Can I write you to get the audio privately?</a><br>
 <a href='#whatisformat'>What is the format?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#hdfwhat'>HDF what?</a><br>
@@ -32,6 +34,7 @@
 <a href='#website'>Why this website doesn't load sometimes?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><br>
 <a href='http://thefullfool.files.wordpress.com/2010/09/wheres-waldo1.jpg'>Where is Waldo?</a><br>
+<a href='#otherdata'>What are other large datasets?</a><br>
 <a href='#getinvolved'>How can I get involved?</a><p>
 
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
@@ -440,6 +443,16 @@ That being said, this dataset and API can be complementary. This is why
 we made sure we provided enough metadata such as musicbrainz ID so everyone
 can link this data to other existing resources.<p>
 
+<a name='writeforaudio'><h3>Can I write you to get the audio privately?</h3></a>
+Sorry, we can't give the audio. LabROSA folks just don't have it.
+Echo Nest probably has access to some of it, but it is licensed.<br>
+There is a slight possibility that in the future, Echo Nest could run
+another feature extractor on the songs, and release the result as an add-on
+to the dataset. But as you can imagine the work and time involved for
+re-analyzing a million song, such feature would need a lot of ISMIR/ICASSP/...
+papers to back its merit, plus be extremely fast and reliable to compute.
+<p>
+
 <a name='whatisformat'><h3>What is the format?</h3></a>
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
@@ -604,6 +617,42 @@ There is no mailing or user blog so far. Simply contact one
 of the creator at LabROSA or the Echo Nest, see the "contact us"
 tab. <a href="mailto:tb2332@columbia.edu">Thierry Bertin-Mahieux</a> 
 is a good first try.<p>
+
+<a name='otherdata'><h3>What are other large datasets?</h3></a>
+We mention some other sources of data related to Music Information
+Retrieval research. THIS IS NOT AN EXHAUSTIVE LIST! If you want your
+dataset to be included here, send <a href='mailto:tb2332@columbia.edu'>me</a> 
+an email.<br>
+Tzanetakis maintains <a href="http://marsyas.info/download/data_sets">
+two datasets</a> including the famous GZTAN which is now considered rather
+small. <a href="http://tagatune.org/Magnatagatune.html">Magnatagatune</a>
+is one of the largest dataset the provides audio and tag information.
+Also note the very important 
+<a href="http://staff.aist.go.jp/m.goto/RWC-MDB/">RWC music database</a>.
+Other tagging / genre datasets include 
+<a href="http://cosmal.ucsd.edu/cal/projects/AnnRet/">CAL500</a> and
+the <a href="http://www.ppgia.pucpr.br/~silla/lmd/index.html">
+latin music database</a>.<br>
+Regarding recommendation, the new standard is probably
+<a href="http://webscope.sandbox.yahoo.com/">Yahoo Music Ratings</a>.
+Paul Lamere also maintains a 2007 crawl of some 
+<a href="http://musicmachinery.com/2010/11/10/lastfm-artisttags2007/">
+Last.fm data</a><br>
+For metadata, nothing compares to <a href="http://musicbrainz.org/">
+musicbrainz</a>.<br>
+For structure analysis, Chris Harte annotated the Beatles, check his
+<a href="http://ismir2005.ismir.net/proceedings/1080.pdf">paper</a> 
+and write him to obtain the data.<br>
+Resources that we are less familiar with but are worth checking out include
+<a href="http://salami.music.mcgill.ca/">SALAMI</a>,
+<a href="http://www.soundsoftware.ac.uk/">soundsoftware</a> and
+<a href="http://www.omras2.org/">OMRAS2</a>. Don't forget the actual
+<a href="http://developer.echonest.com">Echo Nest API</a>.<br>
+On a more general machine learning note, <a href="http://infochimps.com/">
+infochimps</a> is an incredible source of data. Also, to compare algorithms,
+websites like <a href="http://mlcomp.org/">MLcomp</a> and 
+<a href="http://www.kaggle.com/">kaggle</a> are extremely useful.
+<p>
 
 <a name='getinvolved'><h3>How can I get involved?</h3></a>
 Simple! Use the dataset and share your code. We will be happy

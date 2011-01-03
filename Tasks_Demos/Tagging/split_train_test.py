@@ -121,11 +121,12 @@ def die_with_usage():
     print 'GOAL'
     print '  split the list of artists into train and test based on terms (Echo Nest tags).'
     print 'USAGE'
-    print '  python get_unique_terms_from_db.py <artist_term.db> <train.txt> <test.txt>'
+    print '  python get_unique_terms_from_db.py <artist_term.db> <train.txt> <test.txt> <top_terms.txt>'
     print 'PARAMS'
     print '  artist_term.db    - SQLite database containing terms per artist'
     print '       train.txt    - list of Echo Nest artist ID'
     print '        test.txt    - list of Echo Nest artist ID'
+    print '   top_terms.txt    - list of top terms (top 300)'
     print ''
     print 'With the current settings, we get 4699 out of 44745 artists in the test set, corresponding to 122125 test tracks.'
     sys.exit(0)
@@ -134,13 +135,14 @@ def die_with_usage():
 if __name__ == '__main__':
 
     # help menu
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 5:
         die_with_usage()
 
     # params
     dbfile = sys.argv[1]
     output_train = sys.argv[2]
     output_test = sys.argv[3]
+    output_top_terms = sys.argv[4]
 
     # sanity checks
     if not os.path.isfile(dbfile):
@@ -152,7 +154,10 @@ if __name__ == '__main__':
     if os.path.exists(output_test):
         print 'ERROR:',output_test,'already exists! delete or provide a new name'
         sys.exit(0)
-
+    if os.path.exists(output_top_terms):
+        print 'ERROR:',output_top_terms,'already exists! delete or provide a new name'
+        sys.exit(0)
+        
 
     # open connection
     conn = sqlite3.connect(dbfile)
@@ -271,6 +276,12 @@ if __name__ == '__main__':
     f = open(output_train,'w')
     for a in train_artists_list:
         f.write(a+'\n')
+    f.close()
+
+    # we print top terms
+    f = open(output_top_terms,'w')
+    for t in topterms:
+        f.write(t.encode('utf-8')+'\n')
     f.close()
 
     # keep frequency plot open

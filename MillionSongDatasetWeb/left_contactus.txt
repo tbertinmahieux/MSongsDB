@@ -12,7 +12,7 @@ Below are the participant names per organization. The links on the side should h
 <p>
 Please cite us using the following publication:<br>
 (submitted, write us for details)
-
+<p>
 Additonally, you can cite the website:<p>
 <small>
 <div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 15px;">

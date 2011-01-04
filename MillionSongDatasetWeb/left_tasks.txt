@@ -39,10 +39,14 @@ and the two databases (for track metadata <a href="http://www.ee.columbia.edu/~t
 and for artist tags <a href="http://www.ee.columbia.edu/~thierry/artist_term.db">here</a>). 
 From this, you can easily see which artist got what term, find all tracks from that artist, etc.
 <p>
-NOTE: we already provide a train/test split among artists! Please use it
+MORE DETAILS: we already provide a train/test split among artists! Please use it
 so your results are more easily comparable. The two files come with the
 code: <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/artists_train.txt">train</a> and 
 <a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/artists_test.txt">test</a>.
+This split is based on the 300 most used terms in the dataset, ordered list of these terms is available 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/top_terms.txt">here</a>.
+The artists in the test set have 122125 tracks in the dataset (~12%). Overall, 43943 artists out of 44745 have
+terms associated with them.
 <p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>

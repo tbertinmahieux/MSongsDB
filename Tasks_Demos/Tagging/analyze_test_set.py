@@ -54,11 +54,16 @@ def die_with_usage():
     print 'automatic tagging based on tag stats (no audio analysis)'
     print ''
     print 'USAGE'
-    print '   python analyze_test_set.py <artist_test.txt> <track_metadata.db> <artist_term.db>'
+    print '   python analyze_test_set.py [FLAGS] <artist_test.txt> <track_metadata.db> <artist_term.db>'
     print 'PARAM'
     print '    artist_test.txt  - list of artists in the test set'
     print '  track_metadata.db  - SQLite database with metadata per track'
     print '     artist_term.db  - SQLite database with Echo Nest terms per artist'
+    print 'FLAG'
+    print '   -predictionlen n  - number of terms we use to tag every test artist.'
+    print '                       interesting to find the best F-1 score'
+    print '                       By default, we use the average number of top300 terms'
+    print '                       of artists in train se, which is 19.'
     sys.exit(0)
 
 
@@ -67,6 +72,16 @@ if __name__ == '__main__':
     # help menu
     if len(sys.argv) < 4:
         die_with_usage()
+
+    # flags
+    forced_avgnterm = -1
+    while True:
+        if sys.argv[1] == '-predictionlen':
+            forced_avgnterm = int(sys.argv[2])
+            sys.argv.pop(1)
+        else:
+            break
+        sys.argv.pop(1)
 
     # params
     artist_test_file = sys.argv[1]
@@ -170,6 +185,9 @@ if __name__ == '__main__':
 
     # tag test artists with the top avgnterm tags
     avgnterm = int(avgnterm)
+    if forced_avgnterm >= 0:
+        print 'INSTEAD OF',avgnterm,'TERMS, WE USE PREDICTIONS OF LENGTH',forced_avgnterm
+        avgnterm = forced_avgnterm
     tagging_prediction = top300[:avgnterm]
     print 'METHOD: we will tag every test artists with the top',avgnterm,'terms, i.e.:'
     print map(lambda x: x.encode('utf-8'),tagging_prediction)
@@ -185,14 +203,20 @@ if __name__ == '__main__':
         q += " JOIN artist_term ON artist_term.artist_id=test_artists.artist_id"
         q += " WHERE artist_term.term="+encode_string(t)
         res = conn_at.execute(q)
-        acc_prop += res.fetchone()[0]
+        acc_prop += res.fetchone()[0] * 1. / len(test_artists)
     precision = acc_prop / 300.
     print 'precision is:',precision
 
     # measure recall
+    # - For terms in my tagging prediction, I retrieve every artists, therefore recall is 1.
+    # - For terms not in my tagging prediction, I retrieve no artists, therefore recall is 0.
+    recall = avgnterm / 300.
+    print 'recall is:',recall
+
+    # f-1 score
+    print 'F-1 score is:',(precision + recall)/2.
     
     # close connections
     conn_tm.close()
     conn_at.close()
-
-    raise NotImplementedError
+    

@@ -491,7 +491,7 @@ Still not happy? Here is a
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/hdf5_to_matfile.py">python code</a> 
 or a 
 <a href="https://github.com/tb2332/MSongsDB/blob/master/MatlabSrc/hdf5_to_matfile.m">matlab code</a> 
-to transform the data into matfiles (the latter is less tested, strings seem wrongly encoded).<p>
+to transform the data into matfiles (the latter is less tested, non-ASCII strings seem wrongly encoded).<p>
 
 
 <a name='aggregate'><h3>song / aggregate / summary files</h3></a>

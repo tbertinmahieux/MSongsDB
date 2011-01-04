@@ -174,7 +174,22 @@ if __name__ == '__main__':
     print 'METHOD: we will tag every test artists with the top',avgnterm,'terms, i.e.:'
     print map(lambda x: x.encode('utf-8'),tagging_prediction)
 
-    # measure precision / recall
+    # measure precision
+    # - For terms in my tagging prediction, I retrieve every test artists, therefore precision
+    # is the proportion of artists that were actually tagged with it.
+    # - For terms not in my tagging prediction, I retrieve no artists, therefore precision is
+    # set to 0
+    acc_prop = 0
+    for t in tagging_prediction:
+        q = "SELECT Count(test_artists.artist_id) FROM test_artists"
+        q += " JOIN artist_term ON artist_term.artist_id=test_artists.artist_id"
+        q += " WHERE artist_term.term="+encode_string(t)
+        res = conn_at.execute(q)
+        acc_prop += res.fetchone()[0]
+    precision = acc_prop / 300.
+    print 'precision is:',precision
+
+    # measure recall
     
     # close connections
     conn_tm.close()

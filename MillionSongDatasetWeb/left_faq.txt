@@ -39,7 +39,7 @@
 
 <a name='whatisindataset'><h3>What is in the dataset?</h3></a>
 Good question, a lot of things. Mostly, almost all information
-provided by the Echo Nest API which encompasses both metadata
+provided by The Echo Nest API which encompasses both metadata
 and audio analysis. Each file is for one track which corresponds
 to one song, one release and one artist. All the information about
 these four items (track, song, release, artist) are in every file
@@ -55,7 +55,7 @@ for all artists.<p>
 <li>1.000.000 songs / files</li>
 <li>273 GB of data</li>
 <li>44.745 unique artists</li>
-<li>7.643 unique terms (Echo Nest tags)</li>
+<li>7.643 unique terms (The Echo Nest tags)</li>
 <li>2.321 unique musicbrainz tags</li>
 <li>43.943 artists with at least one term</li>
 <li>2.201.916 asymmetric similarity relationships</li>
@@ -71,7 +71,7 @@ Another reference is the code:
 display_song.py</a>. If a field is displayed, the field exists
 and there should be a getter for it (if we forgot some in matlab or java,
 please let us know).
-For the analysis field, we suggest you first read the Echo Nest
+For the analysis field, we suggest you first read The Echo Nest
 <a href='http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation_2.2.pdf'>analyze documentation</a>.
 
 <table border="1">
@@ -420,7 +420,7 @@ Note that the field 'artist_mbid' is provided by the EchoNest API.
 <p>
 
 <a name='termsmbtags'><h3>Terms versus mbtags?</h3></a>
-Terms are the Echo Nest tags. They can come from a number of places, but
+Terms are The Echo Nest tags. They can come from a number of places, but
 mostly blogs as far as we understand it.<br>
 Mbtags are the musicbrainz tags, applied by humans to a particular artist.
 This explains why there are less of them (see 'mbtags_count'), but they
@@ -435,7 +435,7 @@ A subset is also available there to quickly get you started.
 
 <a name='notapi'><h3>Why is it not an API?</h3></a>
 API have a lot of merit, and most of this dataset was built using
-the Echo Nest API (with unlimited access). But APIs have not
+The Echo Nest API (with unlimited access). But APIs have not
 solved all research problems, and there is a place for such a fixed
 dataset. Everyone gets the same data and can report results on the same
 songs and features. Also, it facilitates the download. It is not because
@@ -447,8 +447,8 @@ can link this data to other existing resources.<p>
 
 <a name='writeforaudio'><h3>Can I write you to get the audio privately?</h3></a>
 Sorry, we can't give the audio. LabROSA folks just don't have it.
-Echo Nest probably has access to some of it, but it is licensed.<br>
-There is a slight possibility that in the future, Echo Nest could run
+The Echo Nest probably has access to some of it, but it is licensed.<br>
+There is a slight possibility that in the future, The Echo Nest could run
 another feature extractor on the songs, and release the result as an add-on
 to the dataset. But as you can imagine the work and time involved for
 re-analyzing a million song, such feature would need a lot of ISMIR/ICASSP/...
@@ -539,7 +539,7 @@ MATLAB should also let you see the content, try opening the file.
 <a name='filepaths'><h3>What are the file paths?</h3></a>
 We could not put a million files in one folder. Even a few thousands
 can slow your operating system significantly. We used the track ID
-from the Echo Nest which can be viewed as a hash code. It is always
+from The Echo Nest which can be viewed as a hash code. It is always
 TR+LETTERS+LETTERS&NUMBERS. The path is the 3rd, 4th, 5th letters
 from the track ID, the file itself is named after its track ID + the
 extension ".h5".<p>
@@ -570,16 +570,16 @@ SQLite folder</a>.
 <p>
 
 <a name='howcreated'><h3>How was the dataset created?</h3></a>
-Using the Echonest API and some info from a local copy of the
+Using The Echo Nest API and some info from a local copy of the
 musicbrainz server. Data was downloaded during December 2010.
 Choosing a million songs is surprisingly challenging. We followed these steps:
 <ol>
-<li>Get the most 'familiar' artists according to Echo Nest, download as many
+<li>Get the most 'familiar' artists according to The Echo Nest, download as many
 songs from them as possible</li>
-<li>Get the 200 top terms from Echo Nest, use each term as a descriptor to 
+<li>Get the 200 top terms from The Echo Nest, use each term as a descriptor to 
 find 100 artists, download as many songs as possible</li>
 <li>Get the songs and artists from the CAL500 dataset</li>
-<li>Get 'extreme' songs from the Echo Nest search params, e.g. songs
+<li>Get 'extreme' songs from The Echo Nest search params, e.g. songs
 with highest energy, lowest energy, tempo, song hotttnesss, ...</li>
 <li>Random walk on similar artists starting from the 100 most familiar ones</li>
 </ol>
@@ -596,7 +596,7 @@ should do the trick. Note that it uses pyechonest, and to have the
 full data ('year', 'mbtags' and 'mbtags_count'), you need a local
 musicbrainz server.<br>
 The code is not perfect for the following reasons: 1) it is unclear what
-happens if the song is not recognized by the Echo Nest fingerprinter and
+happens if the song is not recognized by The Echo Nest fingerprinter and
 2) even if it is recognized, if you upload audio associated with a song 
 in the dataset, there is no guarantee you get the same track ID.<p>
 
@@ -625,7 +625,7 @@ Our university server isn't perfect either.<p>
 
 <a name='wherehelp'><h3>Where can I get help?</h3></a>
 There is no mailing or user blog so far. Simply contact one
-of the creator at LabROSA or the Echo Nest, see the "contact us"
+of the creator at LabROSA or The Echo Nest, see the "contact us"
 tab. <a href="mailto:tb2332@columbia.edu">Thierry Bertin-Mahieux</a> 
 is a good first try.<p>
 
@@ -658,7 +658,7 @@ Resources that we are less familiar with but are worth checking out include
 <a href="http://salami.music.mcgill.ca/">SALAMI</a>,
 <a href="http://www.soundsoftware.ac.uk/">soundsoftware</a> and
 <a href="http://www.omras2.org/">OMRAS2</a>. Don't forget the actual
-<a href="http://developer.echonest.com">Echo Nest API</a>.<br>
+<a href="http://developer.echonest.com">The Echo Nest API</a>.<br>
 On a more general machine learning note, <a href="http://infochimps.com/">
 infochimps</a> is an incredible source of data. Also, to compare algorithms,
 websites like <a href="http://mlcomp.org/">MLcomp</a> and 

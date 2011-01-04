@@ -1,17 +1,17 @@
 <div class="post">
 <h2>About the Million Song Dataset</h2><p>
-The Million Song Dataset is a collaborative project between the Echo
+The Million Song Dataset is a collaborative project between The Echo
 Nest and LabROSA at Columbia University. The main goals are:<br />
 <ol>
 <li>providing a large dataset to encourage algorithms that scale to
 commercial sizes</li>
 <li>setting a reference dataset to report results on in academic
 papers</li>
-<li>easing the task of downloading a large dataset using Echo Nest's API</li>
+<li>easing the task of downloading a large dataset using The Echo Nest's API</li>
 <li>helping new researchers in the MIR field getting started</li>
 </ol>
 NO AUDIO IS PROVIDED HERE. The core of the dataset is the analysis of a
-million songs and metadata provided by the Echo Nest (note that audio
+million songs and metadata provided by The Echo Nest (note that audio
 samples can be fetched from services like 7digital, code provided).<br />
 </div>
 <div class="post">

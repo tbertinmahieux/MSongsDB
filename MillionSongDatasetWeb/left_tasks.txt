@@ -52,9 +52,15 @@ terms associated with them.
 <a name='yearrecognition'><h3>Year recognition</h3></a>
 This is a simple supervised task easy to set up with the dataset.
 From audio features, probably "segments_timbre", and possibly some
-
 other information like "energy", "danceability", etc, try to predict
 the year or decade when this song was released.<p>
+
+Some code has been created to get you started, see
+<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/YearPrediction">YearPrediction</a>
+folder. You also want to get (or recreate using track_metadata.db) the list
+of all tracks for which we have the year information (515576 tracks): 
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/tracks_per_year.txt">tracks_per_year.txt</a>.
+<p>
 
 <a name='imputation'><h3>Imputation of missing data</h3></a>
 Imputation of missing data in time series is

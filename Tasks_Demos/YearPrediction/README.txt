@@ -10,3 +10,9 @@ If you don't have it already, look at the Million Song website.
 This contains every tracks for which
 we have the year information (based on musicbrainz) in ascending order.
 The format is: year<SEP>track id<SEP>artist name<SEP>song title
+
+We also provide a train/test split of artists, so everyone reports
+similar results. In more details, prediction should be made for every
+song of every test artist!
+See artists_train.txt and artists_test.txt, and for details on how we
+did the split: split_train_test.py

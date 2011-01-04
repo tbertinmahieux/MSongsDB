@@ -59,7 +59,17 @@ Some code has been created to get you started, see
 <a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/YearPrediction">YearPrediction</a>
 folder. You also want to get (or recreate using track_metadata.db) the list
 of all tracks for which we have the year information (515576 tracks): 
-<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/tracks_per_year.txt">tracks_per_year.txt</a>.
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/tracks_per_year.txt">tracks_per_year.txt</a>. 
+So everyone reports comparable results, we provide a train/test split of
+the 28223 artists that have at least one song with year info. The 2822 test artists
+authored 51638 tracks with year information, about 10% of the whole set. We split according
+to artists, and not according to tracks, to avoid the producer effect. See 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/YearPrediction/split_train_test.py">
+split_train_test.py</a> for details, and 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/YearPrediction/artists_train.txt">train</a>
+and
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/YearPrediction/artists_test.txt">test</a>
+the actual split.
 <p>
 
 <a name='imputation'><h3>Imputation of missing data</h3></a>

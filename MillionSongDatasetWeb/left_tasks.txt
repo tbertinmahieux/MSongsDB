@@ -48,6 +48,14 @@ This split is based on the 300 most used terms in the dataset, ordered list of t
 The artists in the test set have 122125 tracks in the dataset (~12%). Overall, 43943 artists out of 44745 have
 terms associated with them.
 <p>
+FIRST BENCHMARK: if we take the average number of top 300 terms applied to train
+artists (19) and we tag every test artist with the top 19 terms of the dataset
+('rock', ..., 'ambient'), we get a precision of 2.3% and a recall of 6.3% (on average per
+term in the top 300). If we tag every test artist with all 300 terms, we get a precision of
+8.8%, a recall of 100%. There is room for improvement! See 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/Tasks_Demos/Tagging/analyze_test_set.py">
+analyze_test_set.py</a> to reproduce these results.
+<p>
 
 <a name='yearrecognition'><h3>Year recognition</h3></a>
 This is a simple supervised task easy to set up with the dataset.

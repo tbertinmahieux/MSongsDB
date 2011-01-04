@@ -54,6 +54,9 @@ track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title<br>
 <li>List of all unique artist musicbrainz tags
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/unique_mbtags.txt">here</a>.
 </li>
+<li> List of the 515.576 tracks for which we have the year information, ordered by year,
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/tracks_per_year.txt">here</a>.
+</li>
 <li>SQLite database containing most metadata about each track 
 <a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">here</a>.
 </li>

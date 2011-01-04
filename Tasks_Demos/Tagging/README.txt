@@ -1,4 +1,4 @@
-/Tasks_Demos/README.txt
+/Tasks_Demos/Tagging/README.txt
     by T. Bertin-Mahieux (2010) Columbia University
        tb2332@columbia.edu
 

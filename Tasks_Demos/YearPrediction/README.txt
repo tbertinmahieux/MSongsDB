@@ -5,6 +5,8 @@
 This folder contains all code related to year prediction, or era prediction
 in general.
 
-To start, look at tracks_per_year.txt. This contains every tracks for which
+To start, look at tracks_per_year.txt in the addiontal files. 
+If you don't have it already, look at the Million Song website.
+This contains every tracks for which
 we have the year information (based on musicbrainz) in ascending order.
 The format is: year<SEP>track id<SEP>artist name<SEP>song title

@@ -468,8 +468,8 @@ turn it into the same format as the rest of this dataset (see this
 Each file represents one track with all the related information
 (artist information, release information, audio analysis of the track, etc).
 Usually one track is one song, though we can not guarantee that some
-songs are not duplicated. Also, remember the some sons are released
-many times with slight differences.<br>
+songs are not duplicated. Also, remember the some songs are released
+many times with slight differences (e.g. US versus European release).<br>
 The actual file format of each file is <a href='#hdfwhat'>HDF5</a>.
 A schema of the inner organization of a HDF5 song file can be found
 <a href="files/FileSchema.pdf">here</a>.

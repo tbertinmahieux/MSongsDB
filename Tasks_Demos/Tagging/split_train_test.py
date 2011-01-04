@@ -116,12 +116,12 @@ def get_random_artist_for_term(conn,term):
 
 def die_with_usage():
     """ HELP MENU """
-    print 'get_unique_terms_from_db.py'
+    print 'split_train_test.py'
     print '  by T. Bertin-Mahieux (2010) Columbia University'
     print 'GOAL'
     print '  split the list of artists into train and test based on terms (Echo Nest tags).'
     print 'USAGE'
-    print '  python get_unique_terms_from_db.py <artist_term.db> <train.txt> <test.txt> <top_terms.txt>'
+    print '  python split_train_test.py <artist_term.db> <train.txt> <test.txt> <top_terms.txt>'
     print 'PARAMS'
     print '  artist_term.db    - SQLite database containing terms per artist'
     print '       train.txt    - list of Echo Nest artist ID'

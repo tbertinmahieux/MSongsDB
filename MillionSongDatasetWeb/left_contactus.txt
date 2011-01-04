@@ -10,9 +10,19 @@ Below are the participant names per organization. The links on the side should h
 <div class="post">
 <h2>How to cite the dataset<br /></h2>
 <p>
-Please cite us using the following publication:<p>
+Please cite us using the following publication:<br>
+(submitted, write us for details)
 
-Until then:<br>
-Million Song Dataset, url
+Additonally, you can cite the website:<p>
+<small>
+<div style="border:1px solid #808080;padding:1.2em; background-color:#f0f0f0; margin-left: 25px; margin-right: 15px;">
+<div style="margin-left: 10px;">
+<pre>
+Million Song Dataset, official website by Thierry Bertin-Mahieux,
+available at: http://labrosa.ee.columbia.edu/projects/millionsong/
+</pre>
+</div>
+</div>
+</small>
 </div>
 

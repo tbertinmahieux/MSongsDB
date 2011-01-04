@@ -33,6 +33,16 @@ import numpy as np
 import sqlite3
 
 
+def encode_string(s):
+    """
+    Simple utility function to make sure a string is proper
+    to be used in a SQLite query
+    (different than posgtresql, no N to specify unicode)
+    EXAMPLE:
+      That's my boy! -> 'That''s my boy!'
+    """
+    return "'"+s.replace("'","''")+"'"
+
 
 def die_with_usage():
     """ HELP MENU """
@@ -99,7 +109,8 @@ if __name__ == '__main__':
     print 'Found',n_artists_with_term,'artists with at least one term.'
 
     # count number of files/tracks in the test set
-    q = "CREATE TEMP TABLE test_artists (artist_id TEXT)"
+    # create tmp table with test artists in track_metadata connection
+    q = "CREATE TEMP TABLE test_artists (artist_id TEXT PRIMARY KEY)"
     conn_tm.execute(q)
     conn_tm.commit()
     for artist in test_artists:
@@ -123,9 +134,45 @@ if __name__ == '__main__':
     top300 = ordered_terms[:300]
     print 'Top 300 hundred terms are:',top300[:3],'...',top300[298:]
 
-    # in train artists, find N average number of tags within top 300
+    # create tmp table with top 300 terms
+    q = "CREATE TEMP TABLE top300 (term TEXT PRIMARY KEY)"
+    conn_at.execute(q)
+    for t in top300:
+        q = "INSERT INTO top300 VALUES(" + encode_string(t) + ")"
+        conn_at.execute(q)
+    conn_at.commit()
 
-    # tag test artists with the top N tags
+    # create temp table with test_artists in artist_term conection
+    q = "CREATE TEMP TABLE test_artists (artist_id TEXT PRIMARY KEY)"
+    conn_at.execute(q)
+    conn_at.commit()
+    for artist in test_artists:
+        q = "INSERT INTO test_artists VALUES('%s')" % artist
+        conn_at.execute(q)
+    conn_at.commit()
+
+    # in train artists, find avgnterm average number of tags within top 300
+    q = "SELECT artist_term.artist_id,Count(artist_term.term) FROM artist_term"
+    q += " JOIN top300 ON artist_term.term=top300.term"
+    q += " GROUP BY artist_term.artist_id"
+    res = conn_at.execute(q)
+    artist_count_top300 = filter(lambda x: not x[0] in test_artists, res.fetchall())
+    print 'got count for',len(artist_count_top300),'artists'
+    assert len(artist_count_top300)+len(test_artists) <= n_artists_with_term,'incoherence'
+    print n_artists_with_term-len(test_artists)-len(artist_count_top300),'artists have terms but none in top 300.'
+    avgnterm = np.average(map(lambda x: x[1],artist_count_top300))
+    print 'In train set, an artist has on average',avgnterm,'terms from top 300 terms.'
+    print '************ NOTE **********'
+    print 'We ignore artists in train set with no term from top 300.'
+    print 'The way the test set was built, test artists are guaranteed'
+    print 'to have at least one termfrom top 300.'
+    print '****************************'
+
+    # tag test artists with the top avgnterm tags
+    avgnterm = int(avgnterm)
+    tagging_prediction = top300[:avgnterm]
+    print 'METHOD: we will tag every test artists with the top',avgnterm,'terms, i.e.:'
+    print map(lambda x: x.encode('utf-8'),tagging_prediction)
 
     # measure precision / recall
     

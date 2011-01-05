@@ -30,6 +30,8 @@
 <a href='#howcreated'>How was the dataset created?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#myaudio'>Can I add my audio to the dataset?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#getfromapi'>Will I get back the same data from The Echo Nest API?</a><br>
 <a href='#whatlicense'>What is the licensing?</a><br>
 <a href='#website'>Why this website doesn't load sometimes?</a><br>
 <a href='#wherehelp'>Where can I get help?</a><br>
@@ -602,6 +604,17 @@ The code is not perfect for the following reasons: 1) it is unclear what
 happens if the song is not recognized by The Echo Nest fingerprinter and
 2) even if it is recognized, if you upload audio associated with a song 
 in the dataset, there is no guarantee you get the same track ID.<p>
+
+<a name='getfromapi'><h3>Will I get back the same data from The Echo Nest API?</h3></a>
+Probably not, even if that's what we used to create this dataset! 
+If you take a track ID and request its info from The Echo Nest API, the
+info might not be the same as in this dataset. Some fields are bound to change over time,
+e.g. artist familiarity and song hotttnesss. Some should be stable like song title
+and artist name, but there is no guarantee. The analysis of the audio should also
+remain the same, but The Echo Nest updates his analyzer once in a while (to implement
+a better beat tracking or segmenter for instance).<br>
+Remember that the dataset was created / downloaded between December 18 and December 31 2010.
+<p>
 
 <a name='whatlicense'><h3>What is the licensing?</h3></a>
 The Echo Nest data is released under the same 

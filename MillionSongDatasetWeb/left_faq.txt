@@ -76,7 +76,7 @@ please let us know).
 For a more intuitive look, check this
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/one_track_description.pdf">document</a>
 which lists the same fields, but for one particular song.
-For the analysis field, we suggest you first read The Echo Nest
+For the analysis fields, we suggest you first read The Echo Nest
 <a href='http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation_2.2.pdf'>analyze documentation</a>.
 
 <table border="1">

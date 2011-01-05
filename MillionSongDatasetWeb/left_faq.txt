@@ -607,7 +607,7 @@ as their API.
 If you are a researcher and want to publish results on the dataset,
 you are fine.
 If you are a company and are concerned about experimenting on the
-dataset, send an email to The Echo Nest.<br>
+dataset, send an email to <a href="mailto:paul@echonest.com">The Echo Nest</a>.<br>
 Regarding the MusicBrainz data contained in the dataset,
 the track 'year' is under 
 <a href="http://creativecommons.org/licenses/publicdomain/">

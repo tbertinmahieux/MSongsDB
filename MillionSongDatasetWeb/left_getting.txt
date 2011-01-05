@@ -1,10 +1,15 @@
 <div class="post">
 <h2>Getting the dataset</h2><p>
-The dataset is around 300 gb, which makes it difficult to share. 
-Below is a subset of 10000 random songs (1.8 gb) so you can get started.
+The dataset is around 300 gb, which makes it difficult to share.
 <p>
+First, here are the <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/one_track_description.pdf">
+details</a> of what you will find in a typical file of
+this dataset, in this case this 
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/TRAXLZU12903D05F94.h5">one</a>.
+<p>
+Then, below is a subset of 10000 random songs (1.8 gb) so you can get started:<br>
 <a href="http://www.adrive.com/public/19e134041e55d794ee849b7cf03c5ae7423ee16a6b1f0a0c54f977300e8c525f.html">MILLION SONG SUBSET</a> (the link might
-expire, send me an email it it happens).
+expire, send me an <a href="mailto:tb2332@columbia.edu">email</a> it it happens).
 <p>
 To get the whole dataset, first see if you know someone that has it!
 We have sent hard drives with the data to labs at UCSD, QMUL

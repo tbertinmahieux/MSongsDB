@@ -71,6 +71,9 @@ Another reference is the code:
 display_song.py</a>. If a field is displayed, the field exists
 and there should be a getter for it (if we forgot some in matlab or java,
 please let us know).
+For a more intuitive look, check this
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/one_track_description.pdf">document</a>
+which lists the same fields, but for one particular song.
 For the analysis field, we suggest you first read The Echo Nest
 <a href='http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation_2.2.pdf'>analyze documentation</a>.
 

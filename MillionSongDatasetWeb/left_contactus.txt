@@ -1,6 +1,10 @@
 <div class="post">
 <h2>Contact</h2><p>
-Most questions should be addressed to <a href=http://www.columbia.edu/~tb2332/>Thierry Bertin-Mahieux</a> at tb2332@columbia.edu<p>
+Most questions should be addressed to <a href=http://www.columbia.edu/~tb2332/>Thierry Bertin-Mahieux</a> at 
+<a href="mailto:tb2332@columbia.edu">tb2332@columbia.edu</a>.<br>
+For Echo Nest specific questions (e.g. API or licensing), email
+<a href="mailto:paul@echonest.com">Paul Lamere</a>.
+<p>
 Below are the participant names per organization. The links on the side should help you find them.<br>
 <b>LabROSA</b>: Daniel P.W. Ellis and Thierry Bertin-Mahieux<br>
 <b>EchoNest</b>: Brian Whitman and Paul Lamere<br>

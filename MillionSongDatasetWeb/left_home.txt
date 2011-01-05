@@ -17,9 +17,13 @@ samples can be fetched from services like 7digital, code provided).<br />
 <div class="post">
 <h2>How to get started<br />
 </h2>
-<p>Get the dataset (more on this in the appropriate tab). 
+<p>
+Get a sense of what is in the dataset, for example check this
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/one_track_description.pdf">description</a>
+of one of the million songs.
+Then, acquire the dataset (more on this in the appropriate tab). 
 A subset of 10000 songs is provided and easy to download.
-Then, look at the FAQ, in particular the
+While doing this, look at the FAQ, in particular the
 list of fields. Finally, we suggest
 a set of tasks and give snippets of code to get you started
 (Tasks / Demos tab). Don't

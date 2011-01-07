@@ -352,7 +352,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames,summaryfile=False):
                 else:
                     row["idx_artist_mbtags"] = h5.root.musicbrainz.artist_mbtags.shape[0]
             row.append()
-            h5.root.metadata.songs.flush()
+            h5.root.musicbrainz.songs.flush()
             # ARRAYS
             if not summaryfile:
                 h5.root.musicbrainz.artist_mbtags.append( get_artist_mbtags(h5tocopy,songidx) )

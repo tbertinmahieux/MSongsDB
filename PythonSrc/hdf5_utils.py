@@ -217,7 +217,7 @@ def fill_hdf5_from_musicbrainz(h5,connect):
     musicbrainz.flush()
 
 
-def fill_hdf5_aggregate_file(h5,h5_filenames):
+def fill_hdf5_aggregate_file(h5,h5_filenames,summaryfile=False):
     """
     Fill an open hdf5 aggregate file using all the content from all the HDF5 files
     listed as filenames. These HDF5 files are supposed to be filled already.
@@ -225,6 +225,7 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
     For most of the info, we simply use one row per song.
     For the arrays (e.g. segment_start) we need the indecies (e.g. idx_segment_start)
     to know which part of the array belongs to one particular song.
+    If summaryfile=True, we skip arrays (indices all 0)
     """
     # counter
     counter = 0
@@ -255,19 +256,21 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["title"] = get_title(h5tocopy,songidx)
             row["track_7digitalid"] = get_track_7digitalid(h5tocopy,songidx)
             # INDICES
-            if counter == 0 : # we're first row
-                row["idx_similar_artists"] = 0
-                row["idx_artist_terms"] = 0
-            else:
-                row["idx_similar_artists"] = h5.root.metadata.similar_artists.shape[0]
-                row["idx_artist_terms"] = h5.root.metadata.artist_terms.shape[0]
+            if not summaryfile:
+                if counter == 0 : # we're first row
+                    row["idx_similar_artists"] = 0
+                    row["idx_artist_terms"] = 0
+                else:
+                    row["idx_similar_artists"] = h5.root.metadata.similar_artists.shape[0]
+                    row["idx_artist_terms"] = h5.root.metadata.artist_terms.shape[0]
             row.append()
             h5.root.metadata.songs.flush()
             # ARRAYS
-            h5.root.metadata.similar_artists.append( get_similar_artists(h5tocopy,songidx) )
-            h5.root.metadata.artist_terms.append( get_artist_terms(h5tocopy,songidx) )
-            h5.root.metadata.artist_terms_freq.append( get_artist_terms_freq(h5tocopy,songidx) )
-            h5.root.metadata.artist_terms_weight.append( get_artist_terms_weight(h5tocopy,songidx) )
+            if not summaryfile:
+                h5.root.metadata.similar_artists.append( get_similar_artists(h5tocopy,songidx) )
+                h5.root.metadata.artist_terms.append( get_artist_terms(h5tocopy,songidx) )
+                h5.root.metadata.artist_terms_freq.append( get_artist_terms_freq(h5tocopy,songidx) )
+                h5.root.metadata.artist_terms_weight.append( get_artist_terms_weight(h5tocopy,songidx) )
             # ANALYSIS
             row = h5.root.analysis.songs.row
             row["analysis_sample_rate"] = get_analysis_sample_rate(h5tocopy,songidx)
@@ -287,69 +290,73 @@ def fill_hdf5_aggregate_file(h5,h5_filenames):
             row["time_signature_confidence"] = get_time_signature_confidence(h5tocopy,songidx)
             row["track_id"] = get_track_id(h5tocopy,songidx)
             # INDICES
-            if counter == 0 : # we're first row
-                row["idx_segments_start"] = 0
-                row["idx_segments_confidence"] = 0
-                row["idx_segments_pitches"] = 0
-                row["idx_segments_timbre"] = 0
-                row["idx_segments_loudness_max"] = 0
-                row["idx_segments_loudness_max_time"] = 0
-                row["idx_segments_loudness_start"] = 0
-                row["idx_sections_start"] = 0
-                row["idx_sections_confidence"] = 0
-                row["idx_beats_start"] = 0
-                row["idx_beats_confidence"] = 0
-                row["idx_bars_start"] = 0
-                row["idx_bars_confidence"] = 0
-                row["idx_tatums_start"] = 0
-                row["idx_tatums_confidence"] = 0
-            else : # check the current shape of the arrays
-                row["idx_segments_start"] = h5.root.analysis.segments_start.shape[0]
-                row["idx_segments_confidence"] = h5.root.analysis.segments_confidence.shape[0]
-                row["idx_segments_pitches"] = h5.root.analysis.segments_pitches.shape[0]
-                row["idx_segments_timbre"] = h5.root.analysis.segments_timbre.shape[0]
-                row["idx_segments_loudness_max"] = h5.root.analysis.segments_loudness_max.shape[0]
-                row["idx_segments_loudness_max_time"] = h5.root.analysis.segments_loudness_max_time.shape[0]
-                row["idx_segments_loudness_start"] = h5.root.analysis.segments_loudness_start.shape[0]
-                row["idx_sections_start"] = h5.root.analysis.sections_start.shape[0]
-                row["idx_sections_confidence"] = h5.root.analysis.sections_confidence.shape[0]
-                row["idx_beats_start"] = h5.root.analysis.beats_start.shape[0]
-                row["idx_beats_confidence"] = h5.root.analysis.beats_confidence.shape[0]
-                row["idx_bars_start"] = h5.root.analysis.bars_start.shape[0]
-                row["idx_bars_confidence"] = h5.root.analysis.bars_confidence.shape[0]
-                row["idx_tatums_start"] = h5.root.analysis.tatums_start.shape[0]
-                row["idx_tatums_confidence"] = h5.root.analysis.tatums_confidence.shape[0]
+            if not summaryfile:
+                if counter == 0 : # we're first row
+                    row["idx_segments_start"] = 0
+                    row["idx_segments_confidence"] = 0
+                    row["idx_segments_pitches"] = 0
+                    row["idx_segments_timbre"] = 0
+                    row["idx_segments_loudness_max"] = 0
+                    row["idx_segments_loudness_max_time"] = 0
+                    row["idx_segments_loudness_start"] = 0
+                    row["idx_sections_start"] = 0
+                    row["idx_sections_confidence"] = 0
+                    row["idx_beats_start"] = 0
+                    row["idx_beats_confidence"] = 0
+                    row["idx_bars_start"] = 0
+                    row["idx_bars_confidence"] = 0
+                    row["idx_tatums_start"] = 0
+                    row["idx_tatums_confidence"] = 0
+                else : # check the current shape of the arrays
+                    row["idx_segments_start"] = h5.root.analysis.segments_start.shape[0]
+                    row["idx_segments_confidence"] = h5.root.analysis.segments_confidence.shape[0]
+                    row["idx_segments_pitches"] = h5.root.analysis.segments_pitches.shape[0]
+                    row["idx_segments_timbre"] = h5.root.analysis.segments_timbre.shape[0]
+                    row["idx_segments_loudness_max"] = h5.root.analysis.segments_loudness_max.shape[0]
+                    row["idx_segments_loudness_max_time"] = h5.root.analysis.segments_loudness_max_time.shape[0]
+                    row["idx_segments_loudness_start"] = h5.root.analysis.segments_loudness_start.shape[0]
+                    row["idx_sections_start"] = h5.root.analysis.sections_start.shape[0]
+                    row["idx_sections_confidence"] = h5.root.analysis.sections_confidence.shape[0]
+                    row["idx_beats_start"] = h5.root.analysis.beats_start.shape[0]
+                    row["idx_beats_confidence"] = h5.root.analysis.beats_confidence.shape[0]
+                    row["idx_bars_start"] = h5.root.analysis.bars_start.shape[0]
+                    row["idx_bars_confidence"] = h5.root.analysis.bars_confidence.shape[0]
+                    row["idx_tatums_start"] = h5.root.analysis.tatums_start.shape[0]
+                    row["idx_tatums_confidence"] = h5.root.analysis.tatums_confidence.shape[0]
             row.append()
             h5.root.analysis.songs.flush()
             # ARRAYS
-            h5.root.analysis.segments_start.append( get_segments_start(h5tocopy,songidx) )
-            h5.root.analysis.segments_confidence.append( get_segments_confidence(h5tocopy,songidx) )
-            h5.root.analysis.segments_pitches.append( get_segments_pitches(h5tocopy,songidx) )
-            h5.root.analysis.segments_timbre.append( get_segments_timbre(h5tocopy,songidx) )
-            h5.root.analysis.segments_loudness_max.append( get_segments_loudness_max(h5tocopy,songidx) )
-            h5.root.analysis.segments_loudness_max_time.append( get_segments_loudness_max_time(h5tocopy,songidx) )
-            h5.root.analysis.segments_loudness_start.append( get_segments_loudness_start(h5tocopy,songidx) )
-            h5.root.analysis.sections_start.append( get_sections_start(h5tocopy,songidx) )
-            h5.root.analysis.sections_confidence.append( get_sections_confidence(h5tocopy,songidx) )
-            h5.root.analysis.beats_start.append( get_beats_start(h5tocopy,songidx) )
-            h5.root.analysis.beats_confidence.append( get_beats_confidence(h5tocopy,songidx) )
-            h5.root.analysis.bars_start.append( get_bars_start(h5tocopy,songidx) )
-            h5.root.analysis.bars_confidence.append( get_bars_confidence(h5tocopy,songidx) )
-            h5.root.analysis.tatums_start.append( get_tatums_start(h5tocopy,songidx) )
-            h5.root.analysis.tatums_confidence.append( get_tatums_confidence(h5tocopy,songidx) )
+            if not summaryfile:
+                h5.root.analysis.segments_start.append( get_segments_start(h5tocopy,songidx) )
+                h5.root.analysis.segments_confidence.append( get_segments_confidence(h5tocopy,songidx) )
+                h5.root.analysis.segments_pitches.append( get_segments_pitches(h5tocopy,songidx) )
+                h5.root.analysis.segments_timbre.append( get_segments_timbre(h5tocopy,songidx) )
+                h5.root.analysis.segments_loudness_max.append( get_segments_loudness_max(h5tocopy,songidx) )
+                h5.root.analysis.segments_loudness_max_time.append( get_segments_loudness_max_time(h5tocopy,songidx) )
+                h5.root.analysis.segments_loudness_start.append( get_segments_loudness_start(h5tocopy,songidx) )
+                h5.root.analysis.sections_start.append( get_sections_start(h5tocopy,songidx) )
+                h5.root.analysis.sections_confidence.append( get_sections_confidence(h5tocopy,songidx) )
+                h5.root.analysis.beats_start.append( get_beats_start(h5tocopy,songidx) )
+                h5.root.analysis.beats_confidence.append( get_beats_confidence(h5tocopy,songidx) )
+                h5.root.analysis.bars_start.append( get_bars_start(h5tocopy,songidx) )
+                h5.root.analysis.bars_confidence.append( get_bars_confidence(h5tocopy,songidx) )
+                h5.root.analysis.tatums_start.append( get_tatums_start(h5tocopy,songidx) )
+                h5.root.analysis.tatums_confidence.append( get_tatums_confidence(h5tocopy,songidx) )
             # MUSICBRAINZ
             row = h5.root.musicbrainz.songs.row
             row["year"] = get_year(h5tocopy,songidx)
             # INDICES
-            if counter == 0 : # we're first row
-                row["idx_artist_mbtags"] = 0
-            else:
-                row["idx_artist_mbtags"] = h5.root.musicbrainz.artist_mbtags.shape[0]
+            if not summaryfile:
+                if counter == 0 : # we're first row
+                    row["idx_artist_mbtags"] = 0
+                else:
+                    row["idx_artist_mbtags"] = h5.root.musicbrainz.artist_mbtags.shape[0]
             row.append()
             h5.root.metadata.songs.flush()
             # ARRAYS
-            h5.root.musicbrainz.artist_mbtags.append( get_artist_mbtags(h5tocopy,songidx) )
-            h5.root.musicbrainz.artist_mbtags_count.append( get_artist_mbtags_count(h5tocopy,songidx) )
+            if not summaryfile:
+                h5.root.musicbrainz.artist_mbtags.append( get_artist_mbtags(h5tocopy,songidx) )
+                h5.root.musicbrainz.artist_mbtags_count.append( get_artist_mbtags_count(h5tocopy,songidx) )
             # counter
             counter += 1
         # close h5 file
@@ -402,13 +409,15 @@ def create_song_file(h5filename,title='H5 Song File',force=False,complevel=1):
     h5.close()
 
 
-def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expectedrows=1000,complevel=1):
+def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expectedrows=1000,complevel=1,
+                          summaryfile=False):
     """
     Create a new HDF5 file for all songs.
     It will contains everything that are in regular song files.
     Tables created empty.
     If force=False, refuse to overwrite an existing file
     Raise a ValueError if it's the case.
+    If summaryfile=True, creates a sumary file, i.e. no arrays
     Other optional param is the H5 file.
     DETAILS
     - if you create a very large file, try to approximate correctly
@@ -425,6 +434,9 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     if not force:
         if os.path.exists(h5filename):
             raise ValueError('file exists, can not create HDF5 song file')
+    # summary file? change title
+    if summaryfile:
+        title = 'H5 Summary File'
     # create the H5 file
     h5 = tables.openFile(h5filename, mode='w', title='H5 Song File')
     # set filter level
@@ -443,7 +455,8 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
     table = h5.createTable(groupe,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz',
                            expectedrows=expectedrows)
     # create arrays
-    create_all_arrays(h5,expectedrows=expectedrows)
+    if not summaryfile:
+        create_all_arrays(h5,expectedrows=expectedrows)
     # close it, done
     h5.close()
 

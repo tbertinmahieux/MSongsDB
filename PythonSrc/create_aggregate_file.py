@@ -1,5 +1,5 @@
 """
-Thierry Bertin-Mahieux (2010) Columbia University
+Thierry Bertin-Mahieux (2011) Columbia University
 tb2332@columbia.edu
 
 This code creates an aggregate file, i.e. an HDF5 file that looks like song
@@ -9,7 +9,7 @@ This is part of the Million Song Dataset project from
 LabROSA (Columbia University) and The Echo Nest.
 
 
-Copyright 2010, Thierry Bertin-Mahieux
+Copyright 2011, Thierry Bertin-Mahieux
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

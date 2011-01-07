@@ -9,6 +9,8 @@
 <a href='#mbrainz'>MusicBrainz data</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#termsmbtags'>Terms versus mbtags?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='#artistnames'>Artist names</a><br>
 <a href='#gettingdataset'>How to get the dataset?</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#notapi'>Why is it not an API?</a><br>
@@ -432,6 +434,18 @@ This explains why there are less of them (see 'mbtags_count'), but they
 are usually very clean and informative. For instance, if you want to
 create a genre recognition task where classes are mutually exclusive,
 mbtags are probably more reliable then terms.<p>
+
+<a name='artistnames'><h3>Artist names</h3></a>
+If you count the artist names, you will see that there is almost
+twice as many unique ones as there are artist ID in the dataset.
+Echo Nest often associates song with artist names such as "A feat. B" or
+"A / B" to artist A. It is reasonable in most cases. Just be careful,
+when you use files indexed by artist ID (e.g. unique_artists.txt), 
+you get one of the artist names at random. If you try to do string matching, 
+you probably need to consider all names of an artist, you can use the SQLite database
+<a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">track_metadata.db</a> 
+to do so.
+<p>
 
 <a name='gettingdataset'><h3>How to get the dataset?</h3></a>
 See tab <a onClick="clientSideInclude('left','left_getting.txt');" href='#'>Getting the dataset</a>.

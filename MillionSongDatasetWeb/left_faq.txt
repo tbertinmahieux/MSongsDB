@@ -506,9 +506,11 @@ but that contains the information of many songs. It is usefull if you do
 I/O intensive experiments, as it reduce the number of open/close file
 operations you need to perform. A summary file is similar to an
 aggregate file, but contains just the metadata, i.e. we remove all
-the big tables like the analysis (bars, beats, segments, ...).
-Usefull if you want to quickly search the metadata, a lot of space is
-saved!<br>
+the tables (analysis of bars, beats, segments, ..., artist similarity, tags).
+Useful if you want to quickly search the metadata, a lot of space is
+saved! Check the scripts 
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/create_summary_file.py">create_summary_file.py</a> and
+<a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/create_aggregate_file.py">create_aggregate_file.py</a>.<br>
 Note on summary files, if you're using the code 
 <a href="https://github.com/tb2332/MSongsDB/blob/master/PythonSrc/display_song.py">
 display_song.py</a>, you need the '-summary' flag to tell the code 

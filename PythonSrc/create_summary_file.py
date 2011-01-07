@@ -92,7 +92,7 @@ if __name__ == '__main__':
     allh5 = get_all_files(maindir,ext='.h5')
     print 'found',len(allh5),'H5 files.'
 
-    # create aggregate file
+    # create summary file
     HDF5.create_aggregate_file(output,expectedrows=len(allh5),
                                summaryfile=True)
     print 'Summary file created, we start filling it.'

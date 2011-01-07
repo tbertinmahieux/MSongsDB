@@ -452,7 +452,7 @@ def create_aggregate_file(h5filename,title='H5 Aggregate File',force=False,expec
                            expectedrows=expectedrows)
         # group musicbrainz
     group = h5.createGroup("/",'musicbrainz','data about the song coming from MusicBrainz')
-    table = h5.createTable(groupe,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz',
+    table = h5.createTable(group,'songs',DESC.SongMusicBrainz,'table of data coming from MusicBrainz',
                            expectedrows=expectedrows)
     # create arrays
     if not summaryfile:

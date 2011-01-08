@@ -142,28 +142,18 @@ python get_preview_url.py -7digitalkey 98sdjwdd HDF5file
 <p>
 
 <a name='datavizu'><h3>Metadata visualization</h3></a>
-
-SORRY IF NO MAP APPEARS! To see the visualization, you can click
+<center>
+<iframe width="420" height="390" src="tableaumap.html" id="tableausoftmap" id="tableausoftmap" frameBorder="0">
+<center>Sorry, your browser does not support iframes.</center>
+</iframe>
+</center> <p>
+SORRY IF NO MAP APPEARS! To see the visualization (a larger one), you can click
 <a href="http://public.tableausoftware.com/views/artist_location/Sheet1?:embed=yes&:toolbar=yes&:tabs=no" target='_blank'>here</a>. 
-On Linux, we had better luck with Chrome than Firefox.<br>
 For those who see it, it is just an example on how to use online resources
 to quickly visualize some info from the dataset. This map represents every
 artist for which we have a latitude and a longitude. It took less than
 30 minutes to create and publish using 
 <a href="http://www.tableausoftware.com/public">tableausoftware</a>. You can
-even click and interact with it.<br>
-
-<script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script>
-<object class="tableauViz" width="404" height="369" style="display:none;">
-	<param name="name" value="artist_location/Sheet1" />
-	<param name="toolbar" value="yes" />
-	<param name="tabs" value="no" />
-</object>
-<noscript>Sheet 1 <br /><a href="#"><img alt="Sheet 1 " src="http://public.tableausoftware.com/static/images/ar/artist_location/Sheet1/1_rss.png" height="100%" /></a>
-</noscript>
-<div style="width:404px;height:22px;padding:0px 10px 0px 0px; color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;">
-<div style="float:right; padding-right:8px;">
-</div>
-</div>
+even click and interact with it.<br />
 
 </div>

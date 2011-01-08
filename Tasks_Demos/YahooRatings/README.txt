@@ -1,0 +1,14 @@
+/Tasks_Demos/YahooRatings/README.txt
+      by Thierry Bertin-Mahieux (2011) Columbia University
+         tb2332@columbia.edu
+
+
+THis folder contains code to link the Yahoo Ratings data
+with the Million SOng Dataset
+
+For Yahoo data:
+http://webscope.sandbox.yahoo.com/
+
+The most important code links Yahoo artist name with
+Echo Nest artist ID from the Million Song Dataset
+See: match_artist_names.py

@@ -62,6 +62,13 @@ track id&lt;SEP&gt;song id&lt;SEP&gt;artist name&lt;SEP&gt;song title<br>
 <li> List of the 515.576 tracks for which we have the year information, ordered by year,
 <a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/tracks_per_year.txt">here</a>.
 </li>
+<li> List of artists for which we know longitude and latitude ??????
+</li>
+<li>Summary file of the whole dataset, meaning same HDF5 format as regular files,
+it contains all metadata but no arrays like audio analysis,
+similar artists and tags. Most efficient I/O, only 300 Mb, available
+<a href="http://labrosa.ee.columbia.edu/projects/millionsong/files/msd_summary_file.h5">here</a>.
+</li>
 <li>SQLite database containing most metadata about each track 
 <a href="http://www.ee.columbia.edu/~thierry/track_metadata.db">here</a>.
 </li>

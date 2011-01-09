@@ -16,3 +16,9 @@ similar results. In more details, prediction should be made for every
 song of every test artist!
 See artists_train.txt and artists_test.txt, and for details on how we
 did the split: split_train_test.py
+
+
+NOTE: some details are missing in this folder, we are preparing a submission
+presenting the Million Song Dataset, and this will be the featured task.
+The full code and results will soon be released, write us if you need them
+sooner: Thierry Bertin-Mahieux, tb2332@columbia.edu   (January 2011)

@@ -13,6 +13,7 @@ please send us an email!
 <li><a href="#imputation">Imputation of missing data</a></li>
 <li><a href="#nameanalysis">Artist name, release, song title analysis</a></li>
 <li><a href="#preview">Preview audio</a></li>
+<li><a href="#yahoodata">Yahoo ratings dataset</a></li>
 <li><a href="#datavizu">Metadata visualization</a></li>
 </ol>
 <a name='segmentation'><h3>Segmentation</h3></a>
@@ -139,6 +140,19 @@ python get_preview_url.py -7digitalkey 98sdjwdd HDF5file
 </div>
 </div>
 </small>
+<p>
+
+<a name='yahoodata'><h3>Yahoo ratings dataset</h3></a>
+Yahoo has released an extremely useful set of datasets of ratings applied
+by users to different artists. The Yahoo datasets are available
+<a href="http://webscope.sandbox.yahoo.com/">here</a>,
+we specify that Yahoo is linked in no way to the Million Song Dataset.<br />
+We focus on the R1 dataset. Using string matching on artist names, we find
+that we have data (artist metadata + track analysis) for 91% of the ratings!
+We only cover 15,780 artists out of 97,954, but of course we have the most
+famous ones in common, which get the most ratings.<br />
+See the code and mapping
+<a href="https://github.com/tb2332/MSongsDB/tree/master/Tasks_Demos/YahooRatings">here</a>.
 <p>
 
 <a name='datavizu'><h3>Metadata visualization</h3></a>

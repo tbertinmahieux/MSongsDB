@@ -96,7 +96,7 @@ if __name__ == '__main__':
             continue
         yid,yname = line.strip().split('\t')
         if yname in known_y_artist_names:
-            known_y_artist_id.add(yname)
+            known_y_artist_id.add(int(yid))
     f.close()
     print 'Found',len(known_y_artist_id),'Yahoo artist id that we know.'
 
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         if line == '' or line.strip() == '':
             continue
         cnt_lines += 1
-        y_aid = line.strip().split('\t')[1]
+        y_aid = int(line.strip().split('\t')[1])
         if y_aid in known_y_artist_id:
             cnt_ratings += 1
     f.close()

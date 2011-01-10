@@ -8,7 +8,7 @@ commercial sizes</li>
 <li>setting a reference dataset to report results on in academic
 papers</li>
 <li>easing the task of downloading a large dataset using The Echo Nest's API</li>
-<li>helping new researchers in the MIR field getting started</li>
+<li>helping new researchers and students in the MIR field getting started</li>
 </ol>
 NO AUDIO IS PROVIDED HERE. The core of the dataset is the analysis of a
 million songs and metadata provided by The Echo Nest (note that audio

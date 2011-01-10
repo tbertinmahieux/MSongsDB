@@ -144,7 +144,9 @@ python get_preview_url.py -7digitalkey 98sdjwdd HDF5file
 
 <a name='yahoodata'><h3>Yahoo ratings dataset</h3></a>
 Yahoo has released an extremely useful set of datasets of ratings applied
-by users to different artists. The Yahoo datasets are available
+by users to different artists (they are used for the 
+<a href="http://www.kdd.org/kdd2011/kddcup.shtml">KDD Cup 2011</a>). 
+The Yahoo datasets are available
 <a href="http://webscope.sandbox.yahoo.com/">here</a>,
 we specify that Yahoo is linked in no way to the Million Song Dataset.<br />
 We focus on the R1 dataset. Using string matching on artist names, we find

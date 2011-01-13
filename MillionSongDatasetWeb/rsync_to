@@ -1,3 +1,6 @@
-echo 'rsyncing to columbia'
-echo 'please enter password to cunix.columbia.edu:'
-rsync -avz . tb2332@cunix.columbia.edu:public_html/MillionSongDataset
+#echo 'rsyncing to columbia'
+#echo 'please enter password to cunix.columbia.edu:'
+#rsync -avz . tb2332@cunix.columbia.edu:public_html/MillionSongDataset
+echo 'rsyncing to labrosa'
+echo 'please enter EE password at the prompt:'
+rsync -avz . thierry@boar.ee.columbia.edu:~dpwe/public_html/LabROSA/projects/millionsong

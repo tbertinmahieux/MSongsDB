@@ -77,11 +77,11 @@ def die_with_usage():
 if __name__ == '__main__':
 
     # WARNING
-    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    print 'WARNING: if you have the atist_term.db SQLite database,'
-    print 'the unique terms are in it and takes seconds to be retrieved.'
+    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    print 'WARNING: if you have the artist_term.db SQLite database,'
+    print 'the unique terms are in it and it takes only seconds to retrieve.'
     print 'see /Tasks_Demos/SQLite to know how'
-    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
     # help menu
     if len(sys.argv) < 4:

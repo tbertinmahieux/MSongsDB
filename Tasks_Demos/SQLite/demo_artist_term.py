@@ -203,7 +203,7 @@ if __name__ == '__main__':
     # get artists that have term 'rock' but not mbtag 'rock'
     q = "SELECT artist_id FROM artist_term WHERE term="+encode_string('rock')
     q += " EXCEPT SELECT artist_id FROM artist_mbtag WHERE mbtag="+encode_string('rock')
-    q += " ORDER BY RANDOM LIMIT 1"
+    q += " LIMIT 1"
     res = c.execute(q)
     print "* one artist that has term 'rock' but not mbtag 'rock':"
     print res.fetchone()

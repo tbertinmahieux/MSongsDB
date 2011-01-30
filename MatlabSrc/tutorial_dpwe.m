@@ -175,24 +175,59 @@ res = res(order);
 disp('Artist with the most songs is:');
 res(1)
 
-% finally, get all songs for that artist
+% Get all songs for that artist
 mksqlite('open',sqldb);
-res = mksqlite(['SELECT track_id FROM songs WHERE artist_id='''...
+res2 = mksqlite(['SELECT track_id,title FROM songs WHERE artist_id='''...
                 res(1).artist_id,'''']);
 mksqlite('close');
-disp(['Found ',num2str(length(res)),' tracks for that artist.']);
-disp(['First one is: ',res(1).track_id]);
+disp(['Found ',num2str(length(res2)),' tracks for ',res(1).artist_name]);
+disp(['First one is: ',res2(1).track_id,' ',res2(1).title]);
 
+%% Accessing 7digital Previews
+%
+% Although full audio for the database is not available, each track 
+% includes a 7digital track id, which can be used to retrieve a 
+% preview (usually 30 s) via the 7digital.com API.  To access the 
+% API, you have to sign up at:
+% http://access.7digital.com/partnerprogram .
+% You'll get your own oauth_consumer_key (for free), which you'll 
+% have to insert in the code below.
+%
+% The code to read the previews into Matlab also relies on access
+% to the command-line program "wget" via Matlab's system() call,
+% and thus will only work on Mac/Linux systems that have this
+% program installed.
+%
+% It further relies on a working installation of mp3read, see
+% http://labrosa.ee.columbia.edu/matlab/mp3read.html .
+%
+% Here, we listen to the 7digital preview and the resynthesis from
+% the Echo Nest features side-by-side.
+
+% Choose a nice, melodius Dixie Chicks track.
+% (we use a convenience wrapper with the SQLite data file name
+% hard-coded inside)
+res = msd_sql('SELECT * FROM songs WHERE title=''Lullaby'' AND artist_name=''Dixie Chicks''');
+% Load the 7digital preview
+oauth_consumer_key='12345abcde';
+[d,sr] = load_preview(res.track_id,oauth_consumer_key);
+% Convert the audio to mono & dowsample
+d = resample(mean(d,2),1,4);
+sr = sr/4;
+% Now, resynth from the features
+x = synth_song(HDF5_Song_File_Reader(msd_pathname(res.track_id)),0,sr);
+% The previews generally start about 30s into the track.  This
+% sounds about right:
+soundsc([x(round(30.1*sr)+[1:length(d)],:),500*d],sr)
 
 %% Acknowledgment
 %
 % This material is based in part upon work supported by the
-% National Science Foundation under Grant No. IIS-0713334, by 
-% Eastman Kodak Corp, and by the National Geospatial Intelligence 
-% Agency NSERC program.  Any opinions, findings and conclusions or
-% recomendations expressed in this material are those of the
-% author(s) and do not necessarily reflect the views of the sponsors.
+% National Science Foundation under Grant No. IIS-0713334.  
+% Any opinions, findings and conclusions or recommendations 
+% expressed in this material are those of the author(s) and 
+% do not necessarily reflect the views of the sponsors.
 %
-% Last updated: $Date: 2010/08/13 15:40:58 $
+% Last updated: $Date: 2011/01/30 21:18:54 $
 % Dan Ellis <dpwe@ee.columbia.edu>
 % Thierry Bertin-Mahieux <tb2332@columbia.edu>

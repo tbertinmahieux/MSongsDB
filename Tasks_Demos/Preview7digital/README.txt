@@ -22,3 +22,7 @@ https://github.com/ocelma/7-digital
 To be as general as possible, we intend not to use it, but
 we do recommend its use in a real application!
 
+MATLAB
+------
+Dan Ellis provided a Matlab version of the script, see MatlabSrc directory
+at the top level of this repository, script name: load_preview.m

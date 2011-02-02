@@ -30,6 +30,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import time
+# postgresql
+try:
+    import pg
+except ImportError:
+    print "You don't have the 'pg' module, can't use musicbrainz server"
 # our HDF utils library
 import hdf5_utils as HDF5
 # Echo Nest python API
@@ -45,6 +50,66 @@ except KeyError: # historic reasons
 DEF_MB_USER = 'gordon'
 DEF_MB_PASSWD = 'gordon'
 
+
+
+def convert_one_song(audiofile,output,mbconnect=None,verbose=0):
+    """
+    PRINCIPAL FUNCTION
+    Converts one given audio file to hdf5 format (saved in 'output')
+    by uploading it to The Echo Nest API
+    INPUT
+         audiofile   - path to a typical audio file (wav, mp3, ...)
+            output   - nonexisting hdf5 path
+         mbconnect   - if not None, open connection to musicbrainz server
+           verbose   - if >0 display more information
+    RETURN
+       1 if we think a song is created, 0 otherwise
+    """
+    # inputs + sanity checks
+    if not os.path.exists(audiofile):
+        print 'ERROR: song file does not exist:',songfile
+        return 0
+    if os.path.exists(output):
+        print 'ERROR: hdf5 output file already exist:',output,', delete or choose new path'
+        return 0
+    # get EN track / song / artist for that song
+    if verbose>0: print 'get analysis for file:',audiofile
+    track = trackEN.track_from_filename(audiofile)
+    song_id = track.song_id
+    song = songEN.Song(song_id)
+    if verbose>0: print 'found song:',song.title,'(',song_id,')'
+    artist_id = song.artist_id
+    artist = artistEN.Artist(artist_id)
+    if verbose>0: print 'found artist:',artist.name,'(',artist_id,')'
+    # hack to fill missing values
+    try:
+        track.foreign_id
+    except AttributeError:
+        track.__setattr__('foreign_id','')
+        if verbose>0: print 'no track foreign_id found'
+    try:
+        track.foreign_release_id
+    except AttributeError:
+        track.__setattr__('foreign_release_id','')
+        if verbose>0: print 'no track foreign_release_id found'
+    # create HDF5 file
+    if verbose>0: print 'create HDF5 file:',output
+    HDF5.create_song_file(output,force=False)
+    # fill hdf5 file from track
+    if verbose>0:
+        if mbconnect is None:
+            print 'fill HDF5 file with info from track/song/artist'
+        else:
+            print 'fill HDF5 file with info from track/song/artist/musicbrainz'
+    h5 = HDF5.open_h5_file_append(output)
+    HDF5.fill_hdf5_from_artist(h5,artist)
+    HDF5.fill_hdf5_from_song(h5,song)
+    HDF5.fill_hdf5_from_track(h5,track)
+    if not mbconnect is None:
+        HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
+    h5.close()
+    # done
+    return 1
 
 
 def die_with_usage():
@@ -63,9 +128,13 @@ def die_with_usage():
     print ''
     print 'usage:'
     print '  python enpyapi_to_hdf5.py [FLAGS] <songpath> <new hdf5file>'
+    print ' OR'
+    print '  python enpyapi_to_hdf5.py [FLAGS] -dir <inputdir>'
     print 'PARAMS'
     print '  songpath      - path a song in a usual format, e.g. MP3'
     print '  new hdf5file  - output, e.g. mysong.h5'
+    print '      inputdir  - in that mode, converts every known song (mp3,wav,au,ogg)'
+    print '                  in all subdirectories, outputpath is songpath + .h5 extension'
     print 'FLAGS'
     print '  -verbose v    - set it to 0 to remove printouts'
     print '  -usemb        - use musicbrainz, e.g. you have a local copy'
@@ -90,6 +159,7 @@ if __name__ == '__main__':
     mbpasswd = DEF_MB_PASSWD
     usemb = False
     verbose = 1
+    inputdir = ''
     while True:
         if sys.argv[1] == '-verbose':
             verbose = int(sys.argv[2])
@@ -101,23 +171,80 @@ if __name__ == '__main__':
             mbpasswd = sys.argv[3]
             sys.argv.pop(1)
             sys.argv.pop(1)
+        elif sys.argv[1] == '-dir':
+            inputdir = sys.argv[2]
+            sys.argv.pop(1)
         else:
             break
         sys.argv.pop(1)
 
-    # inputs + sanity checks
-    songfile = sys.argv[1]
-    hdf5file = sys.argv[2]
-    if not os.path.exists(songfile):
-        print 'ERROR: song file does not exist:',songfile
-        print '********************************'
-        die_with_usage()
-    if os.path.exists(hdf5file):
-        print 'ERROR: hdf5 file already exist:',hdf5file,', delete or choose new path'
-        print '********************************'
-        die_with_usage()
+    # if we only do one file!
+    if inputdir == '':
+        songfile = sys.argv[1]
+        hdf5file = sys.argv[2]
+        if not os.path.exists(songfile):
+            print 'ERROR: song file does not exist:',songfile
+            print '********************************'
+            die_with_usage()
+        if os.path.exists(hdf5file):
+            print 'ERROR: hdf5 file already exist:',hdf5file,', delete or choose new path'
+            print '********************************'
+            die_with_usage()
+        # musicbrainz
+        mbconnect = None
+        if usemb:
+            if verbose>0: print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+        # transform
+        convert_one_song(songfile,hdf5file,mbconnect=mbconnect,verbose=verbose)
+        # close connection
+        if not mbconnect is None:
+            mbconnect.close()
+        # verbose
+        if verbose > 0:
+            t2 = time.time()
+            print 'From audio:',songfile,'we created hdf5 file:',hdf5file,'in',str(int(t2-t1)),'seconds.'
 
-        
+    # we have an input dir
+    else:
+        # sanity check
+        if not os.path.isdir(inputdir):
+            print 'ERROR: input directory',inputdir,'does not exist.'
+            print '********************************'
+            die_with_usage()
+        # musicbrainz
+        mbconnect = None
+        if usemb:
+            if verbose>0: print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+        # iterate
+        cnt_songs = 0
+        cnt_done = 0
+        for root,dirs,files in os.walk(inputdir):
+            files = filter(lambda x: os.path.splitext(x)[1] in ('.wav','.ogg','.au','.mp3'),
+                           files)
+            files = map(lambda x: os.path.join(root,x), files)
+            for f in files:
+                cnt_songs += 1
+                if cnt_songs % 100 == 0:
+                    if verbose>0: print 'DOING FILE #'+cnt_songs
+                try:
+                    cnt_done += convert_one_song(f,f+'.h5',mbconnect=mbconnect,verbose=verbose)
+                except KeyboardInterrupt:
+                    raise
+                except Exception, e:
+                    print 'ERROR with file:',f+':',e
+        # iteration done
+        if verbose>0:
+            print 'Converted',cnt_done+'/'+cnt_songs,'in all subdirectories of',inputdir
+            t2 = time.time()
+            print 'All conversions took:',str(int(t2-t1)),'seconds.'
+        # close musicbrainz
+        if not mbconnect is None:
+            mbconnect.close()
+
+            
+    """
     # get EN track / song / artist for that song
     if verbose>0: print 'get analysis for file:',songfile
     track = trackEN.track_from_filename(songfile)
@@ -152,7 +279,6 @@ if __name__ == '__main__':
     HDF5.fill_hdf5_from_track(h5,track)
     if usemb:
         if verbose>0: print 'fill HDF5 file using musicbrainz'
-        import pg
         connect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
         HDF5.fill_hdf5_from_musicbrainz(h5,connect)
         connect.close()
@@ -163,3 +289,4 @@ if __name__ == '__main__':
     if verbose > 0:
         print 'From audio:',songfile,'we created hdf5 file:',hdf5file,'in',str(int(t2-t1)),'seconds.'
     
+    """

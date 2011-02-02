@@ -236,7 +236,7 @@ if __name__ == '__main__':
             for f in files:
                 cnt_songs += 1
                 if cnt_songs % 100 == 0:
-                    if verbose>0: print 'DOING FILE #'+cnt_songs
+                    if verbose>0: print 'DOING FILE #'+str(cnt_songs)
                 try:
                     cnt_done += convert_one_song(f,f+'.h5',mbconnect=mbconnect,verbose=verbose,
                                                  DESTROYAUDIO=DESTROYAUDIO)

@@ -246,7 +246,7 @@ if __name__ == '__main__':
                     print 'ERROR with file:',f+':',e
         # iteration done
         if verbose>0:
-            print 'Converted',cnt_done+'/'+cnt_songs,'in all subdirectories of',inputdir
+            print 'Converted',str(cnt_done)+'/'+str(cnt_songs),'in all subdirectories of',inputdir
             t2 = time.time()
             print 'All conversions took:',str(int(t2-t1)),'seconds.'
         # close musicbrainz

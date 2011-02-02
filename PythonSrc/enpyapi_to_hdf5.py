@@ -35,6 +35,10 @@ try:
     import pg
 except ImportError:
     print "You don't have the 'pg' module, can't use musicbrainz server"
+try:
+    import multiprocessing
+except ImportError:
+    print "You can't use multiprocessing"
 # our HDF utils library
 import hdf5_utils as HDF5
 # Echo Nest python API
@@ -50,7 +54,8 @@ except KeyError: # historic reasons
 DEF_MB_USER = 'gordon'
 DEF_MB_PASSWD = 'gordon'
 
-
+# for multiprocessing
+class KeyboardInterruptError(Exception):pass
 
 def convert_one_song(audiofile,output,mbconnect=None,verbose=0,DESTROYAUDIO=False):
     """
@@ -116,6 +121,26 @@ def convert_one_song(audiofile,output,mbconnect=None,verbose=0,DESTROYAUDIO=Fals
     return 1
 
 
+def convert_one_song_wrapper(args):
+    """ for multiprocessing """
+    mbconnect = None
+    if args['usemb']:
+        if verbose>0: print 'fill HDF5 file using musicbrainz'
+        mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,
+                               args['mbuser'],args['mbpasswd'])
+    try:
+        convert_one_song(args['audiofile'],args['output'],
+                         mbconnect=mbconnect,verbose=args['verbose'],
+                         DESTROYAUDIO=args['DESTROYAUDIO'])
+    except KeyboardInterrupt:
+        raise KeyboardInterruptError()
+    except Exception, e:
+        print 'ERROR with file:',args['audiofile']+':',e
+    finally:
+        if not mbconnect is None:
+            mbconnect.close()
+
+
 def die_with_usage():
     """ HELP MENU """
     print 'enpyapi_to_hdf5.py'
@@ -164,6 +189,7 @@ if __name__ == '__main__':
     usemb = False
     verbose = 1
     inputdir = ''
+    nthreads = 1
     DESTROYAUDIO=False # let's not advertise that flag in the help menu
     while True:
         if len(sys.argv) < 2: # happens with -dir option
@@ -180,6 +206,9 @@ if __name__ == '__main__':
             sys.argv.pop(1)
         elif sys.argv[1] == '-dir':
             inputdir = sys.argv[2]
+            sys.argv.pop(1)
+        elif sys.argv[1] == '-nthreads':
+            nthreads = int(sys.argv[2])
             sys.argv.pop(1)
         elif sys.argv[1] == '-DESTROYAUDIO':
             DESTROYAUDIO = True
@@ -214,8 +243,8 @@ if __name__ == '__main__':
             t2 = time.time()
             print 'From audio:',songfile,'we created hdf5 file:',hdf5file,'in',str(int(t2-t1)),'seconds.'
 
-    # we have an input dir
-    else:
+    # we have an input dir, one thread
+    elif nthreads == 1:
         # sanity check
         if not os.path.isdir(inputdir):
             print 'ERROR: input directory',inputdir,'does not exist.'
@@ -254,3 +283,47 @@ if __name__ == '__main__':
             mbconnect.close()
 
 
+    # input dir, many threads
+    # YOU SHOULD NOT USE THIS FUNCTION UNLESS YOU HAVE MORE THAN 1000 FILES
+    else:
+        assert nthreads > 0,'negative or null number of threads? come one!'
+        # get all songs
+        allsongs = []
+        for root,dirs,files in os.walk(inputdir):
+            files = filter(lambda x: os.path.splitext(x)[1] in ('.wav','.ogg','.au','.mp3'),
+                           files)
+            files = map(lambda x: os.path.join(root,x), files)
+            allsongs.extend( files )
+        if verbose>0: print 'We found',len(allsongs),'songs.'
+        # musicbrainz
+        mbconnect = None
+        if usemb:
+            if verbose>0: print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+        # prepare params
+        params_list = map(lambda x: {'verbose':verbose,'DESTROYAUDIO':DESTROYAUDIO,
+                                     'audiofile':x,'output':x+'.h5','usemb':usemb,
+                                     'mbuser':mbuser,'mbpasswd':mbpasswd},allsongs)
+        # launch, run all the jobs
+        pool = multiprocessing.Pool(processes=nthreads)
+        try:
+            pool.map(convert_one_song_wrapper, params_list)
+            pool.close()
+            pool.join()
+        except KeyboardInterruptError:
+            print 'MULTIPROCESSING'
+            print 'stopping multiprocessing due to a keyboard interrupt'
+            pool.terminate()
+            pool.join()
+        except Exception, e:
+            print 'MULTIPROCESSING'
+            print 'got exception: %r, terminating the pool' % (e,)
+            pool.terminate()
+            pool.join()
+        # musicbrainz
+        if not mbconnect is None:
+            mbconnect.close()
+        # all done!
+        if verbose>0:
+            t2 = time.time()
+            print 'Program ran for:',str(int(t2-t1)),'seconds with',nthreads,'threads.'

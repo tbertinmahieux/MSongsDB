@@ -52,7 +52,7 @@ DEF_MB_PASSWD = 'gordon'
 
 
 
-def convert_one_song(audiofile,output,mbconnect=None,verbose=0):
+def convert_one_song(audiofile,output,mbconnect=None,verbose=0,DESTROYAUDIO=False):
     """
     PRINCIPAL FUNCTION
     Converts one given audio file to hdf5 format (saved in 'output')
@@ -62,6 +62,7 @@ def convert_one_song(audiofile,output,mbconnect=None,verbose=0):
             output   - nonexisting hdf5 path
          mbconnect   - if not None, open connection to musicbrainz server
            verbose   - if >0 display more information
+      DESTROYAUDIO   - Careful! deletes audio file if everything went well
     RETURN
        1 if we think a song is created, 0 otherwise
     """
@@ -109,6 +110,9 @@ def convert_one_song(audiofile,output,mbconnect=None,verbose=0):
         HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
     h5.close()
     # done
+    if DESTROYAUDIO:
+        if verbose>0: print 'We remove audio file:',audiofile
+        os.remove(audiofile)
     return 1
 
 
@@ -160,7 +164,10 @@ if __name__ == '__main__':
     usemb = False
     verbose = 1
     inputdir = ''
+    DESTROYAUDIO=False # let's not advertise that flag in the help menu
     while True:
+        if len(sys.argv) < 2: # happens with -dir option
+            break
         if sys.argv[1] == '-verbose':
             verbose = int(sys.argv[2])
             sys.argv.pop(1)
@@ -174,6 +181,8 @@ if __name__ == '__main__':
         elif sys.argv[1] == '-dir':
             inputdir = sys.argv[2]
             sys.argv.pop(1)
+        elif sys.argv[1] == '-DESTROYAUDIO':
+            DESTROYAUDIO = True
         else:
             break
         sys.argv.pop(1)
@@ -229,7 +238,8 @@ if __name__ == '__main__':
                 if cnt_songs % 100 == 0:
                     if verbose>0: print 'DOING FILE #'+cnt_songs
                 try:
-                    cnt_done += convert_one_song(f,f+'.h5',mbconnect=mbconnect,verbose=verbose)
+                    cnt_done += convert_one_song(f,f+'.h5',mbconnect=mbconnect,verbose=verbose,
+                                                 DESTROYAUDIO=DESTROYAUDIO)
                 except KeyboardInterrupt:
                     raise
                 except Exception, e:
@@ -243,50 +253,4 @@ if __name__ == '__main__':
         if not mbconnect is None:
             mbconnect.close()
 
-            
-    """
-    # get EN track / song / artist for that song
-    if verbose>0: print 'get analysis for file:',songfile
-    track = trackEN.track_from_filename(songfile)
-    song_id = track.song_id
-    song = songEN.Song(song_id)
-    if verbose>0: print 'found song:',song.title,'(',song_id,')'
-    artist_id = song.artist_id
-    artist = artistEN.Artist(artist_id)
-    if verbose>0: print 'found artist:',artist.name,'(',artist_id,')'
 
-    # hack to fill missing values
-    try:
-        track.foreign_id
-    except AttributeError:
-        track.__setattr__('foreign_id','')
-        if verbose>0: print 'no track foreign_id found'
-    try:
-        track.foreign_release_id
-    except AttributeError:
-        track.__setattr__('foreign_release_id','')
-        if verbose>0: print 'no track foreign_release_id found'
-    
-    # create HDF5 file
-    if verbose>0: print 'create HDF5 file:',hdf5file
-    HDF5.create_song_file(hdf5file,force=False)
-
-    # fill hdf5 file from track
-    if verbose>0: print 'fill HDF5 file with info from track/song/artist'
-    h5 = HDF5.open_h5_file_append(hdf5file)
-    HDF5.fill_hdf5_from_artist(h5,artist)
-    HDF5.fill_hdf5_from_song(h5,song)
-    HDF5.fill_hdf5_from_track(h5,track)
-    if usemb:
-        if verbose>0: print 'fill HDF5 file using musicbrainz'
-        connect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
-        HDF5.fill_hdf5_from_musicbrainz(h5,connect)
-        connect.close()
-    h5.close()
-
-    # done
-    t2 = time.time()
-    if verbose > 0:
-        print 'From audio:',songfile,'we created hdf5 file:',hdf5file,'in',str(int(t2-t1)),'seconds.'
-    
-    """

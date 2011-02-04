@@ -8,7 +8,6 @@ function fileList = findAllFiles(dirName,ext)
 % a-specific-directory-in-matlab
 % THIS IS MATLAB DONE BY SOMEONE THAT DOES NOT LIKE MATLAB ;)
 % We welcome any sort of improvement! -TBM
-% to just count: applyToAllFiles(msd_subset_data_path)
 %
 % 2011-01-27 dpwe@ee.columbia.edu tb2332@columbia.edu
 

@@ -51,11 +51,11 @@ classdef HDF5_Song_File_Reader
       % Constructor, receives a filename, open with READONLY permission
          obj.h5filename=h5filename;
          obj.h5fileID=H5F.open(h5filename,'H5F_ACC_RDONLY','H5P_DEFAULT');
-         obj.metadataID = H5D.open(obj.h5fileID,'/metadata/songs');
+         obj.metadataID = H5D.open(obj.h5fileID,'/metadata/songs','H5P_DEFAULT');
          obj.metadata = H5D.read(obj.metadataID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
-         obj.analysisID = H5D.open(obj.h5fileID,'/analysis/songs');
+         obj.analysisID = H5D.open(obj.h5fileID,'/analysis/songs','H5P_DEFAULT');
          obj.analysis = H5D.read(obj.analysisID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
-         obj.musicbrainzID = H5D.open(obj.h5fileID,'/musicbrainz/songs');
+         obj.musicbrainzID = H5D.open(obj.h5fileID,'/musicbrainz/songs','H5P_DEFAULT');
          obj.musicbrainz = H5D.read(obj.musicbrainzID, 'H5ML_DEFAULT', 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT');
       end % topo
       

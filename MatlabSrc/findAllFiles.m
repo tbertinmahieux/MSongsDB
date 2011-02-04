@@ -22,7 +22,7 @@ fileList = {};
 % keep files with the right extension
 for k=1:size(fileListTmp,1)
   [d,n,e] = fileparts(cell2mat(fileListTmp(k)));
-  if (e == ext)
+  if strcmp(e,ext)
     fileList = cat(1,fileList,fileListTmp(k));
   end
 end

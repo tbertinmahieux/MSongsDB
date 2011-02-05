@@ -44,7 +44,7 @@ def die_with_usage():
     print '     tb2332@columbia.edu'
     print 'GOAL'
     print '  Split the list of songs into train and test for artist recognition.'
-    print '  We only consider artists with at elast 20 songs.'
+    print '  We only consider artists with at least 20 songs.'
     print '  The training set consists of 15 songs from each of these artists.'
     print 'USAGE'
     print '  python split_train_test.py <track_metadata.db> <train.txt> <test.txt>'
@@ -52,6 +52,8 @@ def die_with_usage():
     print '  artist_term.db    - SQLite database containing metadata for each track'
     print '       train.txt    - list of Echo Nest artist ID'
     print '        test.txt    - list of Echo Nest artist ID'
+    print 'NOTE: this gives a train set of 271,095 songs and a test set of 532,300 songs.'
+    print '      See songs_train.txt and songs_test.txt.'
     sys.exit(0)
 
 

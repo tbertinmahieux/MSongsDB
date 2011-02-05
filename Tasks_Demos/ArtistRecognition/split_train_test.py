@@ -28,12 +28,14 @@ import os
 import sys
 import time
 import glob
+from operator import itemgetter
 import numpy as np
 import sqlite3
 
 # random seed, note that we actually use hash(RNDSEED) so it can be anything
 RNDSEED='caitlin'
-
+# number of songs required to consider an artist
+NUMSONGS=20
 
 def die_with_usage():
     """ HELP MENU """
@@ -57,7 +59,7 @@ if __name__ == '__main__':
 
     # help menu
     if len(sys.argv)<4:
-        die_wtih_usage()
+        die_with_usage()
 
     # params
     dbfile = sys.argv[1]
@@ -75,3 +77,46 @@ if __name__ == '__main__':
         print 'ERROR:',output_test,'already exists! delete or provide a new name'
         sys.exit(0)
 
+    # open connection
+    conn = sqlite3.connect(dbfile)
+
+    # get artists with their number of songs
+    q = "SELECT artist_id,Count(track_id) FROM songs GROUP BY artist_id"
+    res = conn.execute(q)
+    data = res.fetchall()
+    sorted_artists = sorted(data,key=itemgetter(1,0),reverse=True)
+
+    # find the last artist with that many songs
+    last_pos = np.where(np.array(map(lambda x: x[1],sorted_artists))>=NUMSONGS)[0][-1]
+    print 'We have',last_pos+1,'artists with at least',NUMSONGS,'songs.'
+
+    # open output files
+    ftrain = open(output_train,'w')
+    ftest = open(output_test,'w')
+
+    # random seed
+    np.random.seed(hash(RNDSEED))
+
+    # iterate over these artists
+    for aid,nsongs in sorted_artists[:last_pos+1]:
+        # get songs
+        q = "SELECT track_id FROM songs WHERE artist_id='"+aid+"'"
+        res = conn.execute(q)
+        tracks = map(lambda x: x[0], res.fetchall())
+        assert len(tracks)==nsongs,'ERROR: num songs should be '+str(nsongs)+' for '+aid+', got: '+str(len(tracks))
+        tracks = sorted(tracks)
+        np.random.shuffle(tracks)
+        for t in tracks[:15]:
+            ftrain.write(t+'<SEP>'+aid+'\n')
+        for k in tracks[15:]:
+            ftest.write(t+'<SEP>'+aid+'\n')
+            
+    # close files
+    ftrain.close()
+    ftest.close()
+    
+    # close connection
+    conn.close()
+
+    # done
+    print 'DONE!'

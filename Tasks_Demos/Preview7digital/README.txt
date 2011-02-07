@@ -22,6 +22,17 @@ https://github.com/ocelma/7-digital
 To be as general as possible, we intend not to use it, but
 we do recommend its use in a real application!
 
+PLAYER
+------
+We are building a graphical player, see player_7digital.py
+It is in development, but the basic functionnalities are there.
+It takes a track or song ID, or an artist/title as input.
+It is Linux-dependent for the moment, but it should be ready
+for Mac soon.
+It depends on Tkinter, pyao and pymad. If you can install these,
+you can make it work, write us if you need help or want to suggest
+features.
+
 MATLAB
 ------
 Dan Ellis provided a Matlab version of the script, see MatlabSrc directory

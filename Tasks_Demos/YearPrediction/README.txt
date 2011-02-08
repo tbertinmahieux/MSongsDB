@@ -1,4 +1,4 @@
-/Tasks_Demos/TYearPrediction/README.txt
+/Tasks_Demos/YearPrediction/README.txt
     by T. Bertin-Mahieux (2010) Columbia University
        tb2332@columbia.edu
 

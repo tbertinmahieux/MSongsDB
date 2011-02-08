@@ -59,7 +59,8 @@ def create_db(filename):
     c = conn.cursor()
     q = 'CREATE TABLE songs (track_id text PRIMARY KEY, title text, song_id text, '
     q += 'release text, artist_id text, artist_mbid text, artist_name text, '
-    q += 'duration real, artist_familiarity real, artist_hotttnesss real, year int)'
+    q += 'duration real, artist_familiarity real, artist_hotttnesss real, year int, '
+    q += 'track_7digitalid int)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -99,6 +100,8 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ", "+str(hotttnesss) if not np.isnan(hotttnesss) else ",-1"
     year = get_year(h5)
     q += ", "+str(year)
+    track_7digitalid = get_track_7digitalid(h5)
+    q += ", "+str(track_7digitalid)
     # query done, close h5, commit
     h5.close()
     q += ')'

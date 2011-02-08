@@ -29,8 +29,7 @@ if length(bb) == 0
 end
 
 ofs = 12;  % chars between start of 'Saving to:' and beginning of filename
-ee = min(strfind(result((bb+ofs):end),'"'));
-
+ee = min([strfind(result((bb+ofs):end),'"'),strfind(result((bb+ofs):end),'''')]);
 fname = result((bb+ofs):(bb+ofs+ee-2));
 
 if exist(fname,'file') ~= 2

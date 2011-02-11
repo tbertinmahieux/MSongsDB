@@ -41,16 +41,18 @@ cd ..
 addpath('mksqlite');
 
 % set up Million Song paths
-msd_subset_path='MillionSongSubset';  % or 'MillionSong' for full set?
-msd_subset_data_path=[msd_subset_path,'/data'];
-msd_subset_addf_path=[msd_subset_path,'/AdditionalFiles'];
-msd_subset_addf_prefix=[msd_subset_addf_path,'/subset_']; % no 'subset_'?
+global MillionSong MSDsubset
+MillionSong='MillionSongSubset';  % or 'MillionSong' for full set?
+msd_data_path=[MillionSong,'/data'];
+msd_addf_path=[MillionSong,'/AdditionalFiles'];
+MSDsubset = 'subset_'; % or '' for full set
+msd_addf_prefix=[msd_addf_path,'/',MSDsubset];
 % Check that we can actually read the dataset
-assert(exist(msd_subset_path,'dir')==7,'msd_subset_path is wrong...');
+assert(exist(msd_data_path,'dir')==7,['msd_data_path ',msd_data_path,' not found...']);
 
 % path to the Million Song Dataset code
 msd_code_path='MSongsDB';
-assert(exist(msd_code_path,'dir')==7,'msd_code_path is wrong...');
+assert(exist(msd_code_path,'dir')==7,['msd_code_path ',msd_code_path,' not found.']);
 % add to the path
 addpath([msd_code_path,'/MatlabSrc']);
 
@@ -64,7 +66,7 @@ addpath([msd_code_path,'/MatlabSrc']);
 % the first part of the file.  
 
 % Build a list of all the files in the dataset
-all_files = findAllFiles(msd_subset_data_path);
+all_files = findAllFiles(msd_data_path);
 cnt = length(all_files);
 disp(['Number of h5 files found: ',num2str(cnt)]);
 
@@ -144,7 +146,7 @@ disp(['There are ',num2str(length(unique(all_artist_names))), ...
 % Let's try getting all the artist names again, using SQLite:
 
 % Track metadata database
-sqldb = [msd_subset_addf_prefix,'track_metadata.db'];
+sqldb = [msd_addf_prefix,'track_metadata.db'];
 % Open connection
 mksqlite('open',sqldb);
 % Run the SQL query.  DISTINCT means we only get the unique names
@@ -209,7 +211,7 @@ disp(['First one is: ',res2(1).track_id,' ',res2(1).title]);
 % hard-coded inside)
 res = msd_sql('SELECT * FROM songs WHERE title=''Lullaby'' AND artist_name=''Dixie Chicks''');
 % Load the 7digital preview
-oauth_consumer_key='12345abcde';
+oauth_consumer_key='XXXXXXXXXX'; % Insert your real key HERE!
 [d,sr] = load_preview(res.track_id,oauth_consumer_key);
 % Convert the audio to mono & dowsample
 d = resample(mean(d,2),1,4);

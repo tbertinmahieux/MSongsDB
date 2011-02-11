@@ -3,7 +3,7 @@ Thierry Bertin-Mahieux (2010) Columbia University
 tb2332@columbia.edu
 
 Code to split the list of songs for artist recognition.
-This split is unbalanced! e.g. the number of songs per artist
+This split is unbalanced! e.g. the percentage of songs per artist
 in the training set is not the same.
 This split should be easier than the regular one:
 - larger training set

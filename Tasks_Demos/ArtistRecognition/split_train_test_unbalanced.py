@@ -54,9 +54,9 @@ def die_with_usage():
     print 'USAGE'
     print '  python split_train_test_unbalanced.py <track_metadata.db> <train.txt> <test.txt>'
     print 'PARAMS'
-    print '  artist_term.db    - SQLite database containing metadata for each track'
-    print '       train.txt    - list of Echo Nest artist ID'
-    print '        test.txt    - list of Echo Nest artist ID'
+    print ' track_metadata.db    - SQLite database containing metadata for each track'
+    print '         train.txt    - list of Echo Nest artist ID'
+    print '          test.txt    - list of Echo Nest artist ID'
     print 'NOTE: this gives a train set of 541,892 songs and a test set of 261,503 songs.'
     print '      See songs_train_unbalanced.txt and songs_test_unbalanced.txt.'
     sys.exit(0)
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         two_thirds = int(np.ceil(len(tracks) * 2./3.))
         for t in tracks[:two_thirds]:
             ftrain.write(t+'<SEP>'+aid+'\n')
-        for k in tracks[two_thirds:]:
+        for t in tracks[two_thirds:]:
             ftest.write(t+'<SEP>'+aid+'\n')
             
     # close files

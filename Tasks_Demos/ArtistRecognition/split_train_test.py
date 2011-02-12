@@ -49,9 +49,9 @@ def die_with_usage():
     print 'USAGE'
     print '  python split_train_test.py <track_metadata.db> <train.txt> <test.txt>'
     print 'PARAMS'
-    print '  artist_term.db    - SQLite database containing metadata for each track'
-    print '       train.txt    - list of Echo Nest artist ID'
-    print '        test.txt    - list of Echo Nest artist ID'
+    print ' track_metadata.db    - SQLite database containing metadata for each track'
+    print '         train.txt    - list of Echo Nest artist ID'
+    print '          test.txt    - list of Echo Nest artist ID'
     print 'NOTE: this gives a train set of 271,095 songs and a test set of 532,300 songs.'
     print '      See songs_train.txt and songs_test.txt.'
     sys.exit(0)
@@ -110,7 +110,7 @@ if __name__ == '__main__':
         np.random.shuffle(tracks)
         for t in tracks[:15]:
             ftrain.write(t+'<SEP>'+aid+'\n')
-        for k in tracks[15:]:
+        for t in tracks[15:]:
             ftest.write(t+'<SEP>'+aid+'\n')
             
     # close files

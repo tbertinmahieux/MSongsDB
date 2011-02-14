@@ -6,7 +6,7 @@ This folder contains all code related to artist recognition.
 
 REMINDER:
  - the dataset contains 44,745 unique artists based on their Echo Nest ID
- - out of that, 180,073 have at least 20 songs.
+ - out of that, 18,073 have at least 20 songs.
 
 
 TWO SPLITS? WHAT IS THE DIFFERENCE?

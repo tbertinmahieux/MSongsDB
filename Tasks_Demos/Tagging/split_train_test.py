@@ -103,15 +103,21 @@ def get_terms_for_artist(conn,artistid):
     res = conn.execute(q)
     return map(lambda x: x[0],res.fetchall())
 
-def get_random_artist_for_term(conn,term):
+def get_random_artist_for_term(conn,term,avoid_artists=None):
     """
     Get a random artist that is tagged by a given term.
+    If avoid_artists is a list, we exclude these artists.
     """
     q = "SELECT artist_id FROM artist_term WHERE term="+encode_string(term)
     res = conn.execute(q)
     all_artists = sorted( map(lambda x: x[0], res.fetchall()) )
     np.random.shuffle(all_artists)
-    return all_artists[0]
+    if avoid_artists is None:
+        return all_artists[0]
+    for a in all_artists:
+        if not a in subset_artists:
+            return a
+    raise IndexError('Found no artist for term: '+term+' that is not in the avoid list')
 
 
 def die_with_usage():
@@ -121,21 +127,22 @@ def die_with_usage():
     print 'GOAL'
     print '  split the list of artists into train and test based on terms (Echo Nest tags).'
     print 'USAGE'
-    print '  python split_train_test.py <artist_term.db> <train.txt> <test.txt> <top_terms.txt>'
+    print '  python split_train_test.py <artist_term.db> <train.txt> <test.txt> <top_terms.txt> <subset_tmdb>'
     print 'PARAMS'
     print '  artist_term.db    - SQLite database containing terms per artist'
     print '       train.txt    - list of Echo Nest artist ID'
     print '        test.txt    - list of Echo Nest artist ID'
     print '   top_terms.txt    - list of top terms (top 300)'
+    print '     subset_tmdb    - track_metadata for the subset, to be sure all subset artists are in train'
     print ''
-    print 'With the current settings, we get 4699 out of 44745 artists in the test set, corresponding to 122125 test tracks.'
+    print 'With the current settings, we get 4643 out of 44745 artists in the test set, corresponding to 122125 test tracks.'
     sys.exit(0)
 
 
 if __name__ == '__main__':
 
     # help menu
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 6:
         die_with_usage()
 
     # params
@@ -143,6 +150,7 @@ if __name__ == '__main__':
     output_train = sys.argv[2]
     output_test = sys.argv[3]
     output_top_terms = sys.argv[4]
+    subset_tmdb = sys.argv[5]
 
     # sanity checks
     if not os.path.isfile(dbfile):
@@ -157,7 +165,9 @@ if __name__ == '__main__':
     if os.path.exists(output_top_terms):
         print 'ERROR:',output_top_terms,'already exists! delete or provide a new name'
         sys.exit(0)
-        
+    if not os.path.exists(subset_tmdb):
+        print 'ERROR:',subset_tmdb,'does not exist.'
+        sys.exit(0)
 
     # open connection
     conn = sqlite3.connect(dbfile)
@@ -167,6 +177,13 @@ if __name__ == '__main__':
     res = conn.execute(q)
     allartists = map(lambda x: x[0],res.fetchall())
     print 'found',len(allartists),'distinct artists.'
+
+    # get subset artists
+    conn_subtmdb = sqlite3.connect(subset_tmdb)
+    res = conn_subtmdb.execute('SELECT DISTINCT artist_id FROM songs')
+    subset_artists = map(lambda x: x[0], res.fetchall())
+    conn_subtmdb.close()
+    print 'found',len(subset_artists),'distinct subset artists.'
 
     # get all terms
     q = "SELECT DISTINCT term FROM terms ORDER BY term" # DISTINCT useless
@@ -229,7 +246,7 @@ if __name__ == '__main__':
         #print 'term_id =',term_id
         #print '# test artists =',len(test_artists)
         term = topterms[term_id]
-        artist = get_random_artist_for_term(conn,term)
+        artist = get_random_artist_for_term(conn,term,subset_artists)
         if artist in test_artists:
             continue
         test_artists.add(artist)

@@ -42,11 +42,11 @@ except ImportError:
 
 def get_btchromas(h5):
     """
-    Get beat-aligned chroma from a song file of the Million SOng Dataset
+    Get beat-aligned chroma from a song file of the Million Song Dataset
     INPUT:
        h5          - filename or open h5 file
     RETURN:
-       btchromas   - beat-aligned chromas, one beat per segment
+       btchromas   - beat-aligned chromas, one beat per column
                      or None if something went wrong (e.g. no beats)
     """
     # if string, open and get chromas, if h5, get chromas
@@ -72,7 +72,7 @@ def get_btchromas(h5):
     # aligned features
     btchroma = align_feats(chromas.T,segstarts,btstarts,duration)
     if btchroma is None:
-        return btchroma
+        return None
     # Renormalize. Each column max is 1.
     maxs = btchroma.max(axis=0)
     maxs[np.where(maxs==0)] = 1.
@@ -82,14 +82,14 @@ def get_btchromas(h5):
 
 def get_bttimbre(h5):
     """
-    Get beat-aligned timbre from a song file of the Million SOng Dataset
+    Get beat-aligned timbre from a song file of the Million Song Dataset
     INPUT:
        h5          - filename or open h5 file
     RETURN:
-       bttimbre    - beat-aligned timbre, one beat per segment
+       bttimbre    - beat-aligned timbre, one beat per column
                      or None if something went wrong (e.g. no beats)
     """
-    # if string, open and get chromas, if h5, get chromas
+    # if string, open and get timbre, if h5, get timbre
     if type(h5).__name__ == 'str':
         h5 = GETTERS.open_h5_file_read(h5)
         timbre = GETTERS.get_segments_timbre(h5)
@@ -112,9 +112,46 @@ def get_bttimbre(h5):
     # aligned features
     bttimbre = align_feats(timbre.T,segstarts,btstarts,duration)
     if bttimbre is None:
-        return bttimbre
+        return None
     # done (no renormalization)
     return bttimbre
+
+
+def get_btloudnessmax(h5):
+    """
+    Get beat-aligned loudness max from a song file of the Million Song Dataset
+    INPUT:
+       h5             - filename or open h5 file
+    RETURN:
+       btloudnessmax  - beat-aligned loudness max, one beat per column
+                        or None if something went wrong (e.g. no beats)
+    """
+    # if string, open and get max loudness, if h5, get max loudness
+    if type(h5).__name__ == 'str':
+        h5 = GETTERS.open_h5_file_read(h5)
+        loudnessmax = GETTERS.get_segments_loudness_max(h5)
+        segstarts = GETTERS.get_segments_start(h5)
+        btstarts = GETTERS.get_beats_start(h5)
+        duration = GETTERS.get_duration(h5)
+        h5.close()
+    else:
+        loudnessmax = GETTERS.get_segments_loudness_max(h5)
+        segstarts = GETTERS.get_segments_start(h5)
+        btstarts = GETTERS.get_beats_start(h5)
+        duration = GETTERS.get_duration(h5)
+    # get the series of starts for segments and beats
+    # NOTE: MAYBE USELESS?
+    # result for track: 'TR0002Q11C3FA8332D'
+    #    segstarts.shape = (708,)
+    #    btstarts.shape = (304,)
+    segstarts = np.array(segstarts).flatten()
+    btstarts = np.array(btstarts).flatten()
+    # aligned features
+    btloudnessmax = align_feats(loudnessmax.reshape(1,loudnessmax.shape[0]),segstarts,btstarts,duration)
+    if btloudnessmax is None:
+        return None
+    # done (no renormalization)
+    return btloudnessmax
 
 
 def align_feats(feats,segstarts,btstarts,duration):
@@ -149,7 +186,6 @@ def align_feats(feats,segstarts,btstarts,duration):
         return None
 
     # done
-    assert featchroma.shape[0] == 12 # debugging, EN features are size 12
     return featchroma
 
 

@@ -3,8 +3,9 @@
     by T. Bertin-Mahieux (2010) Columbia University
        tb2332@columbia.edu
 
-This folder has code to find cover songs in the million song dataset.
+This folder contains the SecondHandSongs dataset!
+http://labrosa.ee.columbia.edu/millionsong/secondhand
 
-The list of covers is also coming soon! Thank you for you patience, you
-can write us for details.
+Also, it will eventually contain helper code to deal with covers,
+and even benchmark algorithms.
 

@@ -24,4 +24,9 @@ More details on the database:
    - column 'cnt' -> word count for the word
    - column 'is_test' -> 0 if this example is from the train set, 1 if test
 
+If you want to know exactly how we created the bag-of-wirds, look at:
+  lyrics_to_bow.py
+Note that it requires the following Python package:
+  http://pypi.python.org/pypi/stemming/1.0
+
 Please enjoy, and don't hesitate to give us feedback!

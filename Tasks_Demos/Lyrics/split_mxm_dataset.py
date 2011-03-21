@@ -78,7 +78,7 @@ if __name__ == '__main__':
     if not os.path.isfile(testartistsf):
         print 'ERROR: %s does not exist.' % testartistsf
         sys.exit(0)
-    if os path.isfile(trainf):
+    if os.path.isfile(trainf):
         print 'ERROR: %s already exists.' % trainf
         sys.exit(0)
     if os.path.isfile(testf):
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     conn = sqlite3.connect(tmdb)
 
     # load test artists, put them in the database
-    q = "CREATE TEMP TABLE testaids (aid PRIMARY KEY TEXT)"
+    q = "CREATE TEMP TABLE testaids (aid TEXT PRIMARY KEY)"
     conn.execute(q)
     f = open(testartistsf, 'r')
     for line in f.xreadlines():
@@ -109,8 +109,8 @@ if __name__ == '__main__':
         Create simple function to decide if a song is from a test artist
         based on its track ID
         """
-        q = "SELECT testaids.aids FROM testaids JOIN songs"
-        q += " ON testaids.aids=songs.artist_id"
+        q = "SELECT testaids.aid FROM testaids JOIN songs"
+        q += " ON testaids.aid=songs.artist_id"
         q += " WHERE songs.track_id='" + tid + "'"
         q += " LIMIT 1"
         res = conn.execute(q)

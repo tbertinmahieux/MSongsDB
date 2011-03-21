@@ -161,7 +161,7 @@ if __name__ == '__main__':
         for wordcnt in lineparts[2:]:
             wordid, cnt = wordcnt.split(':')
             q = "INSERT INTO lyrics"
-            q += " SELECT '" + tid + ", " + mxm_tid
+            q += " SELECT '" + tid + "', " + mxm_tid + ", "
             q += " words.word, " + cnt + ", 1"
             q += " FROM words WHERE words.ROWID=" + wordid
             conn.execute(q)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     conn.execute(q)
     q = "CREATE INDEX idx_lyrics3 ON lyrics ('word')"
     conn.execute(q)
-    q = "CREATE INDEX idx_lyrics4 ON lyrics ('cnt')"
+    q = "CREATE INDEX idx_lyrics4 ON lyrics ('count')"
     conn.execute(q)
     q = "CREATE INDEX idx_lyrics5 ON lyrics ('is_test')"
     conn.execute(q)

@@ -84,13 +84,14 @@ if __name__ == '__main__':
     conn = sqlite3.connect(outputf)
 
     # create tables -> words and lyrics
-    q = "CREATE TABLE words (word PRIMARY KEY TEXT)"
+    q = "CREATE TABLE words (word TEXT PRIMARY KEY)"
     conn.execute(q)
     q = "CREATE TABLE lyrics (track_id,"
     q += " mxm_tid INT,"
-    q += " FOREIGN KEY(word) REFERENCES words(word),"
+    q += " word TEXT,"
     q += " count INT,"
-    q += " is_test INT)"
+    q += " is_test INT,"
+    q += " FOREIGN KEY(word) REFERENCES words(word))"
     conn.execute(q)
 
     # get words, put them in the words table
@@ -114,8 +115,8 @@ if __name__ == '__main__':
     tmpwords = res.fetchall()
     assert len(tmpwords) == len(topwords), 'Number of words issue.'
     for k in range(len(tmpwords)):
-        assert tmpwords[k][0] = k + 1, 'ROWID issue.'
-        assert tmpwords[k][1] = topwords[k], 'ROWID issue.'
+        assert tmpwords[k][0] == k + 1, 'ROWID issue.'
+        assert tmpwords[k][1].encode('utf-8') == topwords[k], 'ROWID issue.'
 
     # we put the train data in the dataset
     f = open(trainf, 'r')
@@ -130,7 +131,7 @@ if __name__ == '__main__':
         for wordcnt in lineparts[2:]:
             wordid, cnt = wordcnt.split(':')
             q = "INSERT INTO lyrics"
-            q += " SELECT '" + tid + ", " + mxm_tid
+            q += " SELECT '" + tid + "', " + mxm_tid + ", "
             q += " words.word, " + cnt + ", 0"
             q += " FROM words"
             conn.execute(q)

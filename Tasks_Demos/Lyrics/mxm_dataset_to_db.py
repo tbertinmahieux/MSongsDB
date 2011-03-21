@@ -120,6 +120,7 @@ if __name__ == '__main__':
 
     # we put the train data in the dataset
     f = open(trainf, 'r')
+    cnt_lines = 0
     for line in f.xreadlines():
         if line == '' or line.strip() == '':
             continue
@@ -135,6 +136,11 @@ if __name__ == '__main__':
             q += " words.word, " + cnt + ", 0"
             q += " FROM words"
             conn.execute(q)
+        # verbose
+        cnt_lines += 1
+        if cnt_lines % 15000 == 0:
+            print 'Done with %d train tracks.' % cnt_lines
+            conn.commit()
     f.close()
     conn.commit()
     print 'Train lyrics added.'
@@ -142,6 +148,7 @@ if __name__ == '__main__':
     # we put the test data in the dataset
     # only difference from train: is_test is now 1
     f = open(testf, 'r')
+    cnt_lines = 0
     for line in f.xreadlines():
         if line == '' or line.strip() == '':
             continue
@@ -157,6 +164,11 @@ if __name__ == '__main__':
             q += " words.word, " + cnt + ", 1"
             q += " FROM words"
             conn.execute(q)
+        # verbose
+        cnt_lines += 1
+        if cnt_lines % 15000 == 0:
+            print 'Done with %d test tracks.' % cnt_lines
+            conn.commit()
     f.close()
     conn.commit()
     print 'Test lyrics added.'

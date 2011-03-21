@@ -91,7 +91,7 @@ if __name__ == '__main__':
     q += " word TEXT,"
     q += " count INT,"
     q += " is_test INT,"
-    q += " FOREIGN KEY(wordidx) REFERENCES words(word))"
+    q += " FOREIGN KEY(word) REFERENCES words(word))"
     conn.execute(q)
 
     # get words, put them in the words table

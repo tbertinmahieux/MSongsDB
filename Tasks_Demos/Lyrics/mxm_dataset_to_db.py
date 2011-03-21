@@ -91,7 +91,7 @@ if __name__ == '__main__':
     q += " word TEXT,"
     q += " count INT,"
     q += " is_test INT,"
-    q += " FOREIGN KEY(word) REFERENCES words(word))"
+    q += " FOREIGN KEY(wordidx) REFERENCES words(word))"
     conn.execute(q)
 
     # get words, put them in the words table
@@ -117,6 +117,7 @@ if __name__ == '__main__':
     for k in range(len(tmpwords)):
         assert tmpwords[k][0] == k + 1, 'ROWID issue.'
         assert tmpwords[k][1].encode('utf-8') == topwords[k], 'ROWID issue.'
+    print "'words' table filled, checked."
 
     # we put the train data in the dataset
     f = open(trainf, 'r')
@@ -134,7 +135,7 @@ if __name__ == '__main__':
             q = "INSERT INTO lyrics"
             q += " SELECT '" + tid + "', " + mxm_tid + ", "
             q += " words.word, " + cnt + ", 0"
-            q += " FROM words"
+            q += " FROM words WHERE words.ROWID=" + wordid
             conn.execute(q)
         # verbose
         cnt_lines += 1
@@ -162,7 +163,7 @@ if __name__ == '__main__':
             q = "INSERT INTO lyrics"
             q += " SELECT '" + tid + ", " + mxm_tid
             q += " words.word, " + cnt + ", 1"
-            q += " FROM words"
+            q += " FROM words WHERE words.ROWID=" + wordid
             conn.execute(q)
         # verbose
         cnt_lines += 1

@@ -60,7 +60,7 @@ def create_db(filename):
     q = 'CREATE TABLE songs (track_id text PRIMARY KEY, title text, song_id text, '
     q += 'release text, artist_id text, artist_mbid text, artist_name text, '
     q += 'duration real, artist_familiarity real, artist_hotttnesss real, year int, '
-    q += 'track_7digitalid int)'
+    q += 'track_7digitalid int, shs_perf int, shs_work int)'
     c.execute(q)
     # commit and close
     conn.commit()
@@ -102,6 +102,8 @@ def fill_from_h5(conn,h5path,verbose=0):
     q += ", "+str(year)
     track_7digitalid = get_track_7digitalid(h5)
     q += ", "+str(track_7digitalid)
+    # add empty fields for shs perf than work
+    q += ", -1, 0"
     # query done, close h5, commit
     h5.close()
     q += ')'
@@ -182,6 +184,7 @@ def die_with_usage():
     print '  MillionSong dir   - directory containing .h5 song files in sub dirs'
     print '  track_metadata.db - filename for the database'
     print 'FLAGS'
+    print '  -shsdata f  - file containing the SHS dataset (concatenate train and test)'
     print '  -verbose    - print every query'
     sys.exit(0)
 
@@ -203,9 +206,13 @@ if __name__ == '__main__':
     from hdf5_getters import *
 
     verbose = 0
+    shsdataset = ''
     while True:
         if sys.argv[1] == '-verbose':
             verbose = 1
+        elif sys.argv[1] == '-shsdata':
+            shsdataset = sys.argv[2]
+            sys.argv.pop(1)
         else:
             break
         sys.argv.pop(1)
@@ -214,9 +221,14 @@ if __name__ == '__main__':
     maindir = os.path.abspath(sys.argv[1])
     dbfile = os.path.abspath(sys.argv[2])
 
-    # check if file exists!
+    # sanity checks
+    if not os.path.isdir(maindir):
+        print 'ERROR: %s is not a directory.' % maindir
     if os.path.exists(dbfile):
-        print dbfile,'already exists! delete or provide a new name'
+        print 'ERROR: %s already exists! delete or provide a new name' % dbfile
+        sys.exit(0)
+    if shsdataset != '' and not os.path.isfile(shsdataset):
+        print 'ERROR %s does not exist.' % shsdataset
         sys.exit(0)
 
     # start time
@@ -242,6 +254,33 @@ if __name__ == '__main__':
     stimelength = str(datetime.timedelta(seconds=t2-t1))
     print 'added the content of',cnt_files,'files to database:',dbfile
     print 'it took:',stimelength
+
+    # add SHS data
+    if shsdataset != '':
+        print 'We add SHS data from file: %s', % shsdataset
+        # iterate over SHS file
+        shs = open(shsdataset, 'r')
+        for line in shs:
+            if line == '' or line.strip() == '':
+                continue
+            if line[0] == '#':
+                continue
+            # work
+            if line[0] == '%':
+                works = map(lmabda w: int(w), line[1:].split(' ')[0].strip(','))
+                work = min(works)
+                continue
+            # regular line
+            tid,aid,perf = line.strip().split('<SEP>')
+            q = "UPDATE songs SET shs_perf=" + perf + ", shs_work=" + str(work)
+            q += " WHERE track_id='" + tid + "'"
+            if verbose > 0: print q
+            conn.execute(q)
+        # iteration done
+        shs.close()
+        conn.commit()
+
+
 
     # add indices
     c = conn.cursor()

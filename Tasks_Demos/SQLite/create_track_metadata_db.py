@@ -257,7 +257,7 @@ if __name__ == '__main__':
 
     # add SHS data
     if shsdataset != '':
-        print 'We add SHS data from file: %s', % shsdataset
+        print 'We add SHS data from file: %s' % shsdataset
         # iterate over SHS file
         shs = open(shsdataset, 'r')
         for line in shs:
@@ -267,7 +267,7 @@ if __name__ == '__main__':
                 continue
             # work
             if line[0] == '%':
-                works = map(lmabda w: int(w), line[1:].split(' ')[0].strip(','))
+                works = map(lambda w: int(w), line[1:].split(' ')[0].strip(','))
                 work = min(works)
                 continue
             # regular line

@@ -7,6 +7,9 @@ A copy of the API terms of use is provided below.
 
 Regarding the MusicBrainz data contained in the dataset, the track 'year' is under public domain and the 'tags' and 'tag count' are under Attribution-NonCommercial-ShareAlike 2.0 license.
 
+Regarding the SecondHandSongs dataset (cover songs), see the website:
+  http://labrosa.ee.columbia.edu/millionsong/secondhand
+
 The code is released under GNU Public License.
 
 For questions regarding the dataset: tb2332@columbia.edu

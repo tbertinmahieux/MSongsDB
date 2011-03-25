@@ -15,6 +15,8 @@ and LabROSA at Columbia University.
 This project is funded in part by the NSF.
 
 Most of the data is licensed the same way as Echo Nest's API.
+For the SecondHandSongs dataset (cover songs), see the webpage:
+   http://labrosa.ee.columbia.edu/millionsong/secondhand
 The code is under GNU public license.
 See LICENSE for details.
 

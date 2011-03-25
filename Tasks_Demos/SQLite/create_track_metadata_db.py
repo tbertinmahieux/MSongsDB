@@ -171,6 +171,14 @@ def add_indices_to_db(conn,verbose=0):
     q = "CREATE INDEX idx_year2 ON songs ('year','artist_name')"
     if verbose > 0: print q
     c.execute(q)
+    # index to search by (shs_work)
+    q = "CREATE INDEX idx_shs_work ON songs ('shs_work')"
+    if verbose > 0: print q
+    c.execute(q)
+    # index to search by (shs_perf)
+    q = "CREATE INDEX idx_shs_perf ON songs ('shs_perf')"
+    if verbose > 0: print q
+    c.execute(q)
     # done, commit
     conn.commit()
 

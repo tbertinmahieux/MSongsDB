@@ -275,7 +275,7 @@ if __name__ == '__main__':
                 continue
             # work
             if line[0] == '%':
-                works = map(lambda w: int(w), line[1:].split(' ')[0].strip(','))
+                works = map(lambda w: int(w), line[1:].split(' ')[0].split(',')[:-1])
                 work = min(works)
                 continue
             # regular line

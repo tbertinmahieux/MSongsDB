@@ -80,7 +80,7 @@ def get_btchromas(h5):
     return btchroma
 
 
-def get_btchroma_loudness(h5):
+def get_btchromas_loudness(h5):
     """
     Similar to btchroma, but adds the loudness back.
     We use the segments_loudness_max
@@ -104,7 +104,14 @@ def get_btchroma_loudness(h5):
     # get the series of starts for segments and beats
     segstarts = np.array(segstarts).flatten()
     btstarts = np.array(btstarts).flatten()
-    raise NotImplementedError
+    # add back loudness
+    chromas = chromas.T * idB(loudnessmax)
+    # aligned features
+    btchroma = align_feats(chromas, segstarts, btstarts, duration)
+    if btchroma is None:
+        return None
+    # done (no renormalization)
+    return btchroma
 
 
 def get_bttimbre(h5):
@@ -272,6 +279,16 @@ def get_time_warp_matrix(segstart, btstart, duration):
         warpmat[:, n] /= np.sum(warpmat[:, n])
     # return the transpose, meaning (#beats , #segs)
     return warpmat.T
+
+
+def idB(loudness_array):
+    """
+    Reverse the Echo Nest loudness dB features.
+    'loudness_array' can be pretty any numpy object:
+    one value or an array
+    Inspired by D. Ellis MATLAB code
+    """
+    return np.power(10., loudness_array / 20.)
 
 
 def die_with_usage():

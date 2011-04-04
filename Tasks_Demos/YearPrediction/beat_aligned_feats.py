@@ -34,10 +34,9 @@ import numpy as np
 try:
     import hdf5_getters as GETTERS
 except ImportError:
-    print 'cant find file hdf5_getters.py'
-    print 'you must put: MSongsDB/PythonSrc in your path, or import it otherwise'
+    print 'cannot find file hdf5_getters.py'
+    print 'you must put MSongsDB/PythonSrc in your path or import it otherwise'
     raise
-
 
 
 def get_btchromas(h5):
@@ -70,15 +69,43 @@ def get_btchromas(h5):
     segstarts = np.array(segstarts).flatten()
     btstarts = np.array(btstarts).flatten()
     # aligned features
-    btchroma = align_feats(chromas.T,segstarts,btstarts,duration)
+    btchroma = align_feats(chromas.T, segstarts, btstarts, duration)
     if btchroma is None:
         return None
     # Renormalize. Each column max is 1.
     maxs = btchroma.max(axis=0)
-    maxs[np.where(maxs==0)] = 1.
+    maxs[np.where(maxs == 0)] = 1.
     btchroma = (btchroma / maxs)
     # done
     return btchroma
+
+
+def get_btchroma_loudness(h5):
+    """
+    Similar to btchroma, but adds the loudness back.
+    We use the segments_loudness_max
+    There is no max value constraint, simply no negative values.
+    """
+    # if string, open and get chromas, if h5, get chromas
+    if type(h5).__name__ == 'str':
+        h5 = GETTERS.open_h5_file_read(h5)
+        chromas = GETTERS.get_segments_pitches(h5)
+        segstarts = GETTERS.get_segments_start(h5)
+        btstarts = GETTERS.get_beats_start(h5)
+        duration = GETTERS.get_duration(h5)
+        loudnessmax = GETTERS.get_segments_loudness_max(h5)
+        h5.close()
+    else:
+        chromas = GETTERS.get_segments_pitches(h5)
+        segstarts = GETTERS.get_segments_start(h5)
+        btstarts = GETTERS.get_beats_start(h5)
+        duration = GETTERS.get_duration(h5)
+        loudnessmax = GETTERS.get_segments_loudness_max(h5)
+    # get the series of starts for segments and beats
+    segstarts = np.array(segstarts).flatten()
+    btstarts = np.array(btstarts).flatten()
+    raise NotImplementedError
+
 
 def get_bttimbre(h5):
     """
@@ -110,7 +137,7 @@ def get_bttimbre(h5):
     segstarts = np.array(segstarts).flatten()
     btstarts = np.array(btstarts).flatten()
     # aligned features
-    bttimbre = align_feats(timbre.T,segstarts,btstarts,duration)
+    bttimbre = align_feats(timbre.T, segstarts, btstarts, duration)
     if bttimbre is None:
         return None
     # done (no renormalization)
@@ -147,14 +174,16 @@ def get_btloudnessmax(h5):
     segstarts = np.array(segstarts).flatten()
     btstarts = np.array(btstarts).flatten()
     # aligned features
-    btloudnessmax = align_feats(loudnessmax.reshape(1,loudnessmax.shape[0]),segstarts,btstarts,duration)
+    btloudnessmax = align_feats(loudnessmax.reshape(1,
+                                                    loudnessmax.shape[0]),
+                                segstarts, btstarts, duration)
     if btloudnessmax is None:
         return None
     # done (no renormalization)
     return btloudnessmax
 
 
-def align_feats(feats,segstarts,btstarts,duration):
+def align_feats(feats, segstarts, btstarts, duration):
     """
     MAIN FUNCTION: aligned whatever matrix of features is passed,
     one column per segment, and interpolate them to get features
@@ -162,7 +191,8 @@ def align_feats(feats,segstarts,btstarts,duration):
     Note that btstarts could be anything, e.g. bar starts
     INPUT
        feats      - matrix of features, one column per segment
-       segstarts  - segments starts in seconds, dim must match feats # cols (flatten ndarray)
+       segstarts  - segments starts in seconds,
+                    dim must match feats # cols (flatten ndarray)
        btstarts   - beat starts in seconds (flatten ndarray)
        duration   - overall track duration in seconds
     RETURN
@@ -221,14 +251,14 @@ def get_time_warp_matrix(segstart, btstart, duration):
             # (catching faster than ckecking... it happens rarely?)
             break
         # find first segment that starts after beat ends
-        segs_after =  np.nonzero((segstart - end) >= 0)[0]
+        segs_after = np.nonzero((segstart - end) >= 0)[0]
         if segs_after.shape[0] == 0:
             end_idx = start_idx
         else:
             end_idx = segs_after[0]
         # fill col of warpmat with 1 for the elem in between
         # (including start_idx, excluding end_idx)
-        warpmat[start_idx:end_idx, n] = 1. 
+        warpmat[start_idx:end_idx, n] = 1.
         # if the beat started after the segment, keep the proportion
         # of the segment that is inside the beat
         warpmat[start_idx, n] = 1. - ((start - segstart[start_idx])
@@ -236,13 +266,12 @@ def get_time_warp_matrix(segstart, btstart, duration):
         # if the segment ended after the beat ended, keep the proportion
         # of the segment that is inside the beat
         if end_idx - 1 > start_idx:
-            warpmat[end_idx-1,n] = ((end - segstart[end_idx-1])
-                                    / seglen[end_idx-1])
+            warpmat[end_idx-1, n] = ((end - segstart[end_idx-1])
+                                     / seglen[end_idx-1])
         # normalize so the 'energy' for one beat is one
-        warpmat[:,n] /= np.sum(warpmat[:,n])
+        warpmat[:, n] /= np.sum(warpmat[:, n])
     # return the transpose, meaning (#beats , #segs)
     return warpmat.T
-
 
 
 def die_with_usage():
@@ -268,24 +297,23 @@ if __name__ == '__main__':
     # params
     h5file = sys.argv[1]
     if not os.path.isfile(h5file):
-        print 'ERROR: file',h5file,'does not exist.'
+        print 'ERROR: file %s does not exist.' % h5file
         sys.exit(0)
 
     # compute beat chromas
     btchromas = get_btchromas(h5file)
-    print 'btchromas.shape =',btchromas.shape
+    print 'btchromas.shape =', btchromas.shape
     if np.isnan(btchromas).any():
         print 'btchromas have NaN'
     else:
         print 'btchromas have no NaN'
-    print 'the max value is:',btchromas.max()
+    print 'the max value is:', btchromas.max()
 
     # compute beat timbre
     bttimbre = get_bttimbre(h5file)
-    print 'bttimbre.shape =',bttimbre.shape
+    print 'bttimbre.shape =', bttimbre.shape
     if np.isnan(bttimbre).any():
         print 'bttimbre have NaN'
     else:
         print 'bttimbre have no NaN'
-    print 'the max value is:',bttimbre.max()
-
+    print 'the max value is:', bttimbre.max()

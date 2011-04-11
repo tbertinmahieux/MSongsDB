@@ -10,6 +10,9 @@ Regarding the MusicBrainz data contained in the dataset, the track 'year' is und
 Regarding the SecondHandSongs dataset (cover songs), see the website:
   http://labrosa.ee.columbia.edu/millionsong/secondhand
 
+Regarding the musiXmatch dataset (lyrics), see the website:
+  http://labrosa.ee.columbia.edu/millionsong/musixmatch
+
 The code is released under GNU Public License.
 
 For questions regarding the dataset: tb2332@columbia.edu

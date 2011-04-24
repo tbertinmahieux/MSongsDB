@@ -54,7 +54,6 @@ try:
 except KeyError:
     _api_dev_key = os.environ['ECHONEST_API_KEY']
 # posgresql import and info for musicbrainz dataset
-import pg
 MBUSER='gordon'
 MBPASSWD='gordon'
 
@@ -1062,6 +1061,7 @@ def run_steps(maindir,nomb=False,nfilesbuffer=0,startstep=0,onlystep=-1,idxthrea
     if nomb:
         connect = None
     else:
+        import pg
         connect = pg.connect('musicbrainz_db','localhost',-1,None,None,MBUSER,MBPASSWD)
 
     cnt_created = 0
@@ -1141,8 +1141,8 @@ if __name__ == '__main__':
         if sys.argv[1] == '-nthreads':
             nthreads = int(sys.argv[2])
             sys.argv.pop(1)
-        elif sys.argv[1] == '-nobm':
-            nomusicbrainz = True
+        elif sys.argv[1] == '-nomb':
+            nomb = True
         elif sys.argv[1] == '-nfilesbuffer':
             nfilesbuffer = int(sys.argv[2])
             sys.argv.pop(1)

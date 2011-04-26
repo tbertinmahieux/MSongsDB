@@ -1109,7 +1109,7 @@ def die_with_usage():
     print '   python dataset_creator.py [FLAGS] <maindir>'
     print 'FLAGS'
     print '  -nthreads n      - number of threads to use'
-    print '  -nomb            - do not musicbrainz'
+    print '  -nomb            - do not use musicbrainz'
     print '  -nfilesbuffer n  - each thread stop if there is less than that many files'
     print '                     left to be put in the Million Song dataset'
     print '  -t1nobuffer      - removes the filesbuffer for first thread'
@@ -1142,7 +1142,7 @@ if __name__ == '__main__':
             nthreads = int(sys.argv[2])
             sys.argv.pop(1)
         elif sys.argv[1] == '-nomb':
-            nomusicbrainz = True
+            nomb = True
         elif sys.argv[1] == '-nfilesbuffer':
             nfilesbuffer = int(sys.argv[2])
             sys.argv.pop(1)

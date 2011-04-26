@@ -126,9 +126,9 @@ def fill_hdf5_from_track(h5,track):
     # get the metadata table, fill it
     metadata = h5.root.metadata.songs
     #metadata.cols.analyzer_version[0] = track.analyzer_version
-    metadata.cols.artist_name[0] = track.artist.encode('utf-8') if track.artist else ''
-    metadata.cols.release[0] = track.release.encode('utf-8') if track.release else ''
-    metadata.cols.title[0] = track.title.encode('utf-8') if track.title else ''
+    metadata.cols.artist_name[0] = getattr(track, 'artist', u'').encode('utf-8')
+    metadata.cols.release[0] = getattr(track, 'release', u'').encode('utf-8')
+    metadata.cols.title[0] = getattr(track, 'title', u'').encode('utf-8')
     idsplitter_7digital = lambda x: int(x.split(':')[2]) if x and x.split(':')[0]=='7digital' else -1
     metadata.cols.release_7digitalid[0] = idsplitter_7digital(track.foreign_release_id)
     metadata.cols.track_7digitalid[0] = idsplitter_7digital(track.foreign_id)

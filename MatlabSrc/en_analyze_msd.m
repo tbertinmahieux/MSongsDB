@@ -20,7 +20,7 @@ end
 
 track = F;
 
-disp(['track ID=',track]);
+%disp(['track ID=',track]);
 D.id = track;
 
 % Read the MSD file

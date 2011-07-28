@@ -20,8 +20,8 @@ This project is funded in part by the NSF.
    <br>[http://labrosa.ee.columbia.edu/millionsong/secondhand](http://labrosa.ee.columbia.edu/millionsong/secondhand 'SecondHandSongs dataset')</br>
 <br>For the musiXmatch dataset (lyrics), see the webpage:</br>
    <br>[http://labrosa.ee.columbia.edu/millionsong/musixmatch](http://labrosa.ee.columbia.edu/millionsong/musixmatch 'musiXmatch dataset')</br>
-The code is under GNU public license.
-See LICENSE for details.
+<br>The code is under GNU public license.
+See LICENSE for details.</br>
 
 + Most details and instructions on how to get the dataset can be found
 on the project's website:</br>

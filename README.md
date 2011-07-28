@@ -15,7 +15,7 @@ The dataset is the result of a collaboration between The Echo Nest
 and LabROSA at Columbia University.
 This project is funded in part by the NSF.
 
-+ <br>Most of the data is licensed the same way as Echo Nest's API.</br>
++ Most of the data is licensed the same way as Echo Nest's API.</br>
 <br>For the SecondHandSongs dataset (cover songs), see the webpage:</br>
    <br>[http://labrosa.ee.columbia.edu/millionsong/secondhand](http://labrosa.ee.columbia.edu/millionsong/secondhand 'SecondHandSongs dataset')</br>
 <br>For the musiXmatch dataset (lyrics), see the webpage:</br>

@@ -69,19 +69,40 @@ float HDF5Getters::get_artist_familiarity() const {
 }
 
 
-/* UTITITY FUNCTIONS */
+/*
+ * Get Key
+ */
+int HDF5Getters::get_key() const {
+  return get_member_int( GROUP_ANALYSIS, "key");
+}
+
+
+/***************** UTITITY FUNCTIONS *******************/
 
 /*
  * To get a float member from a given group;
  * dataset name is always 'songs'
  */
-float HDF5Getters::get_member_float(const Group& group, 
-				    const std::string name_member) const {
+float HDF5Getters::get_member_float(const Group& group, const std::string name_member) {
   const H5std_string MEMBER( name_member );
   const CompType mtype( sizeof(float) );
   mtype.insertMember( MEMBER, 0, PredType::NATIVE_FLOAT);
   DataSet dataset( group.openDataSet( "songs" ));
   float data_out = -1.;
+  dataset.read( &data_out, mtype );
+  return data_out;
+}
+
+/*
+ * To get a int member from a given group;
+ * dataset name is always 'songs'
+ */
+int HDF5Getters::get_member_int(const Group& group, const std::string name_member) {
+  const H5std_string MEMBER( name_member );
+  const CompType mtype( sizeof(int) );
+  mtype.insertMember( MEMBER, 0, PredType::NATIVE_INT);
+  DataSet dataset( group.openDataSet( "songs" ));
+  int data_out = -1.;
   dataset.read( &data_out, mtype );
   return data_out;
 }

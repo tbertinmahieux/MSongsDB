@@ -52,8 +52,10 @@ int main(int argc, const char* argv[]) {
   HDF5Getters getters(argv[1]);
   
   // print everything!
-  float val = getters.get_artist_familiarity();
-  cout << "artist familiarity: " << val << endl;
+  float fval = getters.get_artist_familiarity();
+  cout << "artist familiarity: " << fval << endl;
+  int ival = getters.get_key();
+  cout << "key: " << ival << endl;
 
   return 0; // succesfully terminated
 }

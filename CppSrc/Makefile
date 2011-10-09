@@ -25,14 +25,17 @@
 # compiler
 CC=g++
 # options passed to the compiler
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -std=c++0x -O2
 
 
-all: hdf5_wrapper.o
-#$(CC) $(CFLAGS) hdf5_display.cpp -o hdf5_display
+all: hdf5_getters.o hdf5_display.o
+	$(CC) -lhdf5 -lhdf5_cpp hdf5_display.o hdf5_getters.o -o hdf5_display
 
-hdf5_wrapper.o:
-	$(CC) $(CFLAGS) -c hdf5_wrapper.cc
+hdf5_display.o:
+	$(CC) $(CFLAGS) -c hdf5_display.cc	
+
+hdf5_getters.o:
+	$(CC) $(CFLAGS) -c hdf5_getters.cc
 
 clean:
-	rm -rf *.o #hdf5_display
+	rm -rf *.o hdf5_display

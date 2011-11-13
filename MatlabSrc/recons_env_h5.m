@@ -1,20 +1,17 @@
-function E = recons_env_h5(A,B)
-% E = recons_env_h5(A,B)
+function E = recons_env_h5(A)
+% E = recons_env_h5(A)
 %    Reconstruct the time-frequency envelope of a sound from the EN
 %    timbre descriptors.  A is a EN HDF5_Song structure including
-%    segment start times and segment durations.  B is a
-%    matrix of N x M x 12 envelope basis functions.  Reconstruct 
+%    segment start times and segment durations.  Reconstruct 
 %    each segment envelope from the A.timbre coefficient weights, 
 %    resample it, insert it into E.
 % 2010-05-03 Dan Ellis dpwe@ee.columbia.edu
 
-global ENTimbreBasis
+global ENTimbreTJ
 
-if nargin < 2
-  if length(ENTimbreBasis)==0
-    load ENTimbreBasis
-  end
-  B = ENTimbreBasis;
+if length(ENTimbreTJ) == 0
+  [p,n,e] = fileparts(which('recons_env_h5'));
+  load(fullfile(p,'ENTimbreTJ.mat'));
 end
 
 segments = A.get_segments_start()';
@@ -25,36 +22,54 @@ nseg = length(segments);
 segmentduration = [segmentduration, segmentduration(end)];
 maxtime = segments(end)+segmentduration(end);
 
-nchan = size(B,1);
-ncol = size(B,2);
-ntimb = size(B,3);
+bases = ENTimbreTJ.bases;
+bmean = ENTimbreTJ.mean;
 
-tbase = 0.010;
+nchan = size(bases,1);
+ncols = size(bases,2);
+ntimb = size(bases,3);
+
+%tbase = 0.010;
+tbase = 128/22050;
 E = zeros(nchan,ceil(maxtime/tbase)+1);
 tt = tbase * [0:(ceil(maxtime/tbase))];
 
 timbre = A.get_segments_timbre();
 
+% How many uninterpolated frames
+ninitial = 10;
+% How many subsequent interpolated frames
+nfinal = ncols - ninitial;
+
 for s = 1:nseg
-  ei = zeros(nchan,ncol);
+  % reconstruction starts with mean + constant value of 1st element
+  ei = ENTimbreTJ.mean + timbre(1,s);
   for i = 1:ntimb
-    ei = ei + squeeze(timbre(i,s)*B(:,:,i));
+    ei = ei + squeeze(timbre(i+1,s)*bases(:,:,i));
   end
   ei2 = [ei,ei(:,end)];
-  % Figure out the actual place to put it
-  % Segment covers A.segment(s) to
-  % A.segment(s)+A.segmentduration(s) in ncol steps
-  % thus each col k of ei corresponds to time 
-  % A.segment(s)+k*A.segmentduration(s)/ncol
-  tk = segments(s)+[0:(ncol-1)]/ncol*segmentduration(s);
+  % First 10 frames are unresampled
+  % next 10 frames are linearly interpolated for the remainder
+  tk = segments(s) + [0:(ninitial-1)]*tbase;
+  tk = [tk, segments(s)+ninitial*tbase ...
+        + [1:(nfinal)]/nfinal*(segmentduration(s)-ninitial*tbase)];
+%  plot(tk,'.');
+%  title(['segment ', num2str(s)]);
+%  pause
   trix = find(tt >= tk(1), 1, 'first'):(find(tt<=tk(end), 1, 'last')+1);
                                         
   tk2 = [tk tk(end)+1];
+  goodtrix = (trix <= size(E,2));
+  trix = trix(goodtrix);
   trp = zeros(1,length(trix));
   for j = 1:length(trix);
     trp(j) = find(tk<=tt(trix(j)), 1,'last');
     trp(j) = trp(j) + (tt(trix(j))-tk(trp(j)))/(tk2(trp(j)+1)-tk(trp(j)));
   end
-%  E(:,trix) = E(:,trix) + idB(A.segmentloudness(s))*(colinterp(ei2,trp).^(1/0.3));
-  E(:,trix) = E(:,trix) + (colinterp(ei2,trp).^(1/0.3));
+%  E(:,trix) = E(:,trix) +
+%  idB(A.segmentloudness(s))*(colinterp(ei2,trp).^(1/0.3));
+%  E(:,trix) = E(:,trix) + (colinterp(ei2,trp));
+  % just overwrite any overlap
+%  E(:,trix) = 10.^(colinterp(ei2,trp)/20);
+  E(:,trix) = colinterp(ei2,trp);
 end

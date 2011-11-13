@@ -1,15 +1,16 @@
 function x = synth_song(M,dur,sr,donoise)
-% x = play_en(M,dur,sr,donoise)
+% x = synth_song(M,dur,sr,donoise)
 %    Resynthesize audio from an EN analyze structure.
 %    M is an HDF_Song_File_Reader structure
 %    x is returned as a waveform synthesized from that data, with
 %    max duration <dur> secs (duration of song), at sampling rate
 %    sr (16000 Hz).  donoise = 1 => noise excited.
 %    (based on echonest/play_en.m)
-% 2009-03-11 Dan Ellis dpwe@ee.columbia.edu
+%    Now with EN-provided resynthesis parameters.
+% 2011-11-13, 2009-03-11 Dan Ellis dpwe@ee.columbia.edu
 
 if nargin < 2; dur = 0; end
-if nargin < 3; sr = 16000; end
+if nargin < 3; sr = 22050; end
 if nargin < 4; donoise = 0; end
 
 % include denormalization by loudness
@@ -33,10 +34,14 @@ x = chromsynth2(C,beattimes,sr,0,maxnpitch);
 
 %%%%% PUT ENVELOPE RECONSTRUCTION FROM TIMBRE FEATURES IN HERE %%%%%%
 
-E = recons_env_h5(M);
+EdB = recons_env_h5(M);
+% E returns in (pseudo?) dB; convert to linear
+E = 10.^(EdB/20);
 
-winlen = round(sr*.025);
-hoplen = round(sr*.010);
+%hoplen = round(sr*.010);
+%winlen = round(sr*.025);
+hoplen = round(sr * 128/22050);
+winlen = round(2.5*hoplen);
 fftlen = 2^ceil(log(winlen)/log(2));
 
 if donoise
@@ -45,8 +50,10 @@ else
   X = specgram(x,fftlen,sr,winlen,winlen-hoplen);
 end
 %X = specgram(randn(1,length(x)),fftlen,sr,winlen,winlen-hoplen);
-M = fft2barkmx(fftlen,sr,size(E,1),1.0);
-DE = M(:,1:(fftlen/2+1))'*E;
+M = fft2jbarkmx(fftlen,sr,size(E,1),1.0);
+M = M(:,1:(fftlen/2+1));
+SM = sum(M);
+DE = diag(1./SM)*M'*E;
 if size(DE,2) < size(X,2)
   DE(1,size(X,2)) = DE(1,end);
 end

@@ -12,7 +12,12 @@ function [C,Tbeats,Tsegs] = msd_beatchroma(id)
 
 nchr = 12;
 
-ENAstruct = en_analyze_msd(id);
+if isstruct(id)
+  ENAstruct = id;
+else
+  ENAstruct = en_analyze_msd(id);
+end
+
 % read chroma out of structure; apply per-segment loudness
 Segs = ENAstruct.pitches .* repmat(10.^(ENAstruct.segmentloudness/20),nchr,1);
 % read times too

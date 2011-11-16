@@ -1,7 +1,7 @@
-function x = synth_song(M,dur,sr,donoise)
-% x = synth_song(M,dur,sr,donoise)
+function x = en_resynth(A,dur,sr,donoise)
+% x = en_resynth(A,dur,sr,donoise)
 %    Resynthesize audio from an EN analyze structure.
-%    M is an HDF_Song_File_Reader structure
+%    A is an HDF_Song_File_Reader structure or MSD ID or en_analyze output
 %    x is returned as a waveform synthesized from that data, with
 %    max duration <dur> secs (duration of song), at sampling rate
 %    sr (16000 Hz).  donoise = 1 => noise excited.
@@ -13,12 +13,22 @@ if nargin < 2; dur = 0; end
 if nargin < 3; sr = 22050; end
 if nargin < 4; donoise = 0; end
 
-% include denormalization by loudness
-C = M.get_segments_pitches(); % .* repmat(idB(M.segmentloudness),nchr,1);
-% denormalization now in timbre reconstruction
-[nchr, nbeats] = size(C);
+if isstruct(A)
+  % struct means an en_analyze structure
+  C = A.pitches;
+  beattimes = [0,cumsum(A.segmentduration)];
+else
+  % else assume an h5 object
+  if ischar(A)
+    % load the MSD file
+    A = HDF5_Song_File_Reader(msd_pathname(A));
+  end
+  % get info from h5 object
+  C = A.get_segments_pitches();
+  beattimes = A.get_segments_start()';
+end
 
-beattimes = M.get_segments_start()';
+[nchr, nbeats] = size(C);
 
 if dur > 0
   nbeats = sum(beattimes <= dur);
@@ -32,11 +42,9 @@ maxnpitch = 6;
 %x = synthesize_chroma(C,beattimes,sr);
 x = chromsynth2(C,beattimes,sr,0,maxnpitch);
 
-%%%%% PUT ENVELOPE RECONSTRUCTION FROM TIMBRE FEATURES IN HERE %%%%%%
-
-EdB = recons_env_h5(M);
-% E returns in (pseudo?) dB; convert to linear
-E = 10.^(EdB/20);
+EdB = en_recons_env(A);
+% E returns in (pseudo?) dB; convert to linear (60 dB alignment)
+E = 10.^((EdB-60.0)/20);
 
 %hoplen = round(sr*.010);
 %winlen = round(sr*.025);
@@ -53,7 +61,13 @@ end
 M = fft2jbarkmx(fftlen,sr,size(E,1),1.0);
 M = M(:,1:(fftlen/2+1));
 SM = sum(M);
-DE = diag(1./SM)*M'*E;
+% M flattened along FFT bin frequencies
+M = M*diag(1./SM);
+SMP = sum(M.^2,2);
+% M equalized for the output power
+M = diag(1./(SMP))*M;
+% Now reconstruct into FFT space
+DE = M'*E;
 if size(DE,2) < size(X,2)
   DE(1,size(X,2)) = DE(1,end);
 end

@@ -1,9 +1,42 @@
-function E = recons_env_sub(segments, segmentduration, timbre, bases, bmean)
-% E = recons_env_sub(segments, segmentduration, timbre, bases, bmean)
+function E = en_recons_env(A)
+% E = en_recons_env(A)
 %    Reconstruct the time-frequency envelope of a sound from the EN
-%    timbre descriptors.  Subsidiary function for both
-%    directly-read EN coefficients and MSD H5 files.
-% 2011-11-16 Dan Ellis dpwe@ee.columbia.edu
+%    timbre descriptors.  A is either an EN HDF5_Song object, or an
+%    EN analyze structure from en_analyze[_msd], which includes
+%    segment start times and segment durations.  Reconstruct 
+%    each segment envelope from the A.timbre coefficient weights, 
+%    resample it, insert it into E.
+% 2010-05-03 Dan Ellis dpwe@ee.columbia.edu
+
+global ENTimbreTJ
+
+if length(ENTimbreTJ) == 0
+  [p,n,e] = fileparts(which('en_recons_env_h5'));
+  load(fullfile(p,'ENTimbreTJ.mat'));
+end
+
+if isstruct(A)
+  % struct means an en_analyze structure
+  segments = A.segment;
+  segmentduration = A.segmentduration;
+  timbre = A.timbre;
+else
+  % else assume an h5 object, or the name of an MSD item
+  if ischar(A)
+    % load the MSD file
+    A = HDF5_Song_File_Reader(msd_pathname(A));
+  end
+  % get info from h5 object
+  segments = A.get_segments_start()';
+  segmentduration = diff(segments);
+  %maxtime = A.get_duration();
+  % just clone the last known duration
+  segmentduration = [segmentduration, segmentduration(end)];
+  timbre = A.get_segments_timbre();
+end
+
+bases = ENTimbreTJ.bases;
+bmean = ENTimbreTJ.mean;
 
 nseg = length(segments);
 maxtime = segments(end) + segmentduration(end);

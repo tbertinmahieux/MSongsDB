@@ -1,5 +1,5 @@
-function [d,sr] = load_preview(track_id, oauth_consumer_key)
-% [d,sr] = load_preview(track_id, oauth_consumer_key)
+function [d,sr] = msd_load_preview(track_id, oauth_consumer_key)
+% [d,sr] = msd_load_preview(track_id, oauth_consumer_key)
 %    Load the 30s 7digital preview for a given track.
 %    Requires you to provide your own 7digital API key, available at:
 %    http://access.7digital.com/partnerprogram.

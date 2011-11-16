@@ -96,13 +96,9 @@ title('first 200 chromas');
 % this.
 
 % Resynthesize the first 30 seconds using chroma and timbre
-% We need to set up the basis functions for the EN timbre dimensions
-global ENTimbreBasis
-load ENTimbreBasis
-% Now can map features back to audio
 sr = 16000;
 dur = 30; % first 30s
-x = synth_song(h5,dur,sr);
+x = en_resynth(h5,dur,sr);
 % Take a listen
 soundsc(x,sr);
 % recognizable?
@@ -212,12 +208,12 @@ disp(['First one is: ',res2(1).track_id,' ',res2(1).title]);
 res = msd_sql('SELECT * FROM songs WHERE title=''Lullaby'' AND artist_name=''Dixie Chicks''');
 % Load the 7digital preview
 oauth_consumer_key='XXXXXXXXXX'; % Insert your real key HERE!
-[d,sr] = load_preview(res.track_id,oauth_consumer_key);
+[d,sr] = msd_load_preview(res.track_id,oauth_consumer_key);
 % Convert the audio to mono & dowsample
 d = resample(mean(d,2),1,4);
 sr = sr/4;
 % Now, resynth from the features
-x = synth_song(HDF5_Song_File_Reader(msd_pathname(res.track_id)),0,sr);
+x = en_resynth(res.track_id,0,sr);
 % The previews generally start about 30s into the track.  This
 % sounds about right:
 soundsc([x(round(30.1*sr)+[1:length(d)],:),500*d],sr)

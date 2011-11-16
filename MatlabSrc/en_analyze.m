@@ -39,8 +39,10 @@ if isnumeric(F) || strncmp(F, 'music:', 6)==0
   % Post to EN Analyze
   % readpost with single argument posts an octet-stream, as
   % required for v4; rest of args go into URL
-  str = urlreadpost(['http://developer.echonest.com/api/v4/track/upload?api_key=',API_KEY,'&filetype=mp3&wait=true&format=json'], ...
-                    {'file',d}); 
+  str = urlpostdata('http://developer.echonest.com/api/v4/track/upload', ...
+                    {'api_key',API_KEY,'filetype','mp3', ...
+                     'wait','true','format','json'}, ...
+                    d);
 
   ddisp('upload complete', verbose);
 
@@ -62,6 +64,9 @@ if isnumeric(F) || strncmp(F, 'music:', 6)==0
 else
   if strncmp(F, 'music:', 6)
     F = F(7:end);
+    if max(F=='/') > 0
+      F = F(max(find(F=='/'))+1:end);
+    end
   end
   track = F;
 end
@@ -70,7 +75,9 @@ disp(['track ID=',track]);
 D.id = track;
 
 % read back the entire analysis structure
-str = urlreadpost('http://developer.echonest.com/api/v4/track/analyze',{'api_key',API_KEY,'format','json','id',track,'bucket','audio_summary','wait','true'});
+str = urlreadpost('http://developer.echonest.com/api/v4/track/analyze', ...
+                  {'api_key',API_KEY,'format','json','id',track, ...
+                   'bucket','audio_summary','wait','true'});
 ddisp('got analyze response', verbose);
 
 % find the full analysis structure

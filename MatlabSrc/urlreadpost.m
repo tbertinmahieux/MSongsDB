@@ -61,58 +61,39 @@ end
 % POST method.  Write param/values to server.
 % Modified for multipart/form-data 2010-04-06 dpwe@ee.columbia.edu
 %    try
-if length(params) == 2
-  % just one param/value pair - use a post octet stream
-  try
-    urlConnection.setDoOutput(true);
-    urlConnection.setRequestProperty( ...
-        'Content-Type','application/octet-stream');
-    printStream = java.io.PrintStream(urlConnection.getOutputStream);
-    dataOutputStream = java.io.DataOutputStream(urlConnection.getOutputStream);
-    % only one param allowed
-    i = 1;
-    dataOutputStream.write(params{i+1},0,length(params{i+1}));
-    printStream.close;
-  catch
-    if catchErrors, return
-    else error('MATLAB:urlread:ConnectionFailed','Could not POST to URL.');
-    end
-  end
-else
-  % multiple params - use multipart/form-data
-  urlConnection.setDoOutput(true);
-  boundary = '***********************';
-  urlConnection.setRequestProperty( ...
-      'Content-Type',['multipart/form-data; boundary=',boundary]);
-  printStream = java.io.PrintStream(urlConnection.getOutputStream);
-  % also create a binary stream
-  dataOutputStream = java.io.DataOutputStream(urlConnection.getOutputStream);
-  eol = [char(13),char(10)];
-  for i=1:2:length(params)
-    printStream.print(['--',boundary,eol]);
-    printStream.print(['Content-Disposition: form-data; name="',params{i},'"']);
-    if ~ischar(params{i+1})
-      % binary data is uploaded as an octet stream
-      % Echo Nest API demands a filename in this case
-      printStream.print(['; filename="dummy"',eol]);
-      printStream.print(['Content-Type: application/octet-stream',eol]);
-      printStream.print([eol]);
-      dataOutputStream.write(params{i+1},0,length(params{i+1}));
-      printStream.print([eol]);
-    else
-      printStream.print([eol]);
-      printStream.print([eol]);
-      printStream.print([params{i+1},eol]);
-    end
-  end
-  printStream.print(['--',boundary,'--',eol]);
-  printStream.close;
+        urlConnection.setDoOutput(true);
+        boundary = '***********************';
+        urlConnection.setRequestProperty( ...
+            'Content-Type',['multipart/form-data; boundary=',boundary]);
+        printStream = java.io.PrintStream(urlConnection.getOutputStream);
+        % also create a binary stream
+        dataOutputStream = java.io.DataOutputStream(urlConnection.getOutputStream);
+        eol = [char(13),char(10)];
+        for i=1:2:length(params)
+          printStream.print(['--',boundary,eol]);
+          printStream.print(['Content-Disposition: form-data; name="',params{i},'"']);
+          if ~ischar(params{i+1})
+            % binary data is uploaded as an octet stream
+            % Echo Nest API demands a filename in this case
+            printStream.print(['; filename="dummy"',eol]);
+            % ?
+            printStream.print(['Content-Type: application/octet-stream',eol]);
+            printStream.print([eol]);
+            dataOutputStream.write(params{i+1},0,length(params{i+1}));
+            printStream.print([eol]);
+          else
+            printStream.print([eol]);
+            printStream.print([eol]);
+            printStream.print([params{i+1},eol]);
+          end
+        end
+        printStream.print(['--',boundary,'--',eol]);
+        printStream.close;
 %    catch
 %        if catchErrors, return
 %        else error('MATLAB:urlread:ConnectionFailed','Could not POST to URL.');
 %        end
 %    end
-end
 
 % Read the data from the connection.
 try

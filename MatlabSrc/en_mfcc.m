@@ -1,16 +1,21 @@
-function [M,melspec] = en_mfcc(D)
-% M = en_mfcc(D)
-%   Take a data structure D containing EN Analyze features (as
-%   returned by en_analyze or en_analyze_msd) and convert them into
-%   MFCCs (similar to the return from melfcc).
+function M = en_mfcc(A)
+% M = en_mfcc(A)
+%   Take a data structure A containing EN Analyze features (as
+%   returned by en_analyze or en_analyze_msd) or an h5 object or an
+%   MSD trakc ID, and convert it into MFCCs (similar to the return 
+%   from melfcc).
 %   M is 20 rows, with one column for every 5.8ms frame recovered
 %   from the original data (128 samples at 22,050 Hz sample rate).
+%   This approximates:
+%      melfcc(d/100, sr, 'wintime', 0.032, 'hoptime', 128/22050,
+%             'minfreq',133.33,'maxfreq',6855.6,'numcep',20,'lifterexp',0);
+%
 % 2011-11-16 Dan Ellis dpwe@ee.columbia.edu
 
 % Reconstruct the Bark-scale envelope
-env = recons_env(D);
+env = en_recons_env(A);
 % E returns in (pseudo?) dB; convert to linear (60 dB alignment)
-env = 10.^((env-60.0)/20);
+env = 10.^((env-100.0)/20);
 % convert to melfcc-scale
 env = env*32768*4;
 

@@ -9,7 +9,7 @@ function D = en_analyze(F, verbose)
 %     It relies on p_json.m .
 % 2011-04-11 Dan Ellis dpwe@ee.columbia.edu
 
-API_KEY='9UGMUXTCZ2WT7WWMJ';  % E4896 key
+API_KEY='XXXXXXXXXXXXXXXXX';  % get a key from http://developer.echonest.com/
 
 if nargin < 2
   verbose = 0;

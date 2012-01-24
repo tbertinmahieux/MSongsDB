@@ -44,10 +44,10 @@ rotation_words = ['and', 'y', 'et', 'vs', 'vs.', 'v', 'with', 'feat',
                   'feat.', 'featuring', 'presents', 'ft.', 'pres.']
 
 # SYMBOLS TO REMOVE AT THE BEGINNING
-stub_to_remove = ['dj', 'dj.', 'mc', 'm.c.', 'mc.', 'the']
+stub_to_remove = ['dj', 'dj.', 'mc', 'm.c.', 'mc.', 'the', 'los', 'les']
 
 # SYMBOLS TO REMOVE AT THE END
-end_to_remove1 = ['big band', 'trio', 'quartet', 'ensemble']
+end_to_remove1 = ['big band', 'trio', 'quartet', 'ensemble', 'orchestra']
 end_to_remove2 = ['band']
 
 # COMPILED REGULAR EXPRESSION

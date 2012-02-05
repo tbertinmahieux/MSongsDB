@@ -39,7 +39,7 @@ import Levenshtein # http://pypi.python.org/pypi/python-Levenshtein/
 
 
 # ROTATION SYMBOLS (A and B => B and A)
-rotation_symbols = ['\|', '/', '&', ',', '\+', '\-', ';', '_']
+rotation_symbols = ['\|', '/', '&', ',', '\+', ';', '_']#, '\-']
 rotation_words = ['and', 'y', 'et', 'vs', 'vs.', 'v', 'with', 'feat',
                   'feat.', 'featuring', 'presents', 'ft.', 'pres.']
 
@@ -200,14 +200,19 @@ def split_rotation_words(s):
     then create all possible permutations
     """
     parts = re_rotwords.split(s)
-    parts = filter(lambda p: not p in rotation_words, parts)
+    parts = filter(lambda p: not p in rotation_words, parts)[:5]
     results = set()
     # keep only the individual elems (risky?)
     for p in parts:
         results.add(p)
     # create all permutations
     permutations = itertools.permutations(parts)
+    #maxperm = 30
+    #count_perm = 0
     for perm in permutations:
+        #count_perm += 1
+        #if count_perm > maxperm:
+        #    break
         results.add(' '.join(perm))
     # redo the same but remove the stub first for all parts
     parts = map(lambda p: normalize_no_rotation(p), parts)
@@ -240,7 +245,7 @@ def normalize_artist(s):
     # normalized versions
     results = set()
     # lower case
-    s = to_lower_case(unicode(s))
+    s = to_lower_case(s)
     results.add(s)
     # remove non-ascii chars (try to replace them)
     s = remove_non_ascii(s)
@@ -268,7 +273,7 @@ def normalize_title(s):
     # normalized versions
     results = set()
     # lower case
-    s = to_lower_case(unicode(s))
+    s = to_lower_case(s)
     results.add(s)
     # remove non-ascii chars (try to replace them)
     s = remove_non_ascii(s)
@@ -296,8 +301,8 @@ def same_artist(name1, name2):
     Return True if it's the same artist, False otherwise
     """
     # trivial
-    n1 = to_lower_case(unicode(name1))
-    n2 = to_lower_case(unicode(name2))
+    n1 = to_lower_case(name1)
+    n2 = to_lower_case(name2)
     if n1 == n2:
         return True
     # edit distance
@@ -329,8 +334,8 @@ def same_title(title1, title2):
     Return True if it's the same title, False otherwise
     """
     # trivial
-    t1 = to_lower_case(unicode(title1))
-    t2 = to_lower_case(unicode(title2))
+    t1 = to_lower_case(title1)
+    t2 = to_lower_case(title2)
     if t1 == t2:
         return True
     # edit distance

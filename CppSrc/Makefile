@@ -29,7 +29,7 @@ CFLAGS=-c -Wall -std=c++0x -O2
 
 
 all: hdf5_getters.o hdf5_display.o
-	$(CC) hdf5_display.o hdf5_getters.o -lhdf5 -lhdf5_cpp -lhdf5_hl -o hdf5_display
+	$(CC) hdf5_display.o hdf5_getters.o -lhdf5 -lhdf5_cpp -o hdf5_display
 
 hdf5_display.o:
 	$(CC) $(CFLAGS) -c hdf5_display.cc	

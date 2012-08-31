@@ -32,8 +32,11 @@
 
 #include "H5Cpp.h"
 //#include "hdf5_hl.h"
-#include "hdf5_getters.h"
+//#include "hdf5_getters.h"
 using namespace H5;
+
+#include "hdf5_hl.h"
+#include "hdf5_getters.h"
 
 // max characters of a field
 //#define FIELDLEN 128
@@ -275,6 +278,22 @@ double HDF5Getters::get_time_signature_confidence() const {
   return get_member_double( GROUP_ANALYSIS, "time_signature_confidence");
 }
 
+/*
+ * Get Track ID
+ */
+std::string HDF5Getters::get_track_id() const {
+  return get_member_str( GROUP_ANALYSIS, "track_id");
+}
+
+/*
+ * Get beats start.
+ */
+void HDF5Getters::get_beats_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "beats_start", "idx_beats_start",
+			   result);
+}
+
 
 /***************** UTITITY FUNCTIONS *******************/
 
@@ -325,14 +344,47 @@ std::string HDF5Getters::get_member_str(const Group& group,
   const CompType mtype( (size_t) 1024 );
   mtype.insertMember( MEMBER, 0, dtype);
 
-  // Need to figure out the proper size!
+  // Ideally we'd figure out the proper size!
   // Otherwise, let's have a buffer that is always big enough...
   char buf[buffer_length + 1];
   dataset.read( (void*) buf, mtype );
   buf[buffer_length] = '\0'; // HACK, some strings are not null-terminated.
-  return std::string(buf);
-  
+  return std::string(buf);  
 }
+
+/*
+ * To get a member which is an array of double;
+ * result put in 'result';
+ * dataset name is always 'songs'. 
+ */
+void  HDF5Getters::get_member_double_array(const Group& group,
+					   const std::string name_member,
+					   const std::string idx_name_member,
+					   std::vector<double>& result)
+{
+  const H5std_string MEMBER( name_member );
+  DataSet dataset( group.openDataSet( MEMBER ));
+
+  hsize_t data_mem_size = dataset.getInMemDataSize();
+  if (data_mem_size == 0) {
+    dataset.close();
+    return;
+  }
+
+  FloatType floattype(dataset);
+  size_t typesize = floattype.getSize();
+
+  int n_entries = data_mem_size / typesize;
+  double values[n_entries];
+  dataset.read((void*) values, floattype);
+
+  result.clear();
+  for (int k = 0; k < n_entries; ++k)
+    {
+      result.push_back(values[k]);
+    }
+}
+
 
 
 #endif // __HDF5_GETTERS__

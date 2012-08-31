@@ -27,8 +27,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
-#include "hdf5_getters.h"
+#include <vector>
 using namespace std;
+
+#include "hdf5_getters.h"
 
 /*
  * Help menu
@@ -55,6 +57,7 @@ int main(int argc, const char* argv[]) {
   double dval;
   std::string sval;
   int ival;
+  vector<double> dvec;
 
   // print everything!
   dval = getters.get_artist_familiarity();
@@ -78,19 +81,6 @@ int main(int argc, const char* argv[]) {
   sval = getters.get_artist_name();
   cout << "artist name: " << sval << endl;
   sval = getters.get_release();
-  cout << "release: " << sval << endl;
-  ival = getters.get_release_7digitalid();
-  cout << "release 7digital id: " << ival << endl;
-  sval = getters.get_song_id();
-  cout << "song id: " << sval << endl;
-  dval = getters.get_song_hotttnesss();
-  cout << "song hotttnesss: " << dval << endl;
-  sval = getters.get_title();
-  cout << "title: " << sval << endl;
-  // get similar artists
-  // get similar terms
-  // get artist terms freq
-  // get_artist_terms_weight
   dval = getters.get_analysis_sample_rate();
   cout << "analysis sample rate: " << dval << endl;
   sval = getters.get_audio_md5();
@@ -114,6 +104,13 @@ int main(int argc, const char* argv[]) {
   dval = getters.get_mode_confidence();
   cout << "mode confidence: " << dval << endl;
   dval = getters.get_start_of_fade_out();
+  cout << "release: " << sval << endl;
+  ival = getters.get_release_7digitalid();
+  cout << "release 7digital id: " << ival << endl;
+  sval = getters.get_song_id();
+  cout << "song id: " << sval << endl;
+  dval = getters.get_song_hotttnesss();
+  cout << "song hotttnesss: " << dval << endl;
   cout << "start of fade out: " << dval << endl;
   dval = getters.get_tempo();
   cout << "tempo " << dval << endl;
@@ -121,6 +118,18 @@ int main(int argc, const char* argv[]) {
   cout << "time_signature: " << ival << endl;
   dval = getters.get_time_signature_confidence();
   cout << "time signature confidence: " << dval << endl;
+  sval = getters.get_title();
+  cout << "title: " << sval << endl;
+  // get similar artists
+  // get similar terms
+  // get artist terms freq
+  // get artist terms weight
+  sval = getters.get_track_id();
+  cout << "track id: " << sval << endl;
+
+  getters.get_beats_start(dvec);
+  cout << "beats start: (" << dvec.size() << ",)" << endl;
+
 
   return 0; // succesfully terminated
 }

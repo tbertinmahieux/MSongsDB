@@ -53,6 +53,10 @@ class HDF5Getters {
   static std::string get_member_str(const Group& group,
 				    const std::string name_member,
 				    uint buffer_length=1024);
+  static void get_member_double_array(const Group& group,
+				      const std::string name_member,
+				      const std::string idx_name_member,
+				      std::vector<double>& result);
 
  public:
 
@@ -96,4 +100,6 @@ class HDF5Getters {
   double get_tempo() const;
   int get_time_signature() const;
   double get_time_signature_confidence() const;
+  std::string get_track_id() const;
+  void get_beats_start(std::vector<double>&) const;
 };

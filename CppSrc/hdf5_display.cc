@@ -87,6 +87,15 @@ int main(int argc, const char* argv[]) {
   cout << "song hotttnesss: " << dval << endl;
   sval = getters.get_title();
   cout << "title: " << sval << endl;
+  // get similar artists
+  // get similar terms
+  // get artist terms freq
+  // get_artist_terms_weight
+  dval = getters.get_analysis_sample_rate();
+  cout << "analysis sample rate: " << dval << endl;
+  sval = getters.get_audio_md5();
+  cout << "audio MD5: " << sval << endl;
+
 
   ival = getters.get_key();
   cout << "key: " << ival << endl;

@@ -46,9 +46,13 @@ class HDF5Getters {
   Group GROUP_MUSICBRAINZ;
 
   // utility functions
-  static double get_member_double(const Group& group, const std::string name_member);
-  static int get_member_int(const Group& group, const std::string name_member);
-  static std::string get_member_str(const Group& group, const std::string name_member);
+  static double get_member_double(const Group& group,
+				  const std::string name_member);
+  static int get_member_int(const Group& group,
+			    const std::string name_member);
+  static std::string get_member_str(const Group& group,
+				    const std::string name_member,
+				    uint buffer_length=1024);
 
  public:
 
@@ -77,6 +81,8 @@ class HDF5Getters {
   std::string get_song_id() const;
   double get_song_hotttnesss() const;
   std::string get_title() const;
+  double get_analysis_sample_rate() const;
+  std::string get_audio_md5() const;
 
 
   int get_key() const;

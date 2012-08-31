@@ -170,7 +170,19 @@ std::string HDF5Getters::get_title() const {
   return get_member_str( GROUP_METADATA, "title");
 }
 
+/*
+ * Get analysis sample rate
+ */
+double HDF5Getters::get_analysis_sample_rate() const {
+  return get_member_double( GROUP_ANALYSIS, "analysis_sample_rate");
+}
 
+/*
+ * Get Audio MD5
+ */
+std::string HDF5Getters::get_audio_md5() const {
+  return get_member_str( GROUP_ANALYSIS, "audio_md5", 32);
+}
 
 
 
@@ -222,7 +234,9 @@ int HDF5Getters::get_member_int(const Group& group, const std::string name_membe
  * To get a string member from a given group;
  * dataset name is always 'songs'
  */
-std::string HDF5Getters::get_member_str(const Group& group, const std::string name_member) {
+std::string HDF5Getters::get_member_str(const Group& group,
+					const std::string name_member,
+					uint buffer_length) {
   const H5std_string MEMBER( name_member );
   DataSet dataset( group.openDataSet( "songs" ));
 
@@ -235,8 +249,9 @@ std::string HDF5Getters::get_member_str(const Group& group, const std::string na
 
   // Need to figure out the proper size!
   // Otherwise, let's have a buffer that is always big enough...
-  char buf[1024];
+  char buf[buffer_length + 1];
   dataset.read( (void*) buf, mtype );
+  buf[buffer_length] = '\0'; // HACK, some strings are not null-terminated.
   return std::string(buf);
   
 }

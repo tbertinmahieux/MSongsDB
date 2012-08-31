@@ -51,11 +51,25 @@ int main(int argc, const char* argv[]) {
   // create wrapper
   HDF5Getters getters(argv[1]);
   
+  // init values
+  double dval;
+  std::string sval;
+  int ival;
+
   // print everything!
-  float fval = getters.get_artist_familiarity();
-  cout << "artist familiarity: " << fval << endl;
-  int ival = getters.get_key();
+  dval = getters.get_artist_familiarity();
+  cout << "artist familiarity: " << dval << endl;
+  dval = getters.get_artist_hotttnesss();
+  cout << "artist hotttnesss: " << dval << endl;
+  sval = getters.get_artist_id();
+  cout << "artist id: " << sval << endl;
+  
+
+  sval = getters.get_artist_name();
+  cout << "artist name: " << sval << endl;
+  ival = getters.get_key();
   cout << "key: " << ival << endl;
+
 
   return 0; // succesfully terminated
 }

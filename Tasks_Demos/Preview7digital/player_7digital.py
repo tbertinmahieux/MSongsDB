@@ -300,7 +300,8 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         die_with_usage()
 
-    # check track metadata
+    # check track metadata, makes sure it's the new version
+    # with track_7digitalid
     tmdb = sys.argv[1]
     if not os.path.isfile(tmdb):
         print 'ERROR: file',tmdb,'does not exist.'

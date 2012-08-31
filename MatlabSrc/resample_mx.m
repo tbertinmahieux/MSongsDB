@@ -22,7 +22,8 @@ incoldurs = [diff(incolpos),1];
 
 for c = 1:noutcols
   firstincol = find(incolpos <= outcolpos(c), 1, 'last');
-  lastincol = max(firstincol,find(incolpos < outcolpos(c+1), 1, 'last'));
+  lastincol = max(firstincol,find(incolpos < outcolpos(c+1), 1, ...
+                                  'last'));
 %  disp(sprintf('firstincol=%d lastincol=%d',firstincol,lastincol));
   % default weights
   wts = incoldurs(firstincol:lastincol);

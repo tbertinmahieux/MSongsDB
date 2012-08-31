@@ -180,12 +180,16 @@ def get_btloudnessmax(h5):
     #    btstarts.shape = (304,)
     segstarts = np.array(segstarts).flatten()
     btstarts = np.array(btstarts).flatten()
+    # reverse dB
+    loudnessmax = idB(loudnessmax)
     # aligned features
     btloudnessmax = align_feats(loudnessmax.reshape(1,
                                                     loudnessmax.shape[0]),
                                 segstarts, btstarts, duration)
     if btloudnessmax is None:
         return None
+    # set it back to dB
+    btloudnessmax = dB(btloudnessmax + 1e-10)
     # done (no renormalization)
     return btloudnessmax
 
@@ -289,6 +293,13 @@ def idB(loudness_array):
     Inspired by D. Ellis MATLAB code
     """
     return np.power(10., loudness_array / 20.)
+
+
+def dB(inv_loudness_array):
+    """
+    Put loudness back in dB
+    """
+    return np.log10(inv_loudness_array) * 20.
 
 
 def die_with_usage():

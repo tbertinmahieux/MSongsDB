@@ -1,4 +1,4 @@
-function [C,Tbeats,Tsegs] = msd_beatchroma(id)
+function [C,Tbeats,Tsegs] = msd_beatchroma(id, nbeats)
 % C = msd_beatchroma(id)
 %   Return beat-synchronous chroma features derived from 
 %   the MSD Echo Nest analyze features.  Segs is the 12xN 
@@ -9,8 +9,15 @@ function [C,Tbeats,Tsegs] = msd_beatchroma(id)
 %   Alternatively, pass in the entire EN Analyze structure as 
 %   returned by en_analyze.m to read the data from there.
 % 2010-04-08 Dan Ellis dpwe@ee.columbia.edu
+%
+% Added by TBM
+% nbeats  - align every nbeats, default=1
 
 nchr = 12;
+
+if nargin < 2
+    nbeats = 1;
+end
 
 if isstruct(id)
   ENAstruct = id;
@@ -19,10 +26,12 @@ else
 end
 
 % read chroma out of structure; apply per-segment loudness
-Segs = ENAstruct.pitches .* repmat(10.^(ENAstruct.segmentloudness/20),nchr,1);
+Segs = ENAstruct.pitches .* repmat(10.^(ENAstruct.segmentloudness/ ...
+                                        20),nchr,1);
+
 % read times too
 Tsegs = ENAstruct.segment;
-Tbeats = ENAstruct.beat;
+Tbeats = ENAstruct.beat(1:nbeats:end);
 
 %%%% Old way
 %  Tres = 0.01;
@@ -40,7 +49,6 @@ Tbeats = ENAstruct.beat;
 
 % Now properly figure time overlaps & weight
 C = resample_mx(Segs, Tsegs, Tbeats);
-  
 % and renormalize columns
 n = max(C);
 C = C.*repmat(1./n,size(C,1),1);

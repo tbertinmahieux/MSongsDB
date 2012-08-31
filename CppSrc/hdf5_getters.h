@@ -24,8 +24,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "H5Cpp.h"
 using namespace H5;
@@ -56,6 +56,9 @@ class HDF5Getters {
   static void get_member_double_array(const Group& group,
 				      const std::string name_member,
 				      std::vector<double>& result);
+  static void get_member_double_12_array(const Group& group,
+					 const std::string name_member,
+					 std::vector<double>& result);
 
  public:
 
@@ -118,4 +121,6 @@ class HDF5Getters {
   void get_tatums_start(std::vector<double>&) const;
   void get_tatums_confidence(std::vector<double>&) const;
   void get_artist_mbtags_count(std::vector<double>&) const;
+  void get_segments_timbre(std::vector<double>&) const;
+  void get_segments_pitches(std::vector<double>&) const;
 };

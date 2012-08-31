@@ -444,6 +444,23 @@ void HDF5Getters::get_artist_mbtags_count(std::vector<double>& result) const
 			   result);
 }
 
+/*
+ * Get segments timbre.
+ */
+void HDF5Getters::get_segments_timbre(std::vector<double>& result) const {
+  get_member_double_12_array( GROUP_ANALYSIS,
+			      "segments_timbre",
+			      result);
+}
+
+/*
+ * Get segments pitches.
+ */
+void HDF5Getters::get_segments_pitches(std::vector<double>& result) const {
+  get_member_double_12_array( GROUP_ANALYSIS,
+			      "segments_pitches",
+			      result);
+}
 
 /***************** UTITITY FUNCTIONS *******************/
 
@@ -532,6 +549,43 @@ void  HDF5Getters::get_member_double_array(const Group& group,
     {
       result.push_back(values[k]);
     }
+}
+
+/*
+ * To get a member which is an array of array of size 12
+ * (used for pitch and timbre features);
+ * data is flatten segments first (i.e. first 12 values are from the
+ * fist segments, etc).
+ * result put in 'result';
+ * dataset name is always 'songs'. 
+ */
+void  HDF5Getters::get_member_double_12_array(const Group& group,
+					      const std::string name_member,
+					      std::vector<double>& result)
+{
+  const H5std_string MEMBER( name_member );
+  DataSet dataset( group.openDataSet( MEMBER ));
+
+  hsize_t data_mem_size = dataset.getInMemDataSize();
+  if (data_mem_size == 0) {
+    dataset.close();
+    return;
+  }
+  FloatType floattype(dataset);
+
+  DataSpace filespace = dataset.getSpace();
+  hsize_t dims[2]; 	// dataset dimensions
+  int rank = filespace.getSimpleExtentDims( dims );
+  DataSpace mspace1(rank, dims);
+
+  int n_values = dims[0];
+  double values[n_values][12]; // buffer for dataset to be read
+  dataset.read(values, floattype, mspace1, filespace);
+  
+  result.clear();
+  for (int row = 0; row < n_values; ++row)
+    for (int col = 0; col < 12; ++col)
+      result.push_back(values[row][col]);
 }
 
 

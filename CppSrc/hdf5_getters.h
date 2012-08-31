@@ -65,7 +65,19 @@ class HDF5Getters {
   double get_artist_familiarity() const;
   double get_artist_hotttnesss() const;
   std::string get_artist_id() const;
-  int get_key() const;
+  std::string get_artist_mbid() const;
+  int get_artist_playmeid() const;
+  int get_artist_7digitalid() const;
+  double get_artist_latitude() const;
+  double get_artist_longitude() const;
+  std::string get_artist_location() const;
   std::string get_artist_name() const;
+  std::string get_release() const;
+  int get_release_7digitalid() const;
+  std::string get_song_id() const;
+  double get_song_hotttnesss() const;
+  std::string get_title() const;
 
+
+  int get_key() const;
 };

@@ -87,12 +87,46 @@ std::string HDF5Getters::get_artist_id() const {
 }
 
 /*
- * Get Key
+ * Get Artist musicbrainz ID.
  */
-int HDF5Getters::get_key() const {
-  return get_member_int( GROUP_ANALYSIS, "key");
+std::string HDF5Getters::get_artist_mbid() const {
+  return get_member_str( GROUP_METADATA, "artist_mbid");
 }
 
+/*
+ * Get Artist musicbrainz Playme ID.
+ */
+int HDF5Getters::get_artist_playmeid() const {
+  return get_member_int( GROUP_METADATA, "artist_playmeid");
+}
+
+/*
+ * Get Artist 7digital ID.
+ */
+int HDF5Getters::get_artist_7digitalid() const {
+  return get_member_int( GROUP_METADATA, "artist_7digitalid");
+}
+
+/*
+ * Get Artist latitude
+ */
+double HDF5Getters::get_artist_latitude() const {
+  return get_member_double( GROUP_METADATA, "artist_latitude");
+}
+
+/*
+ * Get Artist longitude
+ */
+double HDF5Getters::get_artist_longitude() const {
+  return get_member_double( GROUP_METADATA, "artist_longitude");
+}
+
+/*
+ * Get Artist location
+ */
+std::string HDF5Getters::get_artist_location() const {
+  return get_member_str( GROUP_METADATA, "artist_location");
+}
 
 /*
  * Get Artist name
@@ -100,6 +134,57 @@ int HDF5Getters::get_key() const {
 std::string HDF5Getters::get_artist_name() const {
   return get_member_str( GROUP_METADATA, "artist_name");
 }
+
+/*
+ * Get Release
+ */
+std::string HDF5Getters::get_release() const {
+  return get_member_str( GROUP_METADATA, "release");
+}
+
+/*
+ * Get Release 7digital ID.
+ */
+int HDF5Getters::get_release_7digitalid() const {
+  return get_member_int( GROUP_METADATA, "release_7digitalid");
+}
+
+/*
+ * Get Song ID
+ */
+std::string HDF5Getters::get_song_id() const {
+  return get_member_str( GROUP_METADATA, "song_id");
+}
+
+/*
+ * Get Song hotttnesss
+ */
+double HDF5Getters::get_song_hotttnesss() const {
+  return get_member_double( GROUP_METADATA, "song_hotttnesss");
+}
+
+/*
+ * Get Song ID
+ */
+std::string HDF5Getters::get_title() const {
+  return get_member_str( GROUP_METADATA, "title");
+}
+
+
+
+
+
+
+
+/*
+ * Get Key
+ */
+int HDF5Getters::get_key() const {
+  return get_member_int( GROUP_ANALYSIS, "key");
+}
+
+
+
 
 /***************** UTITITY FUNCTIONS *******************/
 

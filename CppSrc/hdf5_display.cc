@@ -63,10 +63,31 @@ int main(int argc, const char* argv[]) {
   cout << "artist hotttnesss: " << dval << endl;
   sval = getters.get_artist_id();
   cout << "artist id: " << sval << endl;
-  
-
+  sval = getters.get_artist_mbid();
+  cout << "artist musicbrainz id: " << sval << endl;
+  ival = getters.get_artist_playmeid();
+  cout << "artist playme id: " << ival << endl;
+  ival = getters.get_artist_7digitalid();
+  cout << "artist 7digital id: " << ival << endl;
+  dval = getters.get_artist_latitude();
+  cout << "artist latitude: " << dval << endl;
+  dval = getters.get_artist_longitude();
+  cout << "artist longitude: " << dval << endl;
+  sval = getters.get_artist_location();
+  cout << "artist location: " << sval << endl;
   sval = getters.get_artist_name();
   cout << "artist name: " << sval << endl;
+  sval = getters.get_release();
+  cout << "release: " << sval << endl;
+  ival = getters.get_release_7digitalid();
+  cout << "release 7digital id: " << ival << endl;
+  sval = getters.get_song_id();
+  cout << "song id: " << sval << endl;
+  dval = getters.get_song_hotttnesss();
+  cout << "song hotttnesss: " << dval << endl;
+  sval = getters.get_title();
+  cout << "title: " << sval << endl;
+
   ival = getters.get_key();
   cout << "key: " << ival << endl;
 

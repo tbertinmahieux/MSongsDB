@@ -55,7 +55,6 @@ class HDF5Getters {
 				    uint buffer_length=1024);
   static void get_member_double_array(const Group& group,
 				      const std::string name_member,
-				      const std::string idx_name_member,
 				      std::vector<double>& result);
 
  public:
@@ -101,5 +100,21 @@ class HDF5Getters {
   int get_time_signature() const;
   double get_time_signature_confidence() const;
   std::string get_track_id() const;
+  int get_year() const;
+  void get_artist_terms_freq(std::vector<double>&) const;
+  void get_artist_terms_weight(std::vector<double>&) const;
+  void get_segments_start(std::vector<double>&) const;
+  void get_segments_confidence(std::vector<double>&) const;
+  void get_segments_loudness_max(std::vector<double>&) const;
+  void get_segments_loudness_max_time(std::vector<double>&) const;
+  void get_segments_loudness_start(std::vector<double>&) const;
+  void get_sections_start(std::vector<double>&) const;
+  void get_sections_confidence(std::vector<double>&) const;
   void get_beats_start(std::vector<double>&) const;
+  void get_beats_confidence(std::vector<double>&) const;
+  void get_bars_start(std::vector<double>&) const;
+  void get_bars_confidence(std::vector<double>&) const;
+  void get_tatums_start(std::vector<double>&) const;
+  void get_tatums_confidence(std::vector<double>&) const;
+  void get_artist_mbtags_count(std::vector<double>&) const;
 };

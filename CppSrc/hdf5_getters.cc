@@ -286,11 +286,154 @@ std::string HDF5Getters::get_track_id() const {
 }
 
 /*
+ * Get year
+ */
+int HDF5Getters::get_year() const {
+  return get_member_int( GROUP_MUSICBRAINZ, "year");
+}
+
+/*
+ * Get artist terms freq.
+ */
+void HDF5Getters::get_artist_terms_freq(std::vector<double>& result) const {
+  get_member_double_array( GROUP_METADATA,
+			   "artist_terms_freq",
+			   result);
+}
+
+/*
+ * Get artist terms weight.
+ */
+void HDF5Getters::get_artist_terms_weight(std::vector<double>& result) const {
+  get_member_double_array( GROUP_METADATA,
+			   "artist_terms_weight",
+			   result);
+}
+
+/*
+ * Get segments start.
+ */
+void HDF5Getters::get_segments_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "segments_start",
+			   result);
+}
+
+/*
+ * Get segments confidence.
+ */
+void HDF5Getters::get_segments_confidence(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "segments_confidence",
+			   result);
+}
+
+/*
+ * Get segments loudness max.
+ */
+void HDF5Getters::get_segments_loudness_max(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "segments_loudness_max",
+			   result);
+}
+
+/*
+ * Get segments loudness max time.
+ */
+void HDF5Getters::get_segments_loudness_max_time(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "segments_loudness_max_time",
+			   result);
+}
+
+/*
+ * Get segments loudness max time.
+ */
+void HDF5Getters::get_segments_loudness_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "segments_loudness_start",
+			   result);
+}
+
+/*
+ * Get sections start.
+ */
+void HDF5Getters::get_sections_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "sections_start",
+			   result);
+}
+
+/*
+ * Get sections confidence.
+ */
+void HDF5Getters::get_sections_confidence(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "sections_confidence",
+			   result);
+}
+
+/*
  * Get beats start.
  */
 void HDF5Getters::get_beats_start(std::vector<double>& result) const {
   get_member_double_array( GROUP_ANALYSIS,
-			   "beats_start", "idx_beats_start",
+			   "beats_start",
+			   result);
+}
+
+/*
+ * Get beats confidence.
+ */
+void HDF5Getters::get_beats_confidence(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "beats_confidence",
+			   result);
+}
+
+/*
+ * Get bars start.
+ */
+void HDF5Getters::get_bars_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "bars_start",
+			   result);
+}
+
+/*
+ * Get bars confidence.
+ */
+void HDF5Getters::get_bars_confidence(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "bars_confidence",
+			   result);
+}
+
+/*
+ * Get tatums start.
+ */
+void HDF5Getters::get_tatums_start(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "tatums_start",
+			   result);
+}
+
+/*
+ * Get tatums confidence.
+ */
+void HDF5Getters::get_tatums_confidence(std::vector<double>& result) const {
+  get_member_double_array( GROUP_ANALYSIS,
+			   "tatums_confidence",
+			   result);
+}
+
+/**
+ * Get artist musicbrainz tags count.
+ */
+void HDF5Getters::get_artist_mbtags_count(std::vector<double>& result) const
+{
+  get_member_double_array( GROUP_MUSICBRAINZ,
+			   "artist_mbtags_count",
 			   result);
 }
 
@@ -359,7 +502,6 @@ std::string HDF5Getters::get_member_str(const Group& group,
  */
 void  HDF5Getters::get_member_double_array(const Group& group,
 					   const std::string name_member,
-					   const std::string idx_name_member,
 					   std::vector<double>& result)
 {
   const H5std_string MEMBER( name_member );

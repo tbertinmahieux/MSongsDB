@@ -95,6 +95,10 @@ int main(int argc, const char* argv[]) {
   cout << "analysis sample rate: " << dval << endl;
   sval = getters.get_audio_md5();
   cout << "audio MD5: " << sval << endl;
+  dval = getters.get_danceability();
+  cout << "danceability: " << dval << endl;
+  dval = getters.get_duration();
+  cout << "duration: " << dval << endl;
 
 
   ival = getters.get_key();

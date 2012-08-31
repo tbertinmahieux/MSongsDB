@@ -83,6 +83,10 @@ class HDF5Getters {
   std::string get_title() const;
   double get_analysis_sample_rate() const;
   std::string get_audio_md5() const;
+  double get_danceability() const;
+  double get_duration() const;
+
+
 
 
   int get_key() const;

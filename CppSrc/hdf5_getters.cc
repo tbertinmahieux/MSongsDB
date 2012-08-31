@@ -184,7 +184,19 @@ std::string HDF5Getters::get_audio_md5() const {
   return get_member_str( GROUP_ANALYSIS, "audio_md5", 32);
 }
 
+/*
+ * Get danceability
+ */
+double HDF5Getters::get_danceability() const {
+  return get_member_double( GROUP_ANALYSIS, "danceability");
+}
 
+/*
+ * Get duration
+ */
+double HDF5Getters::get_duration() const {
+  return get_member_double( GROUP_ANALYSIS, "duration");
+}
 
 
 
@@ -207,7 +219,7 @@ int HDF5Getters::get_key() const {
 double HDF5Getters::get_member_double(const Group& group, const std::string name_member) {
   const H5std_string MEMBER( name_member );
   const CompType mtype( sizeof(double) );
-  mtype.insertMember( MEMBER, 0, PredType::NATIVE_FLOAT);
+  mtype.insertMember( MEMBER, 0, PredType::NATIVE_DOUBLE);
   DataSet dataset( group.openDataSet( "songs" ));
   double data_out = -1.;
   dataset.read( &data_out, mtype );

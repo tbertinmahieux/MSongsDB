@@ -85,9 +85,15 @@ class HDF5Getters {
   std::string get_audio_md5() const;
   double get_danceability() const;
   double get_duration() const;
-
-
-
-
+  double get_end_of_fade_in() const;
+  double get_energy() const;
   int get_key() const;
+  double get_key_confidence() const;
+  double get_loudness() const;
+  int get_mode() const;
+  double get_mode_confidence() const;
+  double get_start_of_fade_out() const;
+  double get_tempo() const;
+  int get_time_signature() const;
+  double get_time_signature_confidence() const;
 };

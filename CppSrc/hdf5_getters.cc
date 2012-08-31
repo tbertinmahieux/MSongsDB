@@ -198,7 +198,19 @@ double HDF5Getters::get_duration() const {
   return get_member_double( GROUP_ANALYSIS, "duration");
 }
 
+/*
+ * Get end of fade in
+ */
+double HDF5Getters::get_end_of_fade_in() const {
+  return get_member_double( GROUP_ANALYSIS, "end_of_fade_in");
+}
 
+/*
+ * Get energy
+ */
+double HDF5Getters::get_energy() const {
+  return get_member_double( GROUP_ANALYSIS, "energy");
+}
 
 /*
  * Get Key
@@ -207,7 +219,61 @@ int HDF5Getters::get_key() const {
   return get_member_int( GROUP_ANALYSIS, "key");
 }
 
+/*
+ * Get key confidence
+ */
+double HDF5Getters::get_key_confidence() const {
+  return get_member_double( GROUP_ANALYSIS, "key_confidence");
+}
 
+/*
+ * Get loudness
+ */
+double HDF5Getters::get_loudness() const {
+  return get_member_double( GROUP_ANALYSIS, "loudness");
+}
+
+/*
+ * Get mode
+ */
+int HDF5Getters::get_mode() const {
+  return get_member_int( GROUP_ANALYSIS, "mode");
+}
+
+/*
+ * Get mode confidence
+ */
+double HDF5Getters::get_mode_confidence() const {
+  return get_member_double( GROUP_ANALYSIS, "mode_confidence");
+}
+
+/*
+ * Get tempo
+ */
+double HDF5Getters::get_tempo() const {
+  return get_member_double( GROUP_ANALYSIS, "tempo");
+}
+
+/*
+ * Get start of fade out
+ */
+double HDF5Getters::get_start_of_fade_out() const {
+  return get_member_double( GROUP_ANALYSIS, "start_of_fade_out");
+}
+
+/*
+ * Get time signature
+ */
+int HDF5Getters::get_time_signature() const {
+  return get_member_int( GROUP_ANALYSIS, "time_signature");
+}
+
+/*
+ * Get time signature confidence
+ */
+double HDF5Getters::get_time_signature_confidence() const {
+  return get_member_double( GROUP_ANALYSIS, "time_signature_confidence");
+}
 
 
 /***************** UTITITY FUNCTIONS *******************/

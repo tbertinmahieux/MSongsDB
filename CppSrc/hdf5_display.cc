@@ -99,11 +99,28 @@ int main(int argc, const char* argv[]) {
   cout << "danceability: " << dval << endl;
   dval = getters.get_duration();
   cout << "duration: " << dval << endl;
-
-
+  dval = getters.get_end_of_fade_in();
+  cout << "end of fade in: " << dval << endl;
+  dval = getters.get_energy();
+  cout << "energy: " << dval << endl;
   ival = getters.get_key();
   cout << "key: " << ival << endl;
-
+  dval = getters.get_key_confidence();
+  cout << "key confidence: " << dval << endl;
+  dval = getters.get_loudness();
+  cout << "loudness: " << dval << endl;
+  ival = getters.get_mode();
+  cout << "mode: " << ival << endl;
+  dval = getters.get_mode_confidence();
+  cout << "mode confidence: " << dval << endl;
+  dval = getters.get_start_of_fade_out();
+  cout << "start of fade out: " << dval << endl;
+  dval = getters.get_tempo();
+  cout << "tempo " << dval << endl;
+  ival = getters.get_time_signature();
+  cout << "time_signature: " << ival << endl;
+  dval = getters.get_time_signature_confidence();
+  cout << "time signature confidence: " << dval << endl;
 
   return 0; // succesfully terminated
 }

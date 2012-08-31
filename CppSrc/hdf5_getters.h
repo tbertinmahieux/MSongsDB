@@ -84,6 +84,7 @@ class HDF5Getters {
   std::string get_song_id() const;
   double get_song_hotttnesss() const;
   std::string get_title() const;
+  int get_track_7digitalid() const;
   double get_analysis_sample_rate() const;
   std::string get_audio_md5() const;
   double get_danceability() const;

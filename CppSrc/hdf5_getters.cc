@@ -174,6 +174,13 @@ std::string HDF5Getters::get_title() const {
 }
 
 /*
+ * Get Track 7digital ID.
+ */
+int HDF5Getters::get_track_7digitalid() const {
+  return get_member_int( GROUP_METADATA, "track_7digitalid");
+}
+
+/*
  * Get analysis sample rate
  */
 double HDF5Getters::get_analysis_sample_rate() const {

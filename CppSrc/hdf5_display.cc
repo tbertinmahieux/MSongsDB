@@ -58,6 +58,7 @@ int main(int argc, const char* argv[]) {
   std::string sval;
   int ival;
   vector<double> dvec;
+  vector<string> svec;
 
   // print everything!
   dval = getters.get_analysis_sample_rate();
@@ -78,12 +79,16 @@ int main(int argc, const char* argv[]) {
   cout << "artist_longitude: " << dval << endl;
   sval = getters.get_artist_mbid();
   cout << "artist_mbid: " << sval << endl;
+  getters.get_artist_mbtags(svec);
+  cout << "artist_mbtags: shape = (" << svec.size() << ",)" << endl;
   getters.get_artist_mbtags_count(dvec);
   cout << "artist_mbtags_count: shape = (" << dvec.size() << ",)" << endl;
   sval = getters.get_artist_name();
   cout << "artist_name: " << sval << endl;
   ival = getters.get_artist_playmeid();
   cout << "artist_playmeid: " << ival << endl;
+  getters.get_artist_terms(svec);
+  cout << "artist_terms: shape = (" << svec.size() << ",)" << endl;
   getters.get_artist_terms_freq(dvec);
   cout << "artist_terms_freq: shape = (" << dvec.size() << ",)" << endl;
   getters.get_artist_terms_weight(dvec);
@@ -138,6 +143,8 @@ int main(int argc, const char* argv[]) {
   cout << "segments_start: shape = (" << dvec.size() << ",)" << endl;
   getters.get_segments_timbre(dvec);
   cout << "segments_timbre: shape = (" << dvec.size() / 12 << ", 12)" << endl;
+  getters.get_similar_artists(svec);
+  cout << "similar_artists: shape = (" << svec.size() << ",)" << endl;
   dval = getters.get_song_hotttnesss();
   cout << "song_hotttnesss: " << dval << endl;
   sval = getters.get_song_id();

@@ -29,10 +29,9 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "H5Cpp.h"
-//#include "hdf5_hl.h"
-//#include "hdf5_getters.h"
 using namespace H5;
 
 #include "hdf5_hl.h"
@@ -462,6 +461,35 @@ void HDF5Getters::get_segments_pitches(std::vector<double>& result) const {
 			      result);
 }
 
+/*
+ * Get artist terms.
+ */
+void HDF5Getters::get_artist_terms(std::vector<std::string>& result) const {
+  get_member_str_array( GROUP_METADATA,
+			"artist_terms",
+			result);
+}
+
+/*
+ * Get artist mbtags.
+ */
+void HDF5Getters::get_artist_mbtags(std::vector<std::string>& result) const {
+  get_member_str_array( GROUP_MUSICBRAINZ,
+			"artist_mbtags",
+			result);
+}
+
+/*
+ * Get similar artists.
+ */
+void HDF5Getters::get_similar_artists(std::vector<std::string>& result) const {
+  get_member_str_array( GROUP_METADATA,
+			"similar_artists",
+			result,
+			20);
+}
+
+
 /***************** UTITITY FUNCTIONS *******************/
 
 /*
@@ -557,7 +585,6 @@ void  HDF5Getters::get_member_double_array(const Group& group,
  * data is flatten segments first (i.e. first 12 values are from the
  * fist segments, etc).
  * result put in 'result';
- * dataset name is always 'songs'. 
  */
 void  HDF5Getters::get_member_double_12_array(const Group& group,
 					      const std::string name_member,
@@ -588,6 +615,57 @@ void  HDF5Getters::get_member_double_12_array(const Group& group,
       result.push_back(values[row][col]);
 }
 
+/*
+ * To get a member which is an array of strings.
+ * (used for tags for instance);
+ * result put in 'result';
+ */
+void  HDF5Getters::get_member_str_array(const Group& group,
+					const std::string name_member,
+					std::vector<std::string>& result,
+					uint word_length)
+{
+  const H5std_string MEMBER( name_member );
+  DataSet dataset( group.openDataSet( MEMBER ));
 
+  hsize_t data_mem_size = dataset.getInMemDataSize();
+  if (data_mem_size == 0) {
+    dataset.close();
+    return;
+  }
+  DataSpace filespace = dataset.getSpace();
+  hsize_t dims[2]; 	// dataset dimensions
+  int rank = filespace.getSimpleExtentDims( dims );
+  DataSpace mspace1(rank, dims);
+
+  uint n_values = dims[0];
+  char values[n_values * word_length];
+  StrType stringtype(dataset);
+  dataset.read(values, stringtype, mspace1, filespace);
+
+  // We split the values
+  char * pch;
+  char * in_values = values;
+  const char* delims = "\0";
+  pch = strtok (in_values, delims);
+  uint counter = 0;
+  result.clear();
+  while (counter < n_values)
+  {
+    result.push_back(std::string(pch));
+    counter += 1;
+    if (counter == n_values)
+      break;
+
+    // hack to remove the padding introduced by HDF5
+    in_values += strlen(pch);
+    while(*in_values == '\0')
+      ++in_values;
+
+    pch = strtok (in_values, delims);
+    }
+
+  dataset.close();
+}
 
 #endif // __HDF5_GETTERS__

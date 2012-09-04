@@ -59,6 +59,11 @@ class HDF5Getters {
   static void get_member_double_12_array(const Group& group,
 					 const std::string name_member,
 					 std::vector<double>& result);
+  static void get_member_str_array(const Group& group,
+				   const std::string name_member,
+				   std::vector<std::string>& result,
+				   uint word_length=1026);
+
 
  public:
 
@@ -123,4 +128,7 @@ class HDF5Getters {
   void get_artist_mbtags_count(std::vector<double>&) const;
   void get_segments_timbre(std::vector<double>&) const;
   void get_segments_pitches(std::vector<double>&) const;
+  void get_artist_terms(std::vector<std::string>&) const;
+  void get_artist_mbtags(std::vector<std::string>&) const;
+  void get_similar_artists(std::vector<std::string>&) const;
 };

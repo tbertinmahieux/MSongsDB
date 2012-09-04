@@ -5,7 +5,7 @@ MSongsDB/CppSrc/README
 
  C++ wrapper for the Million Song Dataset song files in HDF5.
 
- The core code is in hdf5_display.cc and .h.
+ The core code is in hdf5_getters.cc and .h.
  The program hdf5_display shows all the field of a given HDF5 song file and
  acts as a demo on how to use the wrapper.
 

@@ -62,7 +62,11 @@ HDF5Getters::HDF5Getters(const char filename[]) {
  * Destructor
  */
 HDF5Getters::~HDF5Getters() {
-  // file
+  // Groups
+  GROUP_METADATA.close();
+  GROUP_ANALYSIS.close();
+  GROUP_MUSICBRAINZ.close();
+  // File
   h5file->close();
   delete h5file;
 }
@@ -543,6 +547,7 @@ std::string HDF5Getters::get_member_str(const Group& group,
   // Otherwise, let's have a buffer that is always big enough...
   char buf[buffer_length + 1];
   dataset.read( (void*) buf, mtype );
+  dataset.close();
   buf[buffer_length] = '\0'; // HACK, some strings are not null-terminated.
   return std::string(buf);  
 }
@@ -571,6 +576,7 @@ void  HDF5Getters::get_member_double_array(const Group& group,
   int n_entries = data_mem_size / typesize;
   double values[n_entries];
   dataset.read((void*) values, floattype);
+  dataset.close();
 
   result.clear();
   for (int k = 0; k < n_entries; ++k)
@@ -608,7 +614,8 @@ void  HDF5Getters::get_member_double_12_array(const Group& group,
   int n_values = dims[0];
   double values[n_values][12]; // buffer for dataset to be read
   dataset.read(values, floattype, mspace1, filespace);
-  
+  dataset.close();
+
   result.clear();
   for (int row = 0; row < n_values; ++row)
     for (int col = 0; col < 12; ++col)

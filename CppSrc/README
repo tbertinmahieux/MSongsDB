@@ -1,0 +1,24 @@
+MSongsDB/CppSrc/README
+
+  Thierry Bertin-Mahieux (2012) Columbia University
+  tb2332@columbia.edu
+
+ C++ wrapper for the Million Song Dataset song files in HDF5.
+
+ The core code is in hdf5_display.cc and .h.
+ The program hdf5_display shows all the field of a given HDF5 song file and
+ acts as a demo on how to use the wrapper.
+
+ To compile under Linux type 'make'.
+ The libraries needed for this code are 'hdf5' and 'hdf5_cpp', available at:
+ http://www.hdfgroup.org/HDF5/
+
+ To use in your code you can:
+  - (hacky) add hdf5_getters.cc/h source as part of your project
+  - compile it as a library and link your project to it
+
+ DISCLAIMER:
+  This code is distributed 'as is' without any guarantee whatsoever.
+  Use at your own risk.
+  The data in the Million Song Dataset is subject to licenses, read before
+  you start using it, especially if you are not an academic researcher.

@@ -569,12 +569,13 @@ void  HDF5Getters::get_member_double_array(const Group& group,
     dataset.close();
     return;
   }
+  DataSpace filespace = dataset.getSpace();
+  hsize_t dims[2]; 	// dataset dimensions
+  filespace.getSimpleExtentDims( dims );
 
-  FloatType floattype(dataset);
-  size_t typesize = floattype.getSize();
-
-  int n_entries = data_mem_size / typesize;
+  int n_entries = dims[0];
   double values[n_entries];
+  FloatType floattype(dataset);
   dataset.read((void*) values, floattype);
   dataset.close();
 

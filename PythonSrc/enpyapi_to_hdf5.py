@@ -48,16 +48,20 @@ from pyechonest import track as trackEN
 from pyechonest import config
 try:
     config.ECHO_NEST_API_KEY = os.environ['ECHO_NEST_API_KEY']
-except KeyError: # historic reasons
+except KeyError:  # historic reasons
     config.ECHO_NEST_API_KEY = os.environ['ECHONEST_API_KEY']
 # musicbrainz
 DEF_MB_USER = 'gordon'
 DEF_MB_PASSWD = 'gordon'
 
 # for multiprocessing
-class KeyboardInterruptError(Exception):pass
+class KeyboardInterruptError(Exception):
+    """Keyboard interrupt exception."""
+    pass
 
-def convert_one_song(audiofile,output,mbconnect=None,verbose=0,DESTROYAUDIO=False):
+
+def convert_one_song(audiofile, output, mbconnect=None, verbose=0,
+                     destroy_audio=False):
     """
     PRINCIPAL FUNCTION
     Converts one given audio file to hdf5 format (saved in 'output')
@@ -73,50 +77,58 @@ def convert_one_song(audiofile,output,mbconnect=None,verbose=0,DESTROYAUDIO=Fals
     """
     # inputs + sanity checks
     if not os.path.exists(audiofile):
-        print 'ERROR: song file does not exist:',songfile
+        print 'ERROR: song file does not exist: %s' % songfile
         return 0
     if os.path.exists(output):
-        print 'ERROR: hdf5 output file already exist:',output,', delete or choose new path'
+        print ('ERROR: hdf5 output file already exist: %s, delete or choose '
+               'new path' % output)
         return 0
     # get EN track / song / artist for that song
-    if verbose>0: print 'get analysis for file:',audiofile
+    if verbose > 0:
+        print 'get analysis for file: %s' % audiofile
     track = trackEN.track_from_filename(audiofile)
     song_id = track.song_id
     song = songEN.Song(song_id)
-    if verbose>0: print 'found song:',song.title,'(',song_id,')'
+    if verbose > 0:
+        print 'found song: %s (%s)' % (song.title, song_id)
     artist_id = song.artist_id
     artist = artistEN.Artist(artist_id)
-    if verbose>0: print 'found artist:',artist.name,'(',artist_id,')'
+    if verbose > 0:
+        print 'found artist: %s (%s)' % (artist.name, artist_id)
     # hack to fill missing values
     try:
         track.foreign_id
     except AttributeError:
-        track.__setattr__('foreign_id','')
-        if verbose>0: print 'no track foreign_id found'
+        track.foreign_id = ''
+        if verbose > 0:
+            print 'no track foreign_id found'
     try:
         track.foreign_release_id
     except AttributeError:
-        track.__setattr__('foreign_release_id','')
-        if verbose>0: print 'no track foreign_release_id found'
+        track.foreign_release_id = ''
+        if verbose > 0:
+            print 'no track foreign_release_id found'
     # create HDF5 file
-    if verbose>0: print 'create HDF5 file:',output
-    HDF5.create_song_file(output,force=False)
+    if verbose > 0:
+        print 'create HDF5 file: %s' % output
+    HDF5.create_song_file(output, force=False)
     # fill hdf5 file from track
-    if verbose>0:
+    if verbose > 0:
         if mbconnect is None:
             print 'fill HDF5 file with info from track/song/artist'
         else:
             print 'fill HDF5 file with info from track/song/artist/musicbrainz'
     h5 = HDF5.open_h5_file_append(output)
-    HDF5.fill_hdf5_from_artist(h5,artist)
-    HDF5.fill_hdf5_from_song(h5,song)
-    HDF5.fill_hdf5_from_track(h5,track)
+    HDF5.fill_hdf5_from_artist(h5, artist)
+    HDF5.fill_hdf5_from_song(h5, song)
+    HDF5.fill_hdf5_from_track(h5, track)
     if not mbconnect is None:
-        HDF5.fill_hdf5_from_musicbrainz(h5,mbconnect)
+        HDF5.fill_hdf5_from_musicbrainz(h5, mbconnect)
     h5.close()
     # done
     if DESTROYAUDIO:
-        if verbose>0: print 'We remove audio file:',audiofile
+        if verbose > 0:
+            print 'We remove audio file: %s' % audiofile
         os.remove(audiofile)
     return 1
 
@@ -125,17 +137,18 @@ def convert_one_song_wrapper(args):
     """ for multiprocessing """
     mbconnect = None
     if args['usemb']:
-        if verbose>0: print 'fill HDF5 file using musicbrainz'
-        mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,
-                               args['mbuser'],args['mbpasswd'])
+        if verbose > 0:
+            print 'fill HDF5 file using musicbrainz'
+        mbconnect = pg.connect('musicbrainz_db', 'localhost', -1, None, None,
+                               args['mbuser'], args['mbpasswd'])
     try:
-        convert_one_song(args['audiofile'],args['output'],
-                         mbconnect=mbconnect,verbose=args['verbose'],
-                         DESTROYAUDIO=args['DESTROYAUDIO'])
+        convert_one_song(args['audiofile'], args['output'],
+                         mbconnect=mbconnect, verbose=args['verbose'],
+                         destroy_audio=args['DESTROYAUDIO'])
     except KeyboardInterrupt:
         raise KeyboardInterruptError()
     except Exception, e:
-        print 'ERROR with file:',args['audiofile']+':',e
+        print 'ERROR with file: %s: %s' % (args['audiofile'], e)
     finally:
         if not mbconnect is None:
             mbconnect.close()
@@ -162,14 +175,17 @@ def die_with_usage():
     print 'PARAMS'
     print '  songpath      - path a song in a usual format, e.g. MP3'
     print '  new hdf5file  - output, e.g. mysong.h5'
-    print '      inputdir  - in that mode, converts every known song (mp3,wav,au,ogg)'
-    print '                  in all subdirectories, outputpath is songpath + .h5 extension'
+    print ('      inputdir  - in that mode, converts every known song '
+           '(mp3,wav,au,ogg)')
+    print ('                  in all subdirectories, outputpath is songpath + '
+           '.h5 extension')
     print 'FLAGS'
     print '  -verbose v    - set it to 0 to remove printouts'
     print '  -usemb        - use musicbrainz, e.g. you have a local copy'
     print '  -mbuser U P   - specify the musicbrainz user and password'
     print "                  (default: user='gordon' passwd='gordon')"
-    print '                  (you can also change the default values in the code)'
+    print ('                  (you can also change the default values in the '
+           'code)')
     print ''
     sys.exit(0)
 
@@ -190,9 +206,9 @@ if __name__ == '__main__':
     verbose = 1
     inputdir = ''
     nthreads = 1
-    DESTROYAUDIO=False # let's not advertise that flag in the help menu
+    destroy_audio = False  # let's not advertise that flag in the help menu
     while True:
-        if len(sys.argv) < 2: # happens with -dir option
+        if len(sys.argv) < 2:  # happens with -dir option
             break
         if sys.argv[1] == '-verbose':
             verbose = int(sys.argv[2])
@@ -221,89 +237,112 @@ if __name__ == '__main__':
         songfile = sys.argv[1]
         hdf5file = sys.argv[2]
         if not os.path.exists(songfile):
-            print 'ERROR: song file does not exist:',songfile
+            print 'ERROR: song file does not exist: %s' % songfile
             print '********************************'
             die_with_usage()
         if os.path.exists(hdf5file):
-            print 'ERROR: hdf5 file already exist:',hdf5file,', delete or choose new path'
+            print (
+                'ERROR: hdf5 file already exist: %s, delete or choose new '
+                'path' % hdf5file)
             print '********************************'
             die_with_usage()
         # musicbrainz
         mbconnect = None
         if usemb:
-            if verbose>0: print 'fill HDF5 file using musicbrainz'
-            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+            if verbose > 0:
+                print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect(
+                'musicbrainz_db', 'localhost', -1, None, None, mbuser,
+                mbpasswd)
         # transform
-        convert_one_song(songfile,hdf5file,mbconnect=mbconnect,verbose=verbose)
+        convert_one_song(
+            songfile, hdf5file, mbconnect=mbconnect, verbose=verbose)
         # close connection
         if not mbconnect is None:
             mbconnect.close()
         # verbose
         if verbose > 0:
             t2 = time.time()
-            print 'From audio:',songfile,'we created hdf5 file:',hdf5file,'in',str(int(t2-t1)),'seconds.'
+            print 'From audio: %s we created hdf5 file: %s in %s seconds.' % (
+                songfile, hdf5file, str(int(t2 - t1)))
 
     # we have an input dir, one thread
     elif nthreads == 1:
         # sanity check
         if not os.path.isdir(inputdir):
-            print 'ERROR: input directory',inputdir,'does not exist.'
+            print 'ERROR: input directory %s does not exist.' % inputdir
             print '********************************'
             die_with_usage()
         # musicbrainz
         mbconnect = None
         if usemb:
-            if verbose>0: print 'fill HDF5 file using musicbrainz'
-            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+            if verbose > 0:
+                print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect(
+                'musicbrainz_db', 'localhost', -1, None, None, mbuser,
+                mbpasswd)
         # iterate
         cnt_songs = 0
         cnt_done = 0
-        for root,dirs,files in os.walk(inputdir):
-            files = filter(lambda x: os.path.splitext(x)[1] in ('.wav','.ogg','.au','.mp3'),
-                           files)
-            files = map(lambda x: os.path.join(root,x), files)
+        for root, dirs, files in os.walk(inputdir):
+            files = filter(
+                lambda x: os.path.splitext(x)[1] in (
+                    '.wav', '.ogg', '.au', '.mp3'), files)
+            files = map(lambda x: os.path.join(root, x), files)
             for f in files:
                 cnt_songs += 1
                 if cnt_songs % 100 == 0:
-                    if verbose>0: print 'DOING FILE #'+str(cnt_songs)
+                    if verbose > 0:
+                        print 'DOING FILE #%s' % str(cnt_songs)
                 try:
-                    cnt_done += convert_one_song(f,f+'.h5',mbconnect=mbconnect,verbose=verbose,
-                                                 DESTROYAUDIO=DESTROYAUDIO)
+                    cnt_done += convert_one_song(
+                        f, f + '.h5', mbconnect=mbconnect, verbose=verbose,
+                        destroy_audio=destroy_audio)
                 except KeyboardInterrupt:
                     raise
                 except Exception, e:
-                    print 'ERROR with file:',f+':',e
+                    print 'ERROR with file: %s: %s' % (f, e)
         # iteration done
-        if verbose>0:
-            print 'Converted',str(cnt_done)+'/'+str(cnt_songs),'in all subdirectories of',inputdir
+        if verbose > 0:
+            print 'Converted %s/%s in all subdirectories of %s' % (
+                str(cnt_done), str(cnt_songs), inputdir)
             t2 = time.time()
-            print 'All conversions took:',str(int(t2-t1)),'seconds.'
+            print 'All conversions took: %s seconds.' % str(int(t2 - t1))
         # close musicbrainz
         if not mbconnect is None:
             mbconnect.close()
 
-
     # input dir, many threads
     # YOU SHOULD NOT USE THIS FUNCTION UNLESS YOU HAVE MORE THAN 1000 FILES
     else:
-        assert nthreads > 0,'negative or null number of threads? come one!'
+        assert nthreads > 0, 'negative or null number of threads? come one!'
         # get all songs
         allsongs = []
-        for root,dirs,files in os.walk(inputdir):
-            files = filter(lambda x: os.path.splitext(x)[1] in ('.wav','.ogg','.au','.mp3'),
-                           files)
-            files = map(lambda x: os.path.join(root,x), files)
-            allsongs.extend( files )
-        if verbose>0: print 'We found',len(allsongs),'songs.'
+        for root, dirs, files in os.walk(inputdir):
+            files = filter(
+                lambda x: os.path.splitext(x)[1] in (
+                    '.wav', '.ogg', '.au', '.mp3'), files)
+            files = map(lambda x: os.path.join(root, x), files)
+            allsongs.extend(files)
+        if verbose > 0:
+            print 'We found %s songs.' % len(allsongs)
         # musicbrainz
         mbconnect = None
         if usemb:
-            if verbose>0: print 'fill HDF5 file using musicbrainz'
-            mbconnect = pg.connect('musicbrainz_db','localhost',-1,None,None,mbuser,mbpasswd)
+            if verbose > 0:
+                print 'fill HDF5 file using musicbrainz'
+            mbconnect = pg.connect(
+                'musicbrainz_db', 'localhost', -1, None, None, mbuser,
+                mbpasswd)
         # prepare params
-        params_list = map(lambda x: {'verbose':verbose,'DESTROYAUDIO':DESTROYAUDIO,
-                                     'audiofile':x,'output':x+'.h5','usemb':usemb,
-                                     'mbuser':mbuser,'mbpasswd':mbpasswd},allsongs)
+        params_list = map(lambda x: {
+            'verbose': verbose,
+            'destroy_audio': destroy_audio,
+            'audiofile': x,
+            'output': x + '.h5',
+            'usemb': usemb,
+            'mbuser': mbuser,
+            'mbpasswd': mbpasswd}, allsongs)
         # launch, run all the jobs
         pool = multiprocessing.Pool(processes=nthreads)
         try:
@@ -324,6 +363,7 @@ if __name__ == '__main__':
         if not mbconnect is None:
             mbconnect.close()
         # all done!
-        if verbose>0:
+        if verbose > 0:
             t2 = time.time()
-            print 'Program ran for:',str(int(t2-t1)),'seconds with',nthreads,'threads.'
+            print 'Program ran for: %s seconds with %s threads.' % (
+                str(int(t2 - t1)), nthreads)

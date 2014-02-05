@@ -31,5 +31,4 @@ on the project's website:</br>
 
 If you have any question or comment:
 ------------------------------------
-Thierry Bertin-Mahieux</br>
-tb2332@columbia.edu
+https://groups.google.com/forum/#!forum/millionsongdataset

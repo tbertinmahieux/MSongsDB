@@ -573,7 +573,7 @@ public class hdf5_getters
 	System.out.println("file: " + filename);
 	H5File h5 = hdf5_open_readonly(filename);
 	int nSongs = get_num_songs(h5);
-	System.out.println("numberof songs: " + nSongs);
+	System.out.println("number of songs: " + nSongs);
 	if (nSongs > 1) System.out.println("we'll display info for song 0");
 	try {
 	    double[] res;

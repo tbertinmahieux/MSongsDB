@@ -21,7 +21,7 @@ More details on the database:
    - column 'track_id' -> as usual, track id from the MSD
    - column 'mxm_tid' -> track ID from musiXmatch
    - column 'word' -> a word that is also in the 'words' table
-   - column 'cnt' -> word count for the word
+   - column 'count' -> word count for the word
    - column 'is_test' -> 0 if this example is from the train set, 1 if test
 
 If you want to know exactly how we created the bag-of-wirds, look at:

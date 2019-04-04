@@ -31,20 +31,7 @@ import glob
 import time
 import datetime
 import hdf5_utils as HDF5
-
-
-def get_all_files(basedir,ext='.h5') :
-    """
-    From a root directory, go through all subdirectories
-    and find all files with the given extension.
-    Return all absolute paths in a list.
-    """
-    allfiles = []
-    for root, dirs, files in os.walk(basedir):
-        files = glob.glob(os.path.join(root,'*'+ext))
-        for f in files :
-            allfiles.append( os.path.abspath(f) )
-    return allfiles
+import utils
 
 
 def die_with_usage():
@@ -87,7 +74,7 @@ if __name__ == '__main__':
     t1 = time.time()
 
     # get all h5 files
-    allh5 = get_all_files(maindir,ext='.h5')
+    allh5 = utils.get_all_files(maindir,ext='.h5')
     print 'found',len(allh5),'H5 files.'
 
     # create aggregate file

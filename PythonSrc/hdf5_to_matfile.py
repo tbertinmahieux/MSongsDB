@@ -39,21 +39,7 @@ except ImportError:
     raise
 # project code
 import hdf5_getters
-
-
-
-def get_all_files(basedir,ext='.h5') :
-    """
-    From a root directory, go through all subdirectories
-    and find all files with the given extension.
-    Return all absolute paths in a list.
-    """
-    allfiles = []
-    for root, dirs, files in os.walk(basedir):
-        files = glob.glob(os.path.join(root,'*'+ext))
-        for f in files :
-            allfiles.append( os.path.abspath(f) )
-    return allfiles
+import utils
 
 
 def transfer(h5path,matpath=None,force=False):
@@ -172,7 +158,7 @@ if __name__ == '__main__':
         print sys.argv[1],"is neither a file nor a directory? confused... a link? c'est klug?"
         sys.exit(0)
     else:
-        allh5files = get_all_files(sys.argv[1],ext='.h5')
+        allh5files = utils.get_all_files(sys.argv[1],ext='.h5')
     if len(allh5files) == 0:
         print 'no .h5 file found, sorry, check directory you gave us:',sys.argv[1]
 
